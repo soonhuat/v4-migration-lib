@@ -9,7 +9,6 @@
   "typings": "./dist/index.d.ts",
   "umd:main": "./dist/index.umd.js",
   "unpkg": "./dist/index.cjs2.min.js",
-  "types": "./dist/src/index.d.ts",
   "scripts": {
     "start": "node dist/app.js",
     "build": "npm run clean && tsc --sourcemap && microbundle build --format umd,cjs,es --compress --target node --tsconfig tsconfig.json",

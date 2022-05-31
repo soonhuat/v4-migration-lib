@@ -150,7 +150,8 @@ export declare class Migration {
     dtName: string,
     dtSymbol: string,
     network: string | number,
-    v4MetadataCacheUri?: string
+    v4MetadataCacheUri?: string,
+    v4EncryptProviderUri?: string
   ): Promise<
     | Error
     | {

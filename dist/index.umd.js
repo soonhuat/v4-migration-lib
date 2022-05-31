@@ -27815,7 +27815,6 @@
           inputs: [
             { internalType: 'address', name: '_template721', type: 'address' },
             { internalType: 'address', name: '_template', type: 'address' },
-            { internalType: 'address', name: '_collector', type: 'address' },
             { internalType: 'address', name: '_router', type: 'address' }
           ],
           stateMutability: 'nonpayable',
@@ -27875,7 +27874,7 @@
           anonymous: !1,
           inputs: [
             {
-              indexed: !0,
+              indexed: !1,
               internalType: 'address',
               name: 'newTokenAddress',
               type: 'address'
@@ -27893,7 +27892,7 @@
               type: 'string'
             },
             {
-              indexed: !1,
+              indexed: !0,
               internalType: 'address',
               name: 'admin',
               type: 'address'
@@ -27909,6 +27908,18 @@
               internalType: 'string',
               name: 'tokenURI',
               type: 'string'
+            },
+            {
+              indexed: !1,
+              internalType: 'bool',
+              name: 'transferable',
+              type: 'bool'
+            },
+            {
+              indexed: !0,
+              internalType: 'address',
+              name: 'creator',
+              type: 'address'
             }
           ],
           name: 'NFTCreated',
@@ -28145,9 +28156,11 @@
                   name: 'templateIndex',
                   type: 'uint256'
                 },
-                { internalType: 'string', name: 'tokenURI', type: 'string' }
+                { internalType: 'string', name: 'tokenURI', type: 'string' },
+                { internalType: 'bool', name: 'transferable', type: 'bool' },
+                { internalType: 'address', name: 'owner', type: 'address' }
               ],
-              internalType: 'struct ERC721Factory.NftCreateData',
+              internalType: 'struct IFactory.NftCreateData',
               name: '_NftCreateData',
               type: 'tuple'
             },
@@ -28167,7 +28180,7 @@
                 { internalType: 'uint256[]', name: 'uints', type: 'uint256[]' },
                 { internalType: 'bytes[]', name: 'bytess', type: 'bytes[]' }
               ],
-              internalType: 'struct ERC721Factory.ErcCreateData',
+              internalType: 'struct IFactory.ErcCreateData',
               name: '_ErcCreateData',
               type: 'tuple'
             }
@@ -28191,9 +28204,11 @@
                   name: 'templateIndex',
                   type: 'uint256'
                 },
-                { internalType: 'string', name: 'tokenURI', type: 'string' }
+                { internalType: 'string', name: 'tokenURI', type: 'string' },
+                { internalType: 'bool', name: 'transferable', type: 'bool' },
+                { internalType: 'address', name: 'owner', type: 'address' }
               ],
-              internalType: 'struct ERC721Factory.NftCreateData',
+              internalType: 'struct IFactory.NftCreateData',
               name: '_NftCreateData',
               type: 'tuple'
             },
@@ -28213,7 +28228,7 @@
                 { internalType: 'uint256[]', name: 'uints', type: 'uint256[]' },
                 { internalType: 'bytes[]', name: 'bytess', type: 'bytes[]' }
               ],
-              internalType: 'struct ERC721Factory.ErcCreateData',
+              internalType: 'struct IFactory.ErcCreateData',
               name: '_ErcCreateData',
               type: 'tuple'
             },
@@ -28237,7 +28252,7 @@
                   type: 'address'
                 }
               ],
-              internalType: 'struct ERC721Factory.DispenserData',
+              internalType: 'struct IFactory.DispenserData',
               name: '_DispenserData',
               type: 'tuple'
             }
@@ -28261,9 +28276,11 @@
                   name: 'templateIndex',
                   type: 'uint256'
                 },
-                { internalType: 'string', name: 'tokenURI', type: 'string' }
+                { internalType: 'string', name: 'tokenURI', type: 'string' },
+                { internalType: 'bool', name: 'transferable', type: 'bool' },
+                { internalType: 'address', name: 'owner', type: 'address' }
               ],
-              internalType: 'struct ERC721Factory.NftCreateData',
+              internalType: 'struct IFactory.NftCreateData',
               name: '_NftCreateData',
               type: 'tuple'
             },
@@ -28283,7 +28300,7 @@
                 { internalType: 'uint256[]', name: 'uints', type: 'uint256[]' },
                 { internalType: 'bytes[]', name: 'bytess', type: 'bytes[]' }
               ],
-              internalType: 'struct ERC721Factory.ErcCreateData',
+              internalType: 'struct IFactory.ErcCreateData',
               name: '_ErcCreateData',
               type: 'tuple'
             },
@@ -28301,7 +28318,7 @@
                 },
                 { internalType: 'uint256[]', name: 'uints', type: 'uint256[]' }
               ],
-              internalType: 'struct ERC721Factory.FixedData',
+              internalType: 'struct IFactory.FixedData',
               name: '_FixedData',
               type: 'tuple'
             }
@@ -28326,9 +28343,11 @@
                   name: 'templateIndex',
                   type: 'uint256'
                 },
-                { internalType: 'string', name: 'tokenURI', type: 'string' }
+                { internalType: 'string', name: 'tokenURI', type: 'string' },
+                { internalType: 'bool', name: 'transferable', type: 'bool' },
+                { internalType: 'address', name: 'owner', type: 'address' }
               ],
-              internalType: 'struct ERC721Factory.NftCreateData',
+              internalType: 'struct IFactory.NftCreateData',
               name: '_NftCreateData',
               type: 'tuple'
             },
@@ -28348,7 +28367,7 @@
                 { internalType: 'uint256[]', name: 'uints', type: 'uint256[]' },
                 { internalType: 'bytes[]', name: 'bytess', type: 'bytes[]' }
               ],
-              internalType: 'struct ERC721Factory.ErcCreateData',
+              internalType: 'struct IFactory.ErcCreateData',
               name: '_ErcCreateData',
               type: 'tuple'
             },
@@ -28370,7 +28389,7 @@
                   type: 'address[]'
                 }
               ],
-              internalType: 'struct ERC721Factory.PoolData',
+              internalType: 'struct IFactory.PoolData',
               name: '_PoolData',
               type: 'tuple'
             }
@@ -28395,9 +28414,11 @@
                   name: 'templateIndex',
                   type: 'uint256'
                 },
-                { internalType: 'string', name: 'tokenURI', type: 'string' }
+                { internalType: 'string', name: 'tokenURI', type: 'string' },
+                { internalType: 'bool', name: 'transferable', type: 'bool' },
+                { internalType: 'address', name: 'owner', type: 'address' }
               ],
-              internalType: 'struct ERC721Factory.NftCreateData',
+              internalType: 'struct IFactory.NftCreateData',
               name: '_NftCreateData',
               type: 'tuple'
             },
@@ -28491,7 +28512,9 @@
               name: 'additionalMetaDataUpdater',
               type: 'address'
             },
-            { internalType: 'string', name: 'tokenURI', type: 'string' }
+            { internalType: 'string', name: 'tokenURI', type: 'string' },
+            { internalType: 'bool', name: 'transferable', type: 'bool' },
+            { internalType: 'address', name: 'owner', type: 'address' }
           ],
           name: 'deployERC721Contract',
           outputs: [
@@ -29687,7 +29710,8 @@
               name: 'additionalMetaDataUpdater',
               type: 'address'
             },
-            { internalType: 'string', name: 'tokenURI', type: 'string' }
+            { internalType: 'string', name: 'tokenURI', type: 'string' },
+            { internalType: 'bool', name: 'transferable_', type: 'bool' }
           ],
           name: 'initialize',
           outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
@@ -29975,13 +29999,6 @@
           type: 'function'
         },
         {
-          inputs: [],
-          name: 'ssContract',
-          outputs: [{ internalType: 'address', name: '', type: 'address' }],
-          stateMutability: 'view',
-          type: 'function'
-        },
-        {
           inputs: [
             { internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }
           ],
@@ -30043,11 +30060,19 @@
         },
         {
           inputs: [],
+          name: 'transferable',
+          outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+          stateMutability: 'view',
+          type: 'function'
+        },
+        {
+          inputs: [],
           name: 'withdrawETH',
           outputs: [],
           stateMutability: 'payable',
           type: 'function'
-        }
+        },
+        { stateMutability: 'payable', type: 'receive' }
       ]
     async function ch(t) {
       return new Ot(await t.eth.getGasPrice())
@@ -30855,15 +30880,16 @@
         w,
         v,
         M,
-        A
+        A,
+        _
       ) {
-        let _
-        const S = (await oh(t, y)).service[0].attributes.additionalInformation
+        let S
+        const T = (await oh(t, y)).service[0].attributes.additionalInformation
           .description
         try {
-          _ = await this.publishFixedRateAsset(
+          S = await this.publishFixedRateAsset(
             t,
-            S,
+            T,
             e,
             i,
             r,
@@ -30882,29 +30908,29 @@
         } catch (t) {
           console.log('publishFixedRateAsset Error', t)
         }
-        const T = _.events.NFTCreated.returnValues.newTokenAddress,
-          x = _.events.TokenCreated.returnValues.newTokenAddress,
-          E = await this.getEncryptedFiles(g, s, t, M),
-          R = await this.generateDidv4(T),
-          k = await hh(t, R, T, x, y, E),
-          I = await gh,
-          B = await I.encrypt(k, g),
-          O = '0x' + et.default(JSON.stringify(k)).toString(),
-          { validation: P, response: C } = await this.validateAssetAquariusV4(
-            k,
+        const x = S.events.NFTCreated.returnValues.newTokenAddress,
+          E = S.events.TokenCreated.returnValues.newTokenAddress,
+          R = await this.getEncryptedFiles(g, s, t, M),
+          k = await this.generateDidv4(x),
+          I = await hh(t, k, x, E, y, R),
+          B = await gh,
+          O = await B.encrypt(I, _ || g),
+          P = '0x' + et.default(JSON.stringify(I)).toString(),
+          { validation: C, response: L } = await this.validateAssetAquariusV4(
+            I,
             A
           )
-        if (0 == (C.hash === O))
+        if (0 == (L.hash === P))
           return (
             console.log('Asset is not valid'), new Error('Invalid DDO hash')
           )
-        let L
+        let N
         try {
-          L = await this.updateMetadata(n, _, p, g, m, u, B, O, [P])
+          N = await this.updateMetadata(n, S, p, _ || g, m, u, O, P, [C])
         } catch (t) {
           console.log('Error', t)
         }
-        return { txReceipt: _, txReceipt2: L }
+        return { txReceipt: S, txReceipt2: N }
       }
       async migrateFreeAsset(
         t,

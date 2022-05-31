@@ -844,7 +844,8 @@ var Migration = (function () {
     dtName,
     dtSymbol,
     network,
-    v4MetadataCacheUri
+    v4MetadataCacheUri,
+    v4EncryptProviderUri
   ) {
     return __awaiter(this, void 0, void 0, function () {
       var txReceipt,
@@ -939,7 +940,10 @@ var Migration = (function () {
             return [4, Provider_1.default]
           case 9:
             v4Provider = _b.sent()
-            return [4, v4Provider.encrypt(ddo, v4ProviderUrl)]
+            return [
+              4,
+              v4Provider.encrypt(ddo, v4EncryptProviderUri || v4ProviderUrl)
+            ]
           case 10:
             encryptedDdo = _b.sent()
             dataHash =
@@ -963,7 +967,7 @@ var Migration = (function () {
                 ownerAddress,
                 txReceipt,
                 metaDataState,
-                v4ProviderUrl,
+                v4EncryptProviderUri || v4ProviderUrl,
                 metaDataDecryptorAddress,
                 flags,
                 encryptedDdo,

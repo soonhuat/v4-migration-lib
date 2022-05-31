@@ -543,7 +543,8 @@ export class Migration {
     dtName: string,
     dtSymbol: string,
     network: string | number,
-    v4MetadataCacheUri?: string
+    v4MetadataCacheUri?: string,
+    v4EncryptProviderUri?: string
   ) {
     let txReceipt: TransactionReceipt
     const v3DDO = await getDDO(v3Did, v3MetadataCacheUri)
@@ -593,7 +594,10 @@ export class Migration {
       encryptedFiles
     )
     const v4Provider = await V4ProviderInstance
-    const encryptedDdo = await v4Provider.encrypt(ddo, v4ProviderUrl)
+    const encryptedDdo = await v4Provider.encrypt(
+      ddo,
+      v4EncryptProviderUri || v4ProviderUrl
+    )
     const dataHash = '0x' + sha256(JSON.stringify(ddo)).toString()
     const { validation, response } = await this.validateAssetAquariusV4(
       ddo,
@@ -611,7 +615,7 @@ export class Migration {
         ownerAddress,
         txReceipt,
         metaDataState,
-        v4ProviderUrl,
+        v4EncryptProviderUri || v4ProviderUrl,
         metaDataDecryptorAddress,
         flags,
         encryptedDdo,

@@ -15,13 +15,6 @@ export async function fetchData(
   return result
 }
 
-export async function downloadFileBrowser(url: string): Promise<void> {
-  const anchor = document.createElement('a')
-  anchor.download = ''
-  anchor.href = url
-  anchor.click()
-}
-
 export async function downloadFile(
   url: string,
   index?: number

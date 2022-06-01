@@ -169,7 +169,10 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true })
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
 var decimal_js_1 = __importDefault(require('decimal.js'))
-var Account = (function (_super) {
+/**
+ * Account information.
+ */
+var Account = /** @class */ (function (_super) {
   __extends(Account, _super)
   function Account(id, config) {
     if (id === void 0) {
@@ -188,19 +191,63 @@ var Account = (function (_super) {
   Account.prototype.setId = function (id) {
     this.id = id
   }
+  /**
+   * Set account password.
+   * @param {string} password Password for account.
+   */
   Account.prototype.setPassword = function (password) {
     this.password = password
   }
+  /**
+   * Returns account password.
+   * @return {string} Account password.
+   */
   Account.prototype.getPassword = function () {
     return this.password
   }
+  // TODO - Check with Samer if authentificate is still needed or we can use sign
+  /**
+       * Set account token.
+       * @param {string} token Token for account.
+       
+      public setToken(token: string): void {
+          this.token = token
+      }
+      */
+  /**
+       * Returns account token.
+       * @return {Promise<string>} Account token.
+       
+      public async getToken(): Promise<string> {
+          return this.token || this.ocean.auth.restore(this)
+      }
+      */
+  /**
+       * Returns if account token is stored.
+       * @return {Promise<boolean>} Is stored.
+       
+      public isTokenStored(): Promise<boolean> {
+          return this.ocean.auth.isStored(this)
+      }
+      */
+  /**
+       * Authenticate the account.
+       
+      public authenticate() {
+          return this.ocean.auth.store(this)
+      }
+      */
+  /**
+   * Balance of Any Token (converted from wei).
+   * @return {Promise<string>}
+   */
   Account.prototype.getTokenBalance = function (TokenAdress) {
     return __awaiter(this, void 0, void 0, function () {
       var minABI, result, decimals, token, balance, e_1
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (TokenAdress === null) return [2, null]
+            if (TokenAdress === null) return [2 /*return*/, null]
             minABI = [
               {
                 constant: true,
@@ -223,7 +270,7 @@ var Account = (function (_super) {
               }
             ]
             result = null
-            return [4, this.getTokenDecimals(TokenAdress)]
+            return [4 /*yield*/, this.getTokenDecimals(TokenAdress)]
           case 1:
             decimals = _a.sent()
             _a.label = 2
@@ -232,25 +279,29 @@ var Account = (function (_super) {
             token = new this.web3.eth.Contract(minABI, TokenAdress, {
               from: this.id
             })
-            return [4, token.methods.balanceOf(this.id).call()]
+            return [4 /*yield*/, token.methods.balanceOf(this.id).call()]
           case 3:
             balance = _a.sent()
             result = new decimal_js_1.default(balance)
               .div(Math.pow(10, decimals))
               .toString()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_1 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get the balance: '.concat(e_1.message)
             )
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Decimals of Any Token
+   * @return {Promise<number>}
+   */
   Account.prototype.getTokenDecimals = function (TokenAdress) {
     return __awaiter(this, void 0, void 0, function () {
       var decimals, minABI, token, e_2
@@ -258,7 +309,7 @@ var Account = (function (_super) {
         switch (_a.label) {
           case 0:
             decimals = 18
-            if (TokenAdress === null) return [2, decimals]
+            if (TokenAdress === null) return [2 /*return*/, decimals]
             minABI = [
               {
                 constant: true,
@@ -274,46 +325,62 @@ var Account = (function (_super) {
             token = new this.web3.eth.Contract(minABI, TokenAdress, {
               from: this.id
             })
-            return [4, token.methods.decimals().call()]
+            return [4 /*yield*/, token.methods.decimals().call()]
           case 2:
             decimals = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_2 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get decimals : '.concat(e_2.message)
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, decimals]
+            return [2 /*return*/, decimals]
         }
       })
     })
   }
+  /**
+   * Balance of Ocean Token. (converted from wei).
+   * @return {Promise<string>}
+   */
   Account.prototype.getOceanBalance = function () {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.getTokenBalance(this.config.oceanTokenAddress)]
+        return [
+          2 /*return*/,
+          this.getTokenBalance(this.config.oceanTokenAddress)
+        ]
       })
     })
   }
+  /**
+   * Symbol of a Token
+   * @return {Promise<string>}
+   */
   Account.prototype.getTokenSymbol = function (TokenAdress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, '']
+        // TO DO
+        return [2 /*return*/, '']
       })
     })
   }
+  /**
+   * Balance of Ether.(converted from wei).
+   * @return {Promise<string>}
+   */
   Account.prototype.getEtherBalance = function () {
     return __awaiter(this, void 0, void 0, function () {
       var result
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.web3.eth.getBalance(this.id, 'latest')]
+            return [4 /*yield*/, this.web3.eth.getBalance(this.id, 'latest')]
           case 1:
             result = _a.sent()
-            return [2, this.web3.utils.fromWei(result)]
+            return [2 /*return*/, this.web3.utils.fromWei(result)]
         }
       })
     })

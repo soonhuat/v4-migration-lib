@@ -1,5 +1,8 @@
 import { Response } from 'node-fetch'
 import { Logger } from '../../utils'
+/**
+ * Provides a common interface to web services.
+ */
 export declare class WebServiceConnector {
   logger: Logger
   requestTimeout: number
@@ -14,11 +17,5 @@ export declare class WebServiceConnector {
   get(url: string): Promise<Response>
   put(url: string, payload: BodyInit): Promise<Response>
   delete(url: string, payload?: BodyInit): Promise<Response>
-  downloadFile(
-    url: string,
-    destination?: string,
-    index?: number
-  ): Promise<string>
-  downloadFileBrowser(url: string): Promise<void>
   private fetch
 }

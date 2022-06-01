@@ -134,7 +134,7 @@ var __generator =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.SignatureUtils = void 0
-var SignatureUtils = (function () {
+var SignatureUtils = /** @class */ (function () {
   function SignatureUtils(web3, logger) {
     this.web3 = web3
     this.logger = logger
@@ -152,9 +152,12 @@ var SignatureUtils = (function () {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 8])
-            return [4, this.web3.eth.personal.sign(text, publicKey, password)]
+            return [
+              4 /*yield*/,
+              this.web3.eth.personal.sign(text, publicKey, password)
+            ]
           case 2:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
           case 3:
             e_1 = _a.sent()
             if (isMetaMask) {
@@ -165,18 +168,18 @@ var SignatureUtils = (function () {
             _a.label = 4
           case 4:
             _a.trys.push([4, 6, , 7])
-            return [4, this.web3.eth.sign(text, publicKey)]
+            return [4 /*yield*/, this.web3.eth.sign(text, publicKey)]
           case 5:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
           case 6:
             e2_1 = _a.sent()
             this.logger.error('Error on sign.')
             this.logger.error(e2_1)
             throw new Error('Error executing personal sign')
           case 7:
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -195,9 +198,12 @@ var SignatureUtils = (function () {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 8])
-            return [4, this.web3.eth.personal.sign(hash, publicKey, password)]
+            return [
+              4 /*yield*/,
+              this.web3.eth.personal.sign(hash, publicKey, password)
+            ]
           case 2:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
           case 3:
             e_2 = _a.sent()
             if (isMetaMask) {
@@ -208,18 +214,18 @@ var SignatureUtils = (function () {
             _a.label = 4
           case 4:
             _a.trys.push([4, 6, , 7])
-            return [4, this.web3.eth.sign(hash, publicKey)]
+            return [4 /*yield*/, this.web3.eth.sign(hash, publicKey)]
           case 5:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
           case 6:
             e2_2 = _a.sent()
             this.logger.error('Error on sign.')
             this.logger.error(e2_2)
             throw new Error('Error executing personal sign')
           case 7:
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -227,7 +233,7 @@ var SignatureUtils = (function () {
   SignatureUtils.prototype.verifyText = function (text, signature) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.web3.eth.personal.ecRecover(text, signature)]
+        return [2 /*return*/, this.web3.eth.personal.ecRecover(text, signature)]
       })
     })
   }
@@ -240,7 +246,7 @@ var SignatureUtils = (function () {
           hex += '' + message.charCodeAt(i).toString(16)
         }
         hexMessage = '0x' + hex
-        return [2, hexMessage]
+        return [2 /*return*/, hexMessage]
       })
     })
   }
@@ -250,7 +256,7 @@ var SignatureUtils = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getHash(message)]
+            return [4 /*yield*/, this.getHash(message)]
           case 1:
             hash = _a.sent()
             isMetaMask =
@@ -259,7 +265,7 @@ var SignatureUtils = (function () {
               this.web3.currentProvider.isMetaMask
             try {
               return [
-                2,
+                2 /*return*/,
                 this.web3.eth.personal.sign(
                   hash,
                   account.getId(),
@@ -272,9 +278,9 @@ var SignatureUtils = (function () {
               }
               this.logger.warn('Error on personal sign.')
               this.logger.warn(e)
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

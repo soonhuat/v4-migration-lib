@@ -2,10 +2,18 @@
 Object.defineProperty(exports, '__esModule', { value: true })
 var utils_1 = require('../utils')
 var prefix = 'did:op:'
-var DID = (function () {
+/**
+ * Decentralized ID.
+ */
+var DID = /** @class */ (function () {
   function DID(id) {
     this.id = id
   }
+  /**
+   * Parses a DID from a string.
+   * @param  {string} didString DID in string.
+   * @return {DID}
+   */
   DID.parse = function (didString) {
     if (didString instanceof DID) {
       didString = didString.getDid()
@@ -20,12 +28,25 @@ var DID = (function () {
     }
     return did
   }
+  /**
+   * Generate a new DID.
+   * @param  {string} dataTokenAddress Address of data token to use for DID.
+   * @return {DID}
+   */
   DID.generate = function (dataTokenAddress) {
     return new DID((0, utils_1.noZeroX)(dataTokenAddress))
   }
+  /**
+   * Returns the DID.
+   * @return {string}
+   */
   DID.prototype.getDid = function () {
     return ''.concat(prefix).concat(this.id)
   }
+  /**
+   * Returns the ID.
+   * @return {string}
+   */
   DID.prototype.getId = function () {
     return this.id
   }

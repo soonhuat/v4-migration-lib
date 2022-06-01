@@ -20,6 +20,7 @@ function zeroXTransformer(input, zeroOutput) {
   return (zeroOutput && valid ? '0x' : '') + output
 }
 exports.zeroXTransformer = zeroXTransformer
+// Shared functions
 function inputMatch(input, regexp, conversorName) {
   if (typeof input !== 'string') {
     Logger_1.LoggerInstance.debug('Not input string:')

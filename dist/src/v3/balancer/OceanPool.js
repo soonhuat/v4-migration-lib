@@ -187,10 +187,10 @@ var Pool_1 = require('./Pool')
 var bignumber_js_1 = __importDefault(require('bignumber.js'))
 var utils_1 = require('../utils')
 var decimal_js_1 = __importDefault(require('decimal.js'))
-var POOL_MAX_AMOUNT_IN_LIMIT = 0.25
-var POOL_MAX_AMOUNT_OUT_LIMIT = 0.25
+var POOL_MAX_AMOUNT_IN_LIMIT = 0.25 // maximum 1/4 of the pool reserve
+var POOL_MAX_AMOUNT_OUT_LIMIT = 0.25 // maximum 1/4 of the pool reserve
 var BPFACTORY_DEPLOY_BLOCK = 0
-var MAX_AWAIT_PROMISES = 10
+var MAX_AWAIT_PROMISES = 10 // infura has a limit of 10 requests/sec
 var PoolCreateProgressStep
 ;(function (PoolCreateProgressStep) {
   PoolCreateProgressStep[(PoolCreateProgressStep['CreatingPool'] = 0)] =
@@ -205,7 +205,10 @@ var PoolCreateProgressStep
   (PoolCreateProgressStep =
     exports.PoolCreateProgressStep || (exports.PoolCreateProgressStep = {}))
 )
-var OceanPool = (function (_super) {
+/**
+ * Ocean Pools submodule exposed under ocean.pool
+ */
+var OceanPool = /** @class */ (function (_super) {
   __extends(OceanPool, _super)
   function OceanPool(
     web3,
@@ -246,6 +249,16 @@ var OceanPool = (function (_super) {
     _this.startBlock = (config && config.startBlock) || 0
     return _this
   }
+  /**
+       * Create DataToken pool
+       @param {String} account
+       * @param {String} dtAddress  DataToken address
+       * @param {String} dtAmount DataToken amount
+       * @param {String} dtWeight DataToken weight
+       * @param {String} oceanAmount Ocean amount
+       * @param {String} fee Swap fee. E.g. to get a 0.1% swapFee use `0.001`. The maximum allowed swapFee is `0.1` (10%).
+       * @return {String}
+       */
   OceanPool.prototype.create = function (
     account,
     dtAddress,
@@ -282,7 +295,10 @@ var OceanPool = (function (_super) {
           switch (_a.label) {
             case 0:
               observer.next(PoolCreateProgressStep.CreatingPool)
-              return [4, _super.prototype.createPool.call(this, account)]
+              return [
+                4 /*yield*/,
+                _super.prototype.createPool.call(this, account)
+              ]
             case 1:
               createTxid = _a.sent()
               if (!createTxid) {
@@ -294,7 +310,7 @@ var OceanPool = (function (_super) {
               this.dtAddress = dtAddress
               observer.next(PoolCreateProgressStep.ApprovingDatatoken)
               return [
-                4,
+                4 /*yield*/,
                 this.approve(
                   account,
                   dtAddress,
@@ -310,7 +326,7 @@ var OceanPool = (function (_super) {
               }
               observer.next(PoolCreateProgressStep.ApprovingOcean)
               return [
-                4,
+                4 /*yield*/,
                 this.approve(
                   account,
                   this.oceanAddress,
@@ -326,7 +342,7 @@ var OceanPool = (function (_super) {
               }
               observer.next(PoolCreateProgressStep.SetupPool)
               return [
-                4,
+                4 /*yield*/,
                 _super.prototype.setup.call(
                   this,
                   account,
@@ -346,12 +362,18 @@ var OceanPool = (function (_super) {
                 this.logger.error('ERROR: Failed to create a new pool')
                 throw new Error('ERROR: Failed to create a new pool')
               }
-              return [2, createTxid]
+              return [2 /*return*/, createTxid]
           }
         })
       })
     })
   }
+  /**
+   * Get DataToken address of token in this pool
+   * @param {String} account
+   * @param {String} poolAddress
+   * @return {string}
+   */
   OceanPool.prototype.getDTAddress = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var tokens, token, _i, tokens_1
@@ -359,51 +381,67 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             this.dtAddress = null
-            return [4, this.getCurrentTokens(poolAddress)]
+            return [4 /*yield*/, this.getCurrentTokens(poolAddress)]
           case 1:
             tokens = _a.sent()
             if (tokens != null)
               for (_i = 0, tokens_1 = tokens; _i < tokens_1.length; _i++) {
                 token = tokens_1[_i]
+                // TODO: Potential timing attack, left side: true
                 if (token.toLowerCase() !== this.oceanAddress.toLowerCase())
                   this.dtAddress = token
               }
-            return [2, this.dtAddress]
+            return [2 /*return*/, this.dtAddress]
         }
       })
     })
   }
+  /**
+   * Get Ocean Token balance of a pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   OceanPool.prototype.getOceanReserve = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         if (this.oceanAddress == null) {
           this.logger.error('ERROR: oceanAddress is not defined')
-          return [2, null]
+          return [2 /*return*/, null]
         }
         return [
-          2,
+          2 /*return*/,
           _super.prototype.getReserve.call(this, poolAddress, this.oceanAddress)
         ]
       })
     })
   }
+  /**
+   * Get datatoken balance of a pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   OceanPool.prototype.getDTReserve = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              2,
+              2 /*return*/,
               _super.prototype.getReserve.call(this, poolAddress, dtAddress)
             ]
         }
       })
     })
   }
+  /**
+   * Returns max amount that you can buy.
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getMaxBuyQuantity = function (poolAddress, tokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var balance
@@ -411,23 +449,39 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, tokenAddress)
             ]
           case 1:
             balance = _a.sent()
-            return [2, new decimal_js_1.default(balance).div(3).toString()]
+            return [
+              2 /*return*/,
+              new decimal_js_1.default(balance).div(3).toString()
+            ]
         }
       })
     })
   }
+  /**
+   * Returns max amount of OCEAN that you can buy.
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getOceanMaxBuyQuantity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.getMaxBuyQuantity(poolAddress, this.oceanAddress)]
+        return [
+          2 /*return*/,
+          this.getMaxBuyQuantity(poolAddress, this.oceanAddress)
+        ]
       })
     })
   }
+  /**
+   * Returns max amount of DT that you can buy.
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getDTMaxBuyQuantity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var _a, _b
@@ -436,13 +490,20 @@ var OceanPool = (function (_super) {
           case 0:
             _a = this.getMaxBuyQuantity
             _b = [poolAddress]
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
-            return [2, _a.apply(this, _b.concat([_c.sent()]))]
+            return [2 /*return*/, _a.apply(this, _b.concat([_c.sent()]))]
         }
       })
     })
   }
+  /**
+   * Returns tokenInAmount required to get tokenOutAmount
+   * @param poolAddress
+   * @param tokenInAddress
+   * @param tokenOutAddress
+   * @param tokenOutAmount
+   */
   OceanPool.prototype.calcInGivenOut = function (
     poolAddress,
     tokenInAddress,
@@ -457,7 +518,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcInGivenOut).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -467,7 +528,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -477,7 +538,7 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -487,7 +548,7 @@ var OceanPool = (function (_super) {
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -496,16 +557,23 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), tokenOutAmount])
-            return [4, this.getSwapFee(poolAddress)]
+            return [4 /*yield*/, this.getSwapFee(poolAddress)]
           case 5:
-            return [4, _b.apply(_a, _c.concat([_d.sent()]))]
+            return [4 /*yield*/, _b.apply(_a, _c.concat([_d.sent()]))]
           case 6:
             result = _d.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns tokenOutAmount given tokenInAmount
+   * @param poolAddress
+   * @param tokenInAddress
+   * @param tokenOutAddress
+   * @param tokenInAmount
+   */
   OceanPool.prototype.calcOutGivenIn = function (
     poolAddress,
     tokenInAddress,
@@ -520,7 +588,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcOutGivenIn).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -530,7 +598,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -540,7 +608,7 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -550,7 +618,7 @@ var OceanPool = (function (_super) {
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -559,16 +627,25 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), tokenInAmount])
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 5:
-            return [4, _b.apply(_a, _c.concat([_d.sent()]))]
+            return [4 /*yield*/, _b.apply(_a, _c.concat([_d.sent()]))]
           case 6:
             result = _d.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns no of shares receved for adding a token to the pool
+   * @param poolAddress
+   * @param tokenInAddress
+   * @param tokenInAmount
+   */
   OceanPool.prototype.calcPoolOutGivenSingleIn = function (
     poolAddress,
     tokenInAddress,
@@ -582,7 +659,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcPoolOutGivenSingleIn).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -592,7 +669,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -602,13 +679,13 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getPoolSharesTotalSupply.call(this, poolAddress)
             ]
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getTotalDenormalizedWeight.call(
                 this,
                 poolAddress
@@ -616,14 +693,23 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), tokenInAmount])
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 5:
             result = _b.apply(_a, _c.concat([_d.sent()]))
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns no of tokens required to get a specific no of poolShares
+   * @param poolAddress
+   * @param tokenInAddress
+   * @param poolShares
+   */
   OceanPool.prototype.calcSingleInGivenPoolOut = function (
     poolAddress,
     tokenInAddress,
@@ -637,7 +723,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcSingleInGivenPoolOut).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -647,7 +733,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -657,13 +743,13 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getPoolSharesTotalSupply.call(this, poolAddress)
             ]
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getTotalDenormalizedWeight.call(
                 this,
                 poolAddress
@@ -671,14 +757,23 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), poolShares])
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 5:
             result = _b.apply(_a, _c.concat([_d.sent()]))
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns no of tokens received for spending a specific no of poolShares
+   * @param poolAddress
+   * @param tokenOutAddress
+   * @param poolShares
+   */
   OceanPool.prototype.calcSingleOutGivenPoolIn = function (
     poolAddress,
     tokenOutAddress,
@@ -692,7 +787,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcSingleOutGivenPoolIn).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -702,7 +797,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -712,13 +807,13 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getPoolSharesTotalSupply.call(this, poolAddress)
             ]
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getTotalDenormalizedWeight.call(
                 this,
                 poolAddress
@@ -726,14 +821,23 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), poolShares])
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 5:
             result = _b.apply(_a, _c.concat([_d.sent()]))
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns no of pool shares required to  receive a specified amount of tokens
+   * @param poolAddress
+   * @param tokenOutAddress
+   * @param tokenOutAmount
+   */
   OceanPool.prototype.calcPoolInGivenSingleOut = function (
     poolAddress,
     tokenOutAddress,
@@ -747,7 +851,7 @@ var OceanPool = (function (_super) {
             _b = (_a = _super.prototype.calcPoolInGivenSingleOut).call
             _c = [this, poolAddress]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(
                 this,
                 poolAddress,
@@ -757,7 +861,7 @@ var OceanPool = (function (_super) {
           case 1:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -767,13 +871,13 @@ var OceanPool = (function (_super) {
           case 2:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getPoolSharesTotalSupply.call(this, poolAddress)
             ]
           case 3:
             _c = _c.concat([_d.sent()])
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getTotalDenormalizedWeight.call(
                 this,
                 poolAddress
@@ -781,14 +885,22 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             _c = _c.concat([_d.sent(), tokenOutAmount])
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 5:
             result = _b.apply(_a, _c.concat([_d.sent()]))
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Returns no of pool shares required to  receive specified amount of DT
+   * @param poolAddress
+   * @param dtAmount
+   */
   OceanPool.prototype.getPoolSharesRequiredToRemoveDT = function (
     poolAddress,
     dtAmount
@@ -798,17 +910,22 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              2,
+              2 /*return*/,
               this.calcPoolInGivenSingleOut(poolAddress, dtAddress, dtAmount)
             ]
         }
       })
     })
   }
+  /**
+   * Returns DT amnount received after spending poolShares
+   * @param poolAddress
+   * @param poolShares
+   */
   OceanPool.prototype.getDTRemovedforPoolShares = function (
     poolAddress,
     poolShares
@@ -818,17 +935,22 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              2,
+              2 /*return*/,
               this.calcSingleOutGivenPoolIn(poolAddress, dtAddress, poolShares)
             ]
         }
       })
     })
   }
+  /**
+   * Returns no of pool shares required to  receive specified amount of DT
+   * @param poolAddress
+   * @param dtAmount
+   */
   OceanPool.prototype.getPoolSharesRequiredToRemoveOcean = function (
     poolAddress,
     oceanAmount
@@ -836,7 +958,7 @@ var OceanPool = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         return [
-          2,
+          2 /*return*/,
           this.calcPoolInGivenSingleOut(
             poolAddress,
             this.oceanAddress,
@@ -846,6 +968,11 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Returns Ocean amnount received after spending poolShares
+   * @param poolAddress
+   * @param poolShares
+   */
   OceanPool.prototype.getOceanRemovedforPoolShares = function (
     poolAddress,
     poolShares
@@ -853,7 +980,7 @@ var OceanPool = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         return [
-          2,
+          2 /*return*/,
           this.calcSingleOutGivenPoolIn(
             poolAddress,
             this.oceanAddress,
@@ -863,6 +990,12 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Returns Datatoken & Ocean amounts received after spending poolShares
+   * @param {String} poolAddress
+   * @param {String} poolShares
+   * @return {TokensReceived}
+   */
   OceanPool.prototype.getTokensRemovedforPoolShares = function (
     poolAddress,
     poolShares
@@ -873,13 +1006,13 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             _a.trys.push([0, 4, , 5])
-            return [4, this.getPoolSharesTotalSupply(poolAddress)]
+            return [4 /*yield*/, this.getPoolSharesTotalSupply(poolAddress)]
           case 1:
             totalPoolTokens = _a.sent()
-            return [4, this.getDTReserve(poolAddress)]
+            return [4 /*yield*/, this.getDTReserve(poolAddress)]
           case 2:
             dtReserve = _a.sent()
-            return [4, this.getOceanReserve(poolAddress)]
+            return [4 /*yield*/, this.getOceanReserve(poolAddress)]
           case 3:
             oceanReserve = _a.sent()
             dtAmount = new decimal_js_1.default(poolShares)
@@ -890,40 +1023,62 @@ var OceanPool = (function (_super) {
               .div(totalPoolTokens)
               .mul(oceanReserve)
               .toString()
-            return [2, { dtAmount: dtAmount, oceanAmount: oceanAmount }]
+            return [
+              2 /*return*/,
+              { dtAmount: dtAmount, oceanAmount: oceanAmount }
+            ]
           case 4:
             e_1 = _a.sent()
             this.logger.error(
               'ERROR: Unable to get token info. '.concat(e_1.message)
             )
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Returns max DT amount that you can add to the pool
+   * @param poolAddress
+   */
   OceanPool.prototype.getDTMaxAddLiquidity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
-            return [2, this.getMaxAddLiquidity(poolAddress, dtAddress)]
+            return [
+              2 /*return*/,
+              this.getMaxAddLiquidity(poolAddress, dtAddress)
+            ]
         }
       })
     })
   }
+  /**
+   * Returns max Ocean amount that you can add to the pool
+   * @param poolAddress
+   */
   OceanPool.prototype.getOceanMaxAddLiquidity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.getMaxAddLiquidity(poolAddress, this.oceanAddress)]
+        return [
+          2 /*return*/,
+          this.getMaxAddLiquidity(poolAddress, this.oceanAddress)
+        ]
       })
     })
   }
+  /**
+   * Returns max amount of tokens that you can add to the pool
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getMaxAddLiquidity = function (
     poolAddress,
     tokenAddress
@@ -934,24 +1089,29 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, tokenAddress)
             ]
           case 1:
             balance = _a.sent()
             if (parseFloat(balance) > 0) {
               return [
-                2,
+                2 /*return*/,
                 new decimal_js_1.default(balance)
                   .mul(POOL_MAX_AMOUNT_IN_LIMIT)
                   .toString()
               ]
-            } else return [2, '0']
-            return [2]
+            } else return [2 /*return*/, '0']
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Returns max amount of tokens that you can withdraw from the pool
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getMaxRemoveLiquidity = function (
     poolAddress,
     tokenAddress
@@ -962,45 +1122,70 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, tokenAddress)
             ]
           case 1:
             balance = _a.sent()
             if (parseFloat(balance) > 0) {
               return [
-                2,
+                2 /*return*/,
                 new decimal_js_1.default(balance)
                   .mul(POOL_MAX_AMOUNT_OUT_LIMIT)
                   .toString()
               ]
-            } else return [2, '0']
-            return [2]
+            } else return [2 /*return*/, '0']
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Returns max amount of DT that you can withdraw from the pool
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getDTMaxRemoveLiquidity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
-            return [2, this.getMaxRemoveLiquidity(poolAddress, dtAddress)]
+            return [
+              2 /*return*/,
+              this.getMaxRemoveLiquidity(poolAddress, dtAddress)
+            ]
         }
       })
     })
   }
+  /**
+   * Returns max amount of Ocean that you can withdraw from the pool
+   * @param poolAddress
+   * @param tokenAddress
+   */
   OceanPool.prototype.getOceanMaxRemoveLiquidity = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.getMaxRemoveLiquidity(poolAddress, this.oceanAddress)]
+        return [
+          2 /*return*/,
+          this.getMaxRemoveLiquidity(poolAddress, this.oceanAddress)
+        ]
       })
     })
   }
+  /**
+   * Buy datatoken from a pool
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount  datatoken amount
+   * @param {String} oceanAmount  Ocean Token amount payed
+   * @param {String} maxPrice  Maximum price to pay
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.buyDT = function (
     account,
     poolAddress,
@@ -1015,19 +1200,22 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: undefined ocean token contract address')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _c.sent()
             _b = (_a = new decimal_js_1.default(dtAmountWanted)).greaterThan
-            return [4, this.getDTMaxBuyQuantity(poolAddress)]
+            return [4 /*yield*/, this.getDTMaxBuyQuantity(poolAddress)]
           case 2:
             if (_b.apply(_a, [_c.sent()])) {
               this.logger.error('ERROR: Buy quantity exceeds quantity allowed')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getOceanNeeded(poolAddress, dtAmountWanted)]
+            return [
+              4 /*yield*/,
+              this.getOceanNeeded(poolAddress, dtAmountWanted)
+            ]
           case 3:
             calcInGivenOut = _c.sent()
             if (
@@ -1036,10 +1224,10 @@ var OceanPool = (function (_super) {
               )
             ) {
               this.logger.error('ERROR: Not enough Ocean Tokens')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.approve.call(
                 this,
                 account,
@@ -1055,7 +1243,7 @@ var OceanPool = (function (_super) {
               throw new Error('ERROR: Failed to call approve OCEAN token')
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.swapExactAmountOut.call(
                 this,
                 account,
@@ -1069,11 +1257,20 @@ var OceanPool = (function (_super) {
             ]
           case 5:
             tx = _c.sent()
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
   }
+  /**
+   * Buy at least datatoken from a pool for a fixed Ocean amount
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount  datatoken amount
+   * @param {String} oceanAmount  Ocean Token amount payed
+   * @param {String} maxPrice  Maximum price to pay
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.buyDTWithExactOcean = function (
     account,
     poolAddress,
@@ -1088,30 +1285,33 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: undefined ocean token contract address')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _c.sent()
             _b = (_a = new decimal_js_1.default(minimumdtAmountWanted))
               .greaterThan
-            return [4, this.getDTMaxBuyQuantity(poolAddress)]
+            return [4 /*yield*/, this.getDTMaxBuyQuantity(poolAddress)]
           case 2:
             if (_b.apply(_a, [_c.sent()])) {
               this.logger.error('ERROR: Buy quantity exceeds quantity allowed')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getOceanNeeded(poolAddress, minimumdtAmountWanted)]
+            return [
+              4 /*yield*/,
+              this.getOceanNeeded(poolAddress, minimumdtAmountWanted)
+            ]
           case 3:
             calcInGivenOut = _c.sent()
             if (
               new decimal_js_1.default(calcInGivenOut).greaterThan(oceanAmount)
             ) {
               this.logger.error('ERROR: Not enough Ocean Tokens')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.approve.call(
                 this,
                 account,
@@ -1127,7 +1327,7 @@ var OceanPool = (function (_super) {
               throw new Error('ERROR: Failed to call approve OCEAN token')
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.swapExactAmountIn.call(
                 this,
                 account,
@@ -1141,11 +1341,20 @@ var OceanPool = (function (_super) {
             ]
           case 5:
             tx = _c.sent()
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
   }
+  /**
+   * Sell a specific amount of datatoken to get some ocean tokens
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount  datatoken amount to be sold
+   * @param {String} oceanAmount  Ocean Token amount expected
+   * @param {String} maxPrice  Minimum price to sell
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.sellDT = function (
     account,
     poolAddress,
@@ -1160,19 +1369,19 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: oceanAddress is not defined')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _c.sent()
             _b = (_a = new decimal_js_1.default(oceanAmountWanted)).greaterThan
-            return [4, this.getOceanMaxBuyQuantity(poolAddress)]
+            return [4 /*yield*/, this.getOceanMaxBuyQuantity(poolAddress)]
           case 2:
             if (_b.apply(_a, [_c.sent()])) {
               this.logger.error('ERROR: Buy quantity exceeds quantity allowed')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getOceanReceived(poolAddress, dtAmount)]
+            return [4 /*yield*/, this.getOceanReceived(poolAddress, dtAmount)]
           case 3:
             calcOutGivenIn = _c.sent()
             if (
@@ -1181,10 +1390,10 @@ var OceanPool = (function (_super) {
               )
             ) {
               this.logger.error('ERROR: Not enough datatokens')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.approve.call(
                 this,
                 account,
@@ -1200,7 +1409,7 @@ var OceanPool = (function (_super) {
               throw new Error('ERROR: Failed to call approve DT token')
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.swapExactAmountIn.call(
                 this,
                 account,
@@ -1214,29 +1423,39 @@ var OceanPool = (function (_super) {
             ]
           case 5:
             tx = _c.sent()
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
   }
+  /**
+   * Add datatoken amount to pool liquidity
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount datatoken amount
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.addDTLiquidity = function (account, poolAddress, amount) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress, maxAmount, txid, result
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
-            return [4, this.getMaxAddLiquidity(poolAddress, dtAddress)]
+            return [
+              4 /*yield*/,
+              this.getMaxAddLiquidity(poolAddress, dtAddress)
+            ]
           case 2:
             maxAmount = _a.sent()
             if (new decimal_js_1.default(amount).greaterThan(maxAmount)) {
               this.logger.error('ERROR: Too much reserve to add')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.approve.call(
                 this,
                 account,
@@ -1252,7 +1471,7 @@ var OceanPool = (function (_super) {
               throw new Error('ERROR: Failed to call approve DT token')
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.joinswapExternAmountIn.call(
                 this,
                 account,
@@ -1264,11 +1483,19 @@ var OceanPool = (function (_super) {
             ]
           case 4:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Remove datatoken amount from pool liquidity
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount datatoken amount
+   * @param {String} maximumPoolShares
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.removeDTLiquidity = function (
     account,
     poolAddress,
@@ -1280,27 +1507,27 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
-            return [4, this.getDTMaxRemoveLiquidity(poolAddress)]
+            return [4 /*yield*/, this.getDTMaxRemoveLiquidity(poolAddress)]
           case 2:
             maxAmount = _a.sent()
             if (new decimal_js_1.default(amount).greaterThan(maxAmount)) {
               this.logger.error('ERROR: Too much reserve to remove')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.sharesBalance(account, poolAddress)]
+            return [4 /*yield*/, this.sharesBalance(account, poolAddress)]
           case 3:
             usershares = _a.sent()
             if (
               new decimal_js_1.default(usershares).lessThan(maximumPoolShares)
             ) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               this.getPoolSharesRequiredToRemoveDT(poolAddress, amount)
             ]
           case 4:
@@ -1311,8 +1538,9 @@ var OceanPool = (function (_super) {
               )
             ) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
+            // Balancer bug fix
             if (
               new decimal_js_1.default(maximumPoolShares).lessThan(
                 sharesRequired
@@ -1321,8 +1549,9 @@ var OceanPool = (function (_super) {
               maximumPoolShares = new decimal_js_1.default(maximumPoolShares)
                 .mul(0.9999)
                 .toString()
+            // Balance bug fix
             return [
-              2,
+              2 /*return*/,
               this.exitswapExternAmountOut(
                 account,
                 poolAddress,
@@ -1335,6 +1564,13 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Add Ocean Token amount to pool liquidity
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount Ocean Token amount in OCEAN
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.addOceanLiquidity = function (
     account,
     poolAddress,
@@ -1347,17 +1583,17 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: oceanAddress is not defined')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getOceanMaxAddLiquidity(poolAddress)]
+            return [4 /*yield*/, this.getOceanMaxAddLiquidity(poolAddress)]
           case 1:
             maxAmount = _a.sent()
             if (new decimal_js_1.default(amount).greaterThan(maxAmount)) {
               this.logger.error('ERROR: Too much reserve to add')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.approve.call(
                 this,
                 account,
@@ -1373,7 +1609,7 @@ var OceanPool = (function (_super) {
               throw new Error('ERROR: Failed to call approve OCEAN token')
             }
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.joinswapExternAmountIn.call(
                 this,
                 account,
@@ -1385,11 +1621,19 @@ var OceanPool = (function (_super) {
             ]
           case 3:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Remove Ocean Token amount from pool liquidity based on the minimum allowed of Ocean Tokens received
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} poolShares pool shares
+   * @param {String} minOcean minimum amount of OCEAN received
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.removeOceanLiquidityWithMinimum = function (
     account,
     poolAddress,
@@ -1403,17 +1647,17 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: oceanAddress is not defined')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.sharesBalance(account, poolAddress)]
+            return [4 /*yield*/, this.sharesBalance(account, poolAddress)]
           case 1:
             usershares = _a.sent()
             if (new decimal_js_1.default(usershares).lessThan(poolShares)) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              2,
+              2 /*return*/,
               _super.prototype.exitswapPoolAmountIn.call(
                 this,
                 account,
@@ -1427,6 +1671,14 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Remove Ocean Token amount from pool liquidity based on the maximum pool shares allowed to be spent
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} amount Ocean Token amount in OCEAN
+   * @param {String} maximumPoolShares maximum pool shares allowed to be spent
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.removeOceanLiquidity = function (
     account,
     poolAddress,
@@ -1440,26 +1692,26 @@ var OceanPool = (function (_super) {
           case 0:
             if (this.oceanAddress == null) {
               this.logger.error('ERROR: oceanAddress is not defined')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.getOceanMaxRemoveLiquidity(poolAddress)]
+            return [4 /*yield*/, this.getOceanMaxRemoveLiquidity(poolAddress)]
           case 1:
             maxAmount = _a.sent()
             if (new decimal_js_1.default(amount).greaterThan(maxAmount)) {
               this.logger.error('ERROR: Too much reserve to remove')
-              return [2, null]
+              return [2 /*return*/, null]
             }
-            return [4, this.sharesBalance(account, poolAddress)]
+            return [4 /*yield*/, this.sharesBalance(account, poolAddress)]
           case 2:
             usershares = _a.sent()
             if (
               new decimal_js_1.default(usershares).lessThan(maximumPoolShares)
             ) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             return [
-              4,
+              4 /*yield*/,
               this.getPoolSharesRequiredToRemoveOcean(poolAddress, amount)
             ]
           case 3:
@@ -1470,8 +1722,9 @@ var OceanPool = (function (_super) {
               )
             ) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
+            // Balancer bug fix
             if (
               new decimal_js_1.default(maximumPoolShares).lessThan(
                 sharesRequired
@@ -1480,8 +1733,9 @@ var OceanPool = (function (_super) {
               maximumPoolShares = new decimal_js_1.default(maximumPoolShares)
                 .mul(0.9999)
                 .toString()
+            // Balance bug fix
             return [
-              2,
+              2 /*return*/,
               _super.prototype.exitswapExternAmountOut.call(
                 this,
                 account,
@@ -1495,6 +1749,15 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Remove pool liquidity
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} poolShares
+   * @param {String} minDT Minimum DT expected (defaults 0)
+   * @param {String} poolShares Minim Ocean expected (defaults 0)
+   * @return {TransactionReceipt}
+   */
   OceanPool.prototype.removePoolLiquidity = function (
     account,
     poolAddress,
@@ -1513,36 +1776,48 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.sharesBalance(account, poolAddress)]
+            return [4 /*yield*/, this.sharesBalance(account, poolAddress)]
           case 1:
             usershares = _a.sent()
             if (new decimal_js_1.default(usershares).lessThan(poolShares)) {
               this.logger.error('ERROR: Not enough poolShares')
-              return [2, null]
+              return [2 /*return*/, null]
             }
+            // Balancer bug fix
             if (new decimal_js_1.default(usershares).equals(poolShares))
               poolShares = new decimal_js_1.default(poolShares)
                 .mul(0.9999)
                 .toString()
+            // Balance bug fix
             return [
-              2,
+              2 /*return*/,
               this.exitPool(account, poolAddress, poolShares, [minDT, minOcean])
             ]
         }
       })
     })
   }
+  /**
+   * Get datatoken price from pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   OceanPool.prototype.getDTPrice = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         if (this.oceanAddress == null) {
           this.logger.error('ERROR: oceanAddress is not defined')
-          return [2, '0']
+          return [2 /*return*/, '0']
         }
-        return [2, this.getOceanNeeded(poolAddress, '1')]
+        return [2 /*return*/, this.getOceanNeeded(poolAddress, '1')]
       })
     })
   }
+  /**
+   * Search all pools that have datatoken in their composition
+   * @param {String} dtAddress
+   * @return {String[]}
+   */
   OceanPool.prototype.searchPoolforDT = function (dtAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var result, factory, events, i, constituents
@@ -1555,7 +1830,7 @@ var OceanPool = (function (_super) {
               this.config
             )
             return [
-              4,
+              4 /*yield*/,
               factory.getPastEvents('BPoolRegistered', {
                 filter: {},
                 fromBlock: this.startBlock,
@@ -1570,9 +1845,9 @@ var OceanPool = (function (_super) {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getCurrentTokens.call(
                 this,
                 events[i].returnValues[0]
@@ -1585,9 +1860,9 @@ var OceanPool = (function (_super) {
             _a.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
@@ -1598,17 +1873,17 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_c) {
         switch (_c.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _c.sent()
             _b = (_a = new decimal_js_1.default(dtRequired)).greaterThan
-            return [4, this.getDTMaxBuyQuantity(poolAddress)]
+            return [4 /*yield*/, this.getDTMaxBuyQuantity(poolAddress)]
           case 2:
             if (_b.apply(_a, [_c.sent()])) {
-              return [2, '0']
+              return [2 /*return*/, '0']
             }
             return [
-              2,
+              2 /*return*/,
               this.calcInGivenOut(
                 poolAddress,
                 this.oceanAddress,
@@ -1620,17 +1895,23 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Calculate how many Ocean Tokens are you going to receive for selling a specific dtAmount (selling DT)
+   * @param {String} poolAddress
+   * @param {String} dtAmount
+   * @return {String[]} - amount of ocean tokens received
+   */
   OceanPool.prototype.getOceanReceived = function (poolAddress, dtAmount) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              2,
+              2 /*return*/,
               this.calcOutGivenIn(
                 poolAddress,
                 dtAddress,
@@ -1642,17 +1923,23 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Calculate how many data token are you going to receive for selling a specific oceanAmount (buying DT)
+   * @param {String} poolAddress
+   * @param {String} oceanAmount
+   * @return {String[]} - amount of ocean tokens received
+   */
   OceanPool.prototype.getDTReceived = function (poolAddress, oceanAmount) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              2,
+              2 /*return*/,
               this.calcOutGivenIn(
                 poolAddress,
                 this.oceanAddress,
@@ -1670,17 +1957,17 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_c) {
         switch (_c.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _c.sent()
             _b = (_a = new decimal_js_1.default(OceanRequired)).greaterThan
-            return [4, this.getOceanMaxBuyQuantity(poolAddress)]
+            return [4 /*yield*/, this.getOceanMaxBuyQuantity(poolAddress)]
           case 2:
             if (_b.apply(_a, [_c.sent()])) {
-              return [2, '0']
+              return [2 /*return*/, '0']
             }
             return [
-              2,
+              2 /*return*/,
               this.calcInGivenOut(
                 poolAddress,
                 dtAddress,
@@ -1692,6 +1979,11 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /**
+   * Search all pools created by an address
+   * @param {String} account If empty, will return all pools ever created by anybody
+   * @return {PoolDetails[]}
+   */
   OceanPool.prototype.getPoolsbyCreator = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var result, factory, events, i, _a, _b
@@ -1704,7 +1996,7 @@ var OceanPool = (function (_super) {
               this.config
             )
             return [
-              4,
+              4 /*yield*/,
               factory.getPastEvents('BPoolRegistered', {
                 filter: account ? { registeredBy: account } : {},
                 fromBlock: this.startBlock,
@@ -1716,7 +2008,7 @@ var OceanPool = (function (_super) {
             i = 0
             _c.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             if (
               !(
                 !account ||
@@ -1724,17 +2016,17 @@ var OceanPool = (function (_super) {
                   account.toLowerCase()
               )
             )
-              return [3, 4]
+              return [3 /*break*/, 4]
             _b = (_a = result).push
-            return [4, this.getPoolDetails(events[i].returnValues[0])]
+            return [4 /*yield*/, this.getPoolDetails(events[i].returnValues[0])]
           case 3:
             _b.apply(_a, [_c.sent()])
             _c.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
@@ -1746,7 +2038,7 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.sharesBalance.call(
                 this,
                 account,
@@ -1755,8 +2047,8 @@ var OceanPool = (function (_super) {
             ]
           case 1:
             shares = _a.sent()
-            if (!(parseFloat(shares) > 0)) return [3, 3]
-            return [4, this.getDTAddress(event.returnValues[0])]
+            if (!(parseFloat(shares) > 0)) return [3 /*break*/, 3]
+            return [4 /*yield*/, this.getDTAddress(event.returnValues[0])]
           case 2:
             dtAddress = _a.sent()
             if (dtAddress) {
@@ -1767,15 +2059,20 @@ var OceanPool = (function (_super) {
                   (0, utils_1.didNoZeroX)(dtAddress)
                 )
               }
-              return [2, onePool]
+              return [2 /*return*/, onePool]
             }
             _a.label = 3
           case 3:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Search all pools in which a user has shares
+   * @param {String} account
+   * @return {AllPoolsShares[]}
+   */
   OceanPool.prototype.getPoolSharesByAddress = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var result,
@@ -1797,7 +2094,7 @@ var OceanPool = (function (_super) {
               this.config
             )
             return [
-              4,
+              4 /*yield*/,
               factory.getPastEvents('BPoolRegistered', {
                 filter: {},
                 fromBlock: this.startBlock,
@@ -1810,10 +2107,10 @@ var OceanPool = (function (_super) {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             promises.push(this.getResult(account, events[i]))
-            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3, 4]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3 /*break*/, 4]
+            return [4 /*yield*/, Promise.all(promises)]
           case 3:
             results = _a.sent()
             for (j = 0; j < results.length; j++) {
@@ -1823,10 +2120,10 @@ var OceanPool = (function (_super) {
             _a.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            if (!(promises.length > 0)) return [3, 7]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > 0)) return [3 /*break*/, 7]
+            return [4 /*yield*/, Promise.all(promises)]
           case 6:
             results = _a.sent()
             for (j = 0; j < results.length; j++) {
@@ -1838,26 +2135,40 @@ var OceanPool = (function (_super) {
             filteredResult = result.filter(function (share) {
               return share !== undefined
             })
-            return [2, filteredResult]
+            return [2 /*return*/, filteredResult]
         }
       })
     })
   }
+  /**
+   * Get pool details
+   * @param {String} poolAddress Pool address
+   * @return {PoolDetails}
+   */
   OceanPool.prototype.getPoolDetails = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var tokens, details
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, _super.prototype.getFinalTokens.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getFinalTokens.call(this, poolAddress)
+            ]
           case 1:
             tokens = _a.sent()
             details = { poolAddress: poolAddress, tokens: tokens }
-            return [2, details]
+            return [2 /*return*/, details]
         }
       })
     })
   }
+  /**
+   * Get all actions from a pool (join,exit,swap)
+   * @param {String} poolAddress Pool address
+   * @param {String} account Optional, filter for this address
+   * @return {PoolTransaction[]}
+   */
   OceanPool.prototype.getPoolLogs = function (
     poolAddress,
     startBlock,
@@ -1885,7 +2196,7 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             results = []
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             if (startBlock === 0) startBlock = this.startBlock
@@ -1898,7 +2209,7 @@ var OceanPool = (function (_super) {
                 account.substring(2).toLowerCase()
             else addressTopic = null
             return [
-              4,
+              4 /*yield*/,
               this.web3.eth.getPastLogs({
                 address: poolAddress,
                 topics: [[swapTopic, joinTopic, exitTopic], addressTopic],
@@ -1912,10 +2223,10 @@ var OceanPool = (function (_super) {
             i = 0
             _a.label = 3
           case 3:
-            if (!(i < events.length)) return [3, 6]
+            if (!(i < events.length)) return [3 /*break*/, 6]
             promises.push(this.getEventData(poolAddress, dtAddress, events[i]))
-            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3, 5]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3 /*break*/, 5]
+            return [4 /*yield*/, Promise.all(promises)]
           case 4:
             data = _a.sent()
             for (j = 0; j < data.length; j++) {
@@ -1925,10 +2236,10 @@ var OceanPool = (function (_super) {
             _a.label = 5
           case 5:
             i++
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 6:
-            if (!(promises.length > 0)) return [3, 8]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > 0)) return [3 /*break*/, 8]
+            return [4 /*yield*/, Promise.all(promises)]
           case 7:
             data = _a.sent()
             for (j = 0; j < data.length; j++) {
@@ -1940,11 +2251,16 @@ var OceanPool = (function (_super) {
             eventResults = results.filter(function (share) {
               return share !== undefined
             })
-            return [2, eventResults]
+            return [2 /*return*/, eventResults]
         }
       })
     })
   }
+  /**
+   * Get all logs on all pools for a specific address
+   * @param {String} account
+   * @return {PoolTransaction[]}
+   */
   OceanPool.prototype.getAllPoolLogs = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var results, factory, events, promises, i, data, j, data, j, concatResults
@@ -1957,7 +2273,7 @@ var OceanPool = (function (_super) {
               this.config
             )
             return [
-              4,
+              4 /*yield*/,
               factory.getPastEvents('BPoolRegistered', {
                 filter: {},
                 fromBlock: this.startBlock,
@@ -1970,7 +2286,7 @@ var OceanPool = (function (_super) {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             promises.push(
               this.getPoolLogs(
                 events[i].returnValues[0],
@@ -1978,8 +2294,8 @@ var OceanPool = (function (_super) {
                 account
               )
             )
-            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3, 4]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > MAX_AWAIT_PROMISES)) return [3 /*break*/, 4]
+            return [4 /*yield*/, Promise.all(promises)]
           case 3:
             data = _a.sent()
             for (j = 0; j < data.length; j++) {
@@ -1989,10 +2305,10 @@ var OceanPool = (function (_super) {
             _a.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            if (!(promises.length > 0)) return [3, 7]
-            return [4, Promise.all(promises)]
+            if (!(promises.length > 0)) return [3 /*break*/, 7]
+            return [4 /*yield*/, Promise.all(promises)]
           case 6:
             data = _a.sent()
             for (j = 0; j < data.length; j++) {
@@ -2004,7 +2320,7 @@ var OceanPool = (function (_super) {
             concatResults = results.reduce(function (elem1, elem2) {
               return elem1.concat(elem2)
             })
-            return [2, concatResults]
+            return [2 /*return*/, concatResults]
         }
       })
     })
@@ -2015,7 +2331,7 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.web3.eth.getBlock(data.blockNumber)]
+            return [4 /*yield*/, this.web3.eth.getBlock(data.blockNumber)]
           case 1:
             blockDetails = _a.sent()
             swapTopic = _super.prototype.getSwapEventSignature.call(this)
@@ -2079,7 +2395,7 @@ var OceanPool = (function (_super) {
                 })
                 break
             }
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
@@ -2100,7 +2416,7 @@ var OceanPool = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.calcSpotPrice.call(
                 this,
                 poolAddress,
@@ -2114,7 +2430,7 @@ var OceanPool = (function (_super) {
           case 1:
             initialPrice = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.calcSpotPrice.call(
                 this,
                 poolAddress,
@@ -2128,7 +2444,7 @@ var OceanPool = (function (_super) {
           case 2:
             newPrice = _a.sent()
             return [
-              2,
+              2 /*return*/,
               new decimal_js_1.default(newPrice)
                 .mul(100)
                 .div(initialPrice)
@@ -2139,6 +2455,7 @@ var OceanPool = (function (_super) {
       })
     })
   }
+  /* Get slippage for buying some datatokens while spending exactly oceanAmount ocean tokens */
   OceanPool.prototype.computeBuySlippage = function (poolAddress, oceanAmount) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress,
@@ -2154,11 +2471,11 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -2168,7 +2485,7 @@ var OceanPool = (function (_super) {
           case 2:
             dtWeight = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -2178,22 +2495,25 @@ var OceanPool = (function (_super) {
           case 3:
             oceanWeight = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, dtAddress)
             ]
           case 4:
             dtReserve = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, dtAddress)
             ]
           case 5:
             oceanReserve = _a.sent()
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 6:
             swapFee = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.calcOutGivenIn.call(
                 this,
                 poolAddress,
@@ -2214,7 +2534,7 @@ var OceanPool = (function (_super) {
               this.web3.utils.toWei(oceanReserve)
             ).plus(this.web3.utils.toWei(oceanAmount))
             return [
-              4,
+              4 /*yield*/,
               this.computeSlippage(
                 poolAddress,
                 oceanReserve,
@@ -2228,11 +2548,12 @@ var OceanPool = (function (_super) {
             ]
           case 8:
             slippage = _a.sent()
-            return [2, slippage]
+            return [2 /*return*/, slippage]
         }
       })
     })
   }
+  /* Get slippage for selling an exact amount of datatokens to get some ocean tokens */
   OceanPool.prototype.computeSellSlippage = function (poolAddress, dtAmount) {
     return __awaiter(this, void 0, void 0, function () {
       var dtAddress,
@@ -2248,11 +2569,11 @@ var OceanPool = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getDTAddress(poolAddress)]
+            return [4 /*yield*/, this.getDTAddress(poolAddress)]
           case 1:
             dtAddress = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -2262,7 +2583,7 @@ var OceanPool = (function (_super) {
           case 2:
             dtWeight = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getDenormalizedWeight.call(
                 this,
                 poolAddress,
@@ -2272,22 +2593,25 @@ var OceanPool = (function (_super) {
           case 3:
             oceanWeight = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, dtAddress)
             ]
           case 4:
             dtReserve = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.getReserve.call(this, poolAddress, dtAddress)
             ]
           case 5:
             oceanReserve = _a.sent()
-            return [4, _super.prototype.getSwapFee.call(this, poolAddress)]
+            return [
+              4 /*yield*/,
+              _super.prototype.getSwapFee.call(this, poolAddress)
+            ]
           case 6:
             swapFee = _a.sent()
             return [
-              4,
+              4 /*yield*/,
               _super.prototype.calcOutGivenIn.call(
                 this,
                 poolAddress,
@@ -2308,7 +2632,7 @@ var OceanPool = (function (_super) {
               this.web3.utils.toWei(oceanReserve)
             ).minus(this.web3.utils.toWei(oceanReceived))
             return [
-              4,
+              4 /*yield*/,
               this.computeSlippage(
                 poolAddress,
                 dtReserve,
@@ -2322,7 +2646,7 @@ var OceanPool = (function (_super) {
             ]
           case 8:
             slippage = _a.sent()
-            return [2, slippage]
+            return [2 /*return*/, slippage]
         }
       })
     })

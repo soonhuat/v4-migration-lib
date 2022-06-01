@@ -135,7 +135,7 @@ var __generator =
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.TestContractHandler = void 0
 var communityCollector = '0xeE9300b7961e0a01d9f0adb863C7A227A07AaD75'
-var TestContractHandler = (function () {
+var TestContractHandler = /** @class */ (function () {
   function TestContractHandler(
     factoryABI,
     datatokensABI,
@@ -156,10 +156,10 @@ var TestContractHandler = (function () {
         switch (_b.label) {
           case 0:
             _a = this
-            return [4, this.web3.eth.getAccounts()]
+            return [4 /*yield*/, this.web3.eth.getAccounts()]
           case 1:
             _a.accounts = _b.sent()
-            return [2, this.accounts]
+            return [2 /*return*/, this.accounts]
         }
       })
     })
@@ -173,7 +173,7 @@ var TestContractHandler = (function () {
             blob = 'https://example.com/dataset-1'
             cap = 1400000000
             return [
-              4,
+              4 /*yield*/,
               this.template
                 .deploy({
                   data: this.templateBytecode,
@@ -190,12 +190,15 @@ var TestContractHandler = (function () {
                   if (err) console.log('DeployContracts: ' + err)
                   return estGas
                 })
+              // deploy the contract and get it's address
             ]
           case 1:
+            // get est gascost
             estGas = _c.sent()
+            // deploy the contract and get it's address
             _a = this
             return [
-              4,
+              4 /*yield*/,
               this.template
                 .deploy({
                   data: this.templateBytecode,
@@ -218,9 +221,10 @@ var TestContractHandler = (function () {
                 })
             ]
           case 2:
+            // deploy the contract and get it's address
             _a.templateAddress = _c.sent()
             return [
-              4,
+              4 /*yield*/,
               this.factory
                 .deploy({
                   data: this.factoryBytecode,
@@ -230,12 +234,14 @@ var TestContractHandler = (function () {
                   if (err) console.log('DeployContracts: ' + err)
                   return estGas
                 })
+              // deploy the contract and get it's address
             ]
           case 3:
             estGas = _c.sent()
+            // deploy the contract and get it's address
             _b = this
             return [
-              4,
+              4 /*yield*/,
               this.factory
                 .deploy({
                   data: this.factoryBytecode,
@@ -251,8 +257,9 @@ var TestContractHandler = (function () {
                 })
             ]
           case 4:
+            // deploy the contract and get it's address
             _b.factoryAddress = _c.sent()
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

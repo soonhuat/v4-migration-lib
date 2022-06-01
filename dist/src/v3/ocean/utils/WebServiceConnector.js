@@ -139,11 +139,12 @@ var __importDefault =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.WebServiceConnector = void 0
-var fs_1 = __importDefault(require('fs'))
-var save_file_1 = __importDefault(require('save-file'))
 var Timeout_1 = __importDefault(require('../../utils/Timeout'))
 var cross_fetch_1 = __importDefault(require('cross-fetch'))
-var WebServiceConnector = (function () {
+/**
+ * Provides a common interface to web services.
+ */
+var WebServiceConnector = /** @class */ (function () {
   function WebServiceConnector(logger, requestTimeout) {
     this.requestTimeout = 5000
     this.logger = logger
@@ -229,101 +230,27 @@ var WebServiceConnector = (function () {
       })
     }
   }
-  WebServiceConnector.prototype.downloadFile = function (
-    url,
-    destination,
-    index
-  ) {
-    return __awaiter(this, void 0, void 0, function () {
-      var response, filename, _a
-      var _this = this
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4, this.get(url)]
-          case 1:
-            response = _b.sent()
-            if (!response.ok) {
-              throw new Error('Response error.')
-            }
-            try {
-              filename = response.headers
-                .get('content-disposition')
-                .match(/attachment;filename=(.+)/)[1]
-            } catch (_c) {
-              try {
-                filename = url.split('/').pop()
-              } catch (_d) {
-                filename = 'file'.concat(index)
-              }
-            }
-            if (!destination) return [3, 3]
-            return [
-              4,
-              new Promise(function (resolve, reject) {
-                return __awaiter(_this, void 0, void 0, function () {
-                  var fileStream
-                  return __generator(this, function (_a) {
-                    fs_1.default.mkdirSync(destination, { recursive: true })
-                    fileStream = fs_1.default.createWriteStream(
-                      ''.concat(destination).concat(filename)
-                    )
-                    response.body.pipe(fileStream)
-                    response.body.on('error', reject)
-                    fileStream.on('finish', resolve)
-                    return [2]
-                  })
-                })
-              })
-            ]
-          case 2:
-            _b.sent()
-            return [2, destination]
-          case 3:
-            _a = save_file_1.default
-            return [4, response.arrayBuffer()]
-          case 4:
-            _a.apply(void 0, [_b.sent(), filename])
-            _b.label = 5
-          case 5:
-            return [2]
-        }
-      })
-    })
-  }
-  WebServiceConnector.prototype.downloadFileBrowser = function (url) {
-    return __awaiter(this, void 0, void 0, function () {
-      var anchor
-      return __generator(this, function (_a) {
-        anchor = document.createElement('a')
-        anchor.download = ''
-        anchor.href = url
-        anchor.click()
-        return [2]
-      })
-    })
-  }
   WebServiceConnector.prototype.fetch = function (url, opts) {
     return __awaiter(this, void 0, void 0, function () {
       var result, _a, _b, _c
       return __generator(this, function (_d) {
         switch (_d.label) {
           case 0:
-            return [4, (0, cross_fetch_1.default)(url, opts)]
+            return [4 /*yield*/, (0, cross_fetch_1.default)(url, opts)]
           case 1:
             result = _d.sent()
-            if (!!result.ok) return [3, 3]
+            if (!!result.ok) return [3 /*break*/, 3]
             this.logger.error(
               'Error requesting ['.concat(opts.method, '] ').concat(url)
             )
             _b = (_a = this.logger).error
             _c = 'Response message: \n'.concat
-            return [4, result.text()]
+            return [4 /*yield*/, result.text()]
           case 2:
             _b.apply(_a, [_c.apply('Response message: \n', [_d.sent()])])
             throw result
           case 3:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })

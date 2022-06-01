@@ -163,7 +163,7 @@ var __generator =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var ContractHandler = (function (_super) {
+var ContractHandler = /** @class */ (function (_super) {
   __extends(ContractHandler, _super)
   function ContractHandler(config) {
     var _this = _super.call(this) || this
@@ -194,23 +194,23 @@ var ContractHandler = (function (_super) {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, this.ocean.network.getNetworkName()]
+            return [4 /*yield*/, this.ocean.network.getNetworkName()]
           case 1:
             where = _b.sent().toLowerCase()
-            return [4, this.ocean.network.getNetworkId()]
+            return [4 /*yield*/, this.ocean.network.getNetworkId()]
           case 2:
             networkId = _b.sent()
             _b.label = 3
           case 3:
             _b.trys.push([3, 6, , 7])
             _a = ContractHandler.getContract(what, networkId)
-            if (_a) return [3, 5]
-            return [4, this.load(what, where, networkId)]
+            if (_a) return [3 /*break*/, 5]
+            return [4 /*yield*/, this.load(what, where, networkId)]
           case 4:
             _a = _b.sent()
             _b.label = 5
           case 5:
-            return [2, _a]
+            return [2 /*return*/, _a]
           case 6:
             err_1 = _b.sent()
             if (!optional) {
@@ -218,7 +218,7 @@ var ContractHandler = (function (_super) {
             }
             throw err_1
           case 7:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -233,10 +233,11 @@ var ContractHandler = (function (_super) {
             artifact = require('@oceanprotocol/contracts/artifacts/'
               .concat(where, '/')
               .concat(what, '.json'))
-            return [4, this.web3.eth.getCode(artifact.address)]
+            return [4 /*yield*/, this.web3.eth.getCode(artifact.address)]
           case 1:
             code = _a.sent()
             if (code === '0x0') {
+              // no code in the blockchain dude
               throw new Error(
                 'No code deployed at address '.concat(
                   artifact.address,
@@ -257,7 +258,7 @@ var ContractHandler = (function (_super) {
               artifact.address
             )
             ContractHandler.setContract(what, networkId, contract)
-            return [2, ContractHandler.getContract(what, networkId)]
+            return [2 /*return*/, ContractHandler.getContract(what, networkId)]
         }
       })
     })

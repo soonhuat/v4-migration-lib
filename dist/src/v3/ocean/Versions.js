@@ -180,18 +180,25 @@ var OceanPlatformTechStatus
   (OceanPlatformTechStatus =
     exports.OceanPlatformTechStatus || (exports.OceanPlatformTechStatus = {}))
 )
-var Versions = (function (_super) {
+/**
+ * Versions submodule of Ocean Protocol.
+ */
+var Versions = /** @class */ (function (_super) {
   __extends(Versions, _super)
   function Versions() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of Ocean Stack Versions.
+   * @return {Promise<Versions>}
+   */
   Versions.getInstance = function (config) {
     return __awaiter(this, void 0, void 0, function () {
       var instance
       return __generator(this, function (_a) {
         instance = new Versions()
         instance.setInstanceConfig(config)
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }
@@ -211,7 +218,7 @@ var Versions = (function (_super) {
             _c.label = 1
           case 1:
             _c.trys.push([1, 3, , 4])
-            return [4, this.ocean.metadataCache.getVersionInfo()]
+            return [4 /*yield*/, this.ocean.metadataCache.getVersionInfo()]
           case 2:
             ;(_a = _c.sent()), (name_1 = _a.software), (version = _a.version)
             versions.metadataCache = {
@@ -219,14 +226,14 @@ var Versions = (function (_super) {
               status: OceanPlatformTechStatus.Working,
               version: version
             }
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             _b = _c.sent()
             versions.metadataCache = {
               name: 'MetadataCache',
               status: OceanPlatformTechStatus.Stopped
             }
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             techs = Object.values(versions)
             versions.status = {
@@ -235,7 +242,7 @@ var Versions = (function (_super) {
                 return status !== OceanPlatformTechStatus.Working
               })
             }
-            return [2, versions]
+            return [2 /*return*/, versions]
         }
       })
     })

@@ -152,7 +152,7 @@ var V3BPool_json_1 = __importDefault(require('./../src/artifacts/V3BPool.json'))
 var DataTokenTemplate_json_1 = __importDefault(
   require('./../src/artifacts/DataTokenTemplate.json')
 )
-var TestContractHandler = (function () {
+var TestContractHandler = /** @class */ (function () {
   function TestContractHandler(
     web3,
     ERC721TemplateABI,
@@ -216,16 +216,16 @@ var TestContractHandler = (function () {
           case 0:
             _b.trys.push([0, 2, , 3])
             _a = this
-            return [4, this.web3.eth.getAccounts()]
+            return [4 /*yield*/, this.web3.eth.getAccounts()]
           case 1:
             _a.accounts = _b.sent()
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             error_1 = _b.sent()
             console.log('Get Accounts Error:', error_1)
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
-            return [2, this.accounts]
+            return [2 /*return*/, this.accounts]
         }
       })
     })
@@ -276,7 +276,7 @@ var TestContractHandler = (function () {
             cap = this.web3.utils.toWei('100000')
             blob = 'https://example.com/dataset-1'
             return [
-              4,
+              4 /*yield*/,
               this.V3DatatokenTemplate.deploy({
                 data: this.V3DatatokenTemplateBytecode,
                 arguments: [name, symbol, owner, cap, blob, owner]
@@ -284,12 +284,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 1:
+            // v3 Datatoken Template
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _a = this
             return [
-              4,
+              4 /*yield*/,
               this.V3DatatokenTemplate.deploy({
                 data: this.V3DatatokenTemplateBytecode,
                 arguments: [name, symbol, owner, cap, blob, owner]
@@ -302,11 +305,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // V3 DT Factory
             ]
           case 2:
+            // deploy the contract and get it's address
             _a.v3DatatokenTemplateAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.V3DTFactory.deploy({
                 data: this.V3DTFactoryBytecode,
                 arguments: [this.v3DatatokenTemplateAddress, owner]
@@ -314,12 +319,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 3:
+            // V3 DT Factory
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _b = this
             return [
-              4,
+              4 /*yield*/,
               this.V3DTFactory.deploy({
                 data: this.V3DTFactoryBytecode,
                 arguments: [this.v3DatatokenTemplateAddress, owner]
@@ -332,11 +340,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // V3 Pool template
             ]
           case 4:
+            // deploy the contract and get it's address
             _b.v3DTFactoryAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.V3BPoolTemplate.deploy({
                 data: this.V3BPoolTemplateBytecode,
                 arguments: []
@@ -346,10 +356,11 @@ var TestContractHandler = (function () {
               })
             ]
           case 5:
+            // V3 Pool template
             estGas = _s.sent()
             _c = this
             return [
-              4,
+              4 /*yield*/,
               this.V3BPoolTemplate.deploy({
                 data: this.V3BPoolTemplateBytecode,
                 arguments: []
@@ -362,11 +373,12 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // V3 Pool Factory
             ]
           case 6:
             _c.v3BPoolTemplateAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.V3BFactory.deploy({
                 data: this.V3BFactoryBytecode,
                 arguments: [this.v3BPoolTemplateAddress]
@@ -376,10 +388,11 @@ var TestContractHandler = (function () {
               })
             ]
           case 7:
+            // V3 Pool Factory
             estGas = _s.sent()
             _d = this
             return [
-              4,
+              4 /*yield*/,
               this.V3BFactory.deploy({
                 data: this.V3BFactoryBytecode,
                 arguments: [this.v3BPoolTemplateAddress]
@@ -392,11 +405,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY OPF Fee Collector
+              // get est gascost
             ]
           case 8:
             _d.v3BFactoryAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.OPFCollector.deploy({
                 data: this.OPFBytecode,
                 arguments: [owner, owner]
@@ -404,12 +419,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 9:
+            // DEPLOY OPF Fee Collector
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _e = this
             return [
-              4,
+              4 /*yield*/,
               this.OPFCollector.deploy({
                 data: this.OPFBytecode,
                 arguments: [owner, owner]
@@ -422,11 +441,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY POOL TEMPLATE
+              // get est gascost
             ]
           case 10:
+            // deploy the contract and get it's address
             _e.opfCollectorAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.PoolTemplate.deploy({
                 data: this.PoolTemplateBytecode,
                 arguments: []
@@ -434,12 +456,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 11:
+            // DEPLOY POOL TEMPLATE
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _f = this
             return [
-              4,
+              4 /*yield*/,
               this.PoolTemplate.deploy({
                 data: this.PoolTemplateBytecode,
                 arguments: []
@@ -452,11 +478,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY ERC20 TEMPLATE
+              // get est gascost
             ]
           case 12:
+            // deploy the contract and get it's address
             _f.poolTemplateAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.ERC20Template.deploy({
                 data: this.ERC20TemplateBytecode,
                 arguments: []
@@ -464,12 +493,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 13:
+            // DEPLOY ERC20 TEMPLATE
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _g = this
             return [
-              4,
+              4 /*yield*/,
               this.ERC20Template.deploy({
                 data: this.ERC20TemplateBytecode,
                 arguments: []
@@ -482,11 +515,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY ERC721 TEMPLATE
+              // get est gascost
             ]
           case 14:
+            // deploy the contract and get it's address
             _g.template20Address = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.ERC721Template.deploy({
                 data: this.ERC721TemplateBytecode,
                 arguments: []
@@ -494,12 +530,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 15:
+            // DEPLOY ERC721 TEMPLATE
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _h = this
             return [
-              4,
+              4 /*yield*/,
               this.ERC721Template.deploy({
                 data: this.ERC721TemplateBytecode,
                 arguments: []
@@ -512,11 +552,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY OCEAN MOCK
+              // get est gascost
             ]
           case 16:
+            // deploy the contract and get it's address
             _h.template721Address = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['OCEAN', 'OCEAN', 18]
@@ -524,12 +567,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 17:
+            // DEPLOY OCEAN MOCK
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _j = this
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['OCEAN', 'OCEAN', 18]
@@ -542,11 +589,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY ROUTER
             ]
           case 18:
+            // deploy the contract and get it's address
             _j.oceanAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.Router.deploy({
                 data: this.RouterBytecode,
                 arguments: [
@@ -560,12 +609,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 19:
+            // DEPLOY ROUTER
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _k = this
             return [
-              4,
+              4 /*yield*/,
               this.Router.deploy({
                 data: this.RouterBytecode,
                 arguments: [
@@ -584,11 +636,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY SIDE STAKING
             ]
           case 20:
+            // deploy the contract and get it's address
             _k.routerAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.SideStaking.deploy({
                 data: this.SideStakingBytecode,
                 arguments: [this.routerAddress]
@@ -596,12 +650,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 21:
+            // DEPLOY SIDE STAKING
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _l = this
             return [
-              4,
+              4 /*yield*/,
               this.SideStaking.deploy({
                 data: this.SideStakingBytecode,
                 arguments: [this.routerAddress]
@@ -614,11 +671,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY FIXED RATE
             ]
           case 22:
+            // deploy the contract and get it's address
             _l.sideStakingAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.FixedRate.deploy({
                 data: this.FixedRateBytecode,
                 arguments: [this.routerAddress, this.opfCollectorAddress]
@@ -626,12 +685,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 23:
+            // DEPLOY FIXED RATE
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _m = this
             return [
-              4,
+              4 /*yield*/,
               this.FixedRate.deploy({
                 data: this.FixedRateBytecode,
                 arguments: [this.routerAddress, this.opfCollectorAddress]
@@ -644,11 +706,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY Dispenser
             ]
           case 24:
+            // deploy the contract and get it's address
             _m.fixedRateAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.Dispenser.deploy({
                 data: this.DispenserBytecode,
                 arguments: [this.routerAddress]
@@ -656,12 +720,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 25:
+            // DEPLOY Dispenser
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _o = this
             return [
-              4,
+              4 /*yield*/,
               this.Dispenser.deploy({
                 data: this.DispenserBytecode,
                 arguments: [this.routerAddress]
@@ -674,11 +741,13 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY ERC721 FACTORY
             ]
           case 26:
+            // deploy the contract and get it's address
             _o.dispenserAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.ERC721Factory.deploy({
                 data: this.ERC721FactoryBytecode,
                 arguments: [
@@ -691,12 +760,15 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 27:
+            // DEPLOY ERC721 FACTORY
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _p = this
             return [
-              4,
+              4 /*yield*/,
               this.ERC721Factory.deploy({
                 data: this.ERC721FactoryBytecode,
                 arguments: [
@@ -714,11 +786,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY USDC MOCK
+              // get est gascost
             ]
           case 28:
+            // deploy the contract and get it's address
             _p.factory721Address = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['USDC', 'USDC', 6]
@@ -726,12 +801,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 29:
+            // DEPLOY USDC MOCK
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _q = this
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['USDC', 'USDC', 6]
@@ -744,11 +823,14 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // DEPLOY DAI MOCK
+              // get est gascost
             ]
           case 30:
+            // deploy the contract and get it's address
             _q.usdcAddress = _s.sent()
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['DAI', 'DAI', 18]
@@ -756,12 +838,16 @@ var TestContractHandler = (function () {
                 if (err) console.log('DeployContracts: ' + err)
                 return estGas
               })
+              // deploy the contract and get it's address
             ]
           case 31:
+            // DEPLOY DAI MOCK
+            // get est gascost
             estGas = _s.sent()
+            // deploy the contract and get it's address
             _r = this
             return [
-              4,
+              4 /*yield*/,
               this.MockERC20.deploy({
                 data: this.MockERC20Bytecode,
                 arguments: ['DAI', 'DAI', 18]
@@ -774,8 +860,10 @@ var TestContractHandler = (function () {
                 .then(function (contract) {
                   return contract.options.address
                 })
+              // V3 DT and Pool Creation
             ]
           case 32:
+            // deploy the contract and get it's address
             _r.daiAddress = _s.sent()
             RouterContract = new this.web3.eth.Contract(
               routerABI,
@@ -793,23 +881,23 @@ var TestContractHandler = (function () {
           case 33:
             _s.trys.push([33, 35, , 36])
             return [
-              4,
+              4 /*yield*/,
               V3DtFactory.methods
                 .createToken('https://dataset1.dao', 'Token1', 'Tk1', cap)
                 .send({ from: owner })
             ]
           case 34:
             trxReceipt = _s.sent()
-            return [3, 36]
+            return [3 /*break*/, 36]
           case 35:
             e_1 = _s.sent()
             console.log(e_1.message)
-            return [3, 36]
+            return [3 /*break*/, 36]
           case 36:
             this.v3dt1Address =
               trxReceipt.events.TokenCreated.returnValues.newTokenAddress
             return [
-              4,
+              4 /*yield*/,
               V3DtFactory.methods
                 .createToken('https://dataset2.dao', 'Token2', 'Tk2', cap)
                 .send({ from: owner })
@@ -818,8 +906,12 @@ var TestContractHandler = (function () {
             trxReceipt = _s.sent()
             this.v3dt2Address =
               trxReceipt.events.TokenCreated.returnValues.newTokenAddress
-            return [4, V3PoolFactory.methods.newBPool().send({ from: owner })]
+            return [
+              4 /*yield*/,
+              V3PoolFactory.methods.newBPool().send({ from: owner })
+            ]
           case 38:
+            // DEPLOY V3 POOL1
             trxReceipt = _s.sent()
             this.v3pool1Address =
               trxReceipt.events.BPoolCreated.returnValues.newBPoolAddress
@@ -827,8 +919,12 @@ var TestContractHandler = (function () {
               V3BPool_json_1.default.abi,
               this.v3pool1Address
             )
-            return [4, V3PoolFactory.methods.newBPool().send({ from: owner })]
+            return [
+              4 /*yield*/,
+              V3PoolFactory.methods.newBPool().send({ from: owner })
+            ]
           case 39:
+            // DEPLOY V3 POOL2
             trxReceipt = _s.sent()
             this.v3pool2Address =
               trxReceipt.events.BPoolCreated.returnValues.newBPoolAddress
@@ -848,15 +944,21 @@ var TestContractHandler = (function () {
               DataTokenTemplate_json_1.default.abi,
               this.v3dt2Address
             )
-            return [4, Dt1Mock.methods.mint(owner, cap).send({ from: owner })]
+            return [
+              4 /*yield*/,
+              Dt1Mock.methods.mint(owner, cap).send({ from: owner })
+            ]
           case 40:
             _s.sent()
-            return [4, Dt2Mock.methods.mint(owner, cap).send({ from: owner })]
+            return [
+              4 /*yield*/,
+              Dt2Mock.methods.mint(owner, cap).send({ from: owner })
+            ]
           case 41:
             _s.sent()
             MAX = this.web3.utils.toTwosComplement(-1)
             return [
-              4,
+              4 /*yield*/,
               OceanMock.methods
                 .approve(this.v3pool1Address, MAX)
                 .send({ from: owner })
@@ -864,7 +966,7 @@ var TestContractHandler = (function () {
           case 42:
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               Dt1Mock.methods
                 .approve(this.v3pool1Address, MAX)
                 .send({ from: owner })
@@ -872,7 +974,7 @@ var TestContractHandler = (function () {
           case 43:
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               OceanMock.methods
                 .approve(this.v3pool2Address, MAX)
                 .send({ from: owner })
@@ -880,15 +982,17 @@ var TestContractHandler = (function () {
           case 44:
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               Dt2Mock.methods
                 .approve(this.v3pool2Address, MAX)
                 .send({ from: owner })
+              // SETUP v3 POOLS
             ]
           case 45:
             _s.sent()
+            // SETUP v3 POOLS
             return [
-              4,
+              4 /*yield*/,
               V3Pool1.methods
                 .setup(
                   this.v3dt1Address,
@@ -902,9 +1006,10 @@ var TestContractHandler = (function () {
                 .send({ from: owner })
             ]
           case 46:
+            // SETUP v3 POOLS
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               V3Pool2.methods
                 .setup(
                   this.v3dt2Address,
@@ -916,35 +1021,41 @@ var TestContractHandler = (function () {
                   1e15
                 )
                 .send({ from: owner })
+              // v3 lpt owner transfer half of his LPTs to user1 and user2 (30 y 20 Lpts respectively)
             ]
           case 47:
             _s.sent()
+            // v3 lpt owner transfer half of his LPTs to user1 and user2 (30 y 20 Lpts respectively)
             return [
-              4,
+              4 /*yield*/,
               V3Pool1.methods
-                .transfer(this.accounts[1], this.web3.utils.toWei('30'))
+                .transfer(this.accounts[1], this.web3.utils.toWei('30')) // 30 out of 100
                 .send({ from: owner })
             ]
           case 48:
+            // v3 lpt owner transfer half of his LPTs to user1 and user2 (30 y 20 Lpts respectively)
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               V3Pool1.methods
-                .transfer(this.accounts[2], this.web3.utils.toWei('20'))
+                .transfer(this.accounts[2], this.web3.utils.toWei('20')) // 20 out of 100
                 .send({ from: owner })
+              // V4 set up
             ]
           case 49:
             _s.sent()
+            // V4 set up
             return [
-              4,
+              4 /*yield*/,
               RouterContract.methods
                 .addFactory(this.factory721Address)
                 .send({ from: owner })
             ]
           case 50:
+            // V4 set up
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               RouterContract.methods
                 .addFixedRateContract(this.fixedRateAddress)
                 .send({ from: owner })
@@ -952,7 +1063,7 @@ var TestContractHandler = (function () {
           case 51:
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               RouterContract.methods
                 .addDispenserContract(this.dispenserAddress)
                 .send({ from: owner })
@@ -960,14 +1071,14 @@ var TestContractHandler = (function () {
           case 52:
             _s.sent()
             return [
-              4,
+              4 /*yield*/,
               RouterContract.methods
                 .addSSContract(this.sideStakingAddress)
                 .send({ from: owner })
             ]
           case 53:
             _s.sent()
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

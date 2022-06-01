@@ -143,7 +143,7 @@ var utils_1 = require('../utils')
 var BFactory_json_1 = __importDefault(
   require('@oceanprotocol/contracts/artifacts/BFactory.json')
 )
-var PoolFactory = (function () {
+var PoolFactory = /** @class */ (function () {
   function PoolFactory(web3, logger, factoryABI, factoryAddress, config) {
     if (factoryABI === void 0) {
       factoryABI = null
@@ -162,6 +162,9 @@ var PoolFactory = (function () {
     this.logger = logger
     this.config = config
   }
+  /**
+   * Creates a new pool
+   */
   PoolFactory.prototype.createPool = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var factory, txid, gasLimitDefault, estGas, e_1, _a, _b, e_2
@@ -171,11 +174,11 @@ var PoolFactory = (function () {
           case 0:
             if (this.web3 === null) {
               this.logger.error('ERROR: Web3 object is null')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             if (this.factoryAddress === null) {
               this.logger.error('ERROR: bfactoryAddress is null')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             factory = (0, utils_1.setContractDefaults)(
               new this.web3.eth.Contract(this.factoryABI, this.factoryAddress, {
@@ -189,7 +192,7 @@ var PoolFactory = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               factory.methods
                 .newBPool()
                 .estimateGas({ from: account }, function (err, estGas) {
@@ -198,13 +201,13 @@ var PoolFactory = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_1 = _d.sent()
             this.logger.log('Error estimate gas newBPool')
             this.logger.log(e_1)
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = factory.methods.newBPool()).send
@@ -212,20 +215,27 @@ var PoolFactory = (function () {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+              // pooladdress = transactiondata.events.BPoolRegistered.returnValues[0]
+            ]
           case 6:
             txid = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_2 = _d.sent()
             this.logger.error(
               'ERROR: Failed to create new pool: '.concat(e_2.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, txid]
+            return [2 /*return*/, txid]
         }
       })
     })

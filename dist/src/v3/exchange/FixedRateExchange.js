@@ -158,7 +158,14 @@ var FixedRateCreateProgressStep
     exports.FixedRateCreateProgressStep ||
     (exports.FixedRateCreateProgressStep = {}))
 )
-var OceanFixedRateExchange = (function () {
+var OceanFixedRateExchange = /** @class */ (function () {
+  /**
+   * Instantiate FixedRateExchange
+   * @param {any} web3
+   * @param {String} fixedRateExchangeAddress
+   * @param {any} fixedRateExchangeABI
+   * @param {String} oceanAddress
+   */
   function OceanFixedRateExchange(
     web3,
     logger,
@@ -178,6 +185,7 @@ var OceanFixedRateExchange = (function () {
       oceanAddress = null
     }
     this.GASLIMIT_DEFAULT = 1000000
+    /** Ocean related functions */
     this.oceanAddress = null
     this.contract = null
     this.web3 = web3
@@ -198,6 +206,14 @@ var OceanFixedRateExchange = (function () {
       )
     this.logger = logger
   }
+  /**
+   * Creates new exchange pair between Ocean Token and data token.
+   * @param {String} dataToken Data Token Contract Address
+   * @param {Number} rate exchange rate
+   * @param {String} address User address
+   * @param {String} amount Optional, amount of datatokens to be approved for the exchange
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanFixedRateExchange.prototype.create = function (
     dataToken,
     rate,
@@ -212,6 +228,14 @@ var OceanFixedRateExchange = (function () {
       amount
     )
   }
+  /**
+   * Creates new exchange pair between Ocean Token and data token.
+   * @param {String} dataToken Data Token Contract Address
+   * @param {Number} rate exchange rate
+   * @param {String} address User address
+   * @param {String} amount Optional, amount of datatokens to be approved for the exchange
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanFixedRateExchange.prototype.createExchange = function (
     baseToken,
     dataToken,
@@ -233,7 +257,7 @@ var OceanFixedRateExchange = (function () {
             case 1:
               _d.trys.push([1, 3, , 4])
               return [
-                4,
+                4 /*yield*/,
                 this.contract.methods
                   .create(baseToken, dataToken, this.web3.utils.toWei(rate))
                   .estimateGas({ from: address }, function (err, estGas) {
@@ -242,11 +266,11 @@ var OceanFixedRateExchange = (function () {
               ]
             case 2:
               estGas = _d.sent()
-              return [3, 4]
+              return [3 /*break*/, 4]
             case 3:
               e_1 = _d.sent()
               estGas = gasLimitDefault
-              return [3, 4]
+              return [3 /*break*/, 4]
             case 4:
               exchangeId = null
               trxReceipt = null
@@ -262,19 +286,25 @@ var OceanFixedRateExchange = (function () {
                 from: address,
                 gas: estGas + 1
               }
-              return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+              return [
+                4 /*yield*/,
+                (0, utils_1.getFairGasPrice)(this.web3, this.config)
+              ]
             case 6:
-              return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+              return [
+                4 /*yield*/,
+                _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+              ]
             case 7:
               trxReceipt = _d.sent()
               exchangeId = trxReceipt.events.ExchangeCreated.returnValues[0]
-              return [3, 9]
+              return [3 /*break*/, 9]
             case 8:
               e_2 = _d.sent()
               this.logger.error(
                 'ERROR: Failed to create new exchange: '.concat(e_2.message)
               )
-              return [3, 9]
+              return [3 /*break*/, 9]
             case 9:
               if (amount && exchangeId) {
                 observer.next(FixedRateCreateProgressStep.ApprovingDatatoken)
@@ -285,12 +315,18 @@ var OceanFixedRateExchange = (function () {
                   address
                 )
               }
-              return [2, trxReceipt]
+              return [2 /*return*/, trxReceipt]
           }
         })
       })
     })
   }
+  /**
+   * Creates unique exchange identifier.
+   * @param {String} dataToken Data Token Contract Address
+   * @param {String} owner Owner of the exchange
+   * @return {Promise<string>} exchangeId
+   */
   OceanFixedRateExchange.prototype.generateExchangeId = function (
     dataToken,
     owner
@@ -301,18 +337,25 @@ var OceanFixedRateExchange = (function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .generateExchangeId(this.oceanAddress, dataToken, owner)
                 .call()
             ]
           case 1:
             exchangeId = _a.sent()
-            return [2, exchangeId]
+            return [2 /*return*/, exchangeId]
         }
       })
     })
   }
+  /**
+   * Atomic swap
+   * @param {String} exchangeId ExchangeId
+   * @param {Number} dataTokenAmount Amount of Data Tokens
+   * @param {String} address User address
+   * @return {Promise<TransactionReceipt>} transaction receipt
+   */
   OceanFixedRateExchange.prototype.buyDT = function (
     exchangeId,
     dataTokenAmount,
@@ -329,7 +372,7 @@ var OceanFixedRateExchange = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .swap(
                   exchangeId,
@@ -341,11 +384,11 @@ var OceanFixedRateExchange = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_3 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = this.contract.methods.swap(
@@ -356,38 +399,60 @@ var OceanFixedRateExchange = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 7:
             e_4 = _d.sent()
             this.logger.error(
               'ERROR: Failed to buy datatokens: '.concat(e_4.message)
             )
-            return [2, null]
+            return [2 /*return*/, null]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Gets total number of exchanges
+   * @param {String} exchangeId ExchangeId
+   * @param {Number} dataTokenAmount Amount of Data Tokens
+   * @return {Promise<Number>} no of available exchanges
+   */
   OceanFixedRateExchange.prototype.getNumberOfExchanges = function () {
     return __awaiter(this, void 0, void 0, function () {
       var numExchanges
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.getNumberOfExchanges().call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.getNumberOfExchanges().call()
+            ]
           case 1:
             numExchanges = _a.sent()
-            return [2, numExchanges]
+            return [2 /*return*/, numExchanges]
         }
       })
     })
   }
+  /**
+   * Set new rate
+   * @param {String} exchangeId ExchangeId
+   * @param {Number} newRate New rate
+   * @param {String} address User account
+   * @return {Promise<TransactionReceipt>} transaction receipt
+   */
   OceanFixedRateExchange.prototype.setRate = function (
     exchangeId,
     newRate,
@@ -404,7 +469,7 @@ var OceanFixedRateExchange = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .setRate(exchangeId, this.web3.utils.toWei(String(newRate)))
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -413,11 +478,11 @@ var OceanFixedRateExchange = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_5 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _b = (_a = this.contract.methods.setRate(
               exchangeId,
@@ -427,16 +492,28 @@ var OceanFixedRateExchange = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Activate an exchange
+   * @param {String} exchangeId ExchangeId
+   * @param {String} address User address
+   * @return {Promise<TransactionReceipt>} transaction receipt
+   */
   OceanFixedRateExchange.prototype.activate = function (exchangeId, address) {
     return __awaiter(this, void 0, void 0, function () {
       var exchange, gasLimitDefault, estGas, e_6, trxReceipt, _a, _b
@@ -444,17 +521,17 @@ var OceanFixedRateExchange = (function () {
       return __generator(this, function (_d) {
         switch (_d.label) {
           case 0:
-            return [4, this.getExchange(exchangeId)]
+            return [4 /*yield*/, this.getExchange(exchangeId)]
           case 1:
             exchange = _d.sent()
-            if (!exchange) return [2, null]
-            if (exchange.active === true) return [2, null]
+            if (!exchange) return [2 /*return*/, null]
+            if (exchange.active === true) return [2 /*return*/, null]
             gasLimitDefault = this.GASLIMIT_DEFAULT
             _d.label = 2
           case 2:
             _d.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .toggleExchangeState(exchangeId)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -463,11 +540,11 @@ var OceanFixedRateExchange = (function () {
             ]
           case 3:
             estGas = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_6 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             _b = (_a = this.contract.methods.toggleExchangeState(exchangeId))
               .send
@@ -475,16 +552,28 @@ var OceanFixedRateExchange = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Deactivate an exchange
+   * @param {String} exchangeId ExchangeId
+   * @param {String} address User address
+   * @return {Promise<TransactionReceipt>} transaction receipt
+   */
   OceanFixedRateExchange.prototype.deactivate = function (exchangeId, address) {
     return __awaiter(this, void 0, void 0, function () {
       var exchange, gasLimitDefault, estGas, e_7, trxReceipt, _a, _b
@@ -492,17 +581,17 @@ var OceanFixedRateExchange = (function () {
       return __generator(this, function (_d) {
         switch (_d.label) {
           case 0:
-            return [4, this.getExchange(exchangeId)]
+            return [4 /*yield*/, this.getExchange(exchangeId)]
           case 1:
             exchange = _d.sent()
-            if (!exchange) return [2, null]
-            if (exchange.active === false) return [2, null]
+            if (!exchange) return [2 /*return*/, null]
+            if (exchange.active === false) return [2 /*return*/, null]
             gasLimitDefault = this.GASLIMIT_DEFAULT
             _d.label = 2
           case 2:
             _d.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .toggleExchangeState(exchangeId)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -511,11 +600,11 @@ var OceanFixedRateExchange = (function () {
             ]
           case 3:
             estGas = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_7 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             _b = (_a = this.contract.methods.toggleExchangeState(exchangeId))
               .send
@@ -523,44 +612,72 @@ var OceanFixedRateExchange = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Get Rate
+   * @param {String} exchangeId ExchangeId
+   * @return {Promise<string>} Rate (converted from wei)
+   */
   OceanFixedRateExchange.prototype.getRate = function (exchangeId) {
     return __awaiter(this, void 0, void 0, function () {
       var weiRate
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.getRate(exchangeId).call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.getRate(exchangeId).call()
+            ]
           case 1:
             weiRate = _a.sent()
-            return [2, this.web3.utils.fromWei(weiRate)]
+            return [2 /*return*/, this.web3.utils.fromWei(weiRate)]
         }
       })
     })
   }
+  /**
+   * Get Supply
+   * @param {String} exchangeId ExchangeId
+   * @return {Promise<string>} Rate (converted from wei)
+   */
   OceanFixedRateExchange.prototype.getSupply = function (exchangeId) {
     return __awaiter(this, void 0, void 0, function () {
       var weiRate
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.getSupply(exchangeId).call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.getSupply(exchangeId).call()
+            ]
           case 1:
             weiRate = _a.sent()
-            return [2, this.web3.utils.fromWei(weiRate)]
+            return [2 /*return*/, this.web3.utils.fromWei(weiRate)]
         }
       })
     })
   }
+  /**
+   * getOceanNeeded
+   * @param {String} exchangeId ExchangeId
+   * @param {Number} dataTokenAmount Amount of Data Tokens
+   * @return {Promise<string>} Ocean amount needed
+   */
   OceanFixedRateExchange.prototype.getOceanNeeded = function (
     exchangeId,
     dataTokenAmount
@@ -571,7 +688,7 @@ var OceanFixedRateExchange = (function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .CalcInGivenOut(
                   exchangeId,
@@ -581,54 +698,81 @@ var OceanFixedRateExchange = (function () {
             ]
           case 1:
             weiRate = _a.sent()
-            return [2, this.web3.utils.fromWei(weiRate)]
+            return [2 /*return*/, this.web3.utils.fromWei(weiRate)]
         }
       })
     })
   }
+  /**
+   * Get exchange details
+   * @param {String} exchangeId ExchangeId
+   * @return {Promise<FixedPricedExchange>} Exchange details
+   */
   OceanFixedRateExchange.prototype.getExchange = function (exchangeId) {
     return __awaiter(this, void 0, void 0, function () {
       var result
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.getExchange(exchangeId).call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.getExchange(exchangeId).call()
+            ]
           case 1:
             result = _a.sent()
             result.fixedRate = this.web3.utils.fromWei(result.fixedRate)
             result.supply = this.web3.utils.fromWei(result.supply)
             result.exchangeID = exchangeId
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get all exchanges
+   * @param {String} exchangeId ExchangeId
+   * @return {Promise<String[]>} Exchanges list
+   */
   OceanFixedRateExchange.prototype.getExchanges = function () {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.getExchanges().call()]
+            return [4 /*yield*/, this.contract.methods.getExchanges().call()]
           case 1:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
         }
       })
     })
   }
+  /**
+   * Check if an exchange is active
+   * @param {String} exchangeId ExchangeId
+   * @return {Promise<Boolean>} Result
+   */
   OceanFixedRateExchange.prototype.isActive = function (exchangeId) {
     return __awaiter(this, void 0, void 0, function () {
       var result
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.contract.methods.isActive(exchangeId).call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.isActive(exchangeId).call()
+            ]
           case 1:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Calculates how many basetokens are needed to get specifyed amount of datatokens
+   * @param {String} exchangeId ExchangeId
+   * @param {String} dataTokenAmount dataTokenAmount
+   * @return {Promise<String>} Result
+   */
   OceanFixedRateExchange.prototype.CalcInGivenOut = function (
     exchangeId,
     dataTokenAmount
@@ -639,7 +783,7 @@ var OceanFixedRateExchange = (function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .CalcInGivenOut(
                   exchangeId,
@@ -649,7 +793,7 @@ var OceanFixedRateExchange = (function () {
             ]
           case 1:
             result = _a.sent()
-            return [2, this.web3.utils.fromWei(result)]
+            return [2 /*return*/, this.web3.utils.fromWei(result)]
         }
       })
     })
@@ -673,7 +817,7 @@ var OceanFixedRateExchange = (function () {
           case 0:
             result = []
             return [
-              4,
+              4 /*yield*/,
               this.contract.getPastEvents('ExchangeCreated', {
                 filter: { datatoken: dataTokenAddress.toLowerCase() },
                 fromBlock: this.startBlock,
@@ -686,13 +830,13 @@ var OceanFixedRateExchange = (function () {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             promises.push(this.getExchange(events[i].returnValues[0]))
             if (
               !(promises.length > MAX_AWAIT_PROMISES || i === events.length - 1)
             )
-              return [3, 4]
-            return [4, Promise.all(promises)]
+              return [3 /*break*/, 4]
+            return [4 /*yield*/, Promise.all(promises)]
           case 3:
             results = _a.sent()
             for (j = 0; j < results.length; j++) {
@@ -713,13 +857,18 @@ var OceanFixedRateExchange = (function () {
             _a.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get all exchanges, filtered by creator(if any)
+   * @param {String} account
+   * @return {Promise<FixedPricedExchange[]>}
+   */
   OceanFixedRateExchange.prototype.getExchangesbyCreator = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var result, events, i, _a, _b
@@ -728,7 +877,7 @@ var OceanFixedRateExchange = (function () {
           case 0:
             result = []
             return [
-              4,
+              4 /*yield*/,
               this.contract.getPastEvents('ExchangeCreated', {
                 filter: {},
                 fromBlock: this.startBlock,
@@ -740,7 +889,7 @@ var OceanFixedRateExchange = (function () {
             i = 0
             _c.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             if (
               !(
                 !account ||
@@ -748,21 +897,27 @@ var OceanFixedRateExchange = (function () {
                   account.toLowerCase()
               )
             )
-              return [3, 4]
+              return [3 /*break*/, 4]
             _b = (_a = result).push
-            return [4, this.getExchange(events[i].returnValues[0])]
+            return [4 /*yield*/, this.getExchange(events[i].returnValues[0])]
           case 3:
             _b.apply(_a, [_c.sent()])
             _c.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get all swaps for an exchange, filtered by account(if any)
+   * @param {String} exchangeId
+   * @param {String} account
+   * @return {Promise<FixedPricedSwap[]>}
+   */
   OceanFixedRateExchange.prototype.getExchangeSwaps = function (
     exchangeId,
     account
@@ -774,7 +929,7 @@ var OceanFixedRateExchange = (function () {
           case 0:
             result = []
             return [
-              4,
+              4 /*yield*/,
               this.contract.getPastEvents('Swapped', {
                 filter: { exchangeId: exchangeId },
                 fromBlock: this.startBlock,
@@ -791,11 +946,16 @@ var OceanFixedRateExchange = (function () {
               )
                 result.push(this.getEventData(events[i]))
             }
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get all swaps for an account
+   * @param {String} account
+   * @return {Promise<FixedPricedSwap[]>}
+   */
   OceanFixedRateExchange.prototype.getAllExchangesSwaps = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var result, events, i, swaps
@@ -804,7 +964,7 @@ var OceanFixedRateExchange = (function () {
           case 0:
             result = []
             return [
-              4,
+              4 /*yield*/,
               this.contract.getPastEvents('ExchangeCreated', {
                 filter: {},
                 fromBlock: this.startBlock,
@@ -816,9 +976,9 @@ var OceanFixedRateExchange = (function () {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 5]
+            if (!(i < events.length)) return [3 /*break*/, 5]
             return [
-              4,
+              4 /*yield*/,
               this.getExchangeSwaps(events[i].returnValues[0], account)
             ]
           case 3:
@@ -829,9 +989,9 @@ var OceanFixedRateExchange = (function () {
             _a.label = 4
           case 4:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })

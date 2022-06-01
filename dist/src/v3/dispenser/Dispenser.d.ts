@@ -24,6 +24,7 @@ export declare enum DispenserCancelMinterProgressStep {
 }
 export declare class OceanDispenser {
   GASLIMIT_DEFAULT: number
+  /** Ocean related functions */
   dispenserAddress: string
   dispenserABI: AbiItem | AbiItem[]
   web3: Web3
@@ -32,6 +33,12 @@ export declare class OceanDispenser {
   datatokens: DataTokens
   startBlock: number
   private config
+  /**
+   * Instantiate Dispenser
+   * @param {any} web3
+   * @param {String} dispenserAddress
+   * @param {any} dispenserABI
+   */
   constructor(
     web3: Web3,
     logger: Logger,
@@ -40,28 +47,78 @@ export declare class OceanDispenser {
     datatokens: DataTokens,
     config?: ConfigHelperConfig
   )
+  /**
+   * Get dispenser status for a datatoken
+   * @param {String} dataTokenAddress
+   * @return {Promise<FixedPricedExchange>} Exchange details
+   */
   status(dataTokenAddress: string): Promise<DispenserToken>
+  /**
+   * Activates a new dispener.
+   * @param {String} dataToken
+   * @param {Number} maxTokens max amount of tokens to dispense
+   * @param {Number} maxBalance max balance of user. If user balance is >, then dispense will be rejected
+   * @param {String} address User address (must be owner of the dataToken)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   activate(
     dataToken: string,
     maxTokens: string,
     maxBalance: string,
     address: string
   ): Promise<TransactionReceipt>
+  /**
+   * Deactivates a dispener.
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   deactivate(dataToken: string, address: string): Promise<TransactionReceipt>
+  /**
+   * Make the dispenser minter of the datatoken
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the datatoken)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   makeMinter(
     dataToken: string,
     address: string
   ): SubscribablePromise<DispenserMakeMinterProgressStep, TransactionReceipt>
+  /**
+   * Cancel minter role of dispenser and make the owner minter of the datatoken
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   cancelMinter(
     dataToken: string,
     address: string
   ): SubscribablePromise<DispenserCancelMinterProgressStep, TransactionReceipt>
+  /**
+   * Request tokens from dispenser
+   * @param {String} dataToken
+   * @param {String} amount
+   * @param {String} address User address
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   dispense(
     dataToken: string,
     address: string,
     amount?: string
   ): Promise<TransactionReceipt>
+  /**
+   * Withdraw all tokens from the dispenser (if any)
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   ownerWithdraw(dataToken: string, address: string): Promise<TransactionReceipt>
+  /**
+   * Check if tokens can be dispensed
+   * @param {String} dataToken
+   * @param {String} address User address that will receive datatokens
+   * @return {Promise<Boolean>}
+   */
   isDispensable(
     dataToken: string,
     address: string,

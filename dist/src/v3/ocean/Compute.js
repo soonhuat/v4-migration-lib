@@ -189,21 +189,34 @@ exports.ComputeJobStatus = Object.freeze({
   Stopped: 80,
   Deleted: 90
 })
-var Compute = (function (_super) {
+/**
+ * Compute submodule of Ocean Protocol.
+ */
+var Compute = /** @class */ (function (_super) {
   __extends(Compute, _super)
   function Compute() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of Compute.
+   * @return {Promise<Assets>}
+   */
   Compute.getInstance = function (config) {
     return __awaiter(this, void 0, void 0, function () {
       var instance
       return __generator(this, function (_a) {
         instance = new Compute()
         instance.setInstanceConfig(config)
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }
+  /**
+   * Gets the compute address for ordering compute assets
+   * @param  {string} did Decentralized identifer of the primary asset (this will determine where compute happens)
+   * @param  {number} serviceIndex If asset has multiple compute services
+   * @return {Promise<String>} Returns compute address
+   */
   Compute.prototype.getComputeAddress = function (did, serviceIndex) {
     if (serviceIndex === void 0) {
       serviceIndex = -1
@@ -214,270 +227,36 @@ var Compute = (function (_super) {
         switch (_a.label) {
           case 0:
             serviceType = 'compute'
-            if (!(serviceIndex === -1)) return [3, 2]
-            return [4, this.ocean.assets.getServiceByType(did, serviceType)]
+            if (!(serviceIndex === -1)) return [3 /*break*/, 2]
+            return [
+              4 /*yield*/,
+              this.ocean.assets.getServiceByType(did, serviceType)
+            ]
           case 1:
             service = _a.sent()
             serviceIndex = service.index
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 2:
-            return [4, this.ocean.assets.getServiceByIndex(did, serviceIndex)]
+            return [
+              4 /*yield*/,
+              this.ocean.assets.getServiceByIndex(did, serviceIndex)
+            ]
           case 3:
             service = _a.sent()
             serviceType = service.type
             _a.label = 4
           case 4:
             serviceEndpoint = service.serviceEndpoint
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
+            return [
+              4 /*yield*/,
+              Provider_1.Provider.getInstance(this.instanceConfig)
+            ]
           case 5:
             provider = _a.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
+            return [4 /*yield*/, provider.setBaseUrl(serviceEndpoint)]
           case 6:
             _a.sent()
-            return [2, provider.computeAddress]
-        }
-      })
-    })
-  }
-  Compute.prototype.start = function (
-    asset,
-    txId,
-    tokenAddress,
-    consumerAccount,
-    algorithm,
-    output,
-    serviceIndex,
-    serviceType,
-    additionalInputs,
-    userCustomParameters
-  ) {
-    return __awaiter(this, void 0, void 0, function () {
-      var _a,
-        did,
-        ddo,
-        service,
-        serviceEndpoint,
-        ddo_1,
-        algoService,
-        provider,
-        computeJobsList
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            output = this.checkOutput(consumerAccount, output)
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
-          case 1:
-            ;(_a = _b.sent()), (did = _a.did), (ddo = _a.ddo)
-            service = ddo.findServiceByType('compute')
-            serviceEndpoint = service.serviceEndpoint
-            if (!algorithm.serviceIndex) return [3, 4]
-            return [4, (0, utils_1.assetResolve)(algorithm.did, this.ocean)]
-          case 2:
-            ddo_1 = _b.sent().ddo
-            algoService = ddo_1.findServiceById(algorithm.serviceIndex)
-            return [
-              4,
-              this.ocean.assets.isUserCustomParametersValid(
-                algoService.attributes.algoCustomParameters,
-                algorithm.algoCustomParameters
-              )
-            ]
-          case 3:
-            if (!_b.sent()) {
-              return [2, null]
-            }
-            _b.label = 4
-          case 4:
-            if (!(did && txId)) return [3, 8]
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 5:
-            provider = _b.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 6:
-            _b.sent()
-            return [
-              4,
-              provider.computeStart(
-                did,
-                consumerAccount,
-                algorithm,
-                output,
-                txId,
-                serviceIndex,
-                serviceType,
-                tokenAddress,
-                additionalInputs,
-                userCustomParameters
-              )
-            ]
-          case 7:
-            computeJobsList = _b.sent()
-            if (computeJobsList) return [2, computeJobsList[0]]
-            else return [2, null]
-            _b.label = 8
-          case 8:
-            return [2, null]
-        }
-      })
-    })
-  }
-  Compute.prototype.stop = function (consumerAccount, asset, jobId) {
-    return __awaiter(this, void 0, void 0, function () {
-      var _a, did, ddo, service, serviceEndpoint, provider, computeJobsList
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
-          case 1:
-            ;(_a = _b.sent()), (did = _a.did), (ddo = _a.ddo)
-            service = ddo.findServiceByType('compute')
-            serviceEndpoint = service.serviceEndpoint
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 2:
-            provider = _b.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 3:
-            _b.sent()
-            return [4, provider.computeStop(did, consumerAccount, jobId)]
-          case 4:
-            computeJobsList = _b.sent()
-            if (computeJobsList) return [2, computeJobsList[0]]
-            return [2, null]
-        }
-      })
-    })
-  }
-  Compute.prototype.delete = function (consumerAccount, asset, jobId) {
-    return __awaiter(this, void 0, void 0, function () {
-      var _a, did, ddo, service, serviceEndpoint, provider, computeJobsList
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
-          case 1:
-            ;(_a = _b.sent()), (did = _a.did), (ddo = _a.ddo)
-            service = ddo.findServiceByType('compute')
-            serviceEndpoint = service.serviceEndpoint
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 2:
-            provider = _b.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 3:
-            _b.sent()
-            return [4, provider.computeDelete(did, consumerAccount, jobId)]
-          case 4:
-            computeJobsList = _b.sent()
-            if (computeJobsList) return [2, computeJobsList[0]]
-            return [2, null]
-        }
-      })
-    })
-  }
-  Compute.prototype.status = function (
-    consumerAccount,
-    did,
-    ddo,
-    service,
-    jobId,
-    txId
-  ) {
-    return __awaiter(this, void 0, void 0, function () {
-      var provider, serviceEndpoint, computeJobsList
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (!(did || service || ddo)) return [3, 6]
-            if (!!service) return [3, 3]
-            if (!!ddo) return [3, 2]
-            return [4, this.ocean.assets.resolve(did)]
-          case 1:
-            ddo = _a.sent()
-            if (!ddo) throw new Error("Couldn't resolve the did ".concat(did))
-            _a.label = 2
-          case 2:
-            service = ddo.findServiceByType('compute')
-            if (!service)
-              throw new Error(
-                "Couldn't find a compute service on the asset with did ".concat(
-                  did
-                )
-              )
-            _a.label = 3
-          case 3:
-            serviceEndpoint = service.serviceEndpoint
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 4:
-            provider = _a.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 5:
-            _a.sent()
-            return [3, 7]
-          case 6:
-            provider = this.ocean.provider
-            _a.label = 7
-          case 7:
-            return [
-              4,
-              provider.computeStatus(did, consumerAccount, jobId, txId)
-            ]
-          case 8:
-            computeJobsList = _a.sent()
-            return [2, computeJobsList]
-        }
-      })
-    })
-  }
-  Compute.prototype.getResult = function (
-    consumerAccount,
-    jobId,
-    index,
-    destination,
-    did,
-    ddo,
-    service
-  ) {
-    return __awaiter(this, void 0, void 0, function () {
-      var provider, serviceEndpoint, result
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (!(did || service || ddo)) return [3, 6]
-            if (!!service) return [3, 3]
-            if (!!ddo) return [3, 2]
-            return [4, this.ocean.assets.resolve(did)]
-          case 1:
-            ddo = _a.sent()
-            if (!ddo) throw new Error("Couldn't resolve the did ".concat(did))
-            _a.label = 2
-          case 2:
-            service = ddo.findServiceByType('compute')
-            if (!service)
-              throw new Error(
-                "Couldn't find a compute service on the asset with did ".concat(
-                  did
-                )
-              )
-            _a.label = 3
-          case 3:
-            serviceEndpoint = service.serviceEndpoint
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 4:
-            provider = _a.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 5:
-            _a.sent()
-            return [3, 7]
-          case 6:
-            provider = this.ocean.provider
-            _a.label = 7
-          case 7:
-            return [
-              4,
-              provider.computeResult(jobId, index, destination, consumerAccount)
-            ]
-          case 8:
-            result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, provider.computeAddress]
         }
       })
     })
@@ -530,6 +309,16 @@ var Compute = (function (_super) {
       }
     }
   }
+  /**
+   * Creates a compute service
+   * @param {Account} consumerAccount
+   * @param {String} cost  number of datatokens needed for this service, expressed in wei
+   * @param {String} datePublished
+   * @param {Object} providerAttributes
+   * @param {Object} computePrivacy
+   * @param {Number} timeout
+   * @return {Promise<string>} service
+   */
   Compute.prototype.createComputeService = function (
     consumerAccount,
     cost,
@@ -575,6 +364,12 @@ var Compute = (function (_super) {
         requiredCustomParameters.algoCustomParameters
     return service
   }
+  /**
+   * Check the output object and add default properties if needed
+   * @param  {Account} consumerAccount The account of the consumer ordering the service.
+   * @param  {Output} output Output section used for publishing the result.
+   * @return {Promise<Output>} Returns output object
+   */
   Compute.prototype.checkOutput = function (consumerAccount, output) {
     var isDefault =
       !output || (!output.publishAlgorithmLog && !output.publishOutput)
@@ -594,6 +389,18 @@ var Compute = (function (_super) {
       owner: output.owner || consumerAccount.getId()
     }
   }
+  /**
+   * Checks if an asset is orderable with a specific algorithm
+   * @param  {DDO|string} dataset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier of the asset (of type `dataset`) to run the algorithm on.
+   * @param  {string} serviceIndex The Service index
+   * @param  {ComputeAlgorithm} algorithm
+   * @param  {DDO} algorithmDDO Algorithm DDO object. If undefined then the ddo will be fetched by did
+   * @return {Promise<boolean>} True is you can order this
+   *
+   * Note:  algorithmDid and algorithmMeta are optional, but if they are not passed,
+   * you can end up in the situation that you are ordering and paying for your compute job,
+   * but provider will not allow the compute, due to privacy settings of the ddo
+   */
   Compute.prototype.isOrderable = function (
     dataset,
     serviceIndex,
@@ -613,25 +420,26 @@ var Compute = (function (_super) {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, (0, utils_1.assetResolve)(dataset, this.ocean)]
+            return [4 /*yield*/, (0, utils_1.assetResolve)(dataset, this.ocean)]
           case 1:
             datasetResolved = _b.sent()
             service = datasetResolved.ddo.findServiceById(serviceIndex)
-            if (!service) return [2, false]
-            if (!(service.type === 'compute')) return [3, 14]
+            if (!service) return [2 /*return*/, false]
+            if (!(service.type === 'compute')) return [3 /*break*/, 14]
             if (algorithm.meta) {
+              // check if raw algo is allowed
               if (service.attributes.main.privacy)
                 if (service.attributes.main.privacy.allowRawAlgorithm)
-                  return [2, true]
+                  return [2 /*return*/, true]
               this.logger.error(
                 'ERROR: This service does not allow raw algorithm'
               )
-              return [2, false]
+              return [2 /*return*/, false]
             }
-            if (!algorithm.did) return [3, 14]
-            if (!algorithm.serviceIndex) return [3, 8]
-            if (!!algorithmDDO) return [3, 3]
-            return [4, this.ocean.assets.resolve(algorithm.did)]
+            if (!algorithm.did) return [3 /*break*/, 14]
+            if (!algorithm.serviceIndex) return [3 /*break*/, 8]
+            if (!!algorithmDDO) return [3 /*break*/, 3]
+            return [4 /*yield*/, this.ocean.assets.resolve(algorithm.did)]
           case 2:
             algorithmDDO = _b.sent()
             if (!algorithmDDO)
@@ -639,17 +447,30 @@ var Compute = (function (_super) {
             _b.label = 3
           case 3:
             algoService = algorithmDDO.findServiceById(algorithm.serviceIndex)
-            if (!(algoService && algoService.type === 'compute')) return [3, 8]
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
+            if (!(algoService && algoService.type === 'compute'))
+              return [3 /*break*/, 8]
+            return [
+              4 /*yield*/,
+              Provider_1.Provider.getInstance(this.instanceConfig)
+            ]
           case 4:
             algoProvider = _b.sent()
-            return [4, algoProvider.setBaseUrl(algoService.serviceEndpoint)]
+            return [
+              4 /*yield*/,
+              algoProvider.setBaseUrl(algoService.serviceEndpoint)
+            ]
           case 5:
             _b.sent()
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
+            return [
+              4 /*yield*/,
+              Provider_1.Provider.getInstance(this.instanceConfig)
+            ]
           case 6:
             datasetProvider = _b.sent()
-            return [4, datasetProvider.setBaseUrl(service.serviceEndpoint)]
+            return [
+              4 /*yield*/,
+              datasetProvider.setBaseUrl(service.serviceEndpoint)
+            ]
           case 7:
             _b.sent()
             if (
@@ -658,25 +479,25 @@ var Compute = (function (_super) {
               this.logger.error(
                 'ERROR: Both assets with compute service are not served by the same provider'
               )
-              return [2, false]
+              return [2 /*return*/, false]
             }
             _b.label = 8
           case 8:
-            if (!service.attributes.main.privacy) return [3, 13]
+            if (!service.attributes.main.privacy) return [3 /*break*/, 13]
             if (service.attributes.main.privacy.allowAllPublishedAlgorithms)
-              return [2, true]
+              return [2 /*return*/, true]
             if (!service.attributes.main.privacy.publisherTrustedAlgorithms)
-              return [2, false]
+              return [2 /*return*/, false]
             algo = void 0
             ;(_i = 0),
               (_a = service.attributes.main.privacy.publisherTrustedAlgorithms)
             _b.label = 9
           case 9:
-            if (!(_i < _a.length)) return [3, 12]
+            if (!(_i < _a.length)) return [3 /*break*/, 12]
             algo = _a[_i]
-            if (!(algo.did === algorithm.did)) return [3, 11]
+            if (!(algo.did === algorithm.did)) return [3 /*break*/, 11]
             return [
-              4,
+              4 /*yield*/,
               this.createPublisherTrustedAlgorithmfromDID(algorithm.did)
             ]
           case 10:
@@ -690,7 +511,7 @@ var Compute = (function (_super) {
                 'ERROR: Algorithm container section was altered since it was added as trusted by ' +
                   datasetResolved.did
               )
-              return [2, false]
+              return [2 /*return*/, false]
             }
             if (
               algo.filesChecksum &&
@@ -700,29 +521,45 @@ var Compute = (function (_super) {
                 'ERROR: Algorithm files section was altered since it was added as trusted by ' +
                   datasetResolved.ddo
               )
-              return [2, false]
+              return [2 /*return*/, false]
             }
-            return [2, true]
+            // all conditions are meet
+            return [2 /*return*/, true]
           case 11:
             _i++
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 12:
+            // algorithmDid was not found
             this.logger.error(
               'ERROR: Algorithm ' +
                 algorithm.did +
                 ' is not allowed by ' +
                 datasetResolved.did
             )
-            return [2, false]
+            return [2 /*return*/, false]
           case 13:
             console.error('Algo Index:' + algorithm.serviceIndex)
             _b.label = 14
           case 14:
-            return [2, true]
+            return [2 /*return*/, true] // not a compute asset
         }
       })
     })
   }
+  /**
+   * Starts an order of a compute or access service for a compute job
+   * @param  {String} consumerAccount The account of the consumer ordering the service.
+   * @param  {DDO|string} dataset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier of the asset (of type `dataset`) to run the algorithm on.
+   * @param  {string} serviceIndex The Service index
+   * @param  {string} algorithmDid The DID of the algorithm asset (of type `algorithm`) to run on the asset.
+   * @param  {string} algorithmServiceIndex The index of the service in the algorithm
+   * @param  {MetaData} algorithmMeta Metadata about the algorithm being run if `algorithm` is being used. This is ignored when `algorithmDid` is specified.
+   * @return {SubscribablePromise<OrderProgressStep, string>} Returns the transaction details
+   *
+   * Note:  algorithmDid and algorithmMeta are optional, but if they are not passed,
+   * you can end up in the situation that you are ordering and paying for your compute job,
+   * but provider will not allow the compute, due to privacy settings of the ddo
+   */
   Compute.prototype.orderAsset = function (
     consumerAccount,
     dataset,
@@ -747,10 +584,17 @@ var Compute = (function (_super) {
         return __generator(this, function (_a) {
           switch (_a.label) {
             case 0:
-              return [4, (0, utils_1.assetResolve)(dataset, this.ocean)]
+              return [
+                4 /*yield*/,
+                (0, utils_1.assetResolve)(dataset, this.ocean)
+                // first check if we can order this
+              ]
             case 1:
               ddo = _a.sent().ddo
-              return [4, this.isOrderable(ddo, serviceIndex, algorithm)]
+              return [
+                4 /*yield*/,
+                this.isOrderable(ddo, serviceIndex, algorithm)
+              ]
             case 2:
               allowed = _a.sent()
               if (!allowed)
@@ -766,7 +610,7 @@ var Compute = (function (_super) {
             case 3:
               _a.trys.push([3, 5, , 6])
               return [
-                4,
+                4 /*yield*/,
                 this.ocean.assets.order(
                   ddo,
                   service.type,
@@ -781,7 +625,7 @@ var Compute = (function (_super) {
               ]
             case 4:
               order = _a.sent()
-              return [2, order]
+              return [2 /*return*/, order]
             case 5:
               error_1 = _a.sent()
               this.logger.error(
@@ -791,12 +635,22 @@ var Compute = (function (_super) {
                 'Failed to order dataset: '.concat(error_1.message)
               )
             case 6:
-              return [2]
+              return [2 /*return*/]
           }
         })
       })
     })
   }
+  /**
+   * Orders & pays for a algorithm
+   * @param  {DDO|string} asset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier.
+   * @param {String} serviceType
+   * @param {String} payerAddress
+   * @param {Number} serviceIndex
+   * @param {String} mpAddress Marketplace fee collector address
+   * @param {String} consumerAddress Optionally, if the consumer is another address than payer
+   * @return {Promise<String>} transactionHash of the payment
+   */
   Compute.prototype.orderAlgorithm = function (
     asset,
     serviceType,
@@ -824,7 +678,7 @@ var Compute = (function (_super) {
           case 0:
             _a.trys.push([0, 2, , 3])
             return [
-              4,
+              4 /*yield*/,
               this.ocean.assets.order(
                 asset,
                 serviceType,
@@ -838,7 +692,7 @@ var Compute = (function (_super) {
               )
             ]
           case 1:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
           case 2:
             error_2 = _a.sent()
             this.logger.error(
@@ -848,11 +702,19 @@ var Compute = (function (_super) {
               'Failed to order algorithm: '.concat(error_2.message)
             )
           case 3:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Edit Compute Privacy
+   * @param  {ddo} DDO
+   * @param  {number} serviceIndex Index of the compute service in the DDO. If -1, will try to find it
+   * @param  {ServiceComputePrivacy} computePrivacy ComputePrivacy fields & new values.
+   * @param  {Account} account Ethereum account of owner to sign and prove the ownership.
+   * @return {Promise<DDO>}
+   */
   Compute.prototype.editComputePrivacy = function (
     ddo,
     serviceIndex,
@@ -861,14 +723,16 @@ var Compute = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       var service
       return __generator(this, function (_a) {
-        if (!ddo) return [2, null]
+        if (!ddo) return [2 /*return*/, null]
         if (serviceIndex === -1) {
           service = ddo.findServiceByType('compute')
-          if (!service) return [2, null]
+          if (!service) return [2 /*return*/, null]
           serviceIndex = service.index
         }
-        if (typeof ddo.service[serviceIndex] === 'undefined') return [2, null]
-        if (ddo.service[serviceIndex].type !== 'compute') return [2, null]
+        if (typeof ddo.service[serviceIndex] === 'undefined')
+          return [2 /*return*/, null]
+        if (ddo.service[serviceIndex].type !== 'compute')
+          return [2 /*return*/, null]
         ddo.service[serviceIndex].attributes.main.privacy.allowRawAlgorithm =
           computePrivacy.allowRawAlgorithm
         ddo.service[
@@ -881,10 +745,17 @@ var Compute = (function (_super) {
           serviceIndex
         ].attributes.main.privacy.publisherTrustedAlgorithms =
           computePrivacy.publisherTrustedAlgorithms
-        return [2, ddo]
+        return [2 /*return*/, ddo]
       })
     })
   }
+  /**
+   * Toogle allowAllPublishedAlgorithms
+   * @param  {ddo} DDO
+   * @param  {number} serviceIndex Index of the compute service in the DDO. If -1, will try to find it
+   * @param  {boolean} newState
+   * @return {Promise<DDDO>} Returns the new DDO
+   */
   Compute.prototype.toggleAllowAllPublishedAlgorithms = function (
     ddo,
     serviceIndex,
@@ -893,21 +764,29 @@ var Compute = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       var service
       return __generator(this, function (_a) {
-        if (!ddo) return [2, null]
+        if (!ddo) return [2 /*return*/, null]
         if (serviceIndex === -1) {
           service = ddo.findServiceByType('compute')
-          if (!service) return [2, null]
+          if (!service) return [2 /*return*/, null]
           serviceIndex = service.index
         }
-        if (typeof ddo.service[serviceIndex] === 'undefined') return [2, null]
-        if (ddo.service[serviceIndex].type !== 'compute') return [2, null]
+        if (typeof ddo.service[serviceIndex] === 'undefined')
+          return [2 /*return*/, null]
+        if (ddo.service[serviceIndex].type !== 'compute')
+          return [2 /*return*/, null]
         ddo.service[
           serviceIndex
         ].attributes.main.privacy.allowAllPublishedAlgorithms = newState
-        return [2, ddo]
+        return [2 /*return*/, ddo]
       })
     })
   }
+  /**
+   * Generates a publisherTrustedAlgorithm object from a algorithm did
+   * @param  {did} string DID. You can leave this empty if you already have the DDO
+   * @param  {ddo} DDO if empty, will trigger a retrieve
+   * @return {Promise<publisherTrustedAlgorithm>}
+   */
   Compute.prototype.createPublisherTrustedAlgorithmfromDID = function (
     did,
     ddo
@@ -917,20 +796,20 @@ var Compute = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!!ddo) return [3, 2]
-            return [4, this.ocean.assets.resolve(did)]
+            if (!!ddo) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.ocean.assets.resolve(did)]
           case 1:
             ddo = _a.sent()
-            if (!ddo) return [2, null]
+            if (!ddo) return [2 /*return*/, null]
             _a.label = 2
           case 2:
             service = ddo.findServiceByType('metadata')
-            if (!service) return [2, null]
-            if (!service.attributes.main.algorithm) return [2, null]
-            if (!service.attributes.encryptedFiles) return [2, null]
-            if (!service.attributes.main.files) return [2, null]
+            if (!service) return [2 /*return*/, null]
+            if (!service.attributes.main.algorithm) return [2 /*return*/, null]
+            if (!service.attributes.encryptedFiles) return [2 /*return*/, null]
+            if (!service.attributes.main.files) return [2 /*return*/, null]
             return [
-              2,
+              2 /*return*/,
               {
                 did: did,
                 containerSectionChecksum: (0, crypto_js_1.SHA256)(
@@ -946,6 +825,13 @@ var Compute = (function (_super) {
       })
     })
   }
+  /**
+   * Adds a trusted algorithm to an asset
+   * @param  {ddo} DDO
+   * @param  {number} serviceIndex Index of the compute service in the DDO. If -1, will try to find it
+   * @param  {algoDid} string Algorithm DID to be added
+   * @return {Promise<DDDO>} Returns the new DDO
+   */
   Compute.prototype.addTrustedAlgorithmtoAsset = function (
     ddo,
     serviceIndex,
@@ -956,15 +842,16 @@ var Compute = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!ddo) return [2, null]
+            if (!ddo) return [2 /*return*/, null]
             if (serviceIndex === -1) {
               service = ddo.findServiceByType('compute')
-              if (!service) return [2, null]
+              if (!service) return [2 /*return*/, null]
               serviceIndex = service.index
             }
             if (typeof ddo.service[serviceIndex] === 'undefined')
-              return [2, null]
-            if (ddo.service[serviceIndex].type !== 'compute') return [2, null]
+              return [2 /*return*/, null]
+            if (ddo.service[serviceIndex].type !== 'compute')
+              return [2 /*return*/, null]
             if (
               !ddo.service[serviceIndex].attributes.main.privacy
                 .publisherTrustedAlgorithms
@@ -972,7 +859,10 @@ var Compute = (function (_super) {
               ddo.service[
                 serviceIndex
               ].attributes.main.privacy.publisherTrustedAlgorithms = []
-            return [4, this.createPublisherTrustedAlgorithmfromDID(algoDid)]
+            return [
+              4 /*yield*/,
+              this.createPublisherTrustedAlgorithmfromDID(algoDid)
+            ]
           case 1:
             trustedAlgorithm = _a.sent()
             if (trustedAlgorithm)
@@ -981,28 +871,37 @@ var Compute = (function (_super) {
               ].attributes.main.privacy.publisherTrustedAlgorithms.push(
                 trustedAlgorithm
               )
-            return [2, ddo]
+            return [2 /*return*/, ddo]
         }
       })
     })
   }
+  /**
+   * Check is an algo is trusted
+   * @param  {ddo} DDO
+   * @param  {number} serviceIndex Index of the compute service in the DDO. If -1, will try to find it
+   * @param  {algoDid} string Algorithm DID to be added
+   * @return {Promise<DDDO>} Returns the new DDO
+   */
   Compute.prototype.isAlgorithmTrusted = function (ddo, serviceIndex, algoDid) {
     return __awaiter(this, void 0, void 0, function () {
       var service, algo, _i, _a
       return __generator(this, function (_b) {
-        if (!ddo) return [2, false]
+        if (!ddo) return [2 /*return*/, false]
         if (serviceIndex === -1) {
           service = ddo.findServiceByType('compute')
-          if (!service) return [2, false]
+          if (!service) return [2 /*return*/, false]
           serviceIndex = service.index
         }
-        if (typeof ddo.service[serviceIndex] === 'undefined') return [2, false]
-        if (ddo.service[serviceIndex].type !== 'compute') return [2, false]
+        if (typeof ddo.service[serviceIndex] === 'undefined')
+          return [2 /*return*/, false]
+        if (ddo.service[serviceIndex].type !== 'compute')
+          return [2 /*return*/, false]
         if (
           ddo.service[serviceIndex].attributes.main.privacy
             .allowAllPublishedAlgorithms
         )
-          return [2, true]
+          return [2 /*return*/, true]
         for (
           _i = 0,
             _a =
@@ -1012,12 +911,19 @@ var Compute = (function (_super) {
           _i++
         ) {
           algo = _a[_i]
-          if (algo.did === algoDid) return [2, true]
+          if (algo.did === algoDid) return [2 /*return*/, true]
         }
-        return [2, false]
+        return [2 /*return*/, false]
       })
     })
   }
+  /**
+   * Removes a trusted algorithm from an asset
+   * @param  {ddo} DDO
+   * @param  {number} serviceIndex Index of the compute service in the DDO. If -1, will try to find it
+   * @param  {algoDid} string Algorithm DID to be removed
+   * @return {Promise<DDDO>} Returns the new DDO
+   */
   Compute.prototype.removeTrustedAlgorithmFromAsset = function (
     ddo,
     serviceIndex,
@@ -1026,19 +932,21 @@ var Compute = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       var service
       return __generator(this, function (_a) {
-        if (!ddo) return [2, null]
+        if (!ddo) return [2 /*return*/, null]
         if (serviceIndex === -1) {
           service = ddo.findServiceByType('compute')
-          if (!service) return [2, ddo]
+          if (!service) return [2 /*return*/, ddo]
           serviceIndex = service.index
         }
-        if (typeof ddo.service[serviceIndex] === 'undefined') return [2, ddo]
-        if (ddo.service[serviceIndex].type !== 'compute') return [2, ddo]
+        if (typeof ddo.service[serviceIndex] === 'undefined')
+          return [2 /*return*/, ddo]
+        if (ddo.service[serviceIndex].type !== 'compute')
+          return [2 /*return*/, ddo]
         if (
           !ddo.service[serviceIndex].attributes.main.privacy
             .publisherTrustedAlgorithms
         )
-          return [2, ddo]
+          return [2 /*return*/, ddo]
         ddo.service[
           serviceIndex
         ].attributes.main.privacy.publisherTrustedAlgorithms = ddo.service[
@@ -1048,7 +956,7 @@ var Compute = (function (_super) {
         ) {
           return el.did !== algoDid
         })
-        return [2, ddo]
+        return [2 /*return*/, ddo]
       })
     })
   }

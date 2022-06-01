@@ -166,11 +166,18 @@ exports.OceanUtils = void 0
 var Instantiable_abstract_1 = require('../../Instantiable.abstract')
 var SignatureUtils_1 = require('./SignatureUtils')
 var WebServiceConnector_1 = require('./WebServiceConnector')
-var OceanUtils = (function (_super) {
+/**
+ * Utils internal submodule of Ocean Protocol.
+ */
+var OceanUtils = /** @class */ (function (_super) {
   __extends(OceanUtils, _super)
   function OceanUtils() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of OceanUtils.
+   * @return {Promise<OceanUtils>}
+   */
   OceanUtils.getInstance = function (config) {
     var _a
     return __awaiter(this, void 0, void 0, function () {
@@ -188,7 +195,7 @@ var OceanUtils = (function (_super) {
             ? void 0
             : _a.requestTimeout
         )
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }

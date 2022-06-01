@@ -179,7 +179,7 @@ var PoolFactory_1 = require('./PoolFactory')
 var decimal_js_1 = __importDefault(require('decimal.js'))
 var MaxUint256 =
   '115792089237316195423570985008687907853269984665640564039457584007913129639934'
-var Pool = (function (_super) {
+var Pool = /** @class */ (function (_super) {
   __extends(Pool, _super)
   function Pool(web3, logger, factoryABI, poolABI, factoryAddress, config) {
     if (factoryABI === void 0) {
@@ -198,18 +198,38 @@ var Pool = (function (_super) {
     else _this.poolABI = BPool_json_1.default.abi
     return _this
   }
+  /**
+   * Creates a new pool
+   */
   Pool.prototype.createPool = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, _super.prototype.createPool.call(this, account)]
+            return [
+              4 /*yield*/,
+              _super.prototype.createPool.call(this, account)
+            ]
           case 1:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
         }
       })
     })
   }
+  /**
+   * Setup a new pool by setting datatoken, base token, swap fee and
+   * finalizing the pool to make it public.
+   *
+   * @param {String} account ethereum address to use for sending this transaction
+   * @param {String} poolAddress address of new Balancer Pool
+   * @param {String} dataToken address of datatoken ERC20 contract
+   * @param {String} dataTokenAmount in wei
+   * @param {String} dataTokenWeight in wei
+   * @param {String} baseToken address of base token ERC20 contract
+   * @param {String} baseTokenAmount in wei
+   * @param {String} baseTokenWeight in wei
+   * @param {String} swapFee in wei
+   */
   Pool.prototype.setup = function (
     account,
     poolAddress,
@@ -239,7 +259,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .setup(
                   dataToken,
@@ -256,11 +276,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_1 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.setup(
@@ -276,24 +296,36 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_2 = _d.sent()
             this.logger.error(
               'ERROR: Failed to setup a pool: '.concat(e_2.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get Alloance for both DataToken and Ocean
+   * @param {String } tokenAdress
+   * @param {String} owner
+   * @param {String} spender
+   */
   Pool.prototype.allowance = function (tokenAdress, owner, spender) {
     return __awaiter(this, void 0, void 0, function () {
       var tokenAbi, datatoken, trxReceipt
@@ -307,14 +339,25 @@ var Pool = (function (_super) {
               }),
               this.config
             )
-            return [4, datatoken.methods.allowance(owner, spender).call()]
+            return [
+              4 /*yield*/,
+              datatoken.methods.allowance(owner, spender).call()
+            ]
           case 1:
             trxReceipt = _a.sent()
-            return [2, this.web3.utils.fromWei(trxReceipt)]
+            return [2 /*return*/, this.web3.utils.fromWei(trxReceipt)]
         }
       })
     })
   }
+  /**
+   * Approve spender to spent amount tokens
+   * @param {String} account
+   * @param {String} tokenAddress
+   * @param {String} spender
+   * @param {String} amount  (always expressed as wei)
+   * @param {String} force  if true, will overwrite any previous allowence. Else, will check if allowence is enough and will not send a transaction if it's not needed
+   */
   Pool.prototype.approve = function (
     account,
     tokenAddress,
@@ -371,8 +414,8 @@ var Pool = (function (_super) {
               }),
               this.config
             )
-            if (!!force) return [3, 2]
-            return [4, this.allowance(tokenAddress, account, spender)]
+            if (!!force) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.allowance(tokenAddress, account, spender)]
           case 1:
             currentAllowence = _d.sent()
             if (
@@ -380,7 +423,7 @@ var Pool = (function (_super) {
                 this.web3.utils.toWei(currentAllowence)
               ).greaterThanOrEqualTo(amount)
             ) {
-              return [2, currentAllowence]
+              return [2 /*return*/, currentAllowence]
             }
             _d.label = 2
           case 2:
@@ -390,7 +433,7 @@ var Pool = (function (_super) {
           case 3:
             _d.trys.push([3, 5, , 6])
             return [
-              4,
+              4 /*yield*/,
               token.methods
                 .approve(spender, amount)
                 .estimateGas({ from: account }, function (err, estGas) {
@@ -399,11 +442,11 @@ var Pool = (function (_super) {
             ]
           case 4:
             estGas = _d.sent()
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 5:
             e_3 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 6:
             _d.trys.push([6, 9, , 10])
             _b = (_a = token.methods.approve(spender, amount)).send
@@ -411,12 +454,18 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 7:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 8:
             result = _d.sent()
-            return [3, 10]
+            return [3 /*break*/, 10]
           case 9:
             e_4 = _d.sent()
             this.logger.error(
@@ -424,13 +473,19 @@ var Pool = (function (_super) {
                 e_4.message
               )
             )
-            return [3, 10]
+            return [3 /*break*/, 10]
           case 10:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get user shares of pool tokens
+   * @param {String} account
+   * @param {String} poolAddress
+   * @return {String}
+   */
   Pool.prototype.sharesBalance = function (account, poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var result, token, balance, e_5
@@ -445,23 +500,29 @@ var Pool = (function (_super) {
               new this.web3.eth.Contract(this.poolABI, poolAddress),
               this.config
             )
-            return [4, token.methods.balanceOf(account).call()]
+            return [4 /*yield*/, token.methods.balanceOf(account).call()]
           case 2:
             balance = _a.sent()
             result = this.web3.utils.fromWei(balance)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_5 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get shares of pool : '.concat(e_5.message)
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Adds tokens to pool
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {Array} tokens Array of token object { address,amount,weight}
+   */
   Pool.prototype.addToPool = function (account, poolAddress, tokens) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, token, _i, tokens_1, _a, _b, e_6
@@ -478,13 +539,14 @@ var Pool = (function (_super) {
             ;(_i = 0), (tokens_1 = tokens)
             _d.label = 1
           case 1:
-            if (!(_i < tokens_1.length)) return [3, 8]
+            if (!(_i < tokens_1.length)) return [3 /*break*/, 8]
             token = tokens_1[_i]
             _d.label = 2
           case 2:
             _d.trys.push([2, 6, , 7])
+            // approve spending first
             return [
-              4,
+              4 /*yield*/,
               this.approve(
                 account,
                 token.address,
@@ -493,6 +555,7 @@ var Pool = (function (_super) {
               )
             ]
           case 3:
+            // approve spending first
             _d.sent()
             _b = (_a = pool.methods.bind(
               token.address,
@@ -503,27 +566,39 @@ var Pool = (function (_super) {
               from: account,
               gas: this.GASLIMIT_DEFAULT
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 4:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 5:
             _d.sent()
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 6:
             e_6 = _d.sent()
             this.logger.error(
               'ERROR: Failed to add tokens to pool: '.concat(e_6.message)
             )
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 7:
             _i++
-            return [3, 1]
+            return [3 /*break*/, 1]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Set pool fee
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} fee 0.1=10% fee(max allowed)
+   */
   Pool.prototype.setSwapFee = function (account, poolAddress, fee) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, _a, _b, e_7
@@ -546,24 +621,35 @@ var Pool = (function (_super) {
               from: account,
               gas: this.GASLIMIT_DEFAULT
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 2:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 3:
             result = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_7 = _d.sent()
             this.logger.error(
               'ERROR: Failed to set pool swap fee: '.concat(e_7.message)
             )
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Finalize a pool
+   * @param {String} account
+   * @param {String} poolAddress
+   */
   Pool.prototype.finalize = function (account, poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, _a, _b, e_8
@@ -586,24 +672,35 @@ var Pool = (function (_super) {
               from: account,
               gas: this.GASLIMIT_DEFAULT
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 2:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 3:
             result = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_8 = _d.sent()
             this.logger.error(
               'ERROR: Failed to finalize pool: '.concat(e_8.message)
             )
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get number of tokens composing this pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   Pool.prototype.getNumTokens = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_9
@@ -618,22 +715,27 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getNumTokens().call()]
+            return [4 /*yield*/, pool.methods.getNumTokens().call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_9 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get number of tokens: '.concat(e_9.message)
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get total supply of pool shares
+   * @param {String} poolAddress
+   * @return {String}
+   */
   Pool.prototype.getPoolSharesTotalSupply = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, amount, result, e_10
@@ -648,11 +750,11 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.totalSupply().call()]
+            return [4 /*yield*/, pool.methods.totalSupply().call()]
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_10 = _a.sent()
             this.logger.error(
@@ -660,13 +762,18 @@ var Pool = (function (_super) {
                 e_10.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
   }
+  /**
+   * Get tokens composing this pool
+   * @param {String} poolAddress
+   * @return {String[]}
+   */
   Pool.prototype.getCurrentTokens = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_11
@@ -681,10 +788,10 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getCurrentTokens().call()]
+            return [4 /*yield*/, pool.methods.getCurrentTokens().call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_11 = _a.sent()
             this.logger.error(
@@ -692,13 +799,18 @@ var Pool = (function (_super) {
                 e_11.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get the final tokens composing this pool
+   * @param {String} poolAddress
+   * @return {String[]}
+   */
   Pool.prototype.getFinalTokens = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_12
@@ -713,22 +825,27 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getFinalTokens().call()]
+            return [4 /*yield*/, pool.methods.getFinalTokens().call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_12 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get the final tokens composing this pool'
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get controller address of this pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   Pool.prototype.getController = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_13
@@ -743,10 +860,10 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getController().call()]
+            return [4 /*yield*/, pool.methods.getController().call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_13 = _a.sent()
             this.logger.error(
@@ -754,13 +871,20 @@ var Pool = (function (_super) {
                 e_13.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Set controller address of this pool
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} controllerAddress
+   * @return {String}
+   */
   Pool.prototype.setController = function (
     account,
     poolAddress,
@@ -782,26 +906,32 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .setController(controllerAddress)
                 .send({ from: account, gas: this.GASLIMIT_DEFAULT })
             ]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_14 = _a.sent()
             this.logger.error(
               'ERROR: Failed to set pool controller: '.concat(e_14.message)
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get if a token is bounded to a pool
+   * @param {String} poolAddress
+   * @param {String} token  Address of the token
+   * @return {Boolean}
+   */
   Pool.prototype.isBound = function (poolAddress, token) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_15
@@ -816,10 +946,10 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.isBound(token).call()]
+            return [4 /*yield*/, pool.methods.isBound(token).call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_15 = _a.sent()
             this.logger.error(
@@ -827,13 +957,19 @@ var Pool = (function (_super) {
                 e_15.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get how many tokens are in the pool
+   * @param {String} poolAddress
+   * @param {String} token  Address of the token
+   * @return {String}
+   */
   Pool.prototype.getReserve = function (poolAddress, token) {
     return __awaiter(this, void 0, void 0, function () {
       var amount, pool, result, e_16
@@ -848,11 +984,11 @@ var Pool = (function (_super) {
               new this.web3.eth.Contract(this.poolABI, poolAddress),
               this.config
             )
-            return [4, pool.methods.getBalance(token).call()]
+            return [4 /*yield*/, pool.methods.getBalance(token).call()]
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_16 = _a.sent()
             this.logger.error(
@@ -860,13 +996,18 @@ var Pool = (function (_super) {
                 e_16.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
   }
+  /**
+   * Get if a pool is finalized
+   * @param {String} poolAddress
+   * @return {Boolean}
+   */
   Pool.prototype.isFinalized = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, result, e_17
@@ -881,10 +1022,10 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.isFinalized().call()]
+            return [4 /*yield*/, pool.methods.isFinalized().call()]
           case 2:
             result = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_17 = _a.sent()
             this.logger.error(
@@ -892,13 +1033,18 @@ var Pool = (function (_super) {
                 e_17.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get pool fee
+   * @param {String} poolAddress
+   * @return {String} Swap fee. To get the percentage value, substract by 100. E.g. `0.1` represents a 10% swap fee.
+   */
   Pool.prototype.getSwapFee = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, fee, result, e_18
@@ -913,23 +1059,29 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getSwapFee().call()]
+            return [4 /*yield*/, pool.methods.getSwapFee().call()]
           case 2:
             result = _a.sent()
             fee = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_18 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get pool fee: '.concat(e_18.message)
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, fee]
+            return [2 /*return*/, fee]
         }
       })
     })
   }
+  /**
+   * The normalized weight of a token. The combined normalized weights of all tokens will sum up to 1. (Note: the actual sum may be 1 plus or minus a few wei due to division precision loss)
+   * @param {String} poolAddress
+   * @param {String} token
+   * @return {String}
+   */
   Pool.prototype.getNormalizedWeight = function (poolAddress, token) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, weight, result, e_19
@@ -944,11 +1096,11 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getNormalizedWeight(token).call()]
+            return [4 /*yield*/, pool.methods.getNormalizedWeight(token).call()]
           case 2:
             result = _a.sent()
             weight = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_19 = _a.sent()
             this.logger.error(
@@ -956,13 +1108,19 @@ var Pool = (function (_super) {
                 e_19.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, weight]
+            return [2 /*return*/, weight]
         }
       })
     })
   }
+  /**
+   * getDenormalizedWeight of a token in pool
+   * @param {String} poolAddress
+   * @param {String} token
+   * @return {String}
+   */
   Pool.prototype.getDenormalizedWeight = function (poolAddress, token) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, weight, result, e_20
@@ -977,23 +1135,31 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getDenormalizedWeight(token).call()]
+            return [
+              4 /*yield*/,
+              pool.methods.getDenormalizedWeight(token).call()
+            ]
           case 2:
             result = _a.sent()
             weight = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_20 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get denormalized weight of a token in pool'
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, weight]
+            return [2 /*return*/, weight]
         }
       })
     })
   }
+  /**
+   * getTotalDenormalizedWeight in pool
+   * @param {String} poolAddress
+   * @return {String}
+   */
   Pool.prototype.getTotalDenormalizedWeight = function (poolAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, weight, result, e_21
@@ -1008,23 +1174,37 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getTotalDenormalizedWeight().call()]
+            return [
+              4 /*yield*/,
+              pool.methods.getTotalDenormalizedWeight().call()
+            ]
           case 2:
             result = _a.sent()
             weight = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_21 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get total denormalized weight in pool'
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, weight]
+            return [2 /*return*/, weight]
         }
       })
     })
   }
+  /**
+   * swapExactAmountIn - Trades an exact tokenAmountIn of tokenIn taken from the caller by the pool, in exchange for at least minAmountOut of tokenOut given to the caller from the pool, with a maximum marginal price of maxPrice.         Returns (tokenAmountOut, spotPriceAfter), where tokenAmountOut is the amount of token that came out of the pool, and spotPriceAfter is the new marginal spot price, ie, the result of getSpotPrice after the call. (These values are what are limited by the arguments; you are guaranteed tokenAmountOut >= minAmountOut and spotPriceAfter <= maxPrice).
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} tokenAmountIn  will be converted to wei
+   * @param {String} tokenOut
+   * @param {String} minAmountOut will be converted to wei
+   * @param {String} maxPrice will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.swapExactAmountIn = function (
     account,
     poolAddress,
@@ -1052,7 +1232,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .swapExactAmountIn(
                   tokenIn,
@@ -1067,13 +1247,13 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_22 = _d.sent()
             this.logger.log('Error estimate gas swapExactAmountIn')
             this.logger.log(e_22)
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.swapExactAmountIn(
@@ -1087,24 +1267,41 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_23 = _d.sent()
             this.logger.error(
               'ERROR: Failed to swap exact amount in : '.concat(e_23.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * swapExactAmountOut
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} maxAmountIn  will be converted to wei
+   * @param {String} tokenOut
+   * @param {String} minAmountOut will be converted to wei
+   * @param {String} maxPrice will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.swapExactAmountOut = function (
     account,
     poolAddress,
@@ -1132,7 +1329,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .swapExactAmountOut(
                   tokenIn,
@@ -1147,13 +1344,13 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_24 = _d.sent()
             estGas = gasLimitDefault
             this.logger.log('Error estimate gas swapExactAmountIn')
             this.logger.log(e_24)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.swapExactAmountOut(
@@ -1167,24 +1364,38 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_25 = _d.sent()
             this.logger.error(
               'ERROR: Failed to swap exact amount out: '.concat(e_25.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Join the pool, getting poolAmountOut pool tokens. This will pull some of each of the currently trading tokens in the pool, meaning you must have called approve for each token for this pool. These values are limited by the array of maxAmountsIn in the order of the pool tokens.
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} poolAmountOut will be converted to wei
+   * @param {String[]} maxAmountsIn  array holding maxAmount per each token, will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.joinPool = function (
     account,
     poolAddress,
@@ -1229,7 +1440,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .joinPool(this.web3.utils.toWei(poolAmountOut), weiMaxAmountsIn)
                 .estimateGas({ from: account }, function (err, estGas) {
@@ -1238,11 +1449,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_26 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.joinPool(
@@ -1253,24 +1464,38 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_27 = _d.sent()
             this.logger.error(
               'ERROR: Failed to join pool: '.concat(e_27.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Exit the pool, paying poolAmountIn pool tokens and getting some of each of the currently trading tokens in return. These values are limited by the array of minAmountsOut in the order of the pool tokens.
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} poolAmountIn will be converted to wei
+   * @param {String[]} minAmountsOut  array holding minAmount per each token, will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.exitPool = function (
     account,
     poolAddress,
@@ -1315,7 +1540,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .exitPool(this.web3.utils.toWei(poolAmountIn), weiMinAmountsOut)
                 .estimateGas({ from: account }, function (err, estGas) {
@@ -1324,11 +1549,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_28 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.exitPool(
@@ -1339,24 +1564,39 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_29 = _d.sent()
             this.logger.error(
               'ERROR: Failed to exit pool: '.concat(e_29.message)
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Pay tokenAmountIn of token tokenIn to join the pool, getting poolAmountOut of the pool shares.
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} tokenAmountIn will be converted to wei
+   * @param {String} minPoolAmountOut  will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.joinswapExternAmountIn = function (
     account,
     poolAddress,
@@ -1382,7 +1622,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .joinswapExternAmountIn(
                   tokenIn,
@@ -1395,11 +1635,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_30 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.joinswapExternAmountIn(
@@ -1411,12 +1651,18 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_31 = _d.sent()
             this.logger.error(
@@ -1424,13 +1670,22 @@ var Pool = (function (_super) {
                 e_31.message
               )
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Specify poolAmountOut pool shares that you want to get, and a token tokenIn to pay with. This costs tokenAmountIn tokens (these went into the pool).
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} poolAmountOut will be converted to wei
+   * @param {String} maxAmountIn  will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.joinswapPoolAmountOut = function (
     account,
     poolAddress,
@@ -1456,7 +1711,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .joinswapPoolAmountOut(
                   tokenIn,
@@ -1469,11 +1724,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_32 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.joinswapPoolAmountOut(
@@ -1485,22 +1740,37 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_33 = _d.sent()
             this.logger.error('ERROR: Failed to join swap pool amount out')
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Pay poolAmountIn pool shares into the pool, getting minTokenAmountOut of the given token tokenOut out of the pool.
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenOut
+   * @param {String} poolAmountIn will be converted to wei
+   * @param {String} minTokenAmountOut  will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.exitswapPoolAmountIn = function (
     account,
     poolAddress,
@@ -1526,7 +1796,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .exitswapPoolAmountIn(
                   tokenOut,
@@ -1539,11 +1809,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_34 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.exitswapPoolAmountIn(
@@ -1555,12 +1825,18 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_35 = _d.sent()
             this.logger.error(
@@ -1568,13 +1844,22 @@ var Pool = (function (_super) {
                 e_35.message
               )
             )
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Specify tokenAmountOut of token tokenOut that you want to get out of the pool. This costs poolAmountIn pool shares (these went into the pool).
+   * @param {String} account
+   * @param {String} poolAddress
+   * @param {String} tokenOut
+   * @param {String} tokenAmountOut will be converted to wei
+   * @param {String} maxPoolAmountIn  will be converted to wei
+   * @return {TransactionReceipt}
+   */
   Pool.prototype.exitswapExternAmountOut = function (
     account,
     poolAddress,
@@ -1600,7 +1885,7 @@ var Pool = (function (_super) {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .exitswapExternAmountOut(
                   tokenOut,
@@ -1613,11 +1898,11 @@ var Pool = (function (_super) {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_36 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = pool.methods.exitswapExternAmountOut(
@@ -1629,22 +1914,35 @@ var Pool = (function (_super) {
               from: account,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             result = _d.sent()
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             e_37 = _d.sent()
             this.logger.error('ERROR: Failed to exitswapExternAmountOut')
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Get Spot Price of swaping tokenIn to tokenOut
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} tokenOut
+   * @return {String}
+   */
   Pool.prototype.getSpotPrice = function (poolAddress, tokenIn, tokenOut) {
     return __awaiter(this, void 0, void 0, function () {
       var pool, price, result, e_38
@@ -1659,23 +1957,33 @@ var Pool = (function (_super) {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, pool.methods.getSpotPrice(tokenIn, tokenOut).call()]
+            return [
+              4 /*yield*/,
+              pool.methods.getSpotPrice(tokenIn, tokenOut).call()
+            ]
           case 2:
             result = _a.sent()
             price = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_38 = _a.sent()
             this.logger.error(
               'ERROR: Failed to get spot price of swapping tokenIn to tokenOut'
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, price]
+            return [2 /*return*/, price]
         }
       })
     })
   }
+  /**
+   * Get Spot Price of swaping tokenIn to tokenOut without fees
+   * @param {String} poolAddress
+   * @param {String} tokenIn
+   * @param {String} tokenOut
+   * @return {String}
+   */
   Pool.prototype.getSpotPriceSansFee = function (
     poolAddress,
     tokenIn,
@@ -1695,19 +2003,19 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods.getSpotPriceSansFee(tokenIn, tokenOut).call()
             ]
           case 2:
             result = _a.sent()
             price = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_39 = _a.sent()
             this.logger.error('ERROR: Failed to getSpotPriceSansFee')
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, price]
+            return [2 /*return*/, price]
         }
       })
     })
@@ -1734,7 +2042,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcSpotPrice(
                   this.web3.utils.toWei(tokenBalanceIn),
@@ -1748,13 +2056,13 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_40 = _a.sent()
             this.logger.error('ERROR: Failed to call calcSpotPrice')
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -1779,12 +2087,12 @@ var Pool = (function (_super) {
             )
             amount = null
             if (new decimal_js_1.default(tokenAmountOut).gte(tokenBalanceOut))
-              return [2, null]
+              return [2 /*return*/, null]
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcInGivenOut(
                   this.web3.utils.toWei(tokenBalanceIn),
@@ -1799,13 +2107,13 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_41 = _a.sent()
             this.logger.error('ERROR: Failed to calcInGivenOut')
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -1833,7 +2141,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcOutGivenIn(
                   this.web3.utils.toWei(tokenBalanceIn),
@@ -1848,13 +2156,13 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_42 = _a.sent()
             this.logger.error('ERROR: Failed to calcOutGivenIn')
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -1882,7 +2190,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcPoolOutGivenSingleIn(
                   this.web3.utils.toWei(tokenBalanceIn),
@@ -1897,7 +2205,7 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_43 = _a.sent()
             this.logger.error(
@@ -1905,9 +2213,9 @@ var Pool = (function (_super) {
                 e_43.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -1935,7 +2243,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcSingleInGivenPoolOut(
                   this.web3.utils.toWei(tokenBalanceIn),
@@ -1950,7 +2258,7 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_44 = _a.sent()
             this.logger.error(
@@ -1958,9 +2266,9 @@ var Pool = (function (_super) {
                 e_44.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -1988,7 +2296,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcSingleOutGivenPoolIn(
                   this.web3.utils.toWei(tokenBalanceOut),
@@ -2003,7 +2311,7 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_45 = _a.sent()
             this.logger.error(
@@ -2011,9 +2319,9 @@ var Pool = (function (_super) {
                 e_45.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
@@ -2041,7 +2349,7 @@ var Pool = (function (_super) {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               pool.methods
                 .calcPoolInGivenSingleOut(
                   this.web3.utils.toWei(tokenBalanceOut),
@@ -2056,7 +2364,7 @@ var Pool = (function (_super) {
           case 2:
             result = _a.sent()
             amount = this.web3.utils.fromWei(result)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_46 = _a.sent()
             this.logger.error(
@@ -2064,13 +2372,17 @@ var Pool = (function (_super) {
                 e_46.message
               )
             )
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, amount]
+            return [2 /*return*/, amount]
         }
       })
     })
   }
+  /**
+   * Get LOG_SWAP encoded topic
+   * @return {String}
+   */
   Pool.prototype.getSwapEventSignature = function () {
     var abi = this.poolABI
     var eventdata = abi.find(function (o) {
@@ -2079,6 +2391,10 @@ var Pool = (function (_super) {
     var topic = this.web3.eth.abi.encodeEventSignature(eventdata)
     return topic
   }
+  /**
+   * Get LOG_JOIN encoded topic
+   * @return {String}
+   */
   Pool.prototype.getJoinEventSignature = function () {
     var abi = this.poolABI
     var eventdata = abi.find(function (o) {
@@ -2087,6 +2403,10 @@ var Pool = (function (_super) {
     var topic = this.web3.eth.abi.encodeEventSignature(eventdata)
     return topic
   }
+  /**
+   * Get LOG_EXIT encoded topic
+   * @return {String}
+   */
   Pool.prototype.getExitEventSignature = function () {
     var abi = this.poolABI
     var eventdata = abi.find(function (o) {

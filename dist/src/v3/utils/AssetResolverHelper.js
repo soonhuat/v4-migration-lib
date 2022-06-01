@@ -144,16 +144,16 @@ function assetResolve(asset, ocean) {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          if (!isDdo(asset)) return [3, 1]
+          if (!isDdo(asset)) return [3 /*break*/, 1]
           did = asset.id
           ddo = asset
-          return [2, { did: did, ddo: ddo }]
+          return [2 /*return*/, { did: did, ddo: ddo }]
         case 1:
-          return [4, ocean.assets.resolve(asset)]
+          return [4 /*yield*/, ocean.assets.resolve(asset)]
         case 2:
           ddo = _a.sent()
           did = ddo.id
-          return [2, { did: did, ddo: ddo }]
+          return [2 /*return*/, { did: did, ddo: ddo }]
       }
     })
   })

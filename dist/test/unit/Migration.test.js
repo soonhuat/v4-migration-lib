@@ -211,7 +211,7 @@ describe('Migration test', function () {
         migration = new Migration_1.Migration(web3)
         ;(0,
         chai_1.assert)(migration != undefined, 'Failed to initialize Migration class')
-        return [2]
+        return [2 /*return*/]
       })
     })
   })
@@ -249,18 +249,18 @@ describe('Migration test', function () {
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
-            return [4, contracts.getAccounts()]
+            return [4 /*yield*/, contracts.getAccounts()]
           case 2:
             _a.sent()
             v3DtOwner = contracts.accounts[0]
             user1 = contracts.accounts[1]
             user2 = contracts.accounts[2]
             daemon = contracts.accounts[9]
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             error_1 = _a.sent()
             console.log('Get Accounts error', error_1)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             ;(0, chai_1.expect)(v3DtOwner != undefined)
             ;(0, chai_1.expect)(user1 != undefined)
@@ -270,15 +270,17 @@ describe('Migration test', function () {
           case 5:
             _a.trys.push([5, 7, , 8])
             return [
-              4,
+              4 /*yield*/,
               contracts.deployContracts(
                 v3DtOwner,
                 daemon,
                 FactoryRouter_json_1.default.abi
               )
+              //console.log(contracts)
             ]
           case 6:
             _a.sent()
+            //console.log(contracts)
             v3dt1Address = contracts.v3dt1Address
             v3dt2Address = contracts.v3dt2Address
             v3pool1Address = contracts.v3pool1Address
@@ -289,11 +291,11 @@ describe('Migration test', function () {
             factory721Address = contracts.factory721Address
             fixedRateAddress = contracts.fixedRateAddress
             dispenserAddress = contracts.dispenserAddress
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 7:
             error_2 = _a.sent()
             console.log('Deploy Contracts error', error_2)
-            return [3, 8]
+            return [3 /*break*/, 8]
           case 8:
             ;(0, chai_1.expect)(v3dt1Address != undefined)
             ;(0, chai_1.expect)(v3dt2Address != undefined)
@@ -305,7 +307,7 @@ describe('Migration test', function () {
             ;(0, chai_1.expect)(factory721Address != undefined)
             ;(0, chai_1.expect)(fixedRateAddress != undefined)
             ;(0, chai_1.expect)(dispenserAddress != dispenserAddress)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -318,7 +320,7 @@ describe('Migration test', function () {
           case 0:
             _a.trys.push([0, 2, , 3])
             return [
-              4,
+              4 /*yield*/,
               migration.publishFixedRateAsset(
                 did,
                 description,
@@ -340,16 +342,16 @@ describe('Migration test', function () {
             ]
           case 1:
             txReceipt = _a.sent()
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             e_1 = _a.sent()
             console.log('Error', e_1)
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
             ;(0, chai_1.expect)(txReceipt.events.NFTCreated != null)
             ;(0, chai_1.expect)(txReceipt.events.TokenCreated != null)
             ;(0, chai_1.expect)(txReceipt.events.NewFixedRate != null)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -362,7 +364,7 @@ describe('Migration test', function () {
           case 0:
             _a.trys.push([0, 2, , 3])
             return [
-              4,
+              4 /*yield*/,
               migration.migrateFixedRateAsset(
                 did,
                 factory721Address,
@@ -390,18 +392,18 @@ describe('Migration test', function () {
             ]
           case 1:
             response = _a.sent()
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             e_2 = _a.sent()
             console.log('Error', e_2)
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
             ;(0, chai_1.expect)(response.txReceipt.events.NFTCreated != null)
             ;(0, chai_1.expect)(response.txReceipt.events.TokenCreated != null)
             ;(0, chai_1.expect)(response.txReceipt.events.NewFixedRate != null)
             ;(0,
             chai_1.expect)(response.txReceipt2.events.MetadataCreated != null)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -423,7 +425,7 @@ describe('Migration test', function () {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               migration.migrateFreeAsset(
                 did,
                 factory721Address,
@@ -448,18 +450,18 @@ describe('Migration test', function () {
             ]
           case 2:
             response = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_3 = _a.sent()
             console.log('Error', e_3)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             ;(0, chai_1.expect)(response.txReceipt.events.NFTCreated != null)
             ;(0, chai_1.expect)(response.txReceipt.events.TokenCreated != null)
             ;(0, chai_1.expect)(response.txReceipt.events.NewFixedRate != null)
             ;(0,
             chai_1.expect)(response.txReceipt2.events.MetadataCreated != null)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

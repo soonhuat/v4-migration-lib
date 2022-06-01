@@ -165,7 +165,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.EventHandler = void 0
 var ContractEvent_1 = require('./ContractEvent')
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var EventHandler = (function (_super) {
+var EventHandler = /** @class */ (function (_super) {
   __extends(EventHandler, _super)
   function EventHandler(config) {
     var _this = _super.call(this) || this
@@ -213,11 +213,11 @@ var EventHandler = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.web3.eth.getBlockNumber()]
+            return [4 /*yield*/, this.web3.eth.getBlockNumber()]
           case 1:
             blockNumber = _a.sent()
             if ((this.polling && !isInterval) || !this.count) {
-              return [2]
+              return [2 /*return*/]
             }
             this.polling = true
             if (!this.lastBlock) {
@@ -232,7 +232,7 @@ var EventHandler = (function (_super) {
             this.lastTimeout = global.setTimeout(function () {
               return _this.checkBlock(true, n++)
             }, this.interval)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

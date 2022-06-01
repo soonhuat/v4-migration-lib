@@ -152,12 +152,20 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.DDO = void 0
 var Web3Provider_1 = __importDefault(require('../datatokens/Web3Provider'))
-var DDO = (function () {
+/**
+ * DID Descriptor Object.
+ * Contains all the data related to an asset.
+ */
+var DDO = /** @class */ (function () {
   function DDO(ddo) {
     if (ddo === void 0) {
       ddo = {}
     }
     this['@context'] = 'https://w3id.org/did/v1'
+    /**
+     * DID, descentralized ID.
+     * @type {string}
+     */
     this.id = null
     this.publicKey = []
     this.authentication = []
@@ -168,9 +176,19 @@ var DDO = (function () {
         new Date().toISOString().replace(/\.[0-9]{3}/, '')
     })
   }
+  /**
+   * Serializes the DDO object.
+   * @param  {DDO} DDO to be serialized.
+   * @return {string} DDO serialized.
+   */
   DDO.serialize = function (ddo) {
     return JSON.stringify(ddo, null, 2)
   }
+  /**
+   * Deserializes the DDO object.
+   * @param  {DDO} DDO to be deserialized.
+   * @return {string} DDO deserialized.
+   */
   DDO.deserialize = function (ddoString) {
     var ddo = JSON.parse(ddoString)
     return new DDO(ddo)
@@ -178,6 +196,11 @@ var DDO = (function () {
   DDO.prototype.shortId = function () {
     return this.id.replace('did:op:', '')
   }
+  /**
+   * Finds a service of a DDO by index.
+   * @param  {number} Service index.
+   * @return {Service} Service.
+   */
   DDO.prototype.findServiceById = function (index) {
     if (isNaN(index)) {
       throw new Error('index is not set')
@@ -187,6 +210,11 @@ var DDO = (function () {
     })
     return service
   }
+  /**
+   * Finds a service of a DDO by type.
+   * @param  {string} serviceType Service type.
+   * @return {Service} Service.
+   */
   DDO.prototype.findServiceByType = function (serviceType) {
     if (!serviceType) {
       throw new Error('serviceType not set')
@@ -195,6 +223,10 @@ var DDO = (function () {
       return s.type === serviceType
     })
   }
+  /**
+   * Generate the checksum using the current content.
+   * @return {string[]} DDO checksum.
+   */
   DDO.prototype.getChecksum = function () {
     var attributes = this.findServiceByType('metadata').attributes
     var _a = attributes.main,
@@ -218,11 +250,20 @@ var DDO = (function () {
       [name, author, license, this.id],
       false
     )
-    return Web3Provider_1.default
-      .getWeb3()
-      .utils.sha3(values.join(''))
-      .replace(/^0x([a-f0-9]{64})(:!.+)?$/i, '0x$1')
+    return (
+      Web3Provider_1.default
+        .getWeb3()
+        .utils.sha3(values.join(''))
+        // TODO: security/detect-unsafe-regex
+        .replace(/^0x([a-f0-9]{64})(:!.+)?$/i, '0x$1')
+    )
   }
+  /**
+   * Generates and adds a simple hash proof on publicKey
+   * @param  {Ocean}          ocean     Ocean instance.
+   * @param  {string}         publicKey Public key to be used on personal sign.
+   * @return {Promise<void>}
+   */
   DDO.prototype.addProof = function (ocean, publicKey, password) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
@@ -236,9 +277,10 @@ var DDO = (function () {
           signatureValue: Web3Provider_1.default
             .getWeb3()
             .utils.sha3(publicKey)
+            // TODO: security/detect-unsafe-regex
             .replace(/^0x([a-f0-9]{64})(:!.+)?$/i, '0x$1')
         }
-        return [2]
+        return [2 /*return*/]
       })
     })
   }

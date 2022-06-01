@@ -144,7 +144,7 @@ function generateIntantiableConfigFromConfig(config) {
 }
 exports.generateIntantiableConfigFromConfig =
   generateIntantiableConfigFromConfig
-var Instantiable = (function () {
+var Instantiable = /** @class */ (function () {
   function Instantiable() {}
   Object.defineProperty(Instantiable.prototype, 'ocean', {
     get: function () {
@@ -201,7 +201,7 @@ var Instantiable = (function () {
         utils_1.LoggerInstance.warn(
           'getInstance() methods has needs to be added to child class.'
         )
-        return [2]
+        return [2 /*return*/]
       })
     })
   }

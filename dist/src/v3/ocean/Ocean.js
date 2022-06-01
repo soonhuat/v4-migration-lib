@@ -193,11 +193,19 @@ var OceanPool_1 = require('../balancer/OceanPool')
 var FixedRateExchange_1 = require('../exchange/FixedRateExchange')
 var Dispenser_1 = require('../dispenser/Dispenser')
 var EventAccessControl_1 = require('./EventAccessControl')
-var Ocean = (function (_super) {
+/**
+ * Main interface for Ocean Protocol.
+ */
+var Ocean = /** @class */ (function (_super) {
   __extends(Ocean, _super)
   function Ocean() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of Ocean.
+   * @param  {Config} config Ocean instance configuration.
+   * @return {Promise<Ocean>}
+   */
   Ocean.getInstance = function (config) {
     var _a
     return __awaiter(this, void 0, void 0, function () {
@@ -218,16 +226,19 @@ var Ocean = (function (_super) {
             )
             instance.setInstanceConfig(instanceConfig)
             _b = instance
-            return [4, Utils_1.OceanUtils.getInstance(instanceConfig)]
+            return [4 /*yield*/, Utils_1.OceanUtils.getInstance(instanceConfig)]
           case 1:
             _b.utils = _j.sent()
             _c = instance
-            return [4, Provider_1.Provider.getInstance(instanceConfig)]
+            return [
+              4 /*yield*/,
+              Provider_1.Provider.getInstance(instanceConfig)
+            ]
           case 2:
             _c.provider = _j.sent()
             _d = instance
             return [
-              4,
+              4 /*yield*/,
               EventAccessControl_1.EventAccessControl.getInstance(
                 instanceConfig
               )
@@ -242,15 +253,21 @@ var Ocean = (function (_super) {
                 : _a.requestTimeout
             )
             _e = instance
-            return [4, Accounts_1.Accounts.getInstance(instanceConfig)]
+            return [
+              4 /*yield*/,
+              Accounts_1.Accounts.getInstance(instanceConfig)
+              // instance.auth = await Auth.getInstance(instanceConfig)
+            ]
           case 4:
             _e.accounts = _j.sent()
+            // instance.auth = await Auth.getInstance(instanceConfig)
             _f = instance
-            return [4, Assets_1.Assets.getInstance(instanceConfig)]
+            return [4 /*yield*/, Assets_1.Assets.getInstance(instanceConfig)]
           case 5:
+            // instance.auth = await Auth.getInstance(instanceConfig)
             _f.assets = _j.sent()
             _g = instance
-            return [4, Compute_1.Compute.getInstance(instanceConfig)]
+            return [4 /*yield*/, Compute_1.Compute.getInstance(instanceConfig)]
           case 6:
             _g.compute = _j.sent()
             instance.datatokens = new Datatokens_1.DataTokens(
@@ -297,11 +314,14 @@ var Ocean = (function (_super) {
               instanceConfig.config
             )
             _h = instance
-            return [4, Versions_1.Versions.getInstance(instanceConfig)]
+            return [
+              4 /*yield*/,
+              Versions_1.Versions.getInstance(instanceConfig)
+            ]
           case 7:
             _h.versions = _j.sent()
             instance.network = new Network_1.Network()
-            return [2, instance]
+            return [2 /*return*/, instance]
         }
       })
     })

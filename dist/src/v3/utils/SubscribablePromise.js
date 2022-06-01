@@ -2,7 +2,7 @@
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.SubscribablePromise = void 0
 var SubscribableObserver_1 = require('./SubscribableObserver')
-var SubscribablePromise = (function () {
+var SubscribablePromise = /** @class */ (function () {
   function SubscribablePromise(executor) {
     var _this = this
     this.observer = new SubscribableObserver_1.SubscribableObserver()
@@ -14,6 +14,7 @@ var SubscribablePromise = (function () {
       }),
       this
     )
+    // Defear
     setTimeout(function () {
       return _this.init(executor)
     }, 1)

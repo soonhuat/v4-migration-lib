@@ -1,7 +1,7 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.SubscribableObserver = void 0
-var SubscribableObserver = (function () {
+var SubscribableObserver = /** @class */ (function () {
   function SubscribableObserver() {
     this.completed = false
     this.subscriptions = new Set()

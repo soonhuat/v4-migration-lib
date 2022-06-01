@@ -17,5 +17,8 @@ export declare class PoolFactory {
     factoryAddress?: string,
     config?: ConfigHelperConfig
   )
+  /**
+   * Creates a new pool
+   */
   createPool(account: string): Promise<TransactionReceipt>
 }

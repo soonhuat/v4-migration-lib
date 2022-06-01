@@ -1,24 +1,43 @@
-import 'uuid'
-import t from 'decimal.js'
-import e from 'web3'
-import r, { fetch as n } from 'cross-fetch'
-import i from 'node-abort-controller'
-import o from '@oceanprotocol/contracts/artifacts/Metadata.json'
-import { LZMA as s } from 'lzma/src/lzma-c'
-import a from '@oceanprotocol/contracts/artifacts/DTFactory.json'
-import u from '@oceanprotocol/contracts/artifacts/DataTokenTemplate.json'
-import { lookup as h } from '@ethereum-navigator/navigator'
-import { SHA256 as f } from 'crypto-js'
-import l from '@oceanprotocol/contracts/artifacts/BPool.json'
-import c from '@oceanprotocol/contracts/artifacts/BFactory.json'
-import d from '@oceanprotocol/contracts/artifacts/FixedRateExchange.json'
-import p from '@oceanprotocol/contracts/artifacts/Dispenser.json'
-import m from 'fs'
-import { homedir as v } from 'os'
-import g from '@oceanprotocol/contracts/artifacts/address.json'
-import y from 'axios'
-import b from 'crypto-js/sha256'
-function w(t, e) {
+require('uuid')
+var t = require('decimal.js'),
+  e = require('web3'),
+  r = require('cross-fetch'),
+  n = require('node-abort-controller'),
+  i = require('@oceanprotocol/contracts/artifacts/Metadata.json'),
+  o = require('lzma/src/lzma-c'),
+  s = require('@oceanprotocol/contracts/artifacts/DTFactory.json'),
+  a = require('@oceanprotocol/contracts/artifacts/DataTokenTemplate.json'),
+  u = require('@ethereum-navigator/navigator'),
+  h = require('crypto-js'),
+  f = require('@oceanprotocol/contracts/artifacts/BPool.json'),
+  l = require('@oceanprotocol/contracts/artifacts/BFactory.json'),
+  c = require('@oceanprotocol/contracts/artifacts/FixedRateExchange.json'),
+  d = require('@oceanprotocol/contracts/artifacts/Dispenser.json'),
+  p = require('fs'),
+  m = require('os'),
+  v = require('@oceanprotocol/contracts/artifacts/address.json'),
+  g = require('axios'),
+  y = require('crypto-js/sha256')
+function b(t) {
+  return t && 'object' == typeof t && 'default' in t ? t : { default: t }
+}
+var w,
+  M = /*#__PURE__*/ b(t),
+  _ = /*#__PURE__*/ b(e),
+  A = /*#__PURE__*/ b(r),
+  P = /*#__PURE__*/ b(n),
+  S = /*#__PURE__*/ b(i),
+  T = /*#__PURE__*/ b(s),
+  x = /*#__PURE__*/ b(a),
+  E = /*#__PURE__*/ b(f),
+  k = /*#__PURE__*/ b(l),
+  R = /*#__PURE__*/ b(c),
+  I = /*#__PURE__*/ b(d),
+  B = /*#__PURE__*/ b(p),
+  O = /*#__PURE__*/ b(v),
+  C = /*#__PURE__*/ b(g),
+  L = /*#__PURE__*/ b(y)
+function j(t, e) {
   for (var r = 0; r < e.length; r++) {
     var n = e[r]
     ;(n.enumerable = n.enumerable || !1),
@@ -27,17 +46,17 @@ function w(t, e) {
       Object.defineProperty(t, n.key, n)
   }
 }
-function M(t, e, r) {
+function N(t, e, r) {
   return (
-    e && w(t.prototype, e),
-    r && w(t, r),
+    e && j(t.prototype, e),
+    r && j(t, r),
     Object.defineProperty(t, 'prototype', { writable: !1 }),
     t
   )
 }
-function _() {
+function D() {
   return (
-    (_ =
+    (D =
       Object.assign ||
       function (t) {
         for (var e = 1; e < arguments.length; e++) {
@@ -47,30 +66,30 @@ function _() {
         }
         return t
       }),
-    _.apply(this, arguments)
+    D.apply(this, arguments)
   )
 }
-function A(t, e) {
+function U(t, e) {
   ;(t.prototype = Object.create(e.prototype)),
     (t.prototype.constructor = t),
-    P(t, e)
+    F(t, e)
 }
-function P(t, e) {
+function F(t, e) {
   return (
-    (P =
+    (F =
       Object.setPrototypeOf ||
       function (t, e) {
         return (t.__proto__ = e), t
       }),
-    P(t, e)
+    F(t, e)
   )
 }
-function S(t, e) {
+function q(t, e) {
   ;(null == e || e > t.length) && (e = t.length)
   for (var r = 0, n = new Array(e); r < e; r++) n[r] = t[r]
   return n
 }
-function T(t, e) {
+function z(t, e) {
   var r =
     ('undefined' != typeof Symbol && t[Symbol.iterator]) || t['@@iterator']
   if (r) return (r = r.call(t)).next.bind(r)
@@ -78,7 +97,7 @@ function T(t, e) {
     Array.isArray(t) ||
     (r = (function (t, e) {
       if (t) {
-        if ('string' == typeof t) return S(t, e)
+        if ('string' == typeof t) return q(t, e)
         var r = Object.prototype.toString.call(t).slice(8, -1)
         return (
           'Object' === r && t.constructor && (r = t.constructor.name),
@@ -86,7 +105,7 @@ function T(t, e) {
             ? Array.from(t)
             : 'Arguments' === r ||
               /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)
-            ? S(t, e)
+            ? q(t, e)
             : void 0
         )
       }
@@ -103,17 +122,16 @@ function T(t, e) {
     'Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
   )
 }
-var x
 !(function (t) {
   ;(t[(t.None = -1)] = 'None'),
     (t[(t.Error = 0)] = 'Error'),
     (t[(t.Warn = 1)] = 'Warn'),
     (t[(t.Log = 2)] = 'Log'),
     (t[(t.Verbose = 3)] = 'Verbose')
-})(x || (x = {}))
-var E = new /*#__PURE__*/ ((function () {
+})(w || (w = {}))
+var W = new /*#__PURE__*/ ((function () {
     function t(t) {
-      void 0 === t && (t = x.Error),
+      void 0 === t && (t = w.Error),
         (this.logLevel = void 0),
         (this.logLevel = t)
     }
@@ -131,25 +149,25 @@ var E = new /*#__PURE__*/ ((function () {
       (e.debug = function () {
         this.dispatch.apply(
           this,
-          ['debug', x.Verbose].concat([].slice.call(arguments))
+          ['debug', w.Verbose].concat([].slice.call(arguments))
         )
       }),
       (e.log = function () {
         this.dispatch.apply(
           this,
-          ['log', x.Log].concat([].slice.call(arguments))
+          ['log', w.Log].concat([].slice.call(arguments))
         )
       }),
       (e.warn = function () {
         this.dispatch.apply(
           this,
-          ['warn', x.Warn].concat([].slice.call(arguments))
+          ['warn', w.Warn].concat([].slice.call(arguments))
         )
       }),
       (e.error = function () {
         this.dispatch.apply(
           this,
-          ['error', x.Error].concat([].slice.call(arguments))
+          ['error', w.Error].concat([].slice.call(arguments))
         )
       }),
       (e.dispatch = function (t, e) {
@@ -160,44 +178,44 @@ var E = new /*#__PURE__*/ ((function () {
       t
     )
   })())(),
-  k = function (t) {
-    return R(t, !1)
+  H = function (t) {
+    return G(t, !1)
   }
-function R(t, e) {
+function G(t, e) {
   void 0 === t && (t = '')
-  var r = L(t, /^(?:0x)*([a-f0-9]+)$/i, 'zeroXTransformer')
+  var r = $(t, /^(?:0x)*([a-f0-9]+)$/i, 'zeroXTransformer')
   return (e && r.valid ? '0x' : '') + r.output
 }
-var I = function (t) {
-  return B(t, !0)
+var Z = function (t) {
+  return K(t, !0)
 }
-function B(t, e) {
+function K(t, e) {
   void 0 === t && (t = '')
-  var r = L(t, /^(?:0x|did:op:)*([a-f0-9]{40})$/i, 'didTransformer')
+  var r = $(t, /^(?:0x|did:op:)*([a-f0-9]{40})$/i, 'didTransformer')
   return (e && r.valid ? 'did:op:' : '') + r.output
 }
-var O = function (t) {
+var V = function (t) {
     return (function (t) {
-      return R(t, !0)
-    })(B(t, !1))
+      return G(t, !0)
+    })(K(t, !1))
   },
-  C = function (t) {
-    return k(B(t, !1))
+  J = function (t) {
+    return H(K(t, !1))
   }
-function L(t, e, r) {
+function $(t, e, r) {
   if ('string' != typeof t)
     throw (
-      (E.debug('Not input string:'),
-      E.debug(t),
+      (W.debug('Not input string:'),
+      W.debug(t),
       new Error('[' + r + '] Expected string, input type: ' + typeof t))
     )
   var n = t.match(e)
   return n
     ? { valid: !0, output: n[1] }
-    : (E.warn('[' + r + '] Input transformation failed.'),
+    : (W.warn('[' + r + '] Input transformation failed.'),
       { valid: !1, output: t })
 }
-var j = /*#__PURE__*/ (function () {
+var X = /*#__PURE__*/ (function () {
     function t() {
       ;(this.completed = !1), (this.subscriptions = new Set())
     }
@@ -243,10 +261,10 @@ var j = /*#__PURE__*/ (function () {
       t
     )
   })(),
-  N = /*#__PURE__*/ (function () {
+  Y = /*#__PURE__*/ (function () {
     function t(t) {
       var e = this
-      ;(this.observer = new j()),
+      ;(this.observer = new X()),
         (this.promise = Object.assign(
           new Promise(function (t, r) {
             setTimeout(function () {
@@ -290,7 +308,7 @@ var j = /*#__PURE__*/ (function () {
       t
     )
   })(),
-  D =
+  Q =
     'undefined' != typeof globalThis
       ? globalThis
       : 'undefined' != typeof window
@@ -300,18 +318,18 @@ var j = /*#__PURE__*/ (function () {
       : 'undefined' != typeof self
       ? self
       : {}
-function U(t) {
+function tt(t) {
   var e = { exports: {} }
   return t(e, e.exports), e.exports
 }
-function F(t) {
+function et(t) {
   throw new Error(
     'Could not dynamically require "' +
       t +
       '". Please configure the dynamicRequireTargets option of @rollup/plugin-commonjs appropriately for this require call to behave properly.'
   )
 }
-var q = U(function (t) {
+var rt = tt(function (t) {
     !(function (e) {
       var r,
         n = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i,
@@ -1585,16 +1603,16 @@ var q = U(function (t) {
           ? (t.exports = r)
           : (e || (e = 'undefined' != typeof self && self ? self : window),
             (e.BigNumber = r))
-    })(D)
+    })(Q)
   }),
-  z = function (t, e) {
+  nt = function (t, e) {
     try {
       return Promise.resolve(t.eth.getGasPrice()).then(function (t) {
-        var r = new q(t)
+        var r = new rt(t)
         return e && e.gasFeeMultiplier
           ? r
               .multipliedBy(e.gasFeeMultiplier)
-              .integerValue(q.ROUND_DOWN)
+              .integerValue(rt.ROUND_DOWN)
               .toString(10)
           : r.toString(10)
       })
@@ -1602,7 +1620,7 @@ var q = U(function (t) {
       return Promise.reject(t)
     }
   }
-function W(t, e) {
+function it(t, e) {
   return (
     e &&
       ((t.transactionBlockTimeout = e.transactionBlockTimeout),
@@ -1611,9 +1629,9 @@ function W(t, e) {
     t
   )
 }
-var H = function (t, e) {
+var ot = function (t, e) {
   try {
-    return G(t)
+    return st(t)
       ? Promise.resolve({ did: t.id, ddo: t })
       : Promise.resolve(e.assets.resolve(t)).then(function (t) {
           return { did: t.id, ddo: t }
@@ -1622,10 +1640,10 @@ var H = function (t, e) {
     return Promise.reject(t)
   }
 }
-function G(t) {
+function st(t) {
   return void 0 !== t.id
 }
-var Z = {
+var at = {
     nouns: [
       'Crab',
       'Fish',
@@ -1829,7 +1847,7 @@ var Z = {
       'zealous'
     ]
   },
-  K = /*#__PURE__*/ (function () {
+  ut = /*#__PURE__*/ (function () {
     function t() {
       ;(this._ocean = void 0),
         (this._web3 = void 0),
@@ -1840,7 +1858,7 @@ var Z = {
       (t.getInstance = function (t) {
         try {
           return (
-            E.warn(
+            W.warn(
               'getInstance() methods has needs to be added to child class.'
             ),
             Promise.resolve()
@@ -1858,12 +1876,12 @@ var Z = {
       (t.prototype.setInstanceConfig = function (e) {
         t.setInstanceConfig(this, e)
       }),
-      M(t, [
+      N(t, [
         {
           key: 'ocean',
           get: function () {
             return (
-              this._ocean || E.error('Ocean instance is not defined.'),
+              this._ocean || W.error('Ocean instance is not defined.'),
               this._ocean
             )
           }
@@ -1872,7 +1890,7 @@ var Z = {
           key: 'web3',
           get: function () {
             return (
-              this._web3 || E.error('Web3 instance is not defined.'), this._web3
+              this._web3 || W.error('Web3 instance is not defined.'), this._web3
             )
           }
         },
@@ -1880,7 +1898,7 @@ var Z = {
           key: 'config',
           get: function () {
             return (
-              this._config || E.error('Config instance is not defined.'),
+              this._config || W.error('Config instance is not defined.'),
               this._config
             )
           }
@@ -1888,7 +1906,7 @@ var Z = {
         {
           key: 'logger',
           get: function () {
-            return E
+            return W
           }
         },
         {
@@ -1906,7 +1924,7 @@ var Z = {
       t
     )
   })()
-function V(t, e) {
+function ht(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -1914,39 +1932,39 @@ function V(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var J = /*#__PURE__*/ (function (e) {
-    function r(t, r) {
+var ft = /*#__PURE__*/ (function (t) {
+    function e(e, r) {
       var n
       return (
-        void 0 === t && (t = '0x0'),
-        ((n = e.call(this) || this).id = void 0),
+        void 0 === e && (e = '0x0'),
+        ((n = t.call(this) || this).id = void 0),
         (n.password = void 0),
         (n.token = void 0),
-        (n.id = t),
+        (n.id = e),
         r && n.setInstanceConfig(r),
         n
       )
     }
-    A(r, e)
-    var n = r.prototype
+    U(e, t)
+    var r = e.prototype
     return (
-      (n.getId = function () {
+      (r.getId = function () {
         return this.id
       }),
-      (n.setId = function (t) {
+      (r.setId = function (t) {
         this.id = t
       }),
-      (n.setPassword = function (t) {
+      (r.setPassword = function (t) {
         this.password = t
       }),
-      (n.getPassword = function () {
+      (r.getPassword = function () {
         return this.password
       }),
-      (n.getTokenBalance = function (e) {
+      (r.getTokenBalance = function (t) {
         try {
-          var r = this
-          if (null === e) return Promise.resolve(null)
-          var n = [
+          var e = this
+          if (null === t) return Promise.resolve(null)
+          var r = [
               {
                 constant: !0,
                 inputs: [{ name: '_owner', type: 'address' }],
@@ -1957,32 +1975,32 @@ var J = /*#__PURE__*/ (function (e) {
                 type: 'function'
               }
             ],
-            i = null
-          return Promise.resolve(r.getTokenDecimals(e)).then(function (o) {
-            var s = V(
+            n = null
+          return Promise.resolve(e.getTokenDecimals(t)).then(function (i) {
+            var o = ht(
               function () {
-                var s = new r.web3.eth.Contract(n, e, { from: r.id })
-                return Promise.resolve(s.methods.balanceOf(r.id).call()).then(
-                  function (e) {
-                    i = new t(e).div(Math.pow(10, o)).toString()
+                var o = new e.web3.eth.Contract(r, t, { from: e.id })
+                return Promise.resolve(o.methods.balanceOf(e.id).call()).then(
+                  function (t) {
+                    n = new M.default(t).div(Math.pow(10, i)).toString()
                   }
                 )
               },
               function (t) {
-                r.logger.error('ERROR: Failed to get the balance: ' + t.message)
+                e.logger.error('ERROR: Failed to get the balance: ' + t.message)
               }
             )
-            return s && s.then
-              ? s.then(function () {
-                  return i
+            return o && o.then
+              ? o.then(function () {
+                  return n
                 })
-              : i
+              : n
           })
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getTokenDecimals = function (t) {
+      (r.getTokenDecimals = function (t) {
         try {
           var e = this,
             r = 18
@@ -1996,7 +2014,7 @@ var J = /*#__PURE__*/ (function (e) {
                 type: 'function'
               }
             ],
-            i = V(
+            i = ht(
               function () {
                 var i = new e.web3.eth.Contract(n, t, { from: e.id })
                 return Promise.resolve(i.methods.decimals().call()).then(
@@ -2020,7 +2038,7 @@ var J = /*#__PURE__*/ (function (e) {
           return Promise.reject(t)
         }
       }),
-      (n.getOceanBalance = function () {
+      (r.getOceanBalance = function () {
         try {
           return Promise.resolve(
             this.getTokenBalance(this.config.oceanTokenAddress)
@@ -2029,10 +2047,10 @@ var J = /*#__PURE__*/ (function (e) {
           return Promise.reject(t)
         }
       }),
-      (n.getTokenSymbol = function (t) {
+      (r.getTokenSymbol = function (t) {
         return Promise.resolve('')
       }),
-      (n.getEtherBalance = function () {
+      (r.getEtherBalance = function () {
         try {
           var t = this
           return Promise.resolve(t.web3.eth.getBalance(t.id, 'latest')).then(
@@ -2044,10 +2062,10 @@ var J = /*#__PURE__*/ (function (e) {
           return Promise.reject(t)
         }
       }),
-      r
+      e
     )
-  })(K),
-  $ = /*#__PURE__*/ (function () {
+  })(ut),
+  lt = /*#__PURE__*/ (function () {
     function t(t) {
       ;(this.id = void 0), (this.id = t)
     }
@@ -2060,7 +2078,7 @@ var J = /*#__PURE__*/ (function (e) {
       return r
     }),
       (t.generate = function (e) {
-        return new t(k(e))
+        return new t(H(e))
       })
     var e = t.prototype
     return (
@@ -2073,11 +2091,11 @@ var J = /*#__PURE__*/ (function (e) {
       t
     )
   })(),
-  X = /*#__PURE__*/ (function (t) {
+  ct = /*#__PURE__*/ (function (t) {
     function e() {
       return t.apply(this, arguments) || this
     }
-    A(e, t),
+    U(e, t),
       (e.getInstance = function (t) {
         try {
           var r = new e()
@@ -2093,7 +2111,7 @@ var J = /*#__PURE__*/ (function (e) {
           var t = this
           return Promise.resolve(t.web3.eth.getAccounts()).then(function (e) {
             var r = e.map(function (e) {
-              return new J(e, t.instanceConfig)
+              return new ft(e, t.instanceConfig)
             })
             return Promise.all(r)
           })
@@ -2112,24 +2130,24 @@ var J = /*#__PURE__*/ (function (e) {
       }),
       e
     )
-  })(K),
-  Y = /*#__PURE__*/ (function () {
+  })(ut),
+  dt = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.getWeb3 = function (t) {
         return (
           void 0 === t && (t = {}),
-          new e(
+          new _.default(
             t.web3Provider ||
-              e.givenProvider ||
-              new e.providers.HttpProvider(t.nodeUri)
+              _.default.givenProvider ||
+              new _.default.providers.HttpProvider(t.nodeUri)
           )
         )
       }),
       t
     )
   })(),
-  Q = /*#__PURE__*/ (function () {
+  pt = /*#__PURE__*/ (function () {
     function t(t) {
       void 0 === t && (t = {}),
         (this['@context'] = 'https://w3id.org/did/v1'),
@@ -2193,7 +2211,8 @@ var J = /*#__PURE__*/ (function (e) {
               }),
             [e, r, n, this.id]
           )
-        return Y.getWeb3()
+        return dt
+          .getWeb3()
           .utils.sha3(i.join(''))
           .replace(/^0x([a-f0-9]{64})(:!.+)?$/i, '0x$1')
       }),
@@ -2205,7 +2224,8 @@ var J = /*#__PURE__*/ (function (e) {
               created: new Date().toISOString().replace(/\.[0-9]{3}/, ''),
               creator: e,
               type: 'AddressHash',
-              signatureValue: Y.getWeb3()
+              signatureValue: dt
+                .getWeb3()
                 .utils.sha3(e)
                 .replace(/^0x([a-f0-9]{64})(:!.+)?$/i, '0x$1')
             }),
@@ -2218,7 +2238,7 @@ var J = /*#__PURE__*/ (function (e) {
       t
     )
   })()
-function tt(t, e) {
+function mt(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -2226,7 +2246,7 @@ function tt(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var et = /*#__PURE__*/ (function (t) {
+var vt = /*#__PURE__*/ (function (t) {
     function e() {
       for (var e, r = arguments.length, n = new Array(r), i = 0; i < r; i++)
         n[i] = arguments[i]
@@ -2241,7 +2261,7 @@ var et = /*#__PURE__*/ (function (t) {
         e
       )
     }
-    A(e, t),
+    U(e, t),
       (e.getInstance = function (t) {
         try {
           var r = new e()
@@ -2258,9 +2278,9 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       })
-    var n = e.prototype
+    var r = e.prototype
     return (
-      (n.setBaseUrl = function (t) {
+      (r.setBaseUrl = function (t) {
         try {
           var e = this
           return (
@@ -2273,12 +2293,12 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getServiceEndpoints = function () {
+      (r.getServiceEndpoints = function () {
         try {
           var t = this,
             e = []
           return Promise.resolve(
-            tt(
+            mt(
               function () {
                 return Promise.resolve(t.ocean.utils.fetch.get(t.url)).then(
                   function (r) {
@@ -2312,23 +2332,23 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getEndpointURL = function (t) {
+      (r.getEndpointURL = function (t) {
         return this.servicesEndpoints
           ? this.servicesEndpoints.find(function (e) {
               return e.serviceName === t
             })
           : null
       }),
-      (n.createSignature = function (t, e) {
+      (r.createSignature = function (t, e) {
         try {
           return Promise.resolve(
-            this.ocean.utils.signature.signText(k(e), t.getId())
+            this.ocean.utils.signature.signText(H(e), t.getId())
           )
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (n.encrypt = function (t, e, r) {
+      (r.encrypt = function (t, e, r) {
         try {
           var n = this
           return Promise.resolve(n.getNonce(r.getId())).then(function () {
@@ -2339,7 +2359,7 @@ var et = /*#__PURE__*/ (function (t) {
               },
               o = n.getEncryptEndpoint() ? n.getEncryptEndpoint().urlPath : null
             return o
-              ? tt(
+              ? mt(
                   function () {
                     return Promise.resolve(
                       n.ocean.utils.fetch.post(o, decodeURI(JSON.stringify(i)))
@@ -2359,13 +2379,13 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getNonce = function (t) {
+      (r.getNonce = function (t) {
         try {
           var e = this,
             r = e.getNonceEndpoint() ? e.getNonceEndpoint().urlPath : null
           return Promise.resolve(
             r
-              ? tt(
+              ? mt(
                   function () {
                     return Promise.resolve(
                       e.ocean.utils.fetch.get(r + '?userAddress=' + t)
@@ -2386,10 +2406,10 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.initialize = function (t, e, r, n, i) {
+      (r.initialize = function (t, e, r, n, i) {
         try {
           var o = this
-          return Promise.resolve(H(t, o.ocean)).then(function (t) {
+          return Promise.resolve(ot(t, o.ocean)).then(function (t) {
             var s = t.did,
               a = t.ddo,
               u = o.getInitializeEndpoint()
@@ -2402,7 +2422,7 @@ var et = /*#__PURE__*/ (function (t) {
                 (u += '&dataToken=' + a.dataToken),
                 (u += '&consumerAddress=' + n),
                 i && (u += '&userdata=' + encodeURI(JSON.stringify(i))),
-                tt(
+                mt(
                   function () {
                     return Promise.resolve(o.ocean.utils.fetch.get(u)).then(
                       function (t) {
@@ -2423,41 +2443,41 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getInitializeEndpoint = function () {
+      (r.getInitializeEndpoint = function () {
         return this.getEndpointURL('initialize')
       }),
-      (n.getNonceEndpoint = function () {
+      (r.getNonceEndpoint = function () {
         return this.getEndpointURL('nonce')
       }),
-      (n.getEncryptEndpoint = function () {
+      (r.getEncryptEndpoint = function () {
         return this.getEndpointURL('encrypt')
       }),
-      (n.getFileinfoEndpoint = function () {
+      (r.getFileinfoEndpoint = function () {
         return this.getEndpointURL('fileinfo')
       }),
-      (n.getComputeStartEndpoint = function () {
+      (r.getComputeStartEndpoint = function () {
         return this.getEndpointURL('computeStart')
       }),
-      (n.getComputeStopEndpoint = function () {
+      (r.getComputeStopEndpoint = function () {
         return this.getEndpointURL('computeStop')
       }),
-      (n.getComputeStatusEndpoint = function () {
+      (r.getComputeStatusEndpoint = function () {
         return this.getEndpointURL('computeStatus')
       }),
-      (n.getComputeDeleteEndpoint = function () {
+      (r.getComputeDeleteEndpoint = function () {
         return this.getEndpointURL('computeDelete')
       }),
-      (n.getComputeResultEndpoint = function () {
+      (r.getComputeResultEndpoint = function () {
         return this.getEndpointURL('computeResult')
       }),
-      (n.getDownloadEndpoint = function () {
+      (r.getDownloadEndpoint = function () {
         return this.getEndpointURL('download')
       }),
-      (n.isValidProvider = function (t) {
+      (r.isValidProvider = function (t) {
         try {
           var e = this
           return Promise.resolve(
-            tt(
+            mt(
               function () {
                 return Promise.resolve(e.ocean.utils.fetch.get(t)).then(
                   function (t) {
@@ -2487,28 +2507,28 @@ var et = /*#__PURE__*/ (function (t) {
           return Promise.reject(t)
         }
       }),
-      (n.getAssetURL = function (t, e, n) {
+      (r.getAssetURL = function (t, e, r) {
         try {
-          var i = this,
-            o = t.getId()
-          return Promise.resolve(i.getNonce(o)).then(function (s) {
-            function a() {
-              var t = i.getEndpointURL('assetUrls')
-                ? i.getEndpointURL('encrypt').urlPath
+          var n = this,
+            i = t.getId()
+          return Promise.resolve(n.getNonce(i)).then(function (o) {
+            function s() {
+              var t = n.getEndpointURL('assetUrls')
+                ? n.getEndpointURL('encrypt').urlPath
                 : null
               null === t &&
                 (t = 'http://localhost:8030/api/v1/services/assetUrls')
-              var a = t
+              var s = t
               return (
-                (a += '?documentId=' + e),
-                (a += '&signature=' + u),
-                (a += '&serviceId=' + n),
-                (a += '&nonce=' + s),
-                (a += '&publisherAddress=' + o),
-                tt(
+                (s += '?documentId=' + e),
+                (s += '&signature=' + a),
+                (s += '&serviceId=' + r),
+                (s += '&nonce=' + o),
+                (s += '&publisherAddress=' + i),
+                mt(
                   function () {
                     return Promise.resolve(
-                      r(a, {
+                      A.default(s, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' }
                       })
@@ -2524,12 +2544,12 @@ var et = /*#__PURE__*/ (function (t) {
                 )
               )
             }
-            var u,
-              h = tt(
+            var a,
+              u = mt(
                 function () {
-                  return Promise.resolve(i.createSignature(t, e + s)).then(
+                  return Promise.resolve(n.createSignature(t, e + o)).then(
                     function (t) {
-                      u = t
+                      a = t
                     }
                   )
                 },
@@ -2537,13 +2557,13 @@ var et = /*#__PURE__*/ (function (t) {
                   console.log('error', t)
                 }
               )
-            return h && h.then ? h.then(a) : a()
+            return u && u.then ? u.then(s) : s()
           })
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      M(e, [
+      N(e, [
         {
           key: 'url',
           get: function () {
@@ -2553,8 +2573,8 @@ var et = /*#__PURE__*/ (function (t) {
       ]),
       e
     )
-  })(K),
-  rt = U(function (t) {
+  })(ut),
+  gt = tt(function (t) {
     !(function (t, e) {
       function r(t, e) {
         if (!t) throw new Error(e || 'Assertion failed')
@@ -2581,7 +2601,7 @@ var et = /*#__PURE__*/ (function (t) {
         (i.BN = i),
         (i.wordSize = 26)
       try {
-        o = F('buffer').Buffer
+        o = et('buffer').Buffer
       } catch (t) {}
       function s(t, e, r) {
         for (var n = 0, i = Math.min(t.length, r), o = e; o < i; o++) {
@@ -4723,9 +4743,9 @@ var et = /*#__PURE__*/ (function (t) {
         (_.prototype.invm = function (t) {
           return this.imod(t._invmp(this.m).mul(this.r2))._forceRed(this)
         })
-    })(t, D)
+    })(t, Q)
   }),
-  nt = U(function (t) {
+  yt = tt(function (t) {
     !(function (t, e) {
       function r(t, e) {
         if (!t) throw new Error(e || 'Assertion failed')
@@ -4752,7 +4772,7 @@ var et = /*#__PURE__*/ (function (t) {
         (i.BN = i),
         (i.wordSize = 26)
       try {
-        o = F('buffer').Buffer
+        o = et('buffer').Buffer
       } catch (t) {}
       function s(t, e, r) {
         for (var n = 0, i = Math.min(t.length, r), o = e; o < i; o++) {
@@ -6894,9 +6914,9 @@ var et = /*#__PURE__*/ (function (t) {
         (_.prototype.invm = function (t) {
           return this.imod(t._invmp(this.m).mul(this.r2))._forceRed(this)
         })
-    })(t, D)
+    })(t, Q)
   }),
-  it = function (t) {
+  bt = function (t) {
     return 'string' != typeof t
       ? t
       : (function (t) {
@@ -6911,22 +6931,22 @@ var et = /*#__PURE__*/ (function (t) {
       ? t.slice(2)
       : t
   },
-  ot = function (t) {
+  wt = function (t) {
     if ('string' == typeof t || 'number' == typeof t) {
-      var e = new nt(1),
+      var e = new yt(1),
         r = String(t).toLowerCase().trim(),
         n = '0x' === r.substr(0, 2) || '-0x' === r.substr(0, 3),
-        i = it(r)
+        i = bt(r)
       if (
-        ('-' === i.substr(0, 1) && ((i = it(i.slice(1))), (e = new nt(-1, 10))),
+        ('-' === i.substr(0, 1) && ((i = bt(i.slice(1))), (e = new yt(-1, 10))),
         (!(i = '' === i ? '0' : i).match(/^-?[0-9]+$/) &&
           i.match(/^[0-9A-Fa-f]+$/)) ||
           i.match(/^[a-fA-F]+$/) ||
           (!0 === n && i.match(/^[0-9A-Fa-f]+$/)))
       )
-        return new nt(i, 16).mul(e)
+        return new yt(i, 16).mul(e)
       if ((i.match(/^-?[0-9]+$/) || '' === i) && !1 === n)
-        return new nt(i, 10).mul(e)
+        return new yt(i, 10).mul(e)
     } else if (
       'object' == typeof t &&
       t.toString &&
@@ -6935,16 +6955,16 @@ var et = /*#__PURE__*/ (function (t) {
       t.toString(10).match(/^-?[0-9]+$/) &&
       (t.mul || t.dividedToIntegerBy)
     )
-      return new nt(t.toString(10), 10)
+      return new yt(t.toString(10), 10)
     throw new Error(
       '[number-to-bn] while converting number ' +
         JSON.stringify(t) +
         ' to BN.js instance, error: invalid number value. Value must be an integer, hex string, BN or BigNumber instance. Note, decimals are not supported.'
     )
   },
-  st = new rt(0),
-  at = new rt(-1),
-  ut = {
+  Mt = new gt(0),
+  _t = new gt(-1),
+  At = {
     noether: '0',
     wei: '1',
     kwei: '1000',
@@ -6973,19 +6993,19 @@ var et = /*#__PURE__*/ (function (t) {
     gether: '1000000000000000000000000000',
     tether: '1000000000000000000000000000000'
   }
-function ht(t) {
+function Pt(t) {
   var e = t ? t.toLowerCase() : 'ether',
-    r = ut[e]
+    r = At[e]
   if ('string' != typeof r)
     throw new Error(
       '[ethjs-unit] the unit provided ' +
         t +
         " doesn't exists, please use the one of the following units " +
-        JSON.stringify(ut, null, 2)
+        JSON.stringify(At, null, 2)
     )
-  return new rt(r, 10)
+  return new gt(r, 10)
 }
-function ft(t) {
+function St(t) {
   if ('string' == typeof t) {
     if (!t.match(/^-?[0-9.]+$/))
       throw new Error(
@@ -7007,17 +7027,17 @@ function ft(t) {
   )
 }
 for (
-  var lt = {
-      unitMap: ut,
-      numberToString: ft,
-      getValueOfUnit: ht,
+  var Tt = {
+      unitMap: At,
+      numberToString: St,
+      getValueOfUnit: Pt,
       fromWei: function (t, e, r) {
-        var n = ot(t),
-          i = n.lt(st),
-          o = ht(e),
-          s = ut[e].length - 1 || 1,
+        var n = wt(t),
+          i = n.lt(Mt),
+          o = Pt(e),
+          s = At[e].length - 1 || 1,
           a = r || {}
-        i && (n = n.mul(at))
+        i && (n = n.mul(_t))
         for (var u = n.mod(o).toString(10); u.length < s; ) u = '0' + u
         a.pad || (u = u.match(/^([0-9]*[1-9]|0)(0*)/)[1])
         var h = n.div(o).toString(10)
@@ -7026,9 +7046,9 @@ for (
         return i && (f = '-' + f), f
       },
       toWei: function (t, e) {
-        var r = ft(t),
-          n = ht(e),
-          i = ut[e].length - 1 || 1,
+        var r = St(t),
+          n = Pt(e),
+          i = At[e].length - 1 || 1,
           o = '-' === r.substring(0, 1)
         if ((o && (r = r.substring(1)), '.' === r))
           throw new Error(
@@ -7052,13 +7072,13 @@ for (
               ' to wei, too many decimal places'
           )
         for (; u.length < i; ) u += '0'
-        ;(a = new rt(a)), (u = new rt(u))
+        ;(a = new gt(a)), (u = new gt(u))
         var h = a.mul(n).add(u)
-        return o && (h = h.mul(at)), new rt(h.toString(10), 10)
+        return o && (h = h.mul(_t)), new gt(h.toString(10), 10)
       }
     },
-    ct = { __proto__: null, default: {} },
-    dt = U(function (t) {
+    xt = { __proto__: null, default: {} },
+    Et = tt(function (t) {
       !(function (t, e) {
         function r(t, e) {
           if (!t) throw new Error(e || 'Assertion failed')
@@ -7088,7 +7108,7 @@ for (
           o =
             'undefined' != typeof window && void 0 !== window.Buffer
               ? window.Buffer
-              : ct.Buffer
+              : xt.Buffer
         } catch (t) {}
         function s(t, e) {
           var r = t.charCodeAt(e)
@@ -9286,9 +9306,9 @@ for (
           (A.prototype.invm = function (t) {
             return this.imod(t._invmp(this.m).mul(this.r2))._forceRed(this)
           })
-      })(t, D)
+      })(t, Q)
     }),
-    pt = U(function (t, e) {
+    kt = tt(function (t, e) {
       !(function (t) {
         var e,
           r,
@@ -9377,20 +9397,20 @@ for (
           })
       })(e)
     }),
-    mt = [],
-    vt = [],
-    gt = 'undefined' != typeof Uint8Array ? Uint8Array : Array,
-    yt = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
-    bt = 0,
-    wt = yt.length;
-  bt < wt;
-  ++bt
+    Rt = [],
+    It = [],
+    Bt = 'undefined' != typeof Uint8Array ? Uint8Array : Array,
+    Ot = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+    Ct = 0,
+    Lt = Ot.length;
+  Ct < Lt;
+  ++Ct
 )
-  (mt[bt] = yt[bt]), (vt[yt.charCodeAt(bt)] = bt)
-function Mt(t, e, r) {
+  (Rt[Ct] = Ot[Ct]), (It[Ot.charCodeAt(Ct)] = Ct)
+function jt(t, e, r) {
   for (var n, i = [], o = e; o < r; o += 3)
     i.push(
-      mt[
+      Rt[
         ((n =
           ((t[o] << 16) & 16711680) +
           ((t[o + 1] << 8) & 65280) +
@@ -9398,14 +9418,14 @@ function Mt(t, e, r) {
           18) &
           63
       ] +
-        mt[(n >> 12) & 63] +
-        mt[(n >> 6) & 63] +
-        mt[63 & n]
+        Rt[(n >> 12) & 63] +
+        Rt[(n >> 6) & 63] +
+        Rt[63 & n]
     )
   return i.join('')
 }
-;(vt['-'.charCodeAt(0)] = 62), (vt['_'.charCodeAt(0)] = 63)
-var _t = function (t, e, r, n, i) {
+;(It['-'.charCodeAt(0)] = 62), (It['_'.charCodeAt(0)] = 63)
+var Nt = function (t, e, r, n, i) {
     var o,
       s,
       a = 8 * i - n - 1,
@@ -9432,7 +9452,7 @@ var _t = function (t, e, r, n, i) {
     }
     return (d ? -1 : 1) * s * Math.pow(2, o - n)
   },
-  At = function (t, e, r, n, i, o) {
+  Dt = function (t, e, r, n, i, o) {
     var s,
       a,
       u,
@@ -9466,7 +9486,7 @@ var _t = function (t, e, r, n, i) {
     );
     t[r + d - p] |= 128 * m
   },
-  Pt = U(function (t, e) {
+  Ut = tt(function (t, e) {
     var r =
       'function' == typeof Symbol && 'function' == typeof Symbol.for
         ? Symbol.for('nodejs.util.inspect.custom')
@@ -9790,15 +9810,15 @@ var _t = function (t, e, r, n, i) {
           s < a;
           s += o
         )
-          i.push(Mt(t, s, s + o > a ? a : s + o))
+          i.push(jt(t, s, s + o > a ? a : s + o))
         return (
           1 === n
-            ? i.push(mt[(e = t[r - 1]) >> 2] + mt[(e << 4) & 63] + '==')
+            ? i.push(Rt[(e = t[r - 1]) >> 2] + Rt[(e << 4) & 63] + '==')
             : 2 === n &&
               i.push(
-                mt[(e = (t[r - 2] << 8) + t[r - 1]) >> 10] +
-                  mt[(e >> 4) & 63] +
-                  mt[(e << 2) & 63] +
+                Rt[(e = (t[r - 2] << 8) + t[r - 1]) >> 10] +
+                  Rt[(e >> 4) & 63] +
+                  Rt[(e << 2) & 63] +
                   '='
               ),
           i.join('')
@@ -10179,12 +10199,12 @@ var _t = function (t, e, r, n, i) {
     }
     function B(t, e, r, n, i) {
       return (
-        (e = +e), (r >>>= 0), i || I(t, 0, r, 4), At(t, e, r, n, 23, 4), r + 4
+        (e = +e), (r >>>= 0), i || I(t, 0, r, 4), Dt(t, e, r, n, 23, 4), r + 4
       )
     }
     function O(t, e, r, n, i) {
       return (
-        (e = +e), (r >>>= 0), i || I(t, 0, r, 8), At(t, e, r, n, 52, 8), r + 8
+        (e = +e), (r >>>= 0), i || I(t, 0, r, 8), Dt(t, e, r, n, 52, 8), r + 8
       )
     }
     ;(o.prototype.slice = function (t, e) {
@@ -10295,16 +10315,16 @@ var _t = function (t, e, r, n, i) {
         )
       }),
       (o.prototype.readFloatLE = function (t, e) {
-        return (t >>>= 0), e || k(t, 4, this.length), _t(this, t, !0, 23, 4)
+        return (t >>>= 0), e || k(t, 4, this.length), Nt(this, t, !0, 23, 4)
       }),
       (o.prototype.readFloatBE = function (t, e) {
-        return (t >>>= 0), e || k(t, 4, this.length), _t(this, t, !1, 23, 4)
+        return (t >>>= 0), e || k(t, 4, this.length), Nt(this, t, !1, 23, 4)
       }),
       (o.prototype.readDoubleLE = function (t, e) {
-        return (t >>>= 0), e || k(t, 8, this.length), _t(this, t, !0, 52, 8)
+        return (t >>>= 0), e || k(t, 8, this.length), Nt(this, t, !0, 52, 8)
       }),
       (o.prototype.readDoubleBE = function (t, e) {
-        return (t >>>= 0), e || k(t, 8, this.length), _t(this, t, !1, 52, 8)
+        return (t >>>= 0), e || k(t, 8, this.length), Nt(this, t, !1, 52, 8)
       }),
       (o.prototype.writeUintLE = o.prototype.writeUIntLE =
         function (t, e, r, n) {
@@ -10607,7 +10627,7 @@ var _t = function (t, e, r, n, i) {
           })(t),
           i = n[0],
           o = n[1],
-          s = new gt(
+          s = new Bt(
             (function (t, e, r) {
               return (3 * (e + r)) / 4 - r
             })(0, i, o)
@@ -10616,22 +10636,22 @@ var _t = function (t, e, r, n, i) {
           u = o > 0 ? i - 4 : i
         for (r = 0; r < u; r += 4)
           (e =
-            (vt[t.charCodeAt(r)] << 18) |
-            (vt[t.charCodeAt(r + 1)] << 12) |
-            (vt[t.charCodeAt(r + 2)] << 6) |
-            vt[t.charCodeAt(r + 3)]),
+            (It[t.charCodeAt(r)] << 18) |
+            (It[t.charCodeAt(r + 1)] << 12) |
+            (It[t.charCodeAt(r + 2)] << 6) |
+            It[t.charCodeAt(r + 3)]),
             (s[a++] = (e >> 16) & 255),
             (s[a++] = (e >> 8) & 255),
             (s[a++] = 255 & e)
         return (
           2 === o &&
-            ((e = (vt[t.charCodeAt(r)] << 2) | (vt[t.charCodeAt(r + 1)] >> 4)),
+            ((e = (It[t.charCodeAt(r)] << 2) | (It[t.charCodeAt(r + 1)] >> 4)),
             (s[a++] = 255 & e)),
           1 === o &&
             ((e =
-              (vt[t.charCodeAt(r)] << 10) |
-              (vt[t.charCodeAt(r + 1)] << 4) |
-              (vt[t.charCodeAt(r + 2)] >> 2)),
+              (It[t.charCodeAt(r)] << 10) |
+              (It[t.charCodeAt(r + 1)] << 4) |
+              (It[t.charCodeAt(r + 2)] >> 2)),
             (s[a++] = (e >> 8) & 255),
             (s[a++] = 255 & e)),
           s
@@ -10668,7 +10688,7 @@ var _t = function (t, e, r, n, i) {
       return e
     })()
   }),
-  St = U(function (t) {
+  Ft = tt(function (t) {
     !(function (t, e) {
       function r(t, e) {
         if (!t) throw new Error(e || 'Assertion failed')
@@ -10698,7 +10718,7 @@ var _t = function (t, e, r, n, i) {
         o =
           'undefined' != typeof window && void 0 !== window.Buffer
             ? window.Buffer
-            : ct.Buffer
+            : xt.Buffer
       } catch (t) {}
       function s(t, e) {
         var n = t.charCodeAt(e)
@@ -12778,9 +12798,9 @@ var _t = function (t, e, r, n, i) {
         (S.prototype.invm = function (t) {
           return this.imod(t._invmp(this.m).mul(this.r2))._forceRed(this)
         })
-    })(t, D)
+    })(t, Q)
   }),
-  Tt = U(function (t) {
+  qt = tt(function (t) {
     !(function (t, e) {
       function r(t, e) {
         if (!t) throw new Error(e || 'Assertion failed')
@@ -12810,7 +12830,7 @@ var _t = function (t, e, r, n, i) {
         o =
           'undefined' != typeof window && void 0 !== window.Buffer
             ? window.Buffer
-            : ct.Buffer
+            : xt.Buffer
       } catch (t) {}
       function s(t, e) {
         var n = t.charCodeAt(e)
@@ -14890,17 +14910,17 @@ var _t = function (t, e, r, n, i) {
         (S.prototype.invm = function (t) {
           return this.imod(t._invmp(this.m).mul(this.r2))._forceRed(this)
         })
-    })(t, D)
+    })(t, Q)
   }),
-  xt = U(function (t, e) {
+  zt = tt(function (t, e) {
     var r =
-      (D && D.__importDefault) ||
+      (Q && Q.__importDefault) ||
       function (t) {
         return t && t.__esModule ? t : { default: t }
       }
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.getLength = e.decode = e.encode = void 0)
-    var n = r(Tt)
+    var n = r(qt)
     function i(t, e) {
       if ('0' === t[0] && '0' === t[1])
         throw new Error('invalid RLP: extra zeros')
@@ -15016,9 +15036,9 @@ var _t = function (t, e, r, n, i) {
         return n + i(e.slice(1, n).toString('hex'), 16)
       })
   }),
-  Et = U(function (t, e) {
+  Wt = tt(function (t, e) {
     var r =
-        (D && D.__createBinding) ||
+        (Q && Q.__createBinding) ||
         (Object.create
           ? function (t, e, r, n) {
               void 0 === n && (n = r),
@@ -15033,7 +15053,7 @@ var _t = function (t, e, r, n, i) {
               void 0 === n && (n = r), (t[n] = e[r])
             }),
       n =
-        (D && D.__setModuleDefault) ||
+        (Q && Q.__setModuleDefault) ||
         (Object.create
           ? function (t, e) {
               Object.defineProperty(t, 'default', { enumerable: !0, value: e })
@@ -15042,7 +15062,7 @@ var _t = function (t, e, r, n, i) {
               t.default = e
             }),
       i =
-        (D && D.__importStar) ||
+        (Q && Q.__importStar) ||
         function (t) {
           if (t && t.__esModule) return t
           var e = {}
@@ -15054,18 +15074,18 @@ var _t = function (t, e, r, n, i) {
           return n(e, t), e
         },
       o =
-        (D && D.__importDefault) ||
+        (Q && Q.__importDefault) ||
         function (t) {
           return t && t.__esModule ? t : { default: t }
         }
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.rlp = e.BN = void 0)
-    var s = o(St)
+    var s = o(Ft)
     e.BN = s.default
-    var a = i(xt)
+    var a = i(zt)
     e.rlp = a
   }),
-  kt = U(function (t, e) {
+  Ht = tt(function (t, e) {
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.KECCAK256_RLP =
         e.KECCAK256_RLP_S =
@@ -15077,34 +15097,34 @@ var _t = function (t, e, r, n, i) {
         e.MAX_INTEGER =
         e.MAX_UINT64 =
           void 0),
-      (e.MAX_UINT64 = new Et.BN('ffffffffffffffff', 16)),
-      (e.MAX_INTEGER = new Et.BN(
+      (e.MAX_UINT64 = new Wt.BN('ffffffffffffffff', 16)),
+      (e.MAX_INTEGER = new Wt.BN(
         'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
         16
       )),
-      (e.TWO_POW256 = new Et.BN(
+      (e.TWO_POW256 = new Wt.BN(
         '10000000000000000000000000000000000000000000000000000000000000000',
         16
       )),
       (e.KECCAK256_NULL_S =
         'c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470'),
-      (e.KECCAK256_NULL = Pt.Buffer.from(e.KECCAK256_NULL_S, 'hex')),
+      (e.KECCAK256_NULL = Ut.Buffer.from(e.KECCAK256_NULL_S, 'hex')),
       (e.KECCAK256_RLP_ARRAY_S =
         '1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'),
-      (e.KECCAK256_RLP_ARRAY = Pt.Buffer.from(e.KECCAK256_RLP_ARRAY_S, 'hex')),
+      (e.KECCAK256_RLP_ARRAY = Ut.Buffer.from(e.KECCAK256_RLP_ARRAY_S, 'hex')),
       (e.KECCAK256_RLP_S =
         '56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'),
-      (e.KECCAK256_RLP = Pt.Buffer.from(e.KECCAK256_RLP_S, 'hex'))
+      (e.KECCAK256_RLP = Ut.Buffer.from(e.KECCAK256_RLP_S, 'hex'))
   }),
-  Rt = Object.getOwnPropertySymbols,
-  It = Object.prototype.hasOwnProperty,
-  Bt = Object.prototype.propertyIsEnumerable
-function Ot(t) {
+  Gt = Object.getOwnPropertySymbols,
+  Zt = Object.prototype.hasOwnProperty,
+  Kt = Object.prototype.propertyIsEnumerable
+function Vt(t) {
   if (null == t)
     throw new TypeError('Object.assign cannot be called with null or undefined')
   return Object(t)
 }
-var Ct = (function () {
+var Jt = (function () {
     try {
       if (!Object.assign) return !1
       var t = new String('abc')
@@ -15132,18 +15152,18 @@ var Ct = (function () {
   })()
     ? Object.assign
     : function (t, e) {
-        for (var r, n, i = Ot(t), o = 1; o < arguments.length; o++) {
+        for (var r, n, i = Vt(t), o = 1; o < arguments.length; o++) {
           for (var s in (r = Object(arguments[o])))
-            It.call(r, s) && (i[s] = r[s])
-          if (Rt) {
-            n = Rt(r)
+            Zt.call(r, s) && (i[s] = r[s])
+          if (Gt) {
+            n = Gt(r)
             for (var a = 0; a < n.length; a++)
-              Bt.call(r, n[a]) && (i[n[a]] = r[n[a]])
+              Kt.call(r, n[a]) && (i[n[a]] = r[n[a]])
           }
         }
         return i
       },
-  Lt = function (t) {
+  $t = function (t) {
     return (
       t &&
       'object' == typeof t &&
@@ -15152,7 +15172,7 @@ var Ct = (function () {
       'function' == typeof t.readUInt8
     )
   },
-  jt = U(function (t) {
+  Xt = tt(function (t) {
     t.exports =
       'function' == typeof Object.create
         ? function (t, e) {
@@ -15174,7 +15194,7 @@ var Ct = (function () {
               (t.prototype.constructor = t)
           }
   }),
-  Nt = U(function (t, e) {
+  Yt = tt(function (t, e) {
     var r = /%[sdj%]/g
     ;(e.format = function (t) {
       if (!m(t)) {
@@ -15212,7 +15232,7 @@ var Ct = (function () {
       return a
     }),
       (e.deprecate = function (t, r) {
-        if (v(D.process))
+        if (v(Q.process))
           return function () {
             return e.deprecate(t, r).apply(this, arguments)
           }
@@ -15509,7 +15529,7 @@ var Ct = (function () {
           void 0 === t
         )
       }),
-      (e.isBuffer = Lt)
+      (e.isBuffer = $t)
     var P = [
       'Jan',
       'Feb',
@@ -15535,14 +15555,14 @@ var Ct = (function () {
     ;(e.log = function () {
       console.log('%s - %s', S(), e.format.apply(e, arguments))
     }),
-      (e.inherits = jt),
+      (e.inherits = Xt),
       (e._extend = function (t, e) {
         if (!e || !y(e)) return t
         for (var r = Object.keys(e), n = r.length; n--; ) t[r[n]] = e[r[n]]
         return t
       })
   }),
-  Dt = U(function (t) {
+  Qt = tt(function (t) {
     function e(t, e) {
       if (t === e) return 0
       for (
@@ -15557,8 +15577,8 @@ var Ct = (function () {
       return r < n ? -1 : n < r ? 1 : 0
     }
     function r(t) {
-      return D.Buffer && 'function' == typeof D.Buffer.isBuffer
-        ? D.Buffer.isBuffer(t)
+      return Q.Buffer && 'function' == typeof Q.Buffer.isBuffer
+        ? Q.Buffer.isBuffer(t)
         : !(null == t || !t._isBuffer)
     }
     var n = Object.prototype.hasOwnProperty,
@@ -15570,7 +15590,7 @@ var Ct = (function () {
     function a(t) {
       return (
         !r(t) &&
-        'function' == typeof D.ArrayBuffer &&
+        'function' == typeof Q.ArrayBuffer &&
         ('function' == typeof ArrayBuffer.isView
           ? ArrayBuffer.isView(t)
           : !!t &&
@@ -15581,7 +15601,7 @@ var Ct = (function () {
     var u = (t.exports = p),
       h = /\s*function\s+([^\(\s]*)\s*/
     function f(t) {
-      if (Nt.isFunction(t)) {
+      if (Yt.isFunction(t)) {
         if (o) return t.name
         var e = t.toString().match(h)
         return e && e[1]
@@ -15591,7 +15611,7 @@ var Ct = (function () {
       return 'string' == typeof t ? (t.length < e ? t : t.slice(0, e)) : t
     }
     function c(t) {
-      if (o || !Nt.isFunction(t)) return Nt.inspect(t)
+      if (o || !Yt.isFunction(t)) return Yt.inspect(t)
       var e = f(t)
       return '[Function' + (e ? ': ' + e : '') + ']'
     }
@@ -15610,8 +15630,8 @@ var Ct = (function () {
     function m(t, n, o, u) {
       if (t === n) return !0
       if (r(t) && r(n)) return 0 === e(t, n)
-      if (Nt.isDate(t) && Nt.isDate(n)) return t.getTime() === n.getTime()
-      if (Nt.isRegExp(t) && Nt.isRegExp(n))
+      if (Yt.isDate(t) && Yt.isDate(n)) return t.getTime() === n.getTime()
+      if (Yt.isRegExp(t) && Yt.isRegExp(n))
         return (
           t.source === n.source &&
           t.global === n.global &&
@@ -15638,7 +15658,7 @@ var Ct = (function () {
           u.expected.push(n),
           (function (t, e, r, n) {
             if (null == t || null == e) return !1
-            if (Nt.isPrimitive(t) || Nt.isPrimitive(e)) return t === e
+            if (Yt.isPrimitive(t) || Yt.isPrimitive(e)) return t === e
             if (r && Object.getPrototypeOf(t) !== Object.getPrototypeOf(e))
               return !1
             var o = v(t),
@@ -15691,7 +15711,7 @@ var Ct = (function () {
       var o = 'string' == typeof n,
         s = !t && i && !r
       if (
-        (((!t && Nt.isError(i) && o && g(i, r)) || s) &&
+        (((!t && Yt.isError(i) && o && g(i, r)) || s) &&
           d(i, r, 'Got unwanted exception' + n),
         (t && i && r && !g(i, r)) || (!t && i))
       )
@@ -15730,7 +15750,7 @@ var Ct = (function () {
         }
       }
     }),
-      Nt.inherits(u.AssertionError, Error),
+      Yt.inherits(u.AssertionError, Error),
       (u.fail = d),
       (u.ok = p),
       (u.equal = function (t, e, r) {
@@ -15766,7 +15786,7 @@ var Ct = (function () {
       (u.ifError = function (t) {
         if (t) throw t
       }),
-      (u.strict = Ct(
+      (u.strict = Jt(
         function t(e, r) {
           e || d(e, !0, r, '==', t)
         },
@@ -15787,44 +15807,44 @@ var Ct = (function () {
         return e
       }
   })
-const Ut = 'Impossible case. Please create issue.',
-  Ft = 'The tweak was out of range or the resulted private key is invalid',
-  qt = 'Public Key could not be parsed',
-  zt = 'Signature could not be parsed'
-function Wt(t, e) {
+const te = 'Impossible case. Please create issue.',
+  ee = 'The tweak was out of range or the resulted private key is invalid',
+  re = 'Public Key could not be parsed',
+  ne = 'Signature could not be parsed'
+function ie(t, e) {
   if (!t) throw new Error(e)
 }
-function Ht(t, e, r) {
+function oe(t, e, r) {
   if (
-    (Wt(e instanceof Uint8Array, `Expected ${t} to be an Uint8Array`),
+    (ie(e instanceof Uint8Array, `Expected ${t} to be an Uint8Array`),
     void 0 !== r)
   )
     if (Array.isArray(r)) {
       const n = `Expected ${t} to be an Uint8Array with length [${r.join(
         ', '
       )}]`
-      Wt(r.includes(e.length), n)
+      ie(r.includes(e.length), n)
     } else
-      Wt(e.length === r, `Expected ${t} to be an Uint8Array with length ${r}`)
+      ie(e.length === r, `Expected ${t} to be an Uint8Array with length ${r}`)
 }
-function Gt(t) {
-  Wt('Boolean' === Kt(t), 'Expected compressed to be a Boolean')
+function se(t) {
+  ie('Boolean' === ue(t), 'Expected compressed to be a Boolean')
 }
-function Zt(t = (t) => new Uint8Array(t), e) {
-  return 'function' == typeof t && (t = t(e)), Ht('output', t, e), t
+function ae(t = (t) => new Uint8Array(t), e) {
+  return 'function' == typeof t && (t = t(e)), oe('output', t, e), t
 }
-function Kt(t) {
+function ue(t) {
   return Object.prototype.toString.call(t).slice(8, -1)
 }
-var Vt = Jt
-function Jt(t, e) {
+var he = fe
+function fe(t, e) {
   if (!t) throw new Error(e || 'Assertion failed')
 }
-Jt.equal = function (t, e, r) {
+fe.equal = function (t, e, r) {
   if (t != e) throw new Error(r || 'Assertion failed: ' + t + ' != ' + e)
 }
-var $t,
-  Xt = U(function (t, e) {
+var le,
+  ce = tt(function (t, e) {
     var r = e
     function n(t) {
       return 1 === t.length ? '0' + t : t
@@ -15864,13 +15884,13 @@ var $t,
         return 'hex' === e ? i(t) : t
       })
   }),
-  Yt = U(function (t, e) {
+  de = tt(function (t, e) {
     var r = e
-    ;(r.assert = Vt),
-      (r.toArray = Xt.toArray),
-      (r.zero2 = Xt.zero2),
-      (r.toHex = Xt.toHex),
-      (r.encode = Xt.encode),
+    ;(r.assert = he),
+      (r.toArray = ce.toArray),
+      (r.zero2 = ce.zero2),
+      (r.toHex = ce.toHex),
+      (r.encode = ce.encode),
       (r.getNAF = function (t, e, r) {
         var n = new Array(Math.max(t.bitLength(), r) + 1)
         n.fill(0)
@@ -15926,21 +15946,21 @@ var $t,
         return 'string' == typeof t ? r.toArray(t, 'hex') : t
       }),
       (r.intFromLE = function (t) {
-        return new dt(t, 'hex', 'le')
+        return new Et(t, 'hex', 'le')
       })
   }),
-  Qt = function (t) {
-    return $t || ($t = new te(null)), $t.generate(t)
+  pe = function (t) {
+    return le || (le = new me(null)), le.generate(t)
   }
-function te(t) {
+function me(t) {
   this.rand = t
 }
-var ee = te
+var ve = me
 if (
-  ((te.prototype.generate = function (t) {
+  ((me.prototype.generate = function (t) {
     return this._rand(t)
   }),
-  (te.prototype._rand = function (t) {
+  (me.prototype._rand = function (t) {
     if (this.rand.getBytes) return this.rand.getBytes(t)
     for (var e = new Uint8Array(t), r = 0; r < e.length; r++)
       e[r] = this.rand.getByte()
@@ -15949,39 +15969,39 @@ if (
   'object' == typeof self)
 )
   self.crypto && self.crypto.getRandomValues
-    ? (te.prototype._rand = function (t) {
+    ? (me.prototype._rand = function (t) {
         var e = new Uint8Array(t)
         return self.crypto.getRandomValues(e), e
       })
     : self.msCrypto && self.msCrypto.getRandomValues
-    ? (te.prototype._rand = function (t) {
+    ? (me.prototype._rand = function (t) {
         var e = new Uint8Array(t)
         return self.msCrypto.getRandomValues(e), e
       })
     : 'object' == typeof window &&
-      (te.prototype._rand = function () {
+      (me.prototype._rand = function () {
         throw new Error('Not implemented yet')
       })
 else
   try {
-    var re = ct
-    if ('function' != typeof re.randomBytes) throw new Error('Not supported')
-    te.prototype._rand = function (t) {
-      return re.randomBytes(t)
+    var ge = xt
+    if ('function' != typeof ge.randomBytes) throw new Error('Not supported')
+    me.prototype._rand = function (t) {
+      return ge.randomBytes(t)
     }
   } catch (t) {}
-Qt.Rand = ee
-var ne = Yt.getNAF,
-  ie = Yt.getJSF,
-  oe = Yt.assert
-function se(t, e) {
+pe.Rand = ve
+var ye = de.getNAF,
+  be = de.getJSF,
+  we = de.assert
+function Me(t, e) {
   ;(this.type = t),
-    (this.p = new dt(e.p, 16)),
-    (this.red = e.prime ? dt.red(e.prime) : dt.mont(this.p)),
-    (this.zero = new dt(0).toRed(this.red)),
-    (this.one = new dt(1).toRed(this.red)),
-    (this.two = new dt(2).toRed(this.red)),
-    (this.n = e.n && new dt(e.n, 16)),
+    (this.p = new Et(e.p, 16)),
+    (this.red = e.prime ? Et.red(e.prime) : Et.mont(this.p)),
+    (this.zero = new Et(0).toRed(this.red)),
+    (this.one = new Et(1).toRed(this.red)),
+    (this.two = new Et(2).toRed(this.red)),
+    (this.n = e.n && new Et(e.n, 16)),
     (this.g = e.g && this.pointFromJSON(e.g, e.gRed)),
     (this._wnafT1 = new Array(4)),
     (this._wnafT2 = new Array(4)),
@@ -15993,20 +16013,20 @@ function se(t, e) {
     ? (this.redN = null)
     : ((this._maxwellTrick = !0), (this.redN = this.n.toRed(this.red)))
 }
-var ae = se
-function ue(t, e) {
+var _e = Me
+function Ae(t, e) {
   ;(this.curve = t), (this.type = e), (this.precomputed = null)
 }
-;(se.prototype.point = function () {
+;(Me.prototype.point = function () {
   throw new Error('Not implemented')
 }),
-  (se.prototype.validate = function () {
+  (Me.prototype.validate = function () {
     throw new Error('Not implemented')
   }),
-  (se.prototype._fixedNafMul = function (t, e) {
-    oe(t.precomputed)
+  (Me.prototype._fixedNafMul = function (t, e) {
+    we(t.precomputed)
     var r = t._getDoubles(),
-      n = ne(e, 1, this._bitLength),
+      n = ye(e, 1, this._bitLength),
       i = (1 << (r.step + 1)) - (r.step % 2 == 0 ? 2 : 1)
     i /= 3
     var o,
@@ -16032,12 +16052,12 @@ function ue(t, e) {
     }
     return h.toP()
   }),
-  (se.prototype._wnafMul = function (t, e) {
+  (Me.prototype._wnafMul = function (t, e) {
     for (
       var r = 4,
         n = t._getNAFPoints(r),
         i = n.points,
-        o = ne(e, (r = n.wnd), this._bitLength),
+        o = ye(e, (r = n.wnd), this._bitLength),
         s = this.jpoint(null, null, null),
         a = o.length - 1;
       a >= 0;
@@ -16046,7 +16066,7 @@ function ue(t, e) {
       for (var u = 0; a >= 0 && 0 === o[a]; a--) u++
       if ((a >= 0 && u++, (s = s.dblp(u)), a < 0)) break
       var h = o[a]
-      oe(0 !== h),
+      we(0 !== h),
         (s =
           'affine' === t.type
             ? s.mixedAdd(h > 0 ? i[(h - 1) >> 1] : i[(-h - 1) >> 1].neg())
@@ -16054,7 +16074,7 @@ function ue(t, e) {
     }
     return 'affine' === t.type ? s.toP() : s
   }),
-  (se.prototype._wnafMulAdd = function (t, e, r, n, i) {
+  (Me.prototype._wnafMulAdd = function (t, e, r, n, i) {
     var o,
       s,
       a,
@@ -16078,7 +16098,7 @@ function ue(t, e) {
           : ((m[1] = e[d].toJ().mixedAdd(e[p])),
             (m[2] = e[d].toJ().mixedAdd(e[p].neg())))
         var v = [-3, -1, -5, -7, 0, 7, 5, 1, 3],
-          g = ie(r[d], r[p])
+          g = be(r[d], r[p])
         for (
           l = Math.max(g[0].length, l),
             f[d] = new Array(l),
@@ -16091,8 +16111,8 @@ function ue(t, e) {
             (f[p][s] = 0),
             (h[d] = m)
       } else
-        (f[d] = ne(r[d], u[d], this._bitLength)),
-          (f[p] = ne(r[p], u[p], this._bitLength)),
+        (f[d] = ye(r[d], u[d], this._bitLength)),
+          (f[p] = ye(r[p], u[p], this._bitLength)),
           (l = Math.max(f[d].length, l)),
           (l = Math.max(f[p].length, l))
     }
@@ -16118,41 +16138,41 @@ function ue(t, e) {
     for (o = 0; o < n; o++) h[o] = null
     return i ? y : y.toP()
   }),
-  (se.BasePoint = ue),
-  (ue.prototype.eq = function () {
+  (Me.BasePoint = Ae),
+  (Ae.prototype.eq = function () {
     throw new Error('Not implemented')
   }),
-  (ue.prototype.validate = function () {
+  (Ae.prototype.validate = function () {
     return this.curve.validate(this)
   }),
-  (se.prototype.decodePoint = function (t, e) {
-    t = Yt.toArray(t, e)
+  (Me.prototype.decodePoint = function (t, e) {
+    t = de.toArray(t, e)
     var r = this.p.byteLength()
     if ((4 === t[0] || 6 === t[0] || 7 === t[0]) && t.length - 1 == 2 * r)
       return (
         6 === t[0]
-          ? oe(t[t.length - 1] % 2 == 0)
-          : 7 === t[0] && oe(t[t.length - 1] % 2 == 1),
+          ? we(t[t.length - 1] % 2 == 0)
+          : 7 === t[0] && we(t[t.length - 1] % 2 == 1),
         this.point(t.slice(1, 1 + r), t.slice(1 + r, 1 + 2 * r))
       )
     if ((2 === t[0] || 3 === t[0]) && t.length - 1 === r)
       return this.pointFromX(t.slice(1, 1 + r), 3 === t[0])
     throw new Error('Unknown point format')
   }),
-  (ue.prototype.encodeCompressed = function (t) {
+  (Ae.prototype.encodeCompressed = function (t) {
     return this.encode(t, !0)
   }),
-  (ue.prototype._encode = function (t) {
+  (Ae.prototype._encode = function (t) {
     var e = this.curve.p.byteLength(),
       r = this.getX().toArray('be', e)
     return t
       ? [this.getY().isEven() ? 2 : 3].concat(r)
       : [4].concat(r, this.getY().toArray('be', e))
   }),
-  (ue.prototype.encode = function (t, e) {
-    return Yt.encode(this._encode(e), t)
+  (Ae.prototype.encode = function (t, e) {
+    return de.encode(this._encode(e), t)
   }),
-  (ue.prototype.precompute = function (t) {
+  (Ae.prototype.precompute = function (t) {
     if (this.precomputed) return this
     var e = { doubles: null, naf: null, beta: null }
     return (
@@ -16163,12 +16183,12 @@ function ue(t, e) {
       this
     )
   }),
-  (ue.prototype._hasDoubles = function (t) {
+  (Ae.prototype._hasDoubles = function (t) {
     if (!this.precomputed) return !1
     var e = this.precomputed.doubles
     return !!e && e.points.length >= Math.ceil((t.bitLength() + 1) / e.step)
   }),
-  (ue.prototype._getDoubles = function (t, e) {
+  (Ae.prototype._getDoubles = function (t, e) {
     if (this.precomputed && this.precomputed.doubles)
       return this.precomputed.doubles
     for (var r = [this], n = this, i = 0; i < e; i += t) {
@@ -16177,7 +16197,7 @@ function ue(t, e) {
     }
     return { step: t, points: r }
   }),
-  (ue.prototype._getNAFPoints = function (t) {
+  (Ae.prototype._getNAFPoints = function (t) {
     if (this.precomputed && this.precomputed.naf) return this.precomputed.naf
     for (
       var e = [this], r = (1 << t) - 1, n = 1 === r ? null : this.dbl(), i = 1;
@@ -16187,14 +16207,14 @@ function ue(t, e) {
       e[i] = e[i - 1].add(n)
     return { wnd: t, points: e }
   }),
-  (ue.prototype._getBeta = function () {
+  (Ae.prototype._getBeta = function () {
     return null
   }),
-  (ue.prototype.dblp = function (t) {
+  (Ae.prototype.dblp = function (t) {
     for (var e = this, r = 0; r < t; r++) e = e.dbl()
     return e
   })
-var he = U(function (t) {
+var Pe = tt(function (t) {
     t.exports =
       'function' == typeof Object.create
         ? function (t, e) {
@@ -16219,11 +16239,11 @@ var he = U(function (t) {
             }
           }
   }),
-  fe = Yt.assert
-function le(t) {
-  ae.call(this, 'short', t),
-    (this.a = new dt(t.a, 16).toRed(this.red)),
-    (this.b = new dt(t.b, 16).toRed(this.red)),
+  Se = de.assert
+function Te(t) {
+  _e.call(this, 'short', t),
+    (this.a = new Et(t.a, 16).toRed(this.red)),
+    (this.b = new Et(t.b, 16).toRed(this.red)),
     (this.tinv = this.two.redInvm()),
     (this.zeroA = 0 === this.a.fromRed().cmpn(0)),
     (this.threeA = 0 === this.a.fromRed().sub(this.p).cmpn(-3)),
@@ -16231,75 +16251,75 @@ function le(t) {
     (this._endoWnafT1 = new Array(4)),
     (this._endoWnafT2 = new Array(4))
 }
-he(le, ae)
-var ce = le
-function de(t, e, r, n) {
-  ae.BasePoint.call(this, t, 'affine'),
+Pe(Te, _e)
+var xe = Te
+function Ee(t, e, r, n) {
+  _e.BasePoint.call(this, t, 'affine'),
     null === e && null === r
       ? ((this.x = null), (this.y = null), (this.inf = !0))
-      : ((this.x = new dt(e, 16)),
-        (this.y = new dt(r, 16)),
+      : ((this.x = new Et(e, 16)),
+        (this.y = new Et(r, 16)),
         n && (this.x.forceRed(this.curve.red), this.y.forceRed(this.curve.red)),
         this.x.red || (this.x = this.x.toRed(this.curve.red)),
         this.y.red || (this.y = this.y.toRed(this.curve.red)),
         (this.inf = !1))
 }
-function pe(t, e, r, n) {
-  ae.BasePoint.call(this, t, 'jacobian'),
+function ke(t, e, r, n) {
+  _e.BasePoint.call(this, t, 'jacobian'),
     null === e && null === r && null === n
       ? ((this.x = this.curve.one),
         (this.y = this.curve.one),
-        (this.z = new dt(0)))
-      : ((this.x = new dt(e, 16)),
-        (this.y = new dt(r, 16)),
-        (this.z = new dt(n, 16))),
+        (this.z = new Et(0)))
+      : ((this.x = new Et(e, 16)),
+        (this.y = new Et(r, 16)),
+        (this.z = new Et(n, 16))),
     this.x.red || (this.x = this.x.toRed(this.curve.red)),
     this.y.red || (this.y = this.y.toRed(this.curve.red)),
     this.z.red || (this.z = this.z.toRed(this.curve.red)),
     (this.zOne = this.z === this.curve.one)
 }
-function me(t) {
-  ae.call(this, 'mont', t),
-    (this.a = new dt(t.a, 16).toRed(this.red)),
-    (this.b = new dt(t.b, 16).toRed(this.red)),
-    (this.i4 = new dt(4).toRed(this.red).redInvm()),
-    (this.two = new dt(2).toRed(this.red)),
+function Re(t) {
+  _e.call(this, 'mont', t),
+    (this.a = new Et(t.a, 16).toRed(this.red)),
+    (this.b = new Et(t.b, 16).toRed(this.red)),
+    (this.i4 = new Et(4).toRed(this.red).redInvm()),
+    (this.two = new Et(2).toRed(this.red)),
     (this.a24 = this.i4.redMul(this.a.redAdd(this.two)))
 }
-;(le.prototype._getEndomorphism = function (t) {
+;(Te.prototype._getEndomorphism = function (t) {
   if (this.zeroA && this.g && this.n && 1 === this.p.modn(3)) {
     var e, r
-    if (t.beta) e = new dt(t.beta, 16).toRed(this.red)
+    if (t.beta) e = new Et(t.beta, 16).toRed(this.red)
     else {
       var n = this._getEndoRoots(this.p)
       e = (e = n[0].cmp(n[1]) < 0 ? n[0] : n[1]).toRed(this.red)
     }
-    if (t.lambda) r = new dt(t.lambda, 16)
+    if (t.lambda) r = new Et(t.lambda, 16)
     else {
       var i = this._getEndoRoots(this.n)
       0 === this.g.mul(i[0]).x.cmp(this.g.x.redMul(e))
         ? (r = i[0])
-        : fe(0 === this.g.mul((r = i[1])).x.cmp(this.g.x.redMul(e)))
+        : Se(0 === this.g.mul((r = i[1])).x.cmp(this.g.x.redMul(e)))
     }
     return {
       beta: e,
       lambda: r,
       basis: t.basis
         ? t.basis.map(function (t) {
-            return { a: new dt(t.a, 16), b: new dt(t.b, 16) }
+            return { a: new Et(t.a, 16), b: new Et(t.b, 16) }
           })
         : this._getEndoBasis(r)
     }
   }
 }),
-  (le.prototype._getEndoRoots = function (t) {
-    var e = t === this.p ? this.red : dt.mont(t),
-      r = new dt(2).toRed(e).redInvm(),
+  (Te.prototype._getEndoRoots = function (t) {
+    var e = t === this.p ? this.red : Et.mont(t),
+      r = new Et(2).toRed(e).redInvm(),
       n = r.redNeg(),
-      i = new dt(3).toRed(e).redNeg().redSqrt().redMul(r)
+      i = new Et(3).toRed(e).redNeg().redSqrt().redMul(r)
     return [n.redAdd(i).fromRed(), n.redSub(i).fromRed()]
   }),
-  (le.prototype._getEndoBasis = function (t) {
+  (Te.prototype._getEndoBasis = function (t) {
     for (
       var e,
         r,
@@ -16313,10 +16333,10 @@ function me(t) {
         f = this.n.ushrn(Math.floor(this.n.bitLength() / 2)),
         l = t,
         c = this.n.clone(),
-        d = new dt(1),
-        p = new dt(0),
-        m = new dt(0),
-        v = new dt(1),
+        d = new Et(1),
+        p = new Et(0),
+        m = new Et(0),
+        v = new Et(1),
         g = 0;
       0 !== l.cmpn(0);
 
@@ -16340,7 +16360,7 @@ function me(t) {
       ]
     )
   }),
-  (le.prototype._endoSplit = function (t) {
+  (Te.prototype._endoSplit = function (t) {
     var e = this.endo.basis,
       r = e[0],
       n = e[1],
@@ -16352,8 +16372,8 @@ function me(t) {
       h = o.mul(n.b)
     return { k1: t.sub(s).sub(a), k2: u.add(h).neg() }
   }),
-  (le.prototype.pointFromX = function (t, e) {
-    ;(t = new dt(t, 16)).red || (t = t.toRed(this.red))
+  (Te.prototype.pointFromX = function (t, e) {
+    ;(t = new Et(t, 16)).red || (t = t.toRed(this.red))
     var r = t.redSqr().redMul(t).redIAdd(t.redMul(this.a)).redIAdd(this.b),
       n = r.redSqrt()
     if (0 !== n.redSqr().redSub(r).cmp(this.zero))
@@ -16361,7 +16381,7 @@ function me(t) {
     var i = n.fromRed().isOdd()
     return ((e && !i) || (!e && i)) && (n = n.redNeg()), this.point(t, n)
   }),
-  (le.prototype.validate = function (t) {
+  (Te.prototype.validate = function (t) {
     if (t.inf) return !0
     var e = t.x,
       r = t.y,
@@ -16369,7 +16389,7 @@ function me(t) {
       i = e.redSqr().redMul(e).redIAdd(n).redIAdd(this.b)
     return 0 === r.redSqr().redISub(i).cmpn(0)
   }),
-  (le.prototype._endoWnafMulAdd = function (t, e, r) {
+  (Te.prototype._endoWnafMulAdd = function (t, e, r) {
     for (
       var n = this._endoWnafT1, i = this._endoWnafT2, o = 0;
       o < t.length;
@@ -16389,14 +16409,14 @@ function me(t) {
       (n[f] = null), (i[f] = null)
     return h
   }),
-  he(de, ae.BasePoint),
-  (le.prototype.point = function (t, e, r) {
-    return new de(this, t, e, r)
+  Pe(Ee, _e.BasePoint),
+  (Te.prototype.point = function (t, e, r) {
+    return new Ee(this, t, e, r)
   }),
-  (le.prototype.pointFromJSON = function (t, e) {
-    return de.fromJSON(this, t, e)
+  (Te.prototype.pointFromJSON = function (t, e) {
+    return Ee.fromJSON(this, t, e)
   }),
-  (de.prototype._getBeta = function () {
+  (Ee.prototype._getBeta = function () {
     if (this.curve.endo) {
       var t = this.precomputed
       if (t && t.beta) return t.beta
@@ -16419,7 +16439,7 @@ function me(t) {
       return e
     }
   }),
-  (de.prototype.toJSON = function () {
+  (Ee.prototype.toJSON = function () {
     return this.precomputed
       ? [
           this.x,
@@ -16437,7 +16457,7 @@ function me(t) {
         ]
       : [this.x, this.y]
   }),
-  (de.fromJSON = function (t, e, r) {
+  (Ee.fromJSON = function (t, e, r) {
     'string' == typeof e && (e = JSON.parse(e))
     var n = t.point(e[0], e[1], r)
     if (!e[2]) return n
@@ -16460,7 +16480,7 @@ function me(t) {
       n
     )
   }),
-  (de.prototype.inspect = function () {
+  (Ee.prototype.inspect = function () {
     return this.isInfinity()
       ? '<EC Point Infinity>'
       : '<EC Point x: ' +
@@ -16469,10 +16489,10 @@ function me(t) {
           this.y.fromRed().toString(16, 2) +
           '>'
   }),
-  (de.prototype.isInfinity = function () {
+  (Ee.prototype.isInfinity = function () {
     return this.inf
   }),
-  (de.prototype.add = function (t) {
+  (Ee.prototype.add = function (t) {
     if (this.inf) return t
     if (t.inf) return this
     if (this.eq(t)) return this.dbl()
@@ -16484,7 +16504,7 @@ function me(t) {
       n = e.redMul(this.x.redSub(r)).redISub(this.y)
     return this.curve.point(r, n)
   }),
-  (de.prototype.dbl = function () {
+  (Ee.prototype.dbl = function () {
     if (this.inf) return this
     var t = this.y.redAdd(this.y)
     if (0 === t.cmpn(0)) return this.curve.point(null, null)
@@ -16496,15 +16516,15 @@ function me(t) {
       s = i.redMul(this.x.redSub(o)).redISub(this.y)
     return this.curve.point(o, s)
   }),
-  (de.prototype.getX = function () {
+  (Ee.prototype.getX = function () {
     return this.x.fromRed()
   }),
-  (de.prototype.getY = function () {
+  (Ee.prototype.getY = function () {
     return this.y.fromRed()
   }),
-  (de.prototype.mul = function (t) {
+  (Ee.prototype.mul = function (t) {
     return (
-      (t = new dt(t, 16)),
+      (t = new Et(t, 16)),
       this.isInfinity()
         ? this
         : this._hasDoubles(t)
@@ -16514,28 +16534,28 @@ function me(t) {
         : this.curve._wnafMul(this, t)
     )
   }),
-  (de.prototype.mulAdd = function (t, e, r) {
+  (Ee.prototype.mulAdd = function (t, e, r) {
     var n = [this, e],
       i = [t, r]
     return this.curve.endo
       ? this.curve._endoWnafMulAdd(n, i)
       : this.curve._wnafMulAdd(1, n, i, 2)
   }),
-  (de.prototype.jmulAdd = function (t, e, r) {
+  (Ee.prototype.jmulAdd = function (t, e, r) {
     var n = [this, e],
       i = [t, r]
     return this.curve.endo
       ? this.curve._endoWnafMulAdd(n, i, !0)
       : this.curve._wnafMulAdd(1, n, i, 2, !0)
   }),
-  (de.prototype.eq = function (t) {
+  (Ee.prototype.eq = function (t) {
     return (
       this === t ||
       (this.inf === t.inf &&
         (this.inf || (0 === this.x.cmp(t.x) && 0 === this.y.cmp(t.y))))
     )
   }),
-  (de.prototype.neg = function (t) {
+  (Ee.prototype.neg = function (t) {
     if (this.inf) return this
     var e = this.curve.point(this.x, this.y.redNeg())
     if (t && this.precomputed) {
@@ -16553,16 +16573,16 @@ function me(t) {
     }
     return e
   }),
-  (de.prototype.toJ = function () {
+  (Ee.prototype.toJ = function () {
     return this.inf
       ? this.curve.jpoint(null, null, null)
       : this.curve.jpoint(this.x, this.y, this.curve.one)
   }),
-  he(pe, ae.BasePoint),
-  (le.prototype.jpoint = function (t, e, r) {
-    return new pe(this, t, e, r)
+  Pe(ke, _e.BasePoint),
+  (Te.prototype.jpoint = function (t, e, r) {
+    return new ke(this, t, e, r)
   }),
-  (pe.prototype.toP = function () {
+  (ke.prototype.toP = function () {
     if (this.isInfinity()) return this.curve.point(null, null)
     var t = this.z.redInvm(),
       e = t.redSqr(),
@@ -16570,10 +16590,10 @@ function me(t) {
       n = this.y.redMul(e).redMul(t)
     return this.curve.point(r, n)
   }),
-  (pe.prototype.neg = function () {
+  (ke.prototype.neg = function () {
     return this.curve.jpoint(this.x, this.y.redNeg(), this.z)
   }),
-  (pe.prototype.add = function (t) {
+  (ke.prototype.add = function (t) {
     if (this.isInfinity()) return t
     if (t.isInfinity()) return this
     var e = t.z.redSqr(),
@@ -16594,7 +16614,7 @@ function me(t) {
       p = this.z.redMul(t.z).redMul(a)
     return this.curve.jpoint(c, d, p)
   }),
-  (pe.prototype.mixedAdd = function (t) {
+  (ke.prototype.mixedAdd = function (t) {
     if (this.isInfinity()) return t.toJ()
     if (t.isInfinity()) return this
     var e = this.z.redSqr(),
@@ -16614,7 +16634,7 @@ function me(t) {
       d = this.z.redMul(s)
     return this.curve.jpoint(l, c, d)
   }),
-  (pe.prototype.dblp = function (t) {
+  (ke.prototype.dblp = function (t) {
     if (0 === t) return this
     if (this.isInfinity()) return this
     if (!t) return this.dbl()
@@ -16646,7 +16666,7 @@ function me(t) {
     }
     return this.curve.jpoint(o, h.redMul(i), a)
   }),
-  (pe.prototype.dbl = function () {
+  (ke.prototype.dbl = function () {
     return this.isInfinity()
       ? this
       : this.curve.zeroA
@@ -16655,7 +16675,7 @@ function me(t) {
       ? this._threeDbl()
       : this._dbl()
   }),
-  (pe.prototype._zeroDbl = function () {
+  (ke.prototype._zeroDbl = function () {
     var t, e, r
     if (this.zOne) {
       var n = this.x.redSqr(),
@@ -16686,7 +16706,7 @@ function me(t) {
     }
     return this.curve.jpoint(t, e, r)
   }),
-  (pe.prototype._threeDbl = function () {
+  (ke.prototype._threeDbl = function () {
     var t, e, r
     if (this.zOne) {
       var n = this.x.redSqr(),
@@ -16717,7 +16737,7 @@ function me(t) {
     }
     return this.curve.jpoint(t, e, r)
   }),
-  (pe.prototype._dbl = function () {
+  (ke.prototype._dbl = function () {
     var t = this.curve.a,
       e = this.x,
       r = this.y,
@@ -16736,7 +16756,7 @@ function me(t) {
       p = r.redAdd(r).redMul(n)
     return this.curve.jpoint(f, d, p)
   }),
-  (pe.prototype.trpl = function () {
+  (ke.prototype.trpl = function () {
     if (!this.curve.zeroA) return this.dbl().add(this)
     var t = this.x.redSqr(),
       e = this.y.redSqr(),
@@ -16760,10 +16780,10 @@ function me(t) {
     var d = this.z.redAdd(s).redSqr().redISub(r).redISub(a)
     return this.curve.jpoint(l, c, d)
   }),
-  (pe.prototype.mul = function (t, e) {
-    return (t = new dt(t, e)), this.curve._wnafMul(this, t)
+  (ke.prototype.mul = function (t, e) {
+    return (t = new Et(t, e)), this.curve._wnafMul(this, t)
   }),
-  (pe.prototype.eq = function (t) {
+  (ke.prototype.eq = function (t) {
     if ('affine' === t.type) return this.eq(t.toJ())
     if (this === t) return !0
     var e = this.z.redSqr(),
@@ -16773,7 +16793,7 @@ function me(t) {
       i = r.redMul(t.z)
     return 0 === this.y.redMul(i).redISub(t.y.redMul(n)).cmpn(0)
   }),
-  (pe.prototype.eqXToP = function (t) {
+  (ke.prototype.eqXToP = function (t) {
     var e = this.z.redSqr(),
       r = t.toRed(this.curve.red).redMul(e)
     if (0 === this.x.cmp(r)) return !0
@@ -16782,7 +16802,7 @@ function me(t) {
       if ((r.redIAdd(i), 0 === this.x.cmp(r))) return !0
     }
   }),
-  (pe.prototype.inspect = function () {
+  (ke.prototype.inspect = function () {
     return this.isInfinity()
       ? '<EC JPoint Infinity>'
       : '<EC JPoint x: ' +
@@ -16793,44 +16813,44 @@ function me(t) {
           this.z.toString(16, 2) +
           '>'
   }),
-  (pe.prototype.isInfinity = function () {
+  (ke.prototype.isInfinity = function () {
     return 0 === this.z.cmpn(0)
   }),
-  he(me, ae)
-var ve = me
-function ge(t, e, r) {
-  ae.BasePoint.call(this, t, 'projective'),
+  Pe(Re, _e)
+var Ie = Re
+function Be(t, e, r) {
+  _e.BasePoint.call(this, t, 'projective'),
     null === e && null === r
       ? ((this.x = this.curve.one), (this.z = this.curve.zero))
-      : ((this.x = new dt(e, 16)),
-        (this.z = new dt(r, 16)),
+      : ((this.x = new Et(e, 16)),
+        (this.z = new Et(r, 16)),
         this.x.red || (this.x = this.x.toRed(this.curve.red)),
         this.z.red || (this.z = this.z.toRed(this.curve.red)))
 }
-;(me.prototype.validate = function (t) {
+;(Re.prototype.validate = function (t) {
   var e = t.normalize().x,
     r = e.redSqr(),
     n = r.redMul(e).redAdd(r.redMul(this.a)).redAdd(e)
   return 0 === n.redSqrt().redSqr().cmp(n)
 }),
-  he(ge, ae.BasePoint),
-  (me.prototype.decodePoint = function (t, e) {
-    return this.point(Yt.toArray(t, e), 1)
+  Pe(Be, _e.BasePoint),
+  (Re.prototype.decodePoint = function (t, e) {
+    return this.point(de.toArray(t, e), 1)
   }),
-  (me.prototype.point = function (t, e) {
-    return new ge(this, t, e)
+  (Re.prototype.point = function (t, e) {
+    return new Be(this, t, e)
   }),
-  (me.prototype.pointFromJSON = function (t) {
-    return ge.fromJSON(this, t)
+  (Re.prototype.pointFromJSON = function (t) {
+    return Be.fromJSON(this, t)
   }),
-  (ge.prototype.precompute = function () {}),
-  (ge.prototype._encode = function () {
+  (Be.prototype.precompute = function () {}),
+  (Be.prototype._encode = function () {
     return this.getX().toArray('be', this.curve.p.byteLength())
   }),
-  (ge.fromJSON = function (t, e) {
-    return new ge(t, e[0], e[1] || t.one)
+  (Be.fromJSON = function (t, e) {
+    return new Be(t, e[0], e[1] || t.one)
   }),
-  (ge.prototype.inspect = function () {
+  (Be.prototype.inspect = function () {
     return this.isInfinity()
       ? '<EC Point Infinity>'
       : '<EC Point x: ' +
@@ -16839,10 +16859,10 @@ function ge(t, e, r) {
           this.z.fromRed().toString(16, 2) +
           '>'
   }),
-  (ge.prototype.isInfinity = function () {
+  (Be.prototype.isInfinity = function () {
     return 0 === this.z.cmpn(0)
   }),
-  (ge.prototype.dbl = function () {
+  (Be.prototype.dbl = function () {
     var t = this.x.redAdd(this.z).redSqr(),
       e = this.x.redSub(this.z).redSqr(),
       r = t.redSub(e),
@@ -16850,10 +16870,10 @@ function ge(t, e, r) {
       i = r.redMul(e.redAdd(this.curve.a24.redMul(r)))
     return this.curve.point(n, i)
   }),
-  (ge.prototype.add = function () {
+  (Be.prototype.add = function () {
     throw new Error('Not supported on Montgomery curve')
   }),
-  (ge.prototype.diffAdd = function (t, e) {
+  (Be.prototype.diffAdd = function (t, e) {
     var r = this.x.redAdd(this.z),
       n = this.x.redSub(this.z),
       i = t.x.redAdd(t.z),
@@ -16863,7 +16883,7 @@ function ge(t, e, r) {
       u = e.x.redMul(o.redISub(s).redSqr())
     return this.curve.point(a, u)
   }),
-  (ge.prototype.mul = function (t) {
+  (Be.prototype.mul = function (t) {
     for (
       var e = t.clone(), r = this, n = this.curve.point(null, null), i = [];
       0 !== e.cmpn(0);
@@ -16876,54 +16896,54 @@ function ge(t, e, r) {
         : ((n = r.diffAdd(n, this)), (r = r.dbl()))
     return n
   }),
-  (ge.prototype.mulAdd = function () {
+  (Be.prototype.mulAdd = function () {
     throw new Error('Not supported on Montgomery curve')
   }),
-  (ge.prototype.jumlAdd = function () {
+  (Be.prototype.jumlAdd = function () {
     throw new Error('Not supported on Montgomery curve')
   }),
-  (ge.prototype.eq = function (t) {
+  (Be.prototype.eq = function (t) {
     return 0 === this.getX().cmp(t.getX())
   }),
-  (ge.prototype.normalize = function () {
+  (Be.prototype.normalize = function () {
     return (
       (this.x = this.x.redMul(this.z.redInvm())),
       (this.z = this.curve.one),
       this
     )
   }),
-  (ge.prototype.getX = function () {
+  (Be.prototype.getX = function () {
     return this.normalize(), this.x.fromRed()
   })
-var ye = Yt.assert
-function be(t) {
+var Oe = de.assert
+function Ce(t) {
   ;(this.twisted = 1 != (0 | t.a)),
     (this.mOneA = this.twisted && -1 == (0 | t.a)),
     (this.extended = this.mOneA),
-    ae.call(this, 'edwards', t),
-    (this.a = new dt(t.a, 16).umod(this.red.m)),
+    _e.call(this, 'edwards', t),
+    (this.a = new Et(t.a, 16).umod(this.red.m)),
     (this.a = this.a.toRed(this.red)),
-    (this.c = new dt(t.c, 16).toRed(this.red)),
+    (this.c = new Et(t.c, 16).toRed(this.red)),
     (this.c2 = this.c.redSqr()),
-    (this.d = new dt(t.d, 16).toRed(this.red)),
+    (this.d = new Et(t.d, 16).toRed(this.red)),
     (this.dd = this.d.redAdd(this.d)),
-    ye(!this.twisted || 0 === this.c.fromRed().cmpn(1)),
+    Oe(!this.twisted || 0 === this.c.fromRed().cmpn(1)),
     (this.oneC = 1 == (0 | t.c))
 }
-he(be, ae)
-var we = be
-function Me(t, e, r, n, i) {
-  ae.BasePoint.call(this, t, 'projective'),
+Pe(Ce, _e)
+var Le = Ce
+function je(t, e, r, n, i) {
+  _e.BasePoint.call(this, t, 'projective'),
     null === e && null === r && null === n
       ? ((this.x = this.curve.zero),
         (this.y = this.curve.one),
         (this.z = this.curve.one),
         (this.t = this.curve.zero),
         (this.zOne = !0))
-      : ((this.x = new dt(e, 16)),
-        (this.y = new dt(r, 16)),
-        (this.z = n ? new dt(n, 16) : this.curve.one),
-        (this.t = i && new dt(i, 16)),
+      : ((this.x = new Et(e, 16)),
+        (this.y = new Et(r, 16)),
+        (this.z = n ? new Et(n, 16) : this.curve.one),
+        (this.t = i && new Et(i, 16)),
         this.x.red || (this.x = this.x.toRed(this.curve.red)),
         this.y.red || (this.y = this.y.toRed(this.curve.red)),
         this.z.red || (this.z = this.z.toRed(this.curve.red)),
@@ -16934,17 +16954,17 @@ function Me(t, e, r, n, i) {
           ((this.t = this.x.redMul(this.y)),
           this.zOne || (this.t = this.t.redMul(this.z.redInvm()))))
 }
-;(be.prototype._mulA = function (t) {
+;(Ce.prototype._mulA = function (t) {
   return this.mOneA ? t.redNeg() : this.a.redMul(t)
 }),
-  (be.prototype._mulC = function (t) {
+  (Ce.prototype._mulC = function (t) {
     return this.oneC ? t : this.c.redMul(t)
   }),
-  (be.prototype.jpoint = function (t, e, r, n) {
+  (Ce.prototype.jpoint = function (t, e, r, n) {
     return this.point(t, e, r, n)
   }),
-  (be.prototype.pointFromX = function (t, e) {
-    ;(t = new dt(t, 16)).red || (t = t.toRed(this.red))
+  (Ce.prototype.pointFromX = function (t, e) {
+    ;(t = new Et(t, 16)).red || (t = t.toRed(this.red))
     var r = t.redSqr(),
       n = this.c2.redSub(this.a.redMul(r)),
       i = this.one.redSub(this.c2.redMul(this.d).redMul(r)),
@@ -16955,8 +16975,8 @@ function Me(t, e, r, n, i) {
     var a = s.fromRed().isOdd()
     return ((e && !a) || (!e && a)) && (s = s.redNeg()), this.point(t, s)
   }),
-  (be.prototype.pointFromY = function (t, e) {
-    ;(t = new dt(t, 16)).red || (t = t.toRed(this.red))
+  (Ce.prototype.pointFromY = function (t, e) {
+    ;(t = new Et(t, 16)).red || (t = t.toRed(this.red))
     var r = t.redSqr(),
       n = r.redSub(this.c2),
       i = r.redMul(this.d).redMul(this.c2).redSub(this.a),
@@ -16970,7 +16990,7 @@ function Me(t, e, r, n, i) {
       throw new Error('invalid point')
     return s.fromRed().isOdd() !== e && (s = s.redNeg()), this.point(s, t)
   }),
-  (be.prototype.validate = function (t) {
+  (Ce.prototype.validate = function (t) {
     if (t.isInfinity()) return !0
     t.normalize()
     var e = t.x.redSqr(),
@@ -16979,17 +16999,17 @@ function Me(t, e, r, n, i) {
       i = this.c2.redMul(this.one.redAdd(this.d.redMul(e).redMul(r)))
     return 0 === n.cmp(i)
   }),
-  he(Me, ae.BasePoint),
-  (be.prototype.pointFromJSON = function (t) {
-    return Me.fromJSON(this, t)
+  Pe(je, _e.BasePoint),
+  (Ce.prototype.pointFromJSON = function (t) {
+    return je.fromJSON(this, t)
   }),
-  (be.prototype.point = function (t, e, r, n) {
-    return new Me(this, t, e, r, n)
+  (Ce.prototype.point = function (t, e, r, n) {
+    return new je(this, t, e, r, n)
   }),
-  (Me.fromJSON = function (t, e) {
-    return new Me(t, e[0], e[1], e[2])
+  (je.fromJSON = function (t, e) {
+    return new je(t, e[0], e[1], e[2])
   }),
-  (Me.prototype.inspect = function () {
+  (je.prototype.inspect = function () {
     return this.isInfinity()
       ? '<EC Point Infinity>'
       : '<EC Point x: ' +
@@ -17000,14 +17020,14 @@ function Me(t, e, r, n, i) {
           this.z.fromRed().toString(16, 2) +
           '>'
   }),
-  (Me.prototype.isInfinity = function () {
+  (je.prototype.isInfinity = function () {
     return (
       0 === this.x.cmpn(0) &&
       (0 === this.y.cmp(this.z) ||
         (this.zOne && 0 === this.y.cmp(this.curve.c)))
     )
   }),
-  (Me.prototype._extDbl = function () {
+  (je.prototype._extDbl = function () {
     var t = this.x.redSqr(),
       e = this.y.redSqr(),
       r = this.z.redSqr()
@@ -17023,7 +17043,7 @@ function Me(t, e, r, n, i) {
       l = s.redMul(o)
     return this.curve.point(u, h, l, f)
   }),
-  (Me.prototype._projDbl = function () {
+  (je.prototype._projDbl = function () {
     var t,
       e,
       r,
@@ -17053,14 +17073,14 @@ function Me(t, e, r, n, i) {
         (r = n.redMul(o))
     return this.curve.point(t, e, r)
   }),
-  (Me.prototype.dbl = function () {
+  (je.prototype.dbl = function () {
     return this.isInfinity()
       ? this
       : this.curve.extended
       ? this._extDbl()
       : this._projDbl()
   }),
-  (Me.prototype._extAdd = function (t) {
+  (je.prototype._extAdd = function (t) {
     var e = this.y.redSub(this.x).redMul(t.y.redSub(t.x)),
       r = this.y.redAdd(this.x).redMul(t.y.redAdd(t.x)),
       n = this.t.redMul(this.curve.dd).redMul(t.t),
@@ -17075,7 +17095,7 @@ function Me(t, e, r, n, i) {
       c = s.redMul(a)
     return this.curve.point(h, f, c, l)
   }),
-  (Me.prototype._projAdd = function (t) {
+  (je.prototype._projAdd = function (t) {
     var e,
       r,
       n = this.z.redMul(t.z),
@@ -17096,7 +17116,7 @@ function Me(t, e, r, n, i) {
       this.curve.point(l, e, r)
     )
   }),
-  (Me.prototype.add = function (t) {
+  (je.prototype.add = function (t) {
     return this.isInfinity()
       ? t
       : t.isInfinity()
@@ -17105,18 +17125,18 @@ function Me(t, e, r, n, i) {
       ? this._extAdd(t)
       : this._projAdd(t)
   }),
-  (Me.prototype.mul = function (t) {
+  (je.prototype.mul = function (t) {
     return this._hasDoubles(t)
       ? this.curve._fixedNafMul(this, t)
       : this.curve._wnafMul(this, t)
   }),
-  (Me.prototype.mulAdd = function (t, e, r) {
+  (je.prototype.mulAdd = function (t, e, r) {
     return this.curve._wnafMulAdd(1, [this, e], [t, r], 2, !1)
   }),
-  (Me.prototype.jmulAdd = function (t, e, r) {
+  (je.prototype.jmulAdd = function (t, e, r) {
     return this.curve._wnafMulAdd(1, [this, e], [t, r], 2, !0)
   }),
-  (Me.prototype.normalize = function () {
+  (je.prototype.normalize = function () {
     if (this.zOne) return this
     var t = this.z.redInvm()
     return (
@@ -17128,7 +17148,7 @@ function Me(t, e, r, n, i) {
       this
     )
   }),
-  (Me.prototype.neg = function () {
+  (je.prototype.neg = function () {
     return this.curve.point(
       this.x.redNeg(),
       this.y,
@@ -17136,19 +17156,19 @@ function Me(t, e, r, n, i) {
       this.t && this.t.redNeg()
     )
   }),
-  (Me.prototype.getX = function () {
+  (je.prototype.getX = function () {
     return this.normalize(), this.x.fromRed()
   }),
-  (Me.prototype.getY = function () {
+  (je.prototype.getY = function () {
     return this.normalize(), this.y.fromRed()
   }),
-  (Me.prototype.eq = function (t) {
+  (je.prototype.eq = function (t) {
     return (
       this === t ||
       (0 === this.getX().cmp(t.getX()) && 0 === this.getY().cmp(t.getY()))
     )
   }),
-  (Me.prototype.eqXToP = function (t) {
+  (je.prototype.eqXToP = function (t) {
     var e = t.toRed(this.curve.red).redMul(this.z)
     if (0 === this.x.cmp(e)) return !0
     for (var r = t.clone(), n = this.curve.redN.redMul(this.z); ; ) {
@@ -17156,20 +17176,20 @@ function Me(t, e, r, n, i) {
       if ((e.redIAdd(n), 0 === this.x.cmp(e))) return !0
     }
   }),
-  (Me.prototype.toP = Me.prototype.normalize),
-  (Me.prototype.mixedAdd = Me.prototype.add)
-var _e = U(function (t, e) {
+  (je.prototype.toP = je.prototype.normalize),
+  (je.prototype.mixedAdd = je.prototype.add)
+var Ne = tt(function (t, e) {
   var r = e
-  ;(r.base = ae), (r.short = ce), (r.mont = ve), (r.edwards = we)
+  ;(r.base = _e), (r.short = xe), (r.mont = Ie), (r.edwards = Le)
 })
-function Ae(t, e) {
+function De(t, e) {
   return (
     55296 == (64512 & t.charCodeAt(e)) &&
     !(e < 0 || e + 1 >= t.length) &&
     56320 == (64512 & t.charCodeAt(e + 1))
   )
 }
-function Pe(t) {
+function Ue(t) {
   return (
     ((t >>> 24) |
       ((t >>> 8) & 65280) |
@@ -17178,10 +17198,10 @@ function Pe(t) {
     0
   )
 }
-function Se(t) {
+function Fe(t) {
   return 1 === t.length ? '0' + t : t
 }
-function Te(t) {
+function qe(t) {
   return 7 === t.length
     ? '0' + t
     : 6 === t.length
@@ -17198,8 +17218,8 @@ function Te(t) {
     ? '0000000' + t
     : t
 }
-var xe = {
-  inherits: he,
+var ze = {
+  inherits: Pe,
   toArray: function (t, e) {
     if (Array.isArray(t)) return t.slice()
     if (!t) return []
@@ -17222,7 +17242,7 @@ var xe = {
             ? (r[n++] = o)
             : o < 2048
             ? ((r[n++] = (o >> 6) | 192), (r[n++] = (63 & o) | 128))
-            : Ae(t, i)
+            : De(t, i)
             ? ((o = 65536 + ((1023 & o) << 10) + (1023 & t.charCodeAt(++i))),
               (r[n++] = (o >> 18) | 240),
               (r[n++] = ((o >> 12) & 63) | 128),
@@ -17236,22 +17256,22 @@ var xe = {
     return r
   },
   toHex: function (t) {
-    for (var e = '', r = 0; r < t.length; r++) e += Se(t[r].toString(16))
+    for (var e = '', r = 0; r < t.length; r++) e += Fe(t[r].toString(16))
     return e
   },
-  htonl: Pe,
+  htonl: Ue,
   toHex32: function (t, e) {
     for (var r = '', n = 0; n < t.length; n++) {
       var i = t[n]
-      'little' === e && (i = Pe(i)), (r += Te(i.toString(16)))
+      'little' === e && (i = Ue(i)), (r += qe(i.toString(16)))
     }
     return r
   },
-  zero2: Se,
-  zero8: Te,
+  zero2: Fe,
+  zero8: qe,
   join32: function (t, e, r, n) {
     var i = r - e
-    Vt(i % 4 == 0)
+    he(i % 4 == 0)
     for (var o = new Array(i / 4), s = 0, a = e; s < o.length; s++, a += 4)
       o[s] =
         ('big' === n
@@ -17344,7 +17364,7 @@ var xe = {
     return ((t << (32 - r)) | (e >>> r)) >>> 0
   }
 }
-function Ee() {
+function We() {
   ;(this.pending = null),
     (this.pendingTotal = 0),
     (this.blockSize = this.constructor.blockSize),
@@ -17355,10 +17375,10 @@ function Ee() {
     (this._delta8 = this.blockSize / 8),
     (this._delta32 = this.blockSize / 32)
 }
-var ke = Ee
-;(Ee.prototype.update = function (t, e) {
+var He = We
+;(We.prototype.update = function (t, e) {
   if (
-    ((t = xe.toArray(t, e)),
+    ((t = ze.toArray(t, e)),
     (this.pending = this.pending ? this.pending.concat(t) : t),
     (this.pendingTotal += t.length),
     this.pending.length >= this._delta8)
@@ -17366,16 +17386,16 @@ var ke = Ee
     var r = (t = this.pending).length % this._delta8
     ;(this.pending = t.slice(t.length - r, t.length)),
       0 === this.pending.length && (this.pending = null),
-      (t = xe.join32(t, 0, t.length - r, this.endian))
+      (t = ze.join32(t, 0, t.length - r, this.endian))
     for (var n = 0; n < t.length; n += this._delta32)
       this._update(t, n, n + this._delta32)
   }
   return this
 }),
-  (Ee.prototype.digest = function (t) {
-    return this.update(this._pad()), Vt(null === this.pending), this._digest(t)
+  (We.prototype.digest = function (t) {
+    return this.update(this._pad()), he(null === this.pending), this._digest(t)
   }),
-  (Ee.prototype._pad = function () {
+  (We.prototype._pad = function () {
     var t = this.pendingTotal,
       e = this._delta8,
       r = e - ((t + this.padLength) % e),
@@ -17409,48 +17429,48 @@ var ke = Ee
         n[i++] = 0
     return n
   })
-var Re = { BlockHash: ke },
-  Ie = xe.rotr32
-function Be(t, e, r) {
+var Ge = { BlockHash: He },
+  Ze = ze.rotr32
+function Ke(t, e, r) {
   return (t & e) ^ (~t & r)
 }
-function Oe(t, e, r) {
+function Ve(t, e, r) {
   return (t & e) ^ (t & r) ^ (e & r)
 }
-var Ce = Be,
-  Le = Oe,
-  je = xe.rotl32,
-  Ne = xe.sum32,
-  De = xe.sum32_5,
-  Ue = function (t, e, r, n) {
+var Je = Ke,
+  $e = Ve,
+  Xe = ze.rotl32,
+  Ye = ze.sum32,
+  Qe = ze.sum32_5,
+  tr = function (t, e, r, n) {
     return 0 === t
-      ? Be(e, r, n)
+      ? Ke(e, r, n)
       : 1 === t || 3 === t
       ? (function (t, e, r) {
           return t ^ e ^ r
         })(e, r, n)
       : 2 === t
-      ? Oe(e, r, n)
+      ? Ve(e, r, n)
       : void 0
   },
-  Fe = Re.BlockHash,
-  qe = [1518500249, 1859775393, 2400959708, 3395469782]
-function ze() {
-  if (!(this instanceof ze)) return new ze()
-  Fe.call(this),
+  er = Ge.BlockHash,
+  rr = [1518500249, 1859775393, 2400959708, 3395469782]
+function nr() {
+  if (!(this instanceof nr)) return new nr()
+  er.call(this),
     (this.h = [1732584193, 4023233417, 2562383102, 271733878, 3285377520]),
     (this.W = new Array(80))
 }
-xe.inherits(ze, Fe)
-var We = ze
-;(ze.blockSize = 512),
-  (ze.outSize = 160),
-  (ze.hmacStrength = 80),
-  (ze.padLength = 64),
-  (ze.prototype._update = function (t, e) {
+ze.inherits(nr, er)
+var ir = nr
+;(nr.blockSize = 512),
+  (nr.outSize = 160),
+  (nr.hmacStrength = 80),
+  (nr.padLength = 64),
+  (nr.prototype._update = function (t, e) {
     for (var r = this.W, n = 0; n < 16; n++) r[n] = t[e + n]
     for (; n < r.length; n++)
-      r[n] = je(r[n - 3] ^ r[n - 8] ^ r[n - 14] ^ r[n - 16], 1)
+      r[n] = Xe(r[n - 3] ^ r[n - 8] ^ r[n - 14] ^ r[n - 16], 1)
     var i = this.h[0],
       o = this.h[1],
       s = this.h[2],
@@ -17458,34 +17478,34 @@ var We = ze
       u = this.h[4]
     for (n = 0; n < r.length; n++) {
       var h = ~~(n / 20),
-        f = De(je(i, 5), Ue(h, o, s, a), u, r[n], qe[h])
-      ;(u = a), (a = s), (s = je(o, 30)), (o = i), (i = f)
+        f = Qe(Xe(i, 5), tr(h, o, s, a), u, r[n], rr[h])
+      ;(u = a), (a = s), (s = Xe(o, 30)), (o = i), (i = f)
     }
-    ;(this.h[0] = Ne(this.h[0], i)),
-      (this.h[1] = Ne(this.h[1], o)),
-      (this.h[2] = Ne(this.h[2], s)),
-      (this.h[3] = Ne(this.h[3], a)),
-      (this.h[4] = Ne(this.h[4], u))
+    ;(this.h[0] = Ye(this.h[0], i)),
+      (this.h[1] = Ye(this.h[1], o)),
+      (this.h[2] = Ye(this.h[2], s)),
+      (this.h[3] = Ye(this.h[3], a)),
+      (this.h[4] = Ye(this.h[4], u))
   }),
-  (ze.prototype._digest = function (t) {
-    return 'hex' === t ? xe.toHex32(this.h, 'big') : xe.split32(this.h, 'big')
+  (nr.prototype._digest = function (t) {
+    return 'hex' === t ? ze.toHex32(this.h, 'big') : ze.split32(this.h, 'big')
   })
-var He = xe.sum32,
-  Ge = xe.sum32_4,
-  Ze = xe.sum32_5,
-  Ke = Ce,
-  Ve = Le,
-  Je = function (t) {
-    return Ie(t, 2) ^ Ie(t, 13) ^ Ie(t, 22)
+var or = ze.sum32,
+  sr = ze.sum32_4,
+  ar = ze.sum32_5,
+  ur = Je,
+  hr = $e,
+  fr = function (t) {
+    return Ze(t, 2) ^ Ze(t, 13) ^ Ze(t, 22)
   },
-  $e = function (t) {
-    return Ie(t, 6) ^ Ie(t, 11) ^ Ie(t, 25)
+  lr = function (t) {
+    return Ze(t, 6) ^ Ze(t, 11) ^ Ze(t, 25)
   },
-  Xe = function (t) {
-    return Ie(t, 7) ^ Ie(t, 18) ^ (t >>> 3)
+  cr = function (t) {
+    return Ze(t, 7) ^ Ze(t, 18) ^ (t >>> 3)
   },
-  Ye = Re.BlockHash,
-  Qe = [
+  dr = Ge.BlockHash,
+  pr = [
     1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993,
     2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987,
     1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774,
@@ -17498,37 +17518,37 @@ var He = xe.sum32,
     1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424,
     2428436474, 2756734187, 3204031479, 3329325298
   ]
-function tr() {
-  if (!(this instanceof tr)) return new tr()
-  Ye.call(this),
+function mr() {
+  if (!(this instanceof mr)) return new mr()
+  dr.call(this),
     (this.h = [
       1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600822924,
       528734635, 1541459225
     ]),
-    (this.k = Qe),
+    (this.k = pr),
     (this.W = new Array(64))
 }
-xe.inherits(tr, Ye)
-var er = tr
-function rr() {
-  if (!(this instanceof rr)) return new rr()
-  er.call(this),
+ze.inherits(mr, dr)
+var vr = mr
+function gr() {
+  if (!(this instanceof gr)) return new gr()
+  vr.call(this),
     (this.h = [
       3238371032, 914150663, 812702999, 4144912697, 4290775857, 1750603025,
       1694076839, 3204075428
     ])
 }
-;(tr.blockSize = 512),
-  (tr.outSize = 256),
-  (tr.hmacStrength = 192),
-  (tr.padLength = 64),
-  (tr.prototype._update = function (t, e) {
+;(mr.blockSize = 512),
+  (mr.outSize = 256),
+  (mr.hmacStrength = 192),
+  (mr.padLength = 64),
+  (mr.prototype._update = function (t, e) {
     for (var r = this.W, n = 0; n < 16; n++) r[n] = t[e + n]
     for (; n < r.length; n++)
-      r[n] = Ge(
-        Ie((i = r[n - 2]), 17) ^ Ie(i, 19) ^ (i >>> 10),
+      r[n] = sr(
+        Ze((i = r[n - 2]), 17) ^ Ze(i, 19) ^ (i >>> 10),
         r[n - 7],
-        Xe(r[n - 15]),
+        cr(r[n - 15]),
         r[n - 16]
       )
     var i,
@@ -17540,54 +17560,54 @@ function rr() {
       f = this.h[5],
       l = this.h[6],
       c = this.h[7]
-    for (Vt(this.k.length === r.length), n = 0; n < r.length; n++) {
-      var d = Ze(c, $e(h), Ke(h, f, l), this.k[n], r[n]),
-        p = He(Je(o), Ve(o, s, a))
+    for (he(this.k.length === r.length), n = 0; n < r.length; n++) {
+      var d = ar(c, lr(h), ur(h, f, l), this.k[n], r[n]),
+        p = or(fr(o), hr(o, s, a))
       ;(c = l),
         (l = f),
         (f = h),
-        (h = He(u, d)),
+        (h = or(u, d)),
         (u = a),
         (a = s),
         (s = o),
-        (o = He(d, p))
+        (o = or(d, p))
     }
-    ;(this.h[0] = He(this.h[0], o)),
-      (this.h[1] = He(this.h[1], s)),
-      (this.h[2] = He(this.h[2], a)),
-      (this.h[3] = He(this.h[3], u)),
-      (this.h[4] = He(this.h[4], h)),
-      (this.h[5] = He(this.h[5], f)),
-      (this.h[6] = He(this.h[6], l)),
-      (this.h[7] = He(this.h[7], c))
+    ;(this.h[0] = or(this.h[0], o)),
+      (this.h[1] = or(this.h[1], s)),
+      (this.h[2] = or(this.h[2], a)),
+      (this.h[3] = or(this.h[3], u)),
+      (this.h[4] = or(this.h[4], h)),
+      (this.h[5] = or(this.h[5], f)),
+      (this.h[6] = or(this.h[6], l)),
+      (this.h[7] = or(this.h[7], c))
   }),
-  (tr.prototype._digest = function (t) {
-    return 'hex' === t ? xe.toHex32(this.h, 'big') : xe.split32(this.h, 'big')
+  (mr.prototype._digest = function (t) {
+    return 'hex' === t ? ze.toHex32(this.h, 'big') : ze.split32(this.h, 'big')
   }),
-  xe.inherits(rr, er)
-var nr = rr
-;(rr.blockSize = 512),
-  (rr.outSize = 224),
-  (rr.hmacStrength = 192),
-  (rr.padLength = 64),
-  (rr.prototype._digest = function (t) {
+  ze.inherits(gr, vr)
+var yr = gr
+;(gr.blockSize = 512),
+  (gr.outSize = 224),
+  (gr.hmacStrength = 192),
+  (gr.padLength = 64),
+  (gr.prototype._digest = function (t) {
     return 'hex' === t
-      ? xe.toHex32(this.h.slice(0, 7), 'big')
-      : xe.split32(this.h.slice(0, 7), 'big')
+      ? ze.toHex32(this.h.slice(0, 7), 'big')
+      : ze.split32(this.h.slice(0, 7), 'big')
   })
-var ir = xe.rotr64_hi,
-  or = xe.rotr64_lo,
-  sr = xe.shr64_hi,
-  ar = xe.shr64_lo,
-  ur = xe.sum64,
-  hr = xe.sum64_hi,
-  fr = xe.sum64_lo,
-  lr = xe.sum64_4_hi,
-  cr = xe.sum64_4_lo,
-  dr = xe.sum64_5_hi,
-  pr = xe.sum64_5_lo,
-  mr = Re.BlockHash,
-  vr = [
+var br = ze.rotr64_hi,
+  wr = ze.rotr64_lo,
+  Mr = ze.shr64_hi,
+  _r = ze.shr64_lo,
+  Ar = ze.sum64,
+  Pr = ze.sum64_hi,
+  Sr = ze.sum64_lo,
+  Tr = ze.sum64_4_hi,
+  xr = ze.sum64_4_lo,
+  Er = ze.sum64_5_hi,
+  kr = ze.sum64_5_lo,
+  Rr = Ge.BlockHash,
+  Ir = [
     1116352408, 3609767458, 1899447441, 602891725, 3049323471, 3964484399,
     3921009573, 2173295548, 961987163, 4081628472, 1508970993, 3053834265,
     2453635748, 2937671579, 2870763221, 3664609560, 3624381080, 2734883394,
@@ -17616,96 +17636,96 @@ var ir = xe.rotr64_hi,
     1126000580, 2618297676, 1288033470, 3409855158, 1501505948, 4234509866,
     1607167915, 987167468, 1816402316, 1246189591
   ]
-function gr() {
-  if (!(this instanceof gr)) return new gr()
-  mr.call(this),
+function Br() {
+  if (!(this instanceof Br)) return new Br()
+  Rr.call(this),
     (this.h = [
       1779033703, 4089235720, 3144134277, 2227873595, 1013904242, 4271175723,
       2773480762, 1595750129, 1359893119, 2917565137, 2600822924, 725511199,
       528734635, 4215389547, 1541459225, 327033209
     ]),
-    (this.k = vr),
+    (this.k = Ir),
     (this.W = new Array(160))
 }
-xe.inherits(gr, mr)
-var yr = gr
-function br(t, e, r, n, i) {
+ze.inherits(Br, Rr)
+var Or = Br
+function Cr(t, e, r, n, i) {
   var o = (t & r) ^ (~t & i)
   return o < 0 && (o += 4294967296), o
 }
-function wr(t, e, r, n, i, o) {
+function Lr(t, e, r, n, i, o) {
   var s = (e & n) ^ (~e & o)
   return s < 0 && (s += 4294967296), s
 }
-function Mr(t, e, r, n, i) {
+function jr(t, e, r, n, i) {
   var o = (t & r) ^ (t & i) ^ (r & i)
   return o < 0 && (o += 4294967296), o
 }
-function _r(t, e, r, n, i, o) {
+function Nr(t, e, r, n, i, o) {
   var s = (e & n) ^ (e & o) ^ (n & o)
   return s < 0 && (s += 4294967296), s
 }
-function Ar(t, e) {
-  var r = ir(t, e, 28) ^ ir(e, t, 2) ^ ir(e, t, 7)
+function Dr(t, e) {
+  var r = br(t, e, 28) ^ br(e, t, 2) ^ br(e, t, 7)
   return r < 0 && (r += 4294967296), r
 }
-function Pr(t, e) {
-  var r = or(t, e, 28) ^ or(e, t, 2) ^ or(e, t, 7)
+function Ur(t, e) {
+  var r = wr(t, e, 28) ^ wr(e, t, 2) ^ wr(e, t, 7)
   return r < 0 && (r += 4294967296), r
 }
-function Sr(t, e) {
-  var r = ir(t, e, 14) ^ ir(t, e, 18) ^ ir(e, t, 9)
+function Fr(t, e) {
+  var r = br(t, e, 14) ^ br(t, e, 18) ^ br(e, t, 9)
   return r < 0 && (r += 4294967296), r
 }
-function Tr(t, e) {
-  var r = or(t, e, 14) ^ or(t, e, 18) ^ or(e, t, 9)
+function qr(t, e) {
+  var r = wr(t, e, 14) ^ wr(t, e, 18) ^ wr(e, t, 9)
   return r < 0 && (r += 4294967296), r
 }
-function xr(t, e) {
-  var r = ir(t, e, 1) ^ ir(t, e, 8) ^ sr(t, e, 7)
+function zr(t, e) {
+  var r = br(t, e, 1) ^ br(t, e, 8) ^ Mr(t, e, 7)
   return r < 0 && (r += 4294967296), r
 }
-function Er(t, e) {
-  var r = or(t, e, 1) ^ or(t, e, 8) ^ ar(t, e, 7)
+function Wr(t, e) {
+  var r = wr(t, e, 1) ^ wr(t, e, 8) ^ _r(t, e, 7)
   return r < 0 && (r += 4294967296), r
 }
-function kr(t, e) {
-  var r = ir(t, e, 19) ^ ir(e, t, 29) ^ sr(t, e, 6)
+function Hr(t, e) {
+  var r = br(t, e, 19) ^ br(e, t, 29) ^ Mr(t, e, 6)
   return r < 0 && (r += 4294967296), r
 }
-function Rr(t, e) {
-  var r = or(t, e, 19) ^ or(e, t, 29) ^ ar(t, e, 6)
+function Gr(t, e) {
+  var r = wr(t, e, 19) ^ wr(e, t, 29) ^ _r(t, e, 6)
   return r < 0 && (r += 4294967296), r
 }
-function Ir() {
-  if (!(this instanceof Ir)) return new Ir()
-  yr.call(this),
+function Zr() {
+  if (!(this instanceof Zr)) return new Zr()
+  Or.call(this),
     (this.h = [
       3418070365, 3238371032, 1654270250, 914150663, 2438529370, 812702999,
       355462360, 4144912697, 1731405415, 4290775857, 2394180231, 1750603025,
       3675008525, 1694076839, 1203062813, 3204075428
     ])
 }
-;(gr.blockSize = 1024),
-  (gr.outSize = 512),
-  (gr.hmacStrength = 192),
-  (gr.padLength = 128),
-  (gr.prototype._prepareBlock = function (t, e) {
+;(Br.blockSize = 1024),
+  (Br.outSize = 512),
+  (Br.hmacStrength = 192),
+  (Br.padLength = 128),
+  (Br.prototype._prepareBlock = function (t, e) {
     for (var r = this.W, n = 0; n < 32; n++) r[n] = t[e + n]
     for (; n < r.length; n += 2) {
-      var i = kr(r[n - 4], r[n - 3]),
-        o = Rr(r[n - 4], r[n - 3]),
+      var i = Hr(r[n - 4], r[n - 3]),
+        o = Gr(r[n - 4], r[n - 3]),
         s = r[n - 14],
         a = r[n - 13],
-        u = xr(r[n - 30], r[n - 29]),
-        h = Er(r[n - 30], r[n - 29]),
+        u = zr(r[n - 30], r[n - 29]),
+        h = Wr(r[n - 30], r[n - 29]),
         f = r[n - 32],
         l = r[n - 31]
-      ;(r[n] = lr(i, o, s, a, u, h, f, l)),
-        (r[n + 1] = cr(i, o, s, a, u, h, f, l))
+      ;(r[n] = Tr(i, o, s, a, u, h, f, l)),
+        (r[n + 1] = xr(i, o, s, a, u, h, f, l))
     }
   }),
-  (gr.prototype._update = function (t, e) {
+  (Br.prototype._update = function (t, e) {
     this._prepareBlock(t, e)
     var r = this.W,
       n = this.h[0],
@@ -17724,81 +17744,81 @@ function Ir() {
       v = this.h[13],
       g = this.h[14],
       y = this.h[15]
-    Vt(this.k.length === r.length)
+    he(this.k.length === r.length)
     for (var b = 0; b < r.length; b += 2) {
       var w = g,
         M = y,
-        _ = Sr(l, c),
-        A = Tr(l, c),
-        P = br(l, 0, d, 0, m),
-        S = wr(0, c, 0, p, 0, v),
+        _ = Fr(l, c),
+        A = qr(l, c),
+        P = Cr(l, 0, d, 0, m),
+        S = Lr(0, c, 0, p, 0, v),
         T = this.k[b],
         x = this.k[b + 1],
         E = r[b],
         k = r[b + 1],
-        R = dr(w, M, _, A, P, S, T, x, E, k),
-        I = pr(w, M, _, A, P, S, T, x, E, k)
-      ;(w = Ar(n, i)),
-        (M = Pr(n, i)),
-        (_ = Mr(n, 0, o, 0, a)),
-        (A = _r(0, i, 0, s, 0, u))
-      var B = hr(w, M, _, A),
-        O = fr(w, M, _, A)
+        R = Er(w, M, _, A, P, S, T, x, E, k),
+        I = kr(w, M, _, A, P, S, T, x, E, k)
+      ;(w = Dr(n, i)),
+        (M = Ur(n, i)),
+        (_ = jr(n, 0, o, 0, a)),
+        (A = Nr(0, i, 0, s, 0, u))
+      var B = Pr(w, M, _, A),
+        O = Sr(w, M, _, A)
       ;(g = m),
         (y = v),
         (m = d),
         (v = p),
         (d = l),
         (p = c),
-        (l = hr(h, f, R, I)),
-        (c = fr(f, f, R, I)),
+        (l = Pr(h, f, R, I)),
+        (c = Sr(f, f, R, I)),
         (h = a),
         (f = u),
         (a = o),
         (u = s),
         (o = n),
         (s = i),
-        (n = hr(R, I, B, O)),
-        (i = fr(R, I, B, O))
+        (n = Pr(R, I, B, O)),
+        (i = Sr(R, I, B, O))
     }
-    ur(this.h, 0, n, i),
-      ur(this.h, 2, o, s),
-      ur(this.h, 4, a, u),
-      ur(this.h, 6, h, f),
-      ur(this.h, 8, l, c),
-      ur(this.h, 10, d, p),
-      ur(this.h, 12, m, v),
-      ur(this.h, 14, g, y)
+    Ar(this.h, 0, n, i),
+      Ar(this.h, 2, o, s),
+      Ar(this.h, 4, a, u),
+      Ar(this.h, 6, h, f),
+      Ar(this.h, 8, l, c),
+      Ar(this.h, 10, d, p),
+      Ar(this.h, 12, m, v),
+      Ar(this.h, 14, g, y)
   }),
-  (gr.prototype._digest = function (t) {
-    return 'hex' === t ? xe.toHex32(this.h, 'big') : xe.split32(this.h, 'big')
+  (Br.prototype._digest = function (t) {
+    return 'hex' === t ? ze.toHex32(this.h, 'big') : ze.split32(this.h, 'big')
   }),
-  xe.inherits(Ir, yr)
-var Br = Ir
-;(Ir.blockSize = 1024),
-  (Ir.outSize = 384),
-  (Ir.hmacStrength = 192),
-  (Ir.padLength = 128),
-  (Ir.prototype._digest = function (t) {
+  ze.inherits(Zr, Or)
+var Kr = Zr
+;(Zr.blockSize = 1024),
+  (Zr.outSize = 384),
+  (Zr.hmacStrength = 192),
+  (Zr.padLength = 128),
+  (Zr.prototype._digest = function (t) {
     return 'hex' === t
-      ? xe.toHex32(this.h.slice(0, 12), 'big')
-      : xe.split32(this.h.slice(0, 12), 'big')
+      ? ze.toHex32(this.h.slice(0, 12), 'big')
+      : ze.split32(this.h.slice(0, 12), 'big')
   })
-var Or = { sha1: We, sha224: nr, sha256: er, sha384: Br, sha512: yr },
-  Cr = xe.rotl32,
-  Lr = xe.sum32,
-  jr = xe.sum32_3,
-  Nr = xe.sum32_4,
-  Dr = Re.BlockHash
-function Ur() {
-  if (!(this instanceof Ur)) return new Ur()
-  Dr.call(this),
+var Vr = { sha1: ir, sha224: yr, sha256: vr, sha384: Kr, sha512: Or },
+  Jr = ze.rotl32,
+  $r = ze.sum32,
+  Xr = ze.sum32_3,
+  Yr = ze.sum32_4,
+  Qr = Ge.BlockHash
+function tn() {
+  if (!(this instanceof tn)) return new tn()
+  Qr.call(this),
     (this.h = [1732584193, 4023233417, 2562383102, 271733878, 3285377520]),
     (this.endian = 'little')
 }
-xe.inherits(Ur, Dr)
-var Fr = Ur
-function qr(t, e, r, n) {
+ze.inherits(tn, Qr)
+var en = tn
+function rn(t, e, r, n) {
   return t <= 15
     ? e ^ r ^ n
     : t <= 31
@@ -17809,7 +17829,7 @@ function qr(t, e, r, n) {
     ? (e & n) | (r & ~n)
     : e ^ (r | ~n)
 }
-function zr(t) {
+function nn(t) {
   return t <= 15
     ? 0
     : t <= 31
@@ -17820,7 +17840,7 @@ function zr(t) {
     ? 2400959708
     : 2840853838
 }
-function Wr(t) {
+function on(t) {
   return t <= 15
     ? 1352829926
     : t <= 31
@@ -17831,11 +17851,11 @@ function Wr(t) {
     ? 2053994217
     : 0
 }
-;(Ur.blockSize = 512),
-  (Ur.outSize = 160),
-  (Ur.hmacStrength = 192),
-  (Ur.padLength = 64),
-  (Ur.prototype._update = function (t, e) {
+;(tn.blockSize = 512),
+  (tn.outSize = 160),
+  (tn.hmacStrength = 192),
+  (tn.padLength = 64),
+  (tn.prototype._update = function (t, e) {
     for (
       var r = this.h[0],
         n = this.h[1],
@@ -17851,88 +17871,88 @@ function Wr(t) {
       c < 80;
       c++
     ) {
-      var d = Lr(Cr(Nr(r, qr(c, n, i, o), t[Hr[c] + e], zr(c)), Zr[c]), s)
+      var d = $r(Jr(Yr(r, rn(c, n, i, o), t[sn[c] + e], nn(c)), un[c]), s)
       ;(r = s),
         (s = o),
-        (o = Cr(i, 10)),
+        (o = Jr(i, 10)),
         (i = n),
         (n = d),
-        (d = Lr(Cr(Nr(a, qr(79 - c, u, h, f), t[Gr[c] + e], Wr(c)), Kr[c]), l)),
+        (d = $r(Jr(Yr(a, rn(79 - c, u, h, f), t[an[c] + e], on(c)), hn[c]), l)),
         (a = l),
         (l = f),
-        (f = Cr(h, 10)),
+        (f = Jr(h, 10)),
         (h = u),
         (u = d)
     }
-    ;(d = jr(this.h[1], i, f)),
-      (this.h[1] = jr(this.h[2], o, l)),
-      (this.h[2] = jr(this.h[3], s, a)),
-      (this.h[3] = jr(this.h[4], r, u)),
-      (this.h[4] = jr(this.h[0], n, h)),
+    ;(d = Xr(this.h[1], i, f)),
+      (this.h[1] = Xr(this.h[2], o, l)),
+      (this.h[2] = Xr(this.h[3], s, a)),
+      (this.h[3] = Xr(this.h[4], r, u)),
+      (this.h[4] = Xr(this.h[0], n, h)),
       (this.h[0] = d)
   }),
-  (Ur.prototype._digest = function (t) {
+  (tn.prototype._digest = function (t) {
     return 'hex' === t
-      ? xe.toHex32(this.h, 'little')
-      : xe.split32(this.h, 'little')
+      ? ze.toHex32(this.h, 'little')
+      : ze.split32(this.h, 'little')
   })
-var Hr = [
+var sn = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6,
     15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13,
     11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9,
     7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13
   ],
-  Gr = [
+  an = [
     5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5,
     10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10,
     0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10,
     4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11
   ],
-  Zr = [
+  un = [
     11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9,
     7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13,
     6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9,
     15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6
   ],
-  Kr = [
+  hn = [
     8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8,
     9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14,
     13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5,
     12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
   ],
-  Vr = { ripemd160: Fr }
-function Jr(t, e, r) {
-  if (!(this instanceof Jr)) return new Jr(t, e, r)
+  fn = { ripemd160: en }
+function ln(t, e, r) {
+  if (!(this instanceof ln)) return new ln(t, e, r)
   ;(this.Hash = t),
     (this.blockSize = t.blockSize / 8),
     (this.outSize = t.outSize / 8),
     (this.inner = null),
     (this.outer = null),
-    this._init(xe.toArray(e, r))
+    this._init(ze.toArray(e, r))
 }
-var $r = Jr
-;(Jr.prototype._init = function (t) {
+var cn = ln
+;(ln.prototype._init = function (t) {
   t.length > this.blockSize && (t = new this.Hash().update(t).digest()),
-    Vt(t.length <= this.blockSize)
+    he(t.length <= this.blockSize)
   for (var e = t.length; e < this.blockSize; e++) t.push(0)
   for (e = 0; e < t.length; e++) t[e] ^= 54
   for (this.inner = new this.Hash().update(t), e = 0; e < t.length; e++)
     t[e] ^= 106
   this.outer = new this.Hash().update(t)
 }),
-  (Jr.prototype.update = function (t, e) {
+  (ln.prototype.update = function (t, e) {
     return this.inner.update(t, e), this
   }),
-  (Jr.prototype.digest = function (t) {
+  (ln.prototype.digest = function (t) {
     return this.outer.update(this.inner.digest()), this.outer.digest(t)
   })
-var Xr = U(function (t, e) {
+var dn = tt(function (t, e) {
     var r = e
-    ;(r.utils = xe),
-      (r.common = Re),
-      (r.sha = Or),
-      (r.ripemd = Vr),
-      (r.hmac = $r),
+    ;(r.utils = ze),
+      (r.common = Ge),
+      (r.sha = Vr),
+      (r.ripemd = fn),
+      (r.hmac = cn),
       (r.sha1 = r.sha.sha1),
       (r.sha256 = r.sha.sha256),
       (r.sha224 = r.sha.sha224),
@@ -17940,7 +17960,7 @@ var Xr = U(function (t, e) {
       (r.sha512 = r.sha.sha512),
       (r.ripemd160 = r.ripemd.ripemd160)
   }),
-  Yr = {
+  pn = {
     doubles: {
       step: 4,
       points: [
@@ -18720,17 +18740,17 @@ var Xr = U(function (t, e) {
       ]
     }
   },
-  Qr = U(function (t, e) {
+  mn = tt(function (t, e) {
     var r,
       n = e,
-      i = Yt.assert
+      i = de.assert
     function o(t) {
       ;(this.curve =
         'short' === t.type
-          ? new _e.short(t)
+          ? new Ne.short(t)
           : 'edwards' === t.type
-          ? new _e.edwards(t)
-          : new _e.mont(t)),
+          ? new Ne.edwards(t)
+          : new Ne.mont(t)),
         (this.g = this.curve.g),
         (this.n = this.curve.n),
         (this.hash = t.hash),
@@ -18762,7 +18782,7 @@ var Xr = U(function (t, e) {
         a: 'ffffffff ffffffff ffffffff fffffffe ffffffff fffffffc',
         b: '64210519 e59c80e7 0fa7e9ab 72243049 feb8deec c146b9b1',
         n: 'ffffffff ffffffff ffffffff 99def836 146bc9b1 b4d22831',
-        hash: Xr.sha256,
+        hash: dn.sha256,
         gRed: !1,
         g: [
           '188da80e b03090f6 7cbf20eb 43a18800 f4ff0afd 82ff1012',
@@ -18776,7 +18796,7 @@ var Xr = U(function (t, e) {
         a: 'ffffffff ffffffff ffffffff fffffffe ffffffff ffffffff fffffffe',
         b: 'b4050a85 0c04b3ab f5413256 5044b0b7 d7bfd8ba 270b3943 2355ffb4',
         n: 'ffffffff ffffffff ffffffff ffff16a2 e0b8f03e 13dd2945 5c5c2a3d',
-        hash: Xr.sha256,
+        hash: dn.sha256,
         gRed: !1,
         g: [
           'b70e0cbd 6bb4bf7f 321390b9 4a03c1d3 56c21122 343280d6 115c1d21',
@@ -18790,7 +18810,7 @@ var Xr = U(function (t, e) {
         a: 'ffffffff 00000001 00000000 00000000 00000000 ffffffff ffffffff fffffffc',
         b: '5ac635d8 aa3a93e7 b3ebbd55 769886bc 651d06b0 cc53b0f6 3bce3c3e 27d2604b',
         n: 'ffffffff 00000000 ffffffff ffffffff bce6faad a7179e84 f3b9cac2 fc632551',
-        hash: Xr.sha256,
+        hash: dn.sha256,
         gRed: !1,
         g: [
           '6b17d1f2 e12c4247 f8bce6e5 63a440f2 77037d81 2deb33a0 f4a13945 d898c296',
@@ -18804,7 +18824,7 @@ var Xr = U(function (t, e) {
         a: 'ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe ffffffff 00000000 00000000 fffffffc',
         b: 'b3312fa7 e23ee7e4 988e056b e3f82d19 181d9c6e fe814112 0314088f 5013875a c656398d 8a2ed19d 2a85c8ed d3ec2aef',
         n: 'ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff c7634d81 f4372ddf 581a0db2 48b0a77a ecec196a ccc52973',
-        hash: Xr.sha384,
+        hash: dn.sha384,
         gRed: !1,
         g: [
           'aa87ca22 be8b0537 8eb1c71e f320ad74 6e1d3b62 8ba79b98 59f741e0 82542a38 5502f25d bf55296c 3a545e38 72760ab7',
@@ -18818,7 +18838,7 @@ var Xr = U(function (t, e) {
         a: '000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffc',
         b: '00000051 953eb961 8e1c9a1f 929a21a0 b68540ee a2da725b 99b315f3 b8b48991 8ef109e1 56193951 ec7e937b 1652c0bd 3bb1bf07 3573df88 3d2c34f1 ef451fd4 6b503f00',
         n: '000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffa 51868783 bf2f966b 7fcc0148 f709a5d0 3bb5c9b8 899c47ae bb6fb71e 91386409',
-        hash: Xr.sha512,
+        hash: dn.sha512,
         gRed: !1,
         g: [
           '000000c6 858e06b7 0404e9cd 9e3ecb66 2395b442 9c648139 053fb521 f828af60 6b4d3dba a14b5e77 efe75928 fe1dc127 a2ffa8de 3348b3c1 856a429b f97e7e31 c2e5bd66',
@@ -18832,7 +18852,7 @@ var Xr = U(function (t, e) {
         a: '76d06',
         b: '1',
         n: '1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed',
-        hash: Xr.sha256,
+        hash: dn.sha256,
         gRed: !1,
         g: ['9']
       }),
@@ -18844,7 +18864,7 @@ var Xr = U(function (t, e) {
         c: '1',
         d: '52036cee2b6ffe73 8cc740797779e898 00700a4d4141d8ab 75eb4dca135978a3',
         n: '1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed',
-        hash: Xr.sha256,
+        hash: dn.sha256,
         gRed: !1,
         g: [
           '216936d3cd6e53fec0a4e231fdd6dc5c692cc7609525a7b2c9562d608f25d51a',
@@ -18852,7 +18872,7 @@ var Xr = U(function (t, e) {
         ]
       })
     try {
-      r = Yr
+      r = pn
     } catch (t) {
       r = void 0
     }
@@ -18864,7 +18884,7 @@ var Xr = U(function (t, e) {
       b: '7',
       n: 'ffffffff ffffffff ffffffff fffffffe baaedce6 af48a03b bfd25e8c d0364141',
       h: '1',
-      hash: Xr.sha256,
+      hash: dn.sha256,
       beta: '7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee',
       lambda:
         '5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72',
@@ -18886,8 +18906,8 @@ var Xr = U(function (t, e) {
       ]
     })
   })
-function tn(t) {
-  if (!(this instanceof tn)) return new tn(t)
+function vn(t) {
+  if (!(this instanceof vn)) return new vn(t)
   ;(this.hash = t.hash),
     (this.predResist = !!t.predResist),
     (this.outLen = this.hash.outSize),
@@ -18896,26 +18916,26 @@ function tn(t) {
     (this.reseedInterval = null),
     (this.K = null),
     (this.V = null)
-  var e = Xt.toArray(t.entropy, t.entropyEnc || 'hex'),
-    r = Xt.toArray(t.nonce, t.nonceEnc || 'hex'),
-    n = Xt.toArray(t.pers, t.persEnc || 'hex')
-  Vt(
+  var e = ce.toArray(t.entropy, t.entropyEnc || 'hex'),
+    r = ce.toArray(t.nonce, t.nonceEnc || 'hex'),
+    n = ce.toArray(t.pers, t.persEnc || 'hex')
+  he(
     e.length >= this.minEntropy / 8,
     'Not enough entropy. Minimum is: ' + this.minEntropy + ' bits'
   ),
     this._init(e, r, n)
 }
-var en = tn
-;(tn.prototype._init = function (t, e, r) {
+var gn = vn
+;(vn.prototype._init = function (t, e, r) {
   var n = t.concat(e).concat(r)
   ;(this.K = new Array(this.outLen / 8)), (this.V = new Array(this.outLen / 8))
   for (var i = 0; i < this.V.length; i++) (this.K[i] = 0), (this.V[i] = 1)
   this._update(n), (this._reseed = 1), (this.reseedInterval = 281474976710656)
 }),
-  (tn.prototype._hmac = function () {
-    return new Xr.hmac(this.hash, this.K)
+  (vn.prototype._hmac = function () {
+    return new dn.hmac(this.hash, this.K)
   }),
-  (tn.prototype._update = function (t) {
+  (vn.prototype._update = function (t) {
     var e = this._hmac().update(this.V).update([0])
     t && (e = e.update(t)),
       (this.K = e.digest()),
@@ -18924,43 +18944,43 @@ var en = tn
         ((this.K = this._hmac().update(this.V).update([1]).update(t).digest()),
         (this.V = this._hmac().update(this.V).digest()))
   }),
-  (tn.prototype.reseed = function (t, e, r, n) {
+  (vn.prototype.reseed = function (t, e, r, n) {
     'string' != typeof e && ((n = r), (r = e), (e = null)),
-      (t = Xt.toArray(t, e)),
-      (r = Xt.toArray(r, n)),
-      Vt(
+      (t = ce.toArray(t, e)),
+      (r = ce.toArray(r, n)),
+      he(
         t.length >= this.minEntropy / 8,
         'Not enough entropy. Minimum is: ' + this.minEntropy + ' bits'
       ),
       this._update(t.concat(r || [])),
       (this._reseed = 1)
   }),
-  (tn.prototype.generate = function (t, e, r, n) {
+  (vn.prototype.generate = function (t, e, r, n) {
     if (this._reseed > this.reseedInterval)
       throw new Error('Reseed is required')
     'string' != typeof e && ((n = r), (r = e), (e = null)),
-      r && ((r = Xt.toArray(r, n || 'hex')), this._update(r))
+      r && ((r = ce.toArray(r, n || 'hex')), this._update(r))
     for (var i = []; i.length < t; )
       (this.V = this._hmac().update(this.V).digest()), (i = i.concat(this.V))
     var o = i.slice(0, t)
-    return this._update(r), this._reseed++, Xt.encode(o, e)
+    return this._update(r), this._reseed++, ce.encode(o, e)
   })
-var rn = Yt.assert
-function nn(t, e) {
+var yn = de.assert
+function bn(t, e) {
   ;(this.ec = t),
     (this.priv = null),
     (this.pub = null),
     e.priv && this._importPrivate(e.priv, e.privEnc),
     e.pub && this._importPublic(e.pub, e.pubEnc)
 }
-var on = nn
-;(nn.fromPublic = function (t, e, r) {
-  return e instanceof nn ? e : new nn(t, { pub: e, pubEnc: r })
+var wn = bn
+;(bn.fromPublic = function (t, e, r) {
+  return e instanceof bn ? e : new bn(t, { pub: e, pubEnc: r })
 }),
-  (nn.fromPrivate = function (t, e, r) {
-    return e instanceof nn ? e : new nn(t, { priv: e, privEnc: r })
+  (bn.fromPrivate = function (t, e, r) {
+    return e instanceof bn ? e : new bn(t, { priv: e, privEnc: r })
   }),
-  (nn.prototype.validate = function () {
+  (bn.prototype.validate = function () {
     var t = this.getPublic()
     return t.isInfinity()
       ? { result: !1, reason: 'Invalid public key' }
@@ -18970,45 +18990,45 @@ var on = nn
         : { result: !1, reason: 'Public key * N != O' }
       : { result: !1, reason: 'Public key is not a point' }
   }),
-  (nn.prototype.getPublic = function (t, e) {
+  (bn.prototype.getPublic = function (t, e) {
     return (
       'string' == typeof t && ((e = t), (t = null)),
       this.pub || (this.pub = this.ec.g.mul(this.priv)),
       e ? this.pub.encode(e, t) : this.pub
     )
   }),
-  (nn.prototype.getPrivate = function (t) {
+  (bn.prototype.getPrivate = function (t) {
     return 'hex' === t ? this.priv.toString(16, 2) : this.priv
   }),
-  (nn.prototype._importPrivate = function (t, e) {
-    ;(this.priv = new dt(t, e || 16)),
+  (bn.prototype._importPrivate = function (t, e) {
+    ;(this.priv = new Et(t, e || 16)),
       (this.priv = this.priv.umod(this.ec.curve.n))
   }),
-  (nn.prototype._importPublic = function (t, e) {
+  (bn.prototype._importPublic = function (t, e) {
     if (t.x || t.y)
       return (
         'mont' === this.ec.curve.type
-          ? rn(t.x, 'Need x coordinate')
+          ? yn(t.x, 'Need x coordinate')
           : ('short' !== this.ec.curve.type &&
               'edwards' !== this.ec.curve.type) ||
-            rn(t.x && t.y, 'Need both x and y coordinate'),
+            yn(t.x && t.y, 'Need both x and y coordinate'),
         void (this.pub = this.ec.curve.point(t.x, t.y))
       )
     this.pub = this.ec.curve.decodePoint(t, e)
   }),
-  (nn.prototype.derive = function (t) {
+  (bn.prototype.derive = function (t) {
     return (
-      t.validate() || rn(t.validate(), 'public point not validated'),
+      t.validate() || yn(t.validate(), 'public point not validated'),
       t.mul(this.priv).getX()
     )
   }),
-  (nn.prototype.sign = function (t, e, r) {
+  (bn.prototype.sign = function (t, e, r) {
     return this.ec.sign(t, this, e, r)
   }),
-  (nn.prototype.verify = function (t, e) {
+  (bn.prototype.verify = function (t, e) {
     return this.ec.verify(t, e, this)
   }),
-  (nn.prototype.inspect = function () {
+  (bn.prototype.inspect = function () {
     return (
       '<Key priv: ' +
       (this.priv && this.priv.toString(16, 2)) +
@@ -19017,20 +19037,20 @@ var on = nn
       ' >'
     )
   })
-var sn = Yt.assert
-function an(t, e) {
-  if (t instanceof an) return t
+var Mn = de.assert
+function _n(t, e) {
+  if (t instanceof _n) return t
   this._importDER(t, e) ||
-    (sn(t.r && t.s, 'Signature without r or s'),
-    (this.r = new dt(t.r, 16)),
-    (this.s = new dt(t.s, 16)),
+    (Mn(t.r && t.s, 'Signature without r or s'),
+    (this.r = new Et(t.r, 16)),
+    (this.s = new Et(t.s, 16)),
     (this.recoveryParam = void 0 === t.recoveryParam ? null : t.recoveryParam))
 }
-var un = an
-function hn() {
+var An = _n
+function Pn() {
   this.place = 0
 }
-function fn(t, e) {
+function Sn(t, e) {
   var r = t[e.place++]
   if (!(128 & r)) return r
   var n = 15 & r
@@ -19039,11 +19059,11 @@ function fn(t, e) {
     (i <<= 8), (i |= t[s]), (i >>>= 0)
   return !(i <= 127) && ((e.place = s), i)
 }
-function ln(t) {
+function Tn(t) {
   for (var e = 0, r = t.length - 1; !t[e] && !(128 & t[e + 1]) && e < r; ) e++
   return 0 === e ? t : t.slice(e)
 }
-function cn(t, e) {
+function xn(t, e) {
   if (e < 128) t.push(e)
   else {
     var r = 1 + ((Math.log(e) / Math.LN2) >>> 3)
@@ -19051,19 +19071,19 @@ function cn(t, e) {
     t.push(e)
   }
 }
-;(an.prototype._importDER = function (t, e) {
-  t = Yt.toArray(t, e)
-  var r = new hn()
+;(_n.prototype._importDER = function (t, e) {
+  t = de.toArray(t, e)
+  var r = new Pn()
   if (48 !== t[r.place++]) return !1
-  var n = fn(t, r)
+  var n = Sn(t, r)
   if (!1 === n) return !1
   if (n + r.place !== t.length) return !1
   if (2 !== t[r.place++]) return !1
-  var i = fn(t, r)
+  var i = Sn(t, r)
   if (!1 === i) return !1
   var o = t.slice(r.place, i + r.place)
   if (((r.place += i), 2 !== t[r.place++])) return !1
-  var s = fn(t, r)
+  var s = Sn(t, r)
   if (!1 === s) return !1
   if (t.length !== s + r.place) return !1
   var a = t.slice(r.place, s + r.place)
@@ -19076,34 +19096,34 @@ function cn(t, e) {
     a = a.slice(1)
   }
   return (
-    (this.r = new dt(o)), (this.s = new dt(a)), (this.recoveryParam = null), !0
+    (this.r = new Et(o)), (this.s = new Et(a)), (this.recoveryParam = null), !0
   )
 }),
-  (an.prototype.toDER = function (t) {
+  (_n.prototype.toDER = function (t) {
     var e = this.r.toArray(),
       r = this.s.toArray()
     for (
       128 & e[0] && (e = [0].concat(e)),
         128 & r[0] && (r = [0].concat(r)),
-        e = ln(e),
-        r = ln(r);
+        e = Tn(e),
+        r = Tn(r);
       !(r[0] || 128 & r[1]);
 
     )
       r = r.slice(1)
     var n = [2]
-    cn(n, e.length), (n = n.concat(e)).push(2), cn(n, r.length)
+    xn(n, e.length), (n = n.concat(e)).push(2), xn(n, r.length)
     var i = n.concat(r),
       o = [48]
-    return cn(o, i.length), (o = o.concat(i)), Yt.encode(o, t)
+    return xn(o, i.length), (o = o.concat(i)), de.encode(o, t)
   })
-var dn = Yt.assert
-function pn(t) {
-  if (!(this instanceof pn)) return new pn(t)
+var En = de.assert
+function kn(t) {
+  if (!(this instanceof kn)) return new kn(t)
   'string' == typeof t &&
-    (dn(Object.prototype.hasOwnProperty.call(Qr, t), 'Unknown curve ' + t),
-    (t = Qr[t])),
-    t instanceof Qr.PresetCurve && (t = { curve: t }),
+    (En(Object.prototype.hasOwnProperty.call(mn, t), 'Unknown curve ' + t),
+    (t = mn[t])),
+    t instanceof mn.PresetCurve && (t = { curve: t }),
     (this.curve = t.curve.curve),
     (this.n = this.curve.n),
     (this.nh = this.n.ushrn(1)),
@@ -19112,64 +19132,64 @@ function pn(t) {
     this.g.precompute(t.curve.n.bitLength() + 1),
     (this.hash = t.hash || t.curve.hash)
 }
-var mn = pn
-;(pn.prototype.keyPair = function (t) {
-  return new on(this, t)
+var Rn = kn
+;(kn.prototype.keyPair = function (t) {
+  return new wn(this, t)
 }),
-  (pn.prototype.keyFromPrivate = function (t, e) {
-    return on.fromPrivate(this, t, e)
+  (kn.prototype.keyFromPrivate = function (t, e) {
+    return wn.fromPrivate(this, t, e)
   }),
-  (pn.prototype.keyFromPublic = function (t, e) {
-    return on.fromPublic(this, t, e)
+  (kn.prototype.keyFromPublic = function (t, e) {
+    return wn.fromPublic(this, t, e)
   }),
-  (pn.prototype.genKeyPair = function (t) {
+  (kn.prototype.genKeyPair = function (t) {
     t || (t = {})
     for (
-      var e = new en({
+      var e = new gn({
           hash: this.hash,
           pers: t.pers,
           persEnc: t.persEnc || 'utf8',
-          entropy: t.entropy || Qt(this.hash.hmacStrength),
+          entropy: t.entropy || pe(this.hash.hmacStrength),
           entropyEnc: (t.entropy && t.entropyEnc) || 'utf8',
           nonce: this.n.toArray()
         }),
         r = this.n.byteLength(),
-        n = this.n.sub(new dt(2));
+        n = this.n.sub(new Et(2));
       ;
 
     ) {
-      var i = new dt(e.generate(r))
+      var i = new Et(e.generate(r))
       if (!(i.cmp(n) > 0)) return i.iaddn(1), this.keyFromPrivate(i)
     }
   }),
-  (pn.prototype._truncateToN = function (t, e) {
+  (kn.prototype._truncateToN = function (t, e) {
     var r = 8 * t.byteLength() - this.n.bitLength()
     return (
       r > 0 && (t = t.ushrn(r)), !e && t.cmp(this.n) >= 0 ? t.sub(this.n) : t
     )
   }),
-  (pn.prototype.sign = function (t, e, r, n) {
+  (kn.prototype.sign = function (t, e, r, n) {
     'object' == typeof r && ((n = r), (r = null)),
       n || (n = {}),
       (e = this.keyFromPrivate(e, r)),
-      (t = this._truncateToN(new dt(t, 16)))
+      (t = this._truncateToN(new Et(t, 16)))
     for (
       var i = this.n.byteLength(),
         o = e.getPrivate().toArray('be', i),
         s = t.toArray('be', i),
-        a = new en({
+        a = new gn({
           hash: this.hash,
           entropy: o,
           nonce: s,
           pers: n.pers,
           persEnc: n.persEnc || 'utf8'
         }),
-        u = this.n.sub(new dt(1)),
+        u = this.n.sub(new Et(1)),
         h = 0;
       ;
       h++
     ) {
-      var f = n.k ? n.k(h) : new dt(a.generate(this.n.byteLength()))
+      var f = n.k ? n.k(h) : new Et(a.generate(this.n.byteLength()))
       if (!((f = this._truncateToN(f, !0)).cmpn(1) <= 0 || f.cmp(u) >= 0)) {
         var l = this.g.mul(f)
         if (!l.isInfinity()) {
@@ -19183,7 +19203,7 @@ var mn = pn
                 n.canonical &&
                   p.cmp(this.nh) > 0 &&
                   ((p = this.n.sub(p)), (m ^= 1)),
-                new un({ r: d, s: p, recoveryParam: m })
+                new An({ r: d, s: p, recoveryParam: m })
               )
             }
           }
@@ -19191,9 +19211,9 @@ var mn = pn
       }
     }
   }),
-  (pn.prototype.verify = function (t, e, r, n) {
-    ;(t = this._truncateToN(new dt(t, 16))), (r = this.keyFromPublic(r, n))
-    var i = (e = new un(e, 'hex')).r,
+  (kn.prototype.verify = function (t, e, r, n) {
+    ;(t = this._truncateToN(new Et(t, 16))), (r = this.keyFromPublic(r, n))
+    var i = (e = new An(e, 'hex')).r,
       o = e.s
     if (i.cmpn(1) < 0 || i.cmp(this.n) >= 0) return !1
     if (o.cmpn(1) < 0 || o.cmp(this.n) >= 0) return !1
@@ -19206,11 +19226,11 @@ var mn = pn
       : !(s = this.g.mulAdd(u, r.getPublic(), h)).isInfinity() &&
           0 === s.getX().umod(this.n).cmp(i)
   }),
-  (pn.prototype.recoverPubKey = function (t, e, r, n) {
-    dn((3 & r) === r, 'The recovery param is more than two bits'),
-      (e = new un(e, n))
+  (kn.prototype.recoverPubKey = function (t, e, r, n) {
+    En((3 & r) === r, 'The recovery param is more than two bits'),
+      (e = new An(e, n))
     var i = this.n,
-      o = new dt(t),
+      o = new Et(t),
       s = e.r,
       a = e.s,
       u = 1 & r,
@@ -19223,8 +19243,8 @@ var mn = pn
       c = a.mul(f).umod(i)
     return this.g.mulAdd(l, s, c)
   }),
-  (pn.prototype.getKeyRecoveryParam = function (t, e, r, n) {
-    if (null !== (e = new un(e, n)).recoveryParam) return e.recoveryParam
+  (kn.prototype.getKeyRecoveryParam = function (t, e, r, n) {
+    if (null !== (e = new An(e, n)).recoveryParam) return e.recoveryParam
     for (var i = 0; i < 4; i++) {
       var o
       try {
@@ -19236,113 +19256,113 @@ var mn = pn
     }
     throw new Error('Unable to find valid recovery factor')
   })
-var vn = Yt.assert,
-  gn = Yt.parseBytes,
-  yn = Yt.cachedProperty
-function bn(t, e) {
+var In = de.assert,
+  Bn = de.parseBytes,
+  On = de.cachedProperty
+function Cn(t, e) {
   ;(this.eddsa = t),
-    (this._secret = gn(e.secret)),
-    t.isPoint(e.pub) ? (this._pub = e.pub) : (this._pubBytes = gn(e.pub))
+    (this._secret = Bn(e.secret)),
+    t.isPoint(e.pub) ? (this._pub = e.pub) : (this._pubBytes = Bn(e.pub))
 }
-;(bn.fromPublic = function (t, e) {
-  return e instanceof bn ? e : new bn(t, { pub: e })
+;(Cn.fromPublic = function (t, e) {
+  return e instanceof Cn ? e : new Cn(t, { pub: e })
 }),
-  (bn.fromSecret = function (t, e) {
-    return e instanceof bn ? e : new bn(t, { secret: e })
+  (Cn.fromSecret = function (t, e) {
+    return e instanceof Cn ? e : new Cn(t, { secret: e })
   }),
-  (bn.prototype.secret = function () {
+  (Cn.prototype.secret = function () {
     return this._secret
   }),
-  yn(bn, 'pubBytes', function () {
+  On(Cn, 'pubBytes', function () {
     return this.eddsa.encodePoint(this.pub())
   }),
-  yn(bn, 'pub', function () {
+  On(Cn, 'pub', function () {
     return this._pubBytes
       ? this.eddsa.decodePoint(this._pubBytes)
       : this.eddsa.g.mul(this.priv())
   }),
-  yn(bn, 'privBytes', function () {
+  On(Cn, 'privBytes', function () {
     var t = this.eddsa,
       e = this.hash(),
       r = t.encodingLength - 1,
       n = e.slice(0, t.encodingLength)
     return (n[0] &= 248), (n[r] &= 127), (n[r] |= 64), n
   }),
-  yn(bn, 'priv', function () {
+  On(Cn, 'priv', function () {
     return this.eddsa.decodeInt(this.privBytes())
   }),
-  yn(bn, 'hash', function () {
+  On(Cn, 'hash', function () {
     return this.eddsa.hash().update(this.secret()).digest()
   }),
-  yn(bn, 'messagePrefix', function () {
+  On(Cn, 'messagePrefix', function () {
     return this.hash().slice(this.eddsa.encodingLength)
   }),
-  (bn.prototype.sign = function (t) {
-    return vn(this._secret, 'KeyPair can only verify'), this.eddsa.sign(t, this)
+  (Cn.prototype.sign = function (t) {
+    return In(this._secret, 'KeyPair can only verify'), this.eddsa.sign(t, this)
   }),
-  (bn.prototype.verify = function (t, e) {
+  (Cn.prototype.verify = function (t, e) {
     return this.eddsa.verify(t, e, this)
   }),
-  (bn.prototype.getSecret = function (t) {
+  (Cn.prototype.getSecret = function (t) {
     return (
-      vn(this._secret, 'KeyPair is public only'), Yt.encode(this.secret(), t)
+      In(this._secret, 'KeyPair is public only'), de.encode(this.secret(), t)
     )
   }),
-  (bn.prototype.getPublic = function (t) {
-    return Yt.encode(this.pubBytes(), t)
+  (Cn.prototype.getPublic = function (t) {
+    return de.encode(this.pubBytes(), t)
   })
-var wn = bn,
-  Mn = Yt.assert,
-  _n = Yt.cachedProperty,
-  An = Yt.parseBytes
-function Pn(t, e) {
+var Ln = Cn,
+  jn = de.assert,
+  Nn = de.cachedProperty,
+  Dn = de.parseBytes
+function Un(t, e) {
   ;(this.eddsa = t),
-    'object' != typeof e && (e = An(e)),
+    'object' != typeof e && (e = Dn(e)),
     Array.isArray(e) &&
       (e = { R: e.slice(0, t.encodingLength), S: e.slice(t.encodingLength) }),
-    Mn(e.R && e.S, 'Signature without R or S'),
+    jn(e.R && e.S, 'Signature without R or S'),
     t.isPoint(e.R) && (this._R = e.R),
-    e.S instanceof dt && (this._S = e.S),
+    e.S instanceof Et && (this._S = e.S),
     (this._Rencoded = Array.isArray(e.R) ? e.R : e.Rencoded),
     (this._Sencoded = Array.isArray(e.S) ? e.S : e.Sencoded)
 }
-_n(Pn, 'S', function () {
+Nn(Un, 'S', function () {
   return this.eddsa.decodeInt(this.Sencoded())
 }),
-  _n(Pn, 'R', function () {
+  Nn(Un, 'R', function () {
     return this.eddsa.decodePoint(this.Rencoded())
   }),
-  _n(Pn, 'Rencoded', function () {
+  Nn(Un, 'Rencoded', function () {
     return this.eddsa.encodePoint(this.R())
   }),
-  _n(Pn, 'Sencoded', function () {
+  Nn(Un, 'Sencoded', function () {
     return this.eddsa.encodeInt(this.S())
   }),
-  (Pn.prototype.toBytes = function () {
+  (Un.prototype.toBytes = function () {
     return this.Rencoded().concat(this.Sencoded())
   }),
-  (Pn.prototype.toHex = function () {
-    return Yt.encode(this.toBytes(), 'hex').toUpperCase()
+  (Un.prototype.toHex = function () {
+    return de.encode(this.toBytes(), 'hex').toUpperCase()
   })
-var Sn = Pn,
-  Tn = Yt.assert,
-  xn = Yt.parseBytes
-function En(t) {
+var Fn = Un,
+  qn = de.assert,
+  zn = de.parseBytes
+function Wn(t) {
   if (
-    (Tn('ed25519' === t, 'only tested with ed25519 so far'),
-    !(this instanceof En))
+    (qn('ed25519' === t, 'only tested with ed25519 so far'),
+    !(this instanceof Wn))
   )
-    return new En(t)
-  ;(this.curve = t = Qr[t].curve),
+    return new Wn(t)
+  ;(this.curve = t = mn[t].curve),
     (this.g = t.g),
     this.g.precompute(t.n.bitLength() + 1),
     (this.pointClass = t.point().constructor),
     (this.encodingLength = Math.ceil(t.n.bitLength() / 8)),
-    (this.hash = Xr.sha512)
+    (this.hash = dn.sha512)
 }
-var kn = En
-;(En.prototype.sign = function (t, e) {
-  t = xn(t)
+var Hn = Wn
+;(Wn.prototype.sign = function (t, e) {
+  t = zn(t)
   var r = this.keyFromSecret(e),
     n = this.hashInt(r.messagePrefix(), t),
     i = this.g.mul(n),
@@ -19351,61 +19371,61 @@ var kn = En
     a = n.add(s).umod(this.curve.n)
   return this.makeSignature({ R: i, S: a, Rencoded: o })
 }),
-  (En.prototype.verify = function (t, e, r) {
-    ;(t = xn(t)), (e = this.makeSignature(e))
+  (Wn.prototype.verify = function (t, e, r) {
+    ;(t = zn(t)), (e = this.makeSignature(e))
     var n = this.keyFromPublic(r),
       i = this.hashInt(e.Rencoded(), n.pubBytes(), t),
       o = this.g.mul(e.S())
     return e.R().add(n.pub().mul(i)).eq(o)
   }),
-  (En.prototype.hashInt = function () {
+  (Wn.prototype.hashInt = function () {
     for (var t = this.hash(), e = 0; e < arguments.length; e++)
       t.update(arguments[e])
-    return Yt.intFromLE(t.digest()).umod(this.curve.n)
+    return de.intFromLE(t.digest()).umod(this.curve.n)
   }),
-  (En.prototype.keyFromPublic = function (t) {
-    return wn.fromPublic(this, t)
+  (Wn.prototype.keyFromPublic = function (t) {
+    return Ln.fromPublic(this, t)
   }),
-  (En.prototype.keyFromSecret = function (t) {
-    return wn.fromSecret(this, t)
+  (Wn.prototype.keyFromSecret = function (t) {
+    return Ln.fromSecret(this, t)
   }),
-  (En.prototype.makeSignature = function (t) {
-    return t instanceof Sn ? t : new Sn(this, t)
+  (Wn.prototype.makeSignature = function (t) {
+    return t instanceof Fn ? t : new Fn(this, t)
   }),
-  (En.prototype.encodePoint = function (t) {
+  (Wn.prototype.encodePoint = function (t) {
     var e = t.getY().toArray('le', this.encodingLength)
     return (e[this.encodingLength - 1] |= t.getX().isOdd() ? 128 : 0), e
   }),
-  (En.prototype.decodePoint = function (t) {
-    var e = (t = Yt.parseBytes(t)).length - 1,
+  (Wn.prototype.decodePoint = function (t) {
+    var e = (t = de.parseBytes(t)).length - 1,
       r = t.slice(0, e).concat(-129 & t[e]),
       n = 0 != (128 & t[e]),
-      i = Yt.intFromLE(r)
+      i = de.intFromLE(r)
     return this.curve.pointFromY(i, n)
   }),
-  (En.prototype.encodeInt = function (t) {
+  (Wn.prototype.encodeInt = function (t) {
     return t.toArray('le', this.encodingLength)
   }),
-  (En.prototype.decodeInt = function (t) {
-    return Yt.intFromLE(t)
+  (Wn.prototype.decodeInt = function (t) {
+    return de.intFromLE(t)
   }),
-  (En.prototype.isPoint = function (t) {
+  (Wn.prototype.isPoint = function (t) {
     return t instanceof this.pointClass
   })
-var Rn = U(function (t, e) {
+var Gn = tt(function (t, e) {
   var r = e
   ;(r.version = '6.5.4'),
-    (r.utils = Yt),
-    (r.rand = Qt),
-    (r.curve = _e),
-    (r.curves = Qr),
-    (r.ec = mn),
-    (r.eddsa = kn)
+    (r.utils = de),
+    (r.rand = pe),
+    (r.curve = Ne),
+    (r.curves = mn),
+    (r.ec = Rn),
+    (r.eddsa = Hn)
 })
-const In = new (0, Rn.ec)('secp256k1'),
-  Bn = In.curve,
-  On = Bn.n.constructor
-function Cn(t) {
+const Zn = new (0, Gn.ec)('secp256k1'),
+  Kn = Zn.curve,
+  Vn = Kn.n.constructor
+function Jn(t) {
   const e = t[0]
   switch (e) {
     case 2:
@@ -19413,13 +19433,13 @@ function Cn(t) {
       return 33 !== t.length
         ? null
         : (function (t, e) {
-            let r = new On(e)
-            if (r.cmp(Bn.p) >= 0) return null
-            r = r.toRed(Bn.red)
-            let n = r.redSqr().redIMul(r).redIAdd(Bn.b).redSqrt()
+            let r = new Vn(e)
+            if (r.cmp(Kn.p) >= 0) return null
+            r = r.toRed(Kn.red)
+            let n = r.redSqr().redIMul(r).redIAdd(Kn.b).redSqrt()
             return (
               (3 === t) !== n.isOdd() && (n = n.redNeg()),
-              In.keyPair({ pub: { x: r, y: n } })
+              Zn.keyPair({ pub: { x: r, y: n } })
             )
           })(e, t.subarray(1, 33))
     case 4:
@@ -19428,109 +19448,109 @@ function Cn(t) {
       return 65 !== t.length
         ? null
         : (function (t, e, r) {
-            let n = new On(e),
-              i = new On(r)
-            if (n.cmp(Bn.p) >= 0 || i.cmp(Bn.p) >= 0) return null
+            let n = new Vn(e),
+              i = new Vn(r)
+            if (n.cmp(Kn.p) >= 0 || i.cmp(Kn.p) >= 0) return null
             if (
-              ((n = n.toRed(Bn.red)),
-              (i = i.toRed(Bn.red)),
+              ((n = n.toRed(Kn.red)),
+              (i = i.toRed(Kn.red)),
               (6 === t || 7 === t) && i.isOdd() !== (7 === t))
             )
               return null
             const o = n.redSqr().redIMul(n)
-            return i.redSqr().redISub(o.redIAdd(Bn.b)).isZero()
-              ? In.keyPair({ pub: { x: n, y: i } })
+            return i.redSqr().redISub(o.redIAdd(Kn.b)).isZero()
+              ? Zn.keyPair({ pub: { x: n, y: i } })
               : null
           })(e, t.subarray(1, 33), t.subarray(33, 65))
     default:
       return null
   }
 }
-function Ln(t, e) {
+function $n(t, e) {
   const r = e.encode(null, 33 === t.length)
   for (let e = 0; e < t.length; ++e) t[e] = r[e]
 }
-var jn,
-  Nn = {
+var Xn,
+  Yn = {
     contextRandomize: () => 0,
     privateKeyVerify(t) {
-      const e = new On(t)
-      return e.cmp(Bn.n) < 0 && !e.isZero() ? 0 : 1
+      const e = new Vn(t)
+      return e.cmp(Kn.n) < 0 && !e.isZero() ? 0 : 1
     },
     privateKeyNegate(t) {
-      const e = new On(t),
-        r = Bn.n.sub(e).umod(Bn.n).toArrayLike(Uint8Array, 'be', 32)
+      const e = new Vn(t),
+        r = Kn.n.sub(e).umod(Kn.n).toArrayLike(Uint8Array, 'be', 32)
       return t.set(r), 0
     },
     privateKeyTweakAdd(t, e) {
-      const r = new On(e)
-      if (r.cmp(Bn.n) >= 0) return 1
-      if ((r.iadd(new On(t)), r.cmp(Bn.n) >= 0 && r.isub(Bn.n), r.isZero()))
+      const r = new Vn(e)
+      if (r.cmp(Kn.n) >= 0) return 1
+      if ((r.iadd(new Vn(t)), r.cmp(Kn.n) >= 0 && r.isub(Kn.n), r.isZero()))
         return 1
       const n = r.toArrayLike(Uint8Array, 'be', 32)
       return t.set(n), 0
     },
     privateKeyTweakMul(t, e) {
-      let r = new On(e)
-      if (r.cmp(Bn.n) >= 0 || r.isZero()) return 1
-      r.imul(new On(t)), r.cmp(Bn.n) >= 0 && (r = r.umod(Bn.n))
+      let r = new Vn(e)
+      if (r.cmp(Kn.n) >= 0 || r.isZero()) return 1
+      r.imul(new Vn(t)), r.cmp(Kn.n) >= 0 && (r = r.umod(Kn.n))
       const n = r.toArrayLike(Uint8Array, 'be', 32)
       return t.set(n), 0
     },
-    publicKeyVerify: (t) => (null === Cn(t) ? 1 : 0),
+    publicKeyVerify: (t) => (null === Jn(t) ? 1 : 0),
     publicKeyCreate(t, e) {
-      const r = new On(e)
-      return r.cmp(Bn.n) >= 0 || r.isZero()
+      const r = new Vn(e)
+      return r.cmp(Kn.n) >= 0 || r.isZero()
         ? 1
-        : (Ln(t, In.keyFromPrivate(e).getPublic()), 0)
+        : ($n(t, Zn.keyFromPrivate(e).getPublic()), 0)
     },
     publicKeyConvert(t, e) {
-      const r = Cn(e)
-      return null === r ? 1 : (Ln(t, r.getPublic()), 0)
+      const r = Jn(e)
+      return null === r ? 1 : ($n(t, r.getPublic()), 0)
     },
     publicKeyNegate(t, e) {
-      const r = Cn(e)
+      const r = Jn(e)
       if (null === r) return 1
       const n = r.getPublic()
-      return (n.y = n.y.redNeg()), Ln(t, n), 0
+      return (n.y = n.y.redNeg()), $n(t, n), 0
     },
     publicKeyCombine(t, e) {
       const r = new Array(e.length)
       for (let t = 0; t < e.length; ++t)
-        if (((r[t] = Cn(e[t])), null === r[t])) return 1
+        if (((r[t] = Jn(e[t])), null === r[t])) return 1
       let n = r[0].getPublic()
       for (let t = 1; t < r.length; ++t) n = n.add(r[t].pub)
-      return n.isInfinity() ? 2 : (Ln(t, n), 0)
+      return n.isInfinity() ? 2 : ($n(t, n), 0)
     },
     publicKeyTweakAdd(t, e, r) {
-      const n = Cn(e)
+      const n = Jn(e)
       if (null === n) return 1
-      if ((r = new On(r)).cmp(Bn.n) >= 0) return 2
-      const i = n.getPublic().add(Bn.g.mul(r))
-      return i.isInfinity() ? 2 : (Ln(t, i), 0)
+      if ((r = new Vn(r)).cmp(Kn.n) >= 0) return 2
+      const i = n.getPublic().add(Kn.g.mul(r))
+      return i.isInfinity() ? 2 : ($n(t, i), 0)
     },
     publicKeyTweakMul(t, e, r) {
-      const n = Cn(e)
+      const n = Jn(e)
       return null === n
         ? 1
-        : (r = new On(r)).cmp(Bn.n) >= 0 || r.isZero()
+        : (r = new Vn(r)).cmp(Kn.n) >= 0 || r.isZero()
         ? 2
-        : (Ln(t, n.getPublic().mul(r)), 0)
+        : ($n(t, n.getPublic().mul(r)), 0)
     },
     signatureNormalize(t) {
-      const e = new On(t.subarray(0, 32)),
-        r = new On(t.subarray(32, 64))
-      return e.cmp(Bn.n) >= 0 || r.cmp(Bn.n) >= 0
+      const e = new Vn(t.subarray(0, 32)),
+        r = new Vn(t.subarray(32, 64))
+      return e.cmp(Kn.n) >= 0 || r.cmp(Kn.n) >= 0
         ? 1
-        : (1 === r.cmp(In.nh) &&
-            t.set(Bn.n.sub(r).toArrayLike(Uint8Array, 'be', 32), 32),
+        : (1 === r.cmp(Zn.nh) &&
+            t.set(Kn.n.sub(r).toArrayLike(Uint8Array, 'be', 32), 32),
           0)
     },
     signatureExport(t, e) {
       const r = e.subarray(0, 32),
         n = e.subarray(32, 64)
-      if (new On(r).cmp(Bn.n) >= 0) return 1
-      if (new On(n).cmp(Bn.n) >= 0) return 1
+      if (new Vn(r).cmp(Kn.n) >= 0) return 1
+      if (new Vn(n).cmp(Kn.n) >= 0) return 1
       const { output: i } = t
       let o = i.subarray(4, 37)
       ;(o[0] = 0), o.set(r, 1)
@@ -19583,11 +19603,11 @@ var jn,
       let o = e.subarray(6 + r)
       if ((33 === o.length && 0 === o[0] && (o = o.slice(1)), o.length > 32))
         throw new Error('S length is too long')
-      let s = new On(i)
-      s.cmp(Bn.n) >= 0 && (s = new On(0))
-      let a = new On(e.subarray(6 + r))
+      let s = new Vn(i)
+      s.cmp(Kn.n) >= 0 && (s = new Vn(0))
+      let a = new Vn(e.subarray(6 + r))
       return (
-        a.cmp(Bn.n) >= 0 && (a = new On(0)),
+        a.cmp(Kn.n) >= 0 && (a = new Vn(0)),
         t.set(s.toArrayLike(Uint8Array, 'be', 32), 0),
         t.set(a.toArrayLike(Uint8Array, 'be', 32), 32),
         0
@@ -19600,14 +19620,14 @@ var jn,
           const o = t(e, r, null, n, i)
           if (!(o instanceof Uint8Array && 32 === o.length))
             throw new Error('This is the way')
-          return new On(o)
+          return new Vn(o)
         }
       }
-      const o = new On(r)
-      if (o.cmp(Bn.n) >= 0 || o.isZero()) return 1
+      const o = new Vn(r)
+      if (o.cmp(Kn.n) >= 0 || o.isZero()) return 1
       let s
       try {
-        s = In.sign(e, r, { canonical: !0, k: i, pers: n })
+        s = Zn.sign(e, r, { canonical: !0, k: i, pers: n })
       } catch (t) {
         return 1
       }
@@ -19620,38 +19640,38 @@ var jn,
     },
     ecdsaVerify(t, e, r) {
       const n = { r: t.subarray(0, 32), s: t.subarray(32, 64) },
-        i = new On(n.r),
-        o = new On(n.s)
-      if (i.cmp(Bn.n) >= 0 || o.cmp(Bn.n) >= 0) return 1
-      if (1 === o.cmp(In.nh) || i.isZero() || o.isZero()) return 3
-      const s = Cn(r)
+        i = new Vn(n.r),
+        o = new Vn(n.s)
+      if (i.cmp(Kn.n) >= 0 || o.cmp(Kn.n) >= 0) return 1
+      if (1 === o.cmp(Zn.nh) || i.isZero() || o.isZero()) return 3
+      const s = Jn(r)
       if (null === s) return 2
       const a = s.getPublic()
-      return In.verify(e, n, a) ? 0 : 3
+      return Zn.verify(e, n, a) ? 0 : 3
     },
     ecdsaRecover(t, e, r, n) {
       const i = { r: e.slice(0, 32), s: e.slice(32, 64) },
-        o = new On(i.r),
-        s = new On(i.s)
-      if (o.cmp(Bn.n) >= 0 || s.cmp(Bn.n) >= 0) return 1
+        o = new Vn(i.r),
+        s = new Vn(i.s)
+      if (o.cmp(Kn.n) >= 0 || s.cmp(Kn.n) >= 0) return 1
       if (o.isZero() || s.isZero()) return 2
       let a
       try {
-        a = In.recoverPubKey(n, i, r)
+        a = Zn.recoverPubKey(n, i, r)
       } catch (t) {
         return 2
       }
-      return Ln(t, a), 0
+      return $n(t, a), 0
     },
     ecdh(t, e, r, n, i, o, s) {
-      const a = Cn(e)
+      const a = Jn(e)
       if (null === a) return 1
-      const u = new On(r)
-      if (u.cmp(Bn.n) >= 0 || u.isZero()) return 2
+      const u = new Vn(r)
+      if (u.cmp(Kn.n) >= 0 || u.isZero()) return 2
       const h = a.getPublic().mul(u)
       if (void 0 === i) {
         const e = h.encode(null, !0),
-          r = In.hash().update(e).digest()
+          r = Zn.hash().update(e).digest()
         for (let e = 0; e < 32; ++e) t[e] = r[e]
       } else {
         o || (o = new Uint8Array(32))
@@ -19667,45 +19687,45 @@ var jn,
       return 0
     }
   },
-  Dn = ((t) => ({
+  Qn = ((t) => ({
     contextRandomize(e) {
       if (
-        (Wt(
+        (ie(
           null === e || e instanceof Uint8Array,
           'Expected seed to be an Uint8Array or null'
         ),
-        null !== e && Ht('seed', e, 32),
+        null !== e && oe('seed', e, 32),
         1 === t.contextRandomize(e))
       )
         throw new Error('Unknow error on context randomization')
     },
     privateKeyVerify: (e) => (
-      Ht('private key', e, 32), 0 === t.privateKeyVerify(e)
+      oe('private key', e, 32), 0 === t.privateKeyVerify(e)
     ),
     privateKeyNegate(e) {
-      switch ((Ht('private key', e, 32), t.privateKeyNegate(e))) {
+      switch ((oe('private key', e, 32), t.privateKeyNegate(e))) {
         case 0:
           return e
         case 1:
-          throw new Error(Ut)
+          throw new Error(te)
       }
     },
     privateKeyTweakAdd(e, r) {
       switch (
-        (Ht('private key', e, 32),
-        Ht('tweak', r, 32),
+        (oe('private key', e, 32),
+        oe('tweak', r, 32),
         t.privateKeyTweakAdd(e, r))
       ) {
         case 0:
           return e
         case 1:
-          throw new Error(Ft)
+          throw new Error(ee)
       }
     },
     privateKeyTweakMul(e, r) {
       switch (
-        (Ht('private key', e, 32),
-        Ht('tweak', r, 32),
+        (oe('private key', e, 32),
+        oe('tweak', r, 32),
         t.privateKeyTweakMul(e, r))
       ) {
         case 0:
@@ -19715,13 +19735,13 @@ var jn,
       }
     },
     publicKeyVerify: (e) => (
-      Ht('public key', e, [33, 65]), 0 === t.publicKeyVerify(e)
+      oe('public key', e, [33, 65]), 0 === t.publicKeyVerify(e)
     ),
     publicKeyCreate(e, r = !0, n) {
       switch (
-        (Ht('private key', e, 32),
-        Gt(r),
-        (n = Zt(n, r ? 33 : 65)),
+        (oe('private key', e, 32),
+        se(r),
+        (n = ae(n, r ? 33 : 65)),
         t.publicKeyCreate(n, e))
       ) {
         case 0:
@@ -19734,48 +19754,48 @@ var jn,
     },
     publicKeyConvert(e, r = !0, n) {
       switch (
-        (Ht('public key', e, [33, 65]),
-        Gt(r),
-        (n = Zt(n, r ? 33 : 65)),
+        (oe('public key', e, [33, 65]),
+        se(r),
+        (n = ae(n, r ? 33 : 65)),
         t.publicKeyConvert(n, e))
       ) {
         case 0:
           return n
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
           throw new Error('Public Key serialization error')
       }
     },
     publicKeyNegate(e, r = !0, n) {
       switch (
-        (Ht('public key', e, [33, 65]),
-        Gt(r),
-        (n = Zt(n, r ? 33 : 65)),
+        (oe('public key', e, [33, 65]),
+        se(r),
+        (n = ae(n, r ? 33 : 65)),
         t.publicKeyNegate(n, e))
       ) {
         case 0:
           return n
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
-          throw new Error(Ut)
+          throw new Error(te)
         case 3:
           throw new Error('Public Key serialization error')
       }
     },
     publicKeyCombine(e, r = !0, n) {
-      Wt(Array.isArray(e), 'Expected public keys to be an Array'),
-        Wt(
+      ie(Array.isArray(e), 'Expected public keys to be an Array'),
+        ie(
           e.length > 0,
           'Expected public keys array will have more than zero items'
         )
-      for (const t of e) Ht('public key', t, [33, 65])
-      switch ((Gt(r), (n = Zt(n, r ? 33 : 65)), t.publicKeyCombine(n, e))) {
+      for (const t of e) oe('public key', t, [33, 65])
+      switch ((se(r), (n = ae(n, r ? 33 : 65)), t.publicKeyCombine(n, e))) {
         case 0:
           return n
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
           throw new Error('The sum of the public keys is not valid')
         case 3:
@@ -19784,77 +19804,77 @@ var jn,
     },
     publicKeyTweakAdd(e, r, n = !0, i) {
       switch (
-        (Ht('public key', e, [33, 65]),
-        Ht('tweak', r, 32),
-        Gt(n),
-        (i = Zt(i, n ? 33 : 65)),
+        (oe('public key', e, [33, 65]),
+        oe('tweak', r, 32),
+        se(n),
+        (i = ae(i, n ? 33 : 65)),
         t.publicKeyTweakAdd(i, e, r))
       ) {
         case 0:
           return i
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
-          throw new Error(Ft)
+          throw new Error(ee)
       }
     },
     publicKeyTweakMul(e, r, n = !0, i) {
       switch (
-        (Ht('public key', e, [33, 65]),
-        Ht('tweak', r, 32),
-        Gt(n),
-        (i = Zt(i, n ? 33 : 65)),
+        (oe('public key', e, [33, 65]),
+        oe('tweak', r, 32),
+        se(n),
+        (i = ae(i, n ? 33 : 65)),
         t.publicKeyTweakMul(i, e, r))
       ) {
         case 0:
           return i
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
           throw new Error('The tweak was out of range or equal to zero')
       }
     },
     signatureNormalize(e) {
-      switch ((Ht('signature', e, 64), t.signatureNormalize(e))) {
+      switch ((oe('signature', e, 64), t.signatureNormalize(e))) {
         case 0:
           return e
         case 1:
-          throw new Error(zt)
+          throw new Error(ne)
       }
     },
     signatureExport(e, r) {
-      Ht('signature', e, 64)
-      const n = { output: (r = Zt(r, 72)), outputlen: 72 }
+      oe('signature', e, 64)
+      const n = { output: (r = ae(r, 72)), outputlen: 72 }
       switch (t.signatureExport(n, e)) {
         case 0:
           return r.slice(0, n.outputlen)
         case 1:
-          throw new Error(zt)
+          throw new Error(ne)
         case 2:
-          throw new Error(Ut)
+          throw new Error(te)
       }
     },
     signatureImport(e, r) {
-      switch ((Ht('signature', e), (r = Zt(r, 64)), t.signatureImport(r, e))) {
+      switch ((oe('signature', e), (r = ae(r, 64)), t.signatureImport(r, e))) {
         case 0:
           return r
         case 1:
-          throw new Error(zt)
+          throw new Error(ne)
         case 2:
-          throw new Error(Ut)
+          throw new Error(te)
       }
     },
     ecdsaSign(e, r, n = {}, i) {
-      Ht('message', e, 32),
-        Ht('private key', r, 32),
-        Wt('Object' === Kt(n), 'Expected options to be an Object'),
-        void 0 !== n.data && Ht('options.data', n.data),
+      oe('message', e, 32),
+        oe('private key', r, 32),
+        ie('Object' === ue(n), 'Expected options to be an Object'),
+        void 0 !== n.data && oe('options.data', n.data),
         void 0 !== n.noncefn &&
-          Wt(
-            'Function' === Kt(n.noncefn),
+          ie(
+            'Function' === ue(n.noncefn),
             'Expected options.noncefn to be a Function'
           )
-      const o = { signature: (i = Zt(i, 64)), recid: null }
+      const o = { signature: (i = ae(i, 64)), recid: null }
       switch (t.ecdsaSign(o, e, r, n.data, n.noncefn)) {
         case 0:
           return o
@@ -19863,14 +19883,14 @@ var jn,
             'The nonce generation function failed, or the private key was invalid'
           )
         case 2:
-          throw new Error(Ut)
+          throw new Error(te)
       }
     },
     ecdsaVerify(e, r, n) {
       switch (
-        (Ht('signature', e, 64),
-        Ht('message', r, 32),
-        Ht('public key', n, [33, 65]),
+        (oe('signature', e, 64),
+        oe('message', r, 32),
+        oe('public key', n, [33, 65]),
         t.ecdsaVerify(e, r, n))
       ) {
         case 0:
@@ -19878,61 +19898,61 @@ var jn,
         case 3:
           return !1
         case 1:
-          throw new Error(zt)
+          throw new Error(ne)
         case 2:
-          throw new Error(qt)
+          throw new Error(re)
       }
     },
     ecdsaRecover(e, r, n, i = !0, o) {
       switch (
-        (Ht('signature', e, 64),
-        Wt(
-          'Number' === Kt(r) && r >= 0 && r <= 3,
+        (oe('signature', e, 64),
+        ie(
+          'Number' === ue(r) && r >= 0 && r <= 3,
           'Expected recovery id to be a Number within interval [0, 3]'
         ),
-        Ht('message', n, 32),
-        Gt(i),
-        (o = Zt(o, i ? 33 : 65)),
+        oe('message', n, 32),
+        se(i),
+        (o = ae(o, i ? 33 : 65)),
         t.ecdsaRecover(o, e, r, n))
       ) {
         case 0:
           return o
         case 1:
-          throw new Error(zt)
+          throw new Error(ne)
         case 2:
           throw new Error('Public key could not be recover')
         case 3:
-          throw new Error(Ut)
+          throw new Error(te)
       }
     },
     ecdh(e, r, n = {}, i) {
       switch (
-        (Ht('public key', e, [33, 65]),
-        Ht('private key', r, 32),
-        Wt('Object' === Kt(n), 'Expected options to be an Object'),
-        void 0 !== n.data && Ht('options.data', n.data),
+        (oe('public key', e, [33, 65]),
+        oe('private key', r, 32),
+        ie('Object' === ue(n), 'Expected options to be an Object'),
+        void 0 !== n.data && oe('options.data', n.data),
         void 0 !== n.hashfn
-          ? (Wt(
-              'Function' === Kt(n.hashfn),
+          ? (ie(
+              'Function' === ue(n.hashfn),
               'Expected options.hashfn to be a Function'
             ),
-            void 0 !== n.xbuf && Ht('options.xbuf', n.xbuf, 32),
-            void 0 !== n.ybuf && Ht('options.ybuf', n.ybuf, 32),
-            Ht('output', i))
-          : (i = Zt(i, 32)),
+            void 0 !== n.xbuf && oe('options.xbuf', n.xbuf, 32),
+            void 0 !== n.ybuf && oe('options.ybuf', n.ybuf, 32),
+            oe('output', i))
+          : (i = ae(i, 32)),
         t.ecdh(i, e, r, n.data, n.hashfn, n.xbuf, n.ybuf))
       ) {
         case 0:
           return i
         case 1:
-          throw new Error(qt)
+          throw new Error(re)
         case 2:
           throw new Error('Scalar was invalid (zero or overflow)')
       }
     }
-  }))(Nn),
-  Un = U(function (t, e) {
-    var r = Pt.Buffer
+  }))(Yn),
+  ti = tt(function (t, e) {
+    var r = Ut.Buffer
     function n(t, e) {
       for (var r in t) e[r] = t[r]
     }
@@ -19940,8 +19960,8 @@ var jn,
       return r(t, e, n)
     }
     r.from && r.alloc && r.allocUnsafe && r.allocUnsafeSlow
-      ? (t.exports = Pt)
-      : (n(Pt, e), (e.Buffer = i)),
+      ? (t.exports = Ut)
+      : (n(Ut, e), (e.Buffer = i)),
       (i.prototype = Object.create(r.prototype)),
       n(r, i),
       (i.from = function (t, e, n) {
@@ -19970,13 +19990,13 @@ var jn,
       (i.allocUnsafeSlow = function (t) {
         if ('number' != typeof t)
           throw new TypeError('Argument must be a number')
-        return Pt.SlowBuffer(t)
+        return Ut.SlowBuffer(t)
       })
   }),
-  Fn = U(function (t) {
+  ei = tt(function (t) {
     var e = 65536,
-      r = Un.Buffer,
-      n = D.crypto || D.msCrypto
+      r = ti.Buffer,
+      n = Q.crypto || Q.msCrypto
     t.exports =
       n && n.getRandomValues
         ? function (t, i) {
@@ -20000,25 +20020,25 @@ var jn,
             )
           }
   }),
-  qn = /*#__PURE__*/ Object.defineProperty(
+  ri = /*#__PURE__*/ Object.defineProperty(
     {
       getRandomBytes: function (t) {
         return new Promise(function (e, r) {
-          Fn(t, function (t, n) {
+          ei(t, function (t, n) {
             t ? r(t) : e(n)
           })
         })
       },
       getRandomBytesSync: function (t) {
-        return Fn(t)
+        return ei(t)
       }
     },
     '__esModule',
     { value: !0 }
   ),
-  zn = U(function (t, e) {
+  ni = tt(function (t, e) {
     var r =
-        (D && D.__awaiter) ||
+        (Q && Q.__awaiter) ||
         function (t, e, r, n) {
           return new (r || (r = Promise))(function (i, o) {
             function s(t) {
@@ -20050,7 +20070,7 @@ var jn,
           })
         },
       n =
-        (D && D.__generator) ||
+        (Q && Q.__generator) ||
         function (t, e) {
           var r,
             n,
@@ -20151,9 +20171,9 @@ var jn,
           return n(this, function (e) {
             switch (e.label) {
               case 0:
-                return [4, qn.getRandomBytes(32)]
+                return [4, ri.getRandomBytes(32)]
               case 1:
-                return (t = e.sent()), Dn.privateKeyVerify(t) ? [2, t] : [3, 0]
+                return (t = e.sent()), Qn.privateKeyVerify(t) ? [2, t] : [3, 0]
               case 2:
                 return [2]
             }
@@ -20162,15 +20182,15 @@ var jn,
       }),
       (e.createPrivateKeySync = function () {
         for (;;) {
-          var t = qn.getRandomBytesSync(32)
-          if (Dn.privateKeyVerify(t)) return t
+          var t = ri.getRandomBytesSync(32)
+          if (Qn.privateKeyVerify(t)) return t
         }
       }),
       (function (t) {
         for (var r in t) e.hasOwnProperty(r) || (e[r] = t[r])
-      })(Dn)
+      })(Qn)
   }),
-  Wn = U(function (t, e) {
+  ii = tt(function (t, e) {
     function r(t) {
       if ('string' != typeof t)
         throw new Error(
@@ -20292,7 +20312,7 @@ var jn,
         )
       })
   }),
-  Hn = U(function (t, e) {
+  oi = tt(function (t, e) {
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.assertIsString =
         e.assertIsArray =
@@ -20300,7 +20320,7 @@ var jn,
         e.assertIsHexString =
           void 0),
       (e.assertIsHexString = function (t) {
-        if (!(0, Wn.isHexString)(t)) {
+        if (!(0, ii.isHexString)(t)) {
           var e =
             'This method only supports 0x-prefixed hex strings but input was: '.concat(
               t
@@ -20328,9 +20348,9 @@ var jn,
         }
       })
   }),
-  Gn = U(function (t, e) {
+  si = tt(function (t, e) {
     var r =
-        (D && D.__values) ||
+        (Q && Q.__values) ||
         function (t) {
           var e = 'function' == typeof Symbol && Symbol.iterator,
             r = e && t[e],
@@ -20350,7 +20370,7 @@ var jn,
           )
         },
       n =
-        (D && D.__read) ||
+        (Q && Q.__read) ||
         function (t, e) {
           var r = 'function' == typeof Symbol && t[Symbol.iterator]
           if (!r) return t
@@ -20400,7 +20420,7 @@ var jn,
       }),
       (e.intToBuffer = function (t) {
         var r = (0, e.intToHex)(t)
-        return Buffer.from((0, Wn.padToEven)(r.slice(2)), 'hex')
+        return Buffer.from((0, ii.padToEven)(r.slice(2)), 'hex')
       }),
       (e.zeros = function (t) {
         return Buffer.allocUnsafe(t).fill(0)
@@ -20416,10 +20436,10 @@ var jn,
         : t.slice(-r)
     }
     ;(e.setLengthLeft = function (t, e) {
-      return (0, Hn.assertIsBuffer)(t), i(t, e, !1)
+      return (0, oi.assertIsBuffer)(t), i(t, e, !1)
     }),
       (e.setLengthRight = function (t, e) {
-        return (0, Hn.assertIsBuffer)(t), i(t, e, !0)
+        return (0, oi.assertIsBuffer)(t), i(t, e, !0)
       })
     var o = function (t) {
       for (var e = t[0]; t.length > 0 && '0' === e.toString(); )
@@ -20427,14 +20447,14 @@ var jn,
       return t
     }
     ;(e.unpadBuffer = function (t) {
-      return (0, Hn.assertIsBuffer)(t), o(t)
+      return (0, oi.assertIsBuffer)(t), o(t)
     }),
       (e.unpadArray = function (t) {
-        return (0, Hn.assertIsArray)(t), o(t)
+        return (0, oi.assertIsArray)(t), o(t)
       }),
       (e.unpadHexString = function (t) {
         return (
-          (0, Hn.assertIsHexString)(t), (t = (0, Wn.stripHexPrefix)(t)), o(t)
+          (0, oi.assertIsHexString)(t), (t = (0, ii.stripHexPrefix)(t)), o(t)
         )
       }),
       (e.toBuffer = function (t) {
@@ -20442,19 +20462,19 @@ var jn,
         if (Buffer.isBuffer(t)) return Buffer.from(t)
         if (Array.isArray(t) || t instanceof Uint8Array) return Buffer.from(t)
         if ('string' == typeof t) {
-          if (!(0, Wn.isHexString)(t))
+          if (!(0, ii.isHexString)(t))
             throw new Error(
               'Cannot convert string to buffer. toBuffer only supports 0x-prefixed hex strings and this string was given: '.concat(
                 t
               )
             )
           return Buffer.from(
-            (0, Wn.padToEven)((0, Wn.stripHexPrefix)(t)),
+            (0, ii.padToEven)((0, ii.stripHexPrefix)(t)),
             'hex'
           )
         }
         if ('number' == typeof t) return (0, e.intToBuffer)(t)
-        if (Et.BN.isBN(t)) {
+        if (Wt.BN.isBN(t)) {
           if (t.isNeg())
             throw new Error(
               'Cannot convert negative BN to buffer. Given: '.concat(t)
@@ -20466,22 +20486,22 @@ var jn,
         throw new Error('invalid type')
       }),
       (e.bufferToInt = function (t) {
-        return new Et.BN((0, e.toBuffer)(t)).toNumber()
+        return new Wt.BN((0, e.toBuffer)(t)).toNumber()
       }),
       (e.bufferToHex = function (t) {
         return '0x' + (t = (0, e.toBuffer)(t)).toString('hex')
       }),
       (e.fromSigned = function (t) {
-        return new Et.BN(t).fromTwos(256)
+        return new Wt.BN(t).fromTwos(256)
       }),
       (e.toUnsigned = function (t) {
         return Buffer.from(t.toTwos(256).toArray())
       }),
       (e.addHexPrefix = function (t) {
-        return 'string' != typeof t || (0, Wn.isHexPrefixed)(t) ? t : '0x' + t
+        return 'string' != typeof t || (0, ii.isHexPrefixed)(t) ? t : '0x' + t
       }),
       (e.toUtf8 = function (t) {
-        if ((t = (0, Wn.stripHexPrefix)(t)).length % 2 != 0)
+        if ((t = (0, ii.stripHexPrefix)(t)).length % 2 != 0)
           throw new Error(
             'Invalid non-even hex string input for toUtf8() provided'
           )
@@ -20539,7 +20559,7 @@ var jn,
           : Uint8Array.from(null != e ? e : [])
       })
   }),
-  Zn = /*#__PURE__*/ Object.defineProperty(
+  ai = /*#__PURE__*/ Object.defineProperty(
     {
       createHashFunction: function (t) {
         return function (e) {
@@ -20551,16 +20571,16 @@ var jn,
     '__esModule',
     { value: !0 }
   ),
-  Kn = 'object' == typeof Reflect ? Reflect : null,
-  Vn =
-    Kn && 'function' == typeof Kn.apply
-      ? Kn.apply
+  ui = 'object' == typeof Reflect ? Reflect : null,
+  hi =
+    ui && 'function' == typeof ui.apply
+      ? ui.apply
       : function (t, e, r) {
           return Function.prototype.apply.call(t, e, r)
         }
-jn =
-  Kn && 'function' == typeof Kn.ownKeys
-    ? Kn.ownKeys
+Xn =
+  ui && 'function' == typeof ui.ownKeys
+    ? ui.ownKeys
     : Object.getOwnPropertySymbols
     ? function (t) {
         return Object.getOwnPropertyNames(t).concat(
@@ -20570,34 +20590,34 @@ jn =
     : function (t) {
         return Object.getOwnPropertyNames(t)
       }
-var Jn =
+var fi =
   Number.isNaN ||
   function (t) {
     return t != t
   }
-function $n() {
-  $n.init.call(this)
+function li() {
+  li.init.call(this)
 }
-var Xn = $n
-;($n.EventEmitter = $n),
-  ($n.prototype._events = void 0),
-  ($n.prototype._eventsCount = 0),
-  ($n.prototype._maxListeners = void 0)
-var Yn = 10
-function Qn(t) {
+var ci = li
+;(li.EventEmitter = li),
+  (li.prototype._events = void 0),
+  (li.prototype._eventsCount = 0),
+  (li.prototype._maxListeners = void 0)
+var di = 10
+function pi(t) {
   if ('function' != typeof t)
     throw new TypeError(
       'The "listener" argument must be of type Function. Received type ' +
         typeof t
     )
 }
-function ti(t) {
-  return void 0 === t._maxListeners ? $n.defaultMaxListeners : t._maxListeners
+function mi(t) {
+  return void 0 === t._maxListeners ? li.defaultMaxListeners : t._maxListeners
 }
-function ei(t, e, r, n) {
+function vi(t, e, r, n) {
   var i, o, s
   if (
-    (Qn(r),
+    (pi(r),
     void 0 === (o = t._events)
       ? ((o = t._events = Object.create(null)), (t._eventsCount = 0))
       : (void 0 !== o.newListener &&
@@ -20613,7 +20633,7 @@ function ei(t, e, r, n) {
       : n
       ? s.unshift(r)
       : s.push(r),
-    (i = ti(t)) > 0 && s.length > i && !s.warned)
+    (i = mi(t)) > 0 && s.length > i && !s.warned)
   ) {
     s.warned = !0
     var a = new Error(
@@ -20631,7 +20651,7 @@ function ei(t, e, r, n) {
   }
   return t
 }
-function ri() {
+function gi() {
   if (!this.fired)
     return (
       this.target.removeListener(this.type, this.wrapFn),
@@ -20641,12 +20661,12 @@ function ri() {
         : this.listener.apply(this.target, arguments)
     )
 }
-function ni(t, e, r) {
+function yi(t, e, r) {
   var n = { fired: !1, wrapFn: void 0, target: t, type: e, listener: r },
-    i = ri.bind(n)
+    i = gi.bind(n)
   return (i.listener = r), (n.wrapFn = i), i
 }
-function ii(t, e, r) {
+function bi(t, e, r) {
   var n = t._events
   if (void 0 === n) return []
   var i = n[e]
@@ -20662,9 +20682,9 @@ function ii(t, e, r) {
           e[r] = t[r].listener || t[r]
         return e
       })(i)
-    : si(i, i.length)
+    : Mi(i, i.length)
 }
-function oi(t) {
+function wi(t) {
   var e = this._events
   if (void 0 !== e) {
     var r = e[t]
@@ -20673,11 +20693,11 @@ function oi(t) {
   }
   return 0
 }
-function si(t, e) {
+function Mi(t, e) {
   for (var r = new Array(e), n = 0; n < e; ++n) r[n] = t[n]
   return r
 }
-function ai(t, e, r, n) {
+function _i(t, e, r, n) {
   if ('function' == typeof t.on) n.once ? t.once(e, r) : t.on(e, r)
   else {
     if ('function' != typeof t.addEventListener)
@@ -20690,29 +20710,29 @@ function ai(t, e, r, n) {
     })
   }
 }
-Object.defineProperty($n, 'defaultMaxListeners', {
+Object.defineProperty(li, 'defaultMaxListeners', {
   enumerable: !0,
   get: function () {
-    return Yn
+    return di
   },
   set: function (t) {
-    if ('number' != typeof t || t < 0 || Jn(t))
+    if ('number' != typeof t || t < 0 || fi(t))
       throw new RangeError(
         'The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' +
           t +
           '.'
       )
-    Yn = t
+    di = t
   }
 }),
-  ($n.init = function () {
+  (li.init = function () {
     ;(void 0 !== this._events &&
       this._events !== Object.getPrototypeOf(this)._events) ||
       ((this._events = Object.create(null)), (this._eventsCount = 0)),
       (this._maxListeners = this._maxListeners || void 0)
   }),
-  ($n.prototype.setMaxListeners = function (t) {
-    if ('number' != typeof t || t < 0 || Jn(t))
+  (li.prototype.setMaxListeners = function (t) {
+    if ('number' != typeof t || t < 0 || fi(t))
       throw new RangeError(
         'The value of "n" is out of range. It must be a non-negative number. Received ' +
           t +
@@ -20720,10 +20740,10 @@ Object.defineProperty($n, 'defaultMaxListeners', {
       )
     return (this._maxListeners = t), this
   }),
-  ($n.prototype.getMaxListeners = function () {
-    return ti(this)
+  (li.prototype.getMaxListeners = function () {
+    return mi(this)
   }),
-  ($n.prototype.emit = function (t) {
+  (li.prototype.emit = function (t) {
     for (var e = [], r = 1; r < arguments.length; r++) e.push(arguments[r])
     var n = 'error' === t,
       i = this._events
@@ -20737,31 +20757,31 @@ Object.defineProperty($n, 'defaultMaxListeners', {
     }
     var a = i[t]
     if (void 0 === a) return !1
-    if ('function' == typeof a) Vn(a, this, e)
+    if ('function' == typeof a) hi(a, this, e)
     else {
       var u = a.length,
-        h = si(a, u)
-      for (r = 0; r < u; ++r) Vn(h[r], this, e)
+        h = Mi(a, u)
+      for (r = 0; r < u; ++r) hi(h[r], this, e)
     }
     return !0
   }),
-  ($n.prototype.on = $n.prototype.addListener =
+  (li.prototype.on = li.prototype.addListener =
     function (t, e) {
-      return ei(this, t, e, !1)
+      return vi(this, t, e, !1)
     }),
-  ($n.prototype.prependListener = function (t, e) {
-    return ei(this, t, e, !0)
+  (li.prototype.prependListener = function (t, e) {
+    return vi(this, t, e, !0)
   }),
-  ($n.prototype.once = function (t, e) {
-    return Qn(e), this.on(t, ni(this, t, e)), this
+  (li.prototype.once = function (t, e) {
+    return pi(e), this.on(t, yi(this, t, e)), this
   }),
-  ($n.prototype.prependOnceListener = function (t, e) {
-    return Qn(e), this.prependListener(t, ni(this, t, e)), this
+  (li.prototype.prependOnceListener = function (t, e) {
+    return pi(e), this.prependListener(t, yi(this, t, e)), this
   }),
-  ($n.prototype.off = $n.prototype.removeListener =
+  (li.prototype.off = li.prototype.removeListener =
     function (t, e) {
       var r, n, i, o, s
-      if ((Qn(e), void 0 === (n = this._events))) return this
+      if ((pi(e), void 0 === (n = this._events))) return this
       if (void 0 === (r = n[t])) return this
       if (r === e || r.listener === e)
         0 == --this._eventsCount
@@ -20786,7 +20806,7 @@ Object.defineProperty($n, 'defaultMaxListeners', {
       }
       return this
     }),
-  ($n.prototype.removeAllListeners = function (t) {
+  (li.prototype.removeAllListeners = function (t) {
     var e, r, n
     if (void 0 === (r = this._events)) return this
     if (void 0 === r.removeListener)
@@ -20816,22 +20836,22 @@ Object.defineProperty($n, 'defaultMaxListeners', {
       for (n = e.length - 1; n >= 0; n--) this.removeListener(t, e[n])
     return this
   }),
-  ($n.prototype.listeners = function (t) {
-    return ii(this, t, !0)
+  (li.prototype.listeners = function (t) {
+    return bi(this, t, !0)
   }),
-  ($n.prototype.rawListeners = function (t) {
-    return ii(this, t, !1)
+  (li.prototype.rawListeners = function (t) {
+    return bi(this, t, !1)
   }),
-  ($n.listenerCount = function (t, e) {
+  (li.listenerCount = function (t, e) {
     return 'function' == typeof t.listenerCount
       ? t.listenerCount(e)
-      : oi.call(t, e)
+      : wi.call(t, e)
   }),
-  ($n.prototype.listenerCount = oi),
-  ($n.prototype.eventNames = function () {
-    return this._eventsCount > 0 ? jn(this._events) : []
+  (li.prototype.listenerCount = wi),
+  (li.prototype.eventNames = function () {
+    return this._eventsCount > 0 ? Xn(this._events) : []
   }),
-  (Xn.once = function (t, e) {
+  (ci.once = function (t, e) {
     return new Promise(function (r, n) {
       function i(r) {
         t.removeListener(e, o), n(r)
@@ -20840,15 +20860,15 @@ Object.defineProperty($n, 'defaultMaxListeners', {
         'function' == typeof t.removeListener && t.removeListener('error', i),
           r([].slice.call(arguments))
       }
-      ai(t, e, o, { once: !0 }),
+      _i(t, e, o, { once: !0 }),
         'error' !== e &&
           (function (t, e, r) {
-            'function' == typeof t.on && ai(t, 'error', e, { once: !0 })
+            'function' == typeof t.on && _i(t, 'error', e, { once: !0 })
           })(t, i)
     })
   })
-var ui = Xn.EventEmitter
-function hi(t, e) {
+var Ai = ci.EventEmitter
+function Pi(t, e) {
   var r = Object.keys(t)
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(t)
@@ -20860,7 +20880,7 @@ function hi(t, e) {
   }
   return r
 }
-function fi(t, e, r) {
+function Si(t, e, r) {
   return (
     e in t
       ? Object.defineProperty(t, e, {
@@ -20873,13 +20893,13 @@ function fi(t, e, r) {
     t
   )
 }
-var li = Pt.Buffer,
-  ci = ct.inspect,
-  di = (ci && ci.custom) || 'inspect'
-function pi(t, e, r) {
-  li.prototype.copy.call(t, e, r)
+var Ti = Ut.Buffer,
+  xi = xt.inspect,
+  Ei = (xi && xi.custom) || 'inspect'
+function ki(t, e, r) {
+  Ti.prototype.copy.call(t, e, r)
 }
-var mi =
+var Ri =
   /*#__PURE__*/
   (function () {
     function t() {
@@ -20942,9 +20962,9 @@ var mi =
         {
           key: 'concat',
           value: function (t) {
-            if (0 === this.length) return li.alloc(0)
-            for (var e = li.allocUnsafe(t >>> 0), r = this.head, n = 0; r; )
-              pi(r.data, e, n), (n += r.data.length), (r = r.next)
+            if (0 === this.length) return Ti.alloc(0)
+            for (var e = Ti.allocUnsafe(t >>> 0), r = this.head, n = 0; r; )
+              ki(r.data, e, n), (n += r.data.length), (r = r.next)
             return e
           }
         },
@@ -20995,7 +21015,7 @@ var mi =
         {
           key: '_getBuffer',
           value: function (t) {
-            var e = li.allocUnsafe(t),
+            var e = Ti.allocUnsafe(t),
               r = this.head,
               n = 1
             for (r.data.copy(e), t -= r.data.length; (r = r.next); ) {
@@ -21013,23 +21033,23 @@ var mi =
           }
         },
         {
-          key: di,
+          key: Ei,
           value: function (t, e) {
-            return ci(
+            return xi(
               this,
               (function (t) {
                 for (var e = 1; e < arguments.length; e++) {
                   var r = null != arguments[e] ? arguments[e] : {}
                   e % 2
-                    ? hi(Object(r), !0).forEach(function (e) {
-                        fi(t, e, r[e])
+                    ? Pi(Object(r), !0).forEach(function (e) {
+                        Si(t, e, r[e])
                       })
                     : Object.getOwnPropertyDescriptors
                     ? Object.defineProperties(
                         t,
                         Object.getOwnPropertyDescriptors(r)
                       )
-                    : hi(Object(r)).forEach(function (e) {
+                    : Pi(Object(r)).forEach(function (e) {
                         Object.defineProperty(
                           t,
                           e,
@@ -21056,18 +21076,18 @@ var mi =
       t
     )
   })()
-function vi(t, e) {
-  yi(t, e), gi(t)
+function Ii(t, e) {
+  Oi(t, e), Bi(t)
 }
-function gi(t) {
+function Bi(t) {
   ;(t._writableState && !t._writableState.emitClose) ||
     (t._readableState && !t._readableState.emitClose) ||
     t.emit('close')
 }
-function yi(t, e) {
+function Oi(t, e) {
   t.emit('error', e)
 }
-var bi = function (t, e) {
+var Ci = function (t, e) {
     var r = this
     return (this._readableState && this._readableState.destroyed) ||
       (this._writableState && this._writableState.destroyed)
@@ -21077,8 +21097,8 @@ var bi = function (t, e) {
             (this._writableState
               ? this._writableState.errorEmitted ||
                 ((this._writableState.errorEmitted = !0),
-                process.nextTick(yi, this, t))
-              : process.nextTick(yi, this, t)),
+                process.nextTick(Oi, this, t))
+              : process.nextTick(Oi, this, t)),
         this)
       : (this._readableState && (this._readableState.destroyed = !0),
         this._writableState && (this._writableState.destroyed = !0),
@@ -21086,17 +21106,17 @@ var bi = function (t, e) {
           !e && t
             ? r._writableState
               ? r._writableState.errorEmitted
-                ? process.nextTick(gi, r)
+                ? process.nextTick(Bi, r)
                 : ((r._writableState.errorEmitted = !0),
-                  process.nextTick(vi, r, t))
-              : process.nextTick(vi, r, t)
+                  process.nextTick(Ii, r, t))
+              : process.nextTick(Ii, r, t)
             : e
-            ? (process.nextTick(gi, r), e(t))
-            : process.nextTick(gi, r)
+            ? (process.nextTick(Bi, r), e(t))
+            : process.nextTick(Bi, r)
         }),
         this)
   },
-  wi = function () {
+  Li = function () {
     this._readableState &&
       ((this._readableState.destroyed = !1),
       (this._readableState.reading = !1),
@@ -21111,15 +21131,15 @@ var bi = function (t, e) {
         (this._writableState.finished = !1),
         (this._writableState.errorEmitted = !1))
   },
-  Mi = function (t, e) {
+  ji = function (t, e) {
     var r = t._readableState,
       n = t._writableState
     ;(r && r.autoDestroy) || (n && n.autoDestroy)
       ? t.destroy(e)
       : t.emit('error', e)
   },
-  _i = {}
-function Ai(t, e, r) {
+  Ni = {}
+function Di(t, e, r) {
   r || (r = Error)
   var n =
     /*#__PURE__*/
@@ -21143,9 +21163,9 @@ function Ai(t, e, r) {
         i
       )
     })(r)
-  ;(n.prototype.name = r.name), (n.prototype.code = t), (_i[t] = n)
+  ;(n.prototype.name = r.name), (n.prototype.code = t), (Ni[t] = n)
 }
-function Pi(t, e) {
+function Ui(t, e) {
   if (Array.isArray(t)) {
     var r = t.length
     return (
@@ -21163,14 +21183,14 @@ function Pi(t, e) {
   }
   return 'of '.concat(e, ' ').concat(String(t))
 }
-Ai(
+Di(
   'ERR_INVALID_OPT_VALUE',
   function (t, e) {
     return 'The value "' + e + '" is invalid for option "' + t + '"'
   },
   TypeError
 ),
-  Ai(
+  Di(
     'ERR_INVALID_ARG_TYPE',
     function (t, e, r) {
       var n, i, o, s
@@ -21185,7 +21205,7 @@ Ai(
           )
         })(t, ' argument'))
       )
-        i = 'The '.concat(t, ' ').concat(n, ' ').concat(Pi(e, 'type'))
+        i = 'The '.concat(t, ' ').concat(n, ' ').concat(Ui(e, 'type'))
       else {
         var a =
           ('number' != typeof s && (s = 0),
@@ -21196,62 +21216,62 @@ Ai(
           .concat(t, '" ')
           .concat(a, ' ')
           .concat(n, ' ')
-          .concat(Pi(e, 'type'))
+          .concat(Ui(e, 'type'))
       }
       return i + '. Received type '.concat(typeof r)
     },
     TypeError
   ),
-  Ai('ERR_STREAM_PUSH_AFTER_EOF', 'stream.push() after EOF'),
-  Ai('ERR_METHOD_NOT_IMPLEMENTED', function (t) {
+  Di('ERR_STREAM_PUSH_AFTER_EOF', 'stream.push() after EOF'),
+  Di('ERR_METHOD_NOT_IMPLEMENTED', function (t) {
     return 'The ' + t + ' method is not implemented'
   }),
-  Ai('ERR_STREAM_PREMATURE_CLOSE', 'Premature close'),
-  Ai('ERR_STREAM_DESTROYED', function (t) {
+  Di('ERR_STREAM_PREMATURE_CLOSE', 'Premature close'),
+  Di('ERR_STREAM_DESTROYED', function (t) {
     return 'Cannot call ' + t + ' after a stream was destroyed'
   }),
-  Ai('ERR_MULTIPLE_CALLBACK', 'Callback called multiple times'),
-  Ai('ERR_STREAM_CANNOT_PIPE', 'Cannot pipe, not readable'),
-  Ai('ERR_STREAM_WRITE_AFTER_END', 'write after end'),
-  Ai(
+  Di('ERR_MULTIPLE_CALLBACK', 'Callback called multiple times'),
+  Di('ERR_STREAM_CANNOT_PIPE', 'Cannot pipe, not readable'),
+  Di('ERR_STREAM_WRITE_AFTER_END', 'write after end'),
+  Di(
     'ERR_STREAM_NULL_VALUES',
     'May not write null values to stream',
     TypeError
   ),
-  Ai(
+  Di(
     'ERR_UNKNOWN_ENCODING',
     function (t) {
       return 'Unknown encoding: ' + t
     },
     TypeError
   ),
-  Ai('ERR_STREAM_UNSHIFT_AFTER_END_EVENT', 'stream.unshift() after end event')
-var Si = { codes: _i },
-  Ti = Si.codes.ERR_INVALID_OPT_VALUE,
-  xi = function (t, e, r, n) {
+  Di('ERR_STREAM_UNSHIFT_AFTER_END_EVENT', 'stream.unshift() after end event')
+var Fi = { codes: Ni },
+  qi = Fi.codes.ERR_INVALID_OPT_VALUE,
+  zi = function (t, e, r, n) {
     var i = (function (t, e, r) {
       return null != t.highWaterMark ? t.highWaterMark : e ? t[r] : null
     })(e, n, r)
     if (null != i) {
       if (!isFinite(i) || Math.floor(i) !== i || i < 0)
-        throw new Ti(n ? r : 'highWaterMark', i)
+        throw new qi(n ? r : 'highWaterMark', i)
       return Math.floor(i)
     }
     return t.objectMode ? 16 : 16384
   }
-function Ei(t) {
+function Wi(t) {
   try {
-    if (!D.localStorage) return !1
+    if (!Q.localStorage) return !1
   } catch (t) {
     return !1
   }
-  var e = D.localStorage[t]
+  var e = Q.localStorage[t]
   return null != e && 'true' === String(e).toLowerCase()
 }
-var ki,
-  Ri = oo,
-  Ii = $i
-function Bi(t) {
+var Hi,
+  Gi = Mo,
+  Zi = lo
+function Ki(t) {
   var e = this
   ;(this.next = null),
     (this.entry = null),
@@ -21266,39 +21286,39 @@ function Bi(t) {
       })(e, t)
     })
 }
-$i.WritableState = Ji
-var Oi,
-  Ci = function (t, e) {
-    if (Ei('noDeprecation')) return t
+lo.WritableState = fo
+var Vi,
+  Ji = function (t, e) {
+    if (Wi('noDeprecation')) return t
     var r = !1
     return function () {
       if (!r) {
-        if (Ei('throwDeprecation')) throw new Error(e)
-        Ei('traceDeprecation') ? console.trace(e) : console.warn(e), (r = !0)
+        if (Wi('throwDeprecation')) throw new Error(e)
+        Wi('traceDeprecation') ? console.trace(e) : console.warn(e), (r = !0)
       }
       return t.apply(this, arguments)
     }
   },
-  Li = Pt.Buffer,
-  ji = D.Uint8Array || function () {},
-  Ni = xi,
-  Di = Si.codes,
-  Ui = Di.ERR_INVALID_ARG_TYPE,
-  Fi = Di.ERR_METHOD_NOT_IMPLEMENTED,
-  qi = Di.ERR_MULTIPLE_CALLBACK,
-  zi = Di.ERR_STREAM_CANNOT_PIPE,
-  Wi = Di.ERR_STREAM_DESTROYED,
-  Hi = Di.ERR_STREAM_NULL_VALUES,
-  Gi = Di.ERR_STREAM_WRITE_AFTER_END,
-  Zi = Di.ERR_UNKNOWN_ENCODING,
-  Ki = Mi
-function Vi() {}
-function Ji(t, e, r) {
-  ;(ki = ki || Ri),
-    'boolean' != typeof r && (r = e instanceof ki),
+  $i = Ut.Buffer,
+  Xi = Q.Uint8Array || function () {},
+  Yi = zi,
+  Qi = Fi.codes,
+  to = Qi.ERR_INVALID_ARG_TYPE,
+  eo = Qi.ERR_METHOD_NOT_IMPLEMENTED,
+  ro = Qi.ERR_MULTIPLE_CALLBACK,
+  no = Qi.ERR_STREAM_CANNOT_PIPE,
+  io = Qi.ERR_STREAM_DESTROYED,
+  oo = Qi.ERR_STREAM_NULL_VALUES,
+  so = Qi.ERR_STREAM_WRITE_AFTER_END,
+  ao = Qi.ERR_UNKNOWN_ENCODING,
+  uo = ji
+function ho() {}
+function fo(t, e, r) {
+  ;(Hi = Hi || Gi),
+    'boolean' != typeof r && (r = e instanceof Hi),
     (this.objectMode = !!(t = t || {}).objectMode),
     r && (this.objectMode = this.objectMode || !!t.writableObjectMode),
-    (this.highWaterMark = Ni(this, t, 'writableHighWaterMark', r)),
+    (this.highWaterMark = Yi(this, t, 'writableHighWaterMark', r)),
     (this.finalCalled = !1),
     (this.needDrain = !1),
     (this.ending = !1),
@@ -21317,7 +21337,7 @@ function Ji(t, e, r) {
         var r = t._writableState,
           n = r.sync,
           i = r.writecb
-        if ('function' != typeof i) throw new qi()
+        if ('function' != typeof i) throw new ro()
         if (
           ((function (t) {
             ;(t.writing = !1),
@@ -21331,18 +21351,18 @@ function Ji(t, e, r) {
             --e.pendingcb,
               r
                 ? (process.nextTick(i, n),
-                  process.nextTick(ro, t, e),
+                  process.nextTick(yo, t, e),
                   (t._writableState.errorEmitted = !0),
-                  Ki(t, n))
+                  uo(t, n))
                 : (i(n),
                   (t._writableState.errorEmitted = !0),
-                  Ki(t, n),
-                  ro(t, e))
+                  uo(t, n),
+                  yo(t, e))
           })(t, r, n, e, i)
         else {
-          var o = to(r) || t.destroyed
-          o || r.corked || r.bufferProcessing || !r.bufferedRequest || Qi(t, r),
-            n ? process.nextTick(Yi, t, r, o, i) : Yi(t, r, o, i)
+          var o = vo(r) || t.destroyed
+          o || r.corked || r.bufferProcessing || !r.bufferedRequest || mo(t, r),
+            n ? process.nextTick(po, t, r, o, i) : po(t, r, o, i)
         }
       })(e, t)
     }),
@@ -21356,42 +21376,42 @@ function Ji(t, e, r) {
     (this.emitClose = !1 !== t.emitClose),
     (this.autoDestroy = !!t.autoDestroy),
     (this.bufferedRequestCount = 0),
-    (this.corkedRequestsFree = new Bi(this))
+    (this.corkedRequestsFree = new Ki(this))
 }
-function $i(t) {
-  var e = this instanceof (ki = ki || Ri)
-  if (!e && !Oi.call($i, this)) return new $i(t)
-  ;(this._writableState = new Ji(t, this, e)),
+function lo(t) {
+  var e = this instanceof (Hi = Hi || Gi)
+  if (!e && !Vi.call(lo, this)) return new lo(t)
+  ;(this._writableState = new fo(t, this, e)),
     (this.writable = !0),
     t &&
       ('function' == typeof t.write && (this._write = t.write),
       'function' == typeof t.writev && (this._writev = t.writev),
       'function' == typeof t.destroy && (this._destroy = t.destroy),
       'function' == typeof t.final && (this._final = t.final)),
-    ui.call(this)
+    Ai.call(this)
 }
-function Xi(t, e, r, n, i, o, s) {
+function co(t, e, r, n, i, o, s) {
   ;(e.writelen = n),
     (e.writecb = s),
     (e.writing = !0),
     (e.sync = !0),
     e.destroyed
-      ? e.onwrite(new Wi('write'))
+      ? e.onwrite(new io('write'))
       : r
       ? t._writev(i, e.onwrite)
       : t._write(i, o, e.onwrite),
     (e.sync = !1)
 }
-function Yi(t, e, r, n) {
+function po(t, e, r, n) {
   r ||
     (function (t, e) {
       0 === e.length && e.needDrain && ((e.needDrain = !1), t.emit('drain'))
     })(t, e),
     e.pendingcb--,
     n(),
-    ro(t, e)
+    yo(t, e)
 }
-function Qi(t, e) {
+function mo(t, e) {
   e.bufferProcessing = !0
   var r = e.bufferedRequest
   if (t._writev && r && r.next) {
@@ -21401,18 +21421,18 @@ function Qi(t, e) {
     for (var o = 0, s = !0; r; )
       (n[o] = r), r.isBuf || (s = !1), (r = r.next), (o += 1)
     ;(n.allBuffers = s),
-      Xi(t, e, !0, e.length, n, '', i.finish),
+      co(t, e, !0, e.length, n, '', i.finish),
       e.pendingcb++,
       (e.lastBufferedRequest = null),
       i.next
         ? ((e.corkedRequestsFree = i.next), (i.next = null))
-        : (e.corkedRequestsFree = new Bi(e)),
+        : (e.corkedRequestsFree = new Ki(e)),
       (e.bufferedRequestCount = 0)
   } else {
     for (; r; ) {
       var a = r.chunk
       if (
-        (Xi(t, e, !1, e.objectMode ? 1 : a.length, a, r.encoding, r.callback),
+        (co(t, e, !1, e.objectMode ? 1 : a.length, a, r.encoding, r.callback),
         (r = r.next),
         e.bufferedRequestCount--,
         e.writing)
@@ -21423,7 +21443,7 @@ function Qi(t, e) {
   }
   ;(e.bufferedRequest = r), (e.bufferProcessing = !1)
 }
-function to(t) {
+function vo(t) {
   return (
     t.ending &&
     0 === t.length &&
@@ -21432,17 +21452,17 @@ function to(t) {
     !t.writing
   )
 }
-function eo(t, e) {
+function go(t, e) {
   t._final(function (r) {
     e.pendingcb--,
-      r && Ki(t, r),
+      r && uo(t, r),
       (e.prefinished = !0),
       t.emit('prefinish'),
-      ro(t, e)
+      yo(t, e)
   })
 }
-function ro(t, e) {
-  var r = to(e)
+function yo(t, e) {
+  var r = vo(e)
   if (
     r &&
     ((function (t, e) {
@@ -21450,7 +21470,7 @@ function ro(t, e) {
         e.finalCalled ||
         ('function' != typeof t._final || e.destroyed
           ? ((e.prefinished = !0), t.emit('prefinish'))
-          : (e.pendingcb++, (e.finalCalled = !0), process.nextTick(eo, t, e)))
+          : (e.pendingcb++, (e.finalCalled = !0), process.nextTick(go, t, e)))
     })(t, e),
     0 === e.pendingcb && ((e.finished = !0), t.emit('finish'), e.autoDestroy))
   ) {
@@ -21459,15 +21479,15 @@ function ro(t, e) {
   }
   return r
 }
-he($i, ui),
-  (Ji.prototype.getBuffer = function () {
+Pe(lo, Ai),
+  (fo.prototype.getBuffer = function () {
     for (var t = this.bufferedRequest, e = []; t; ) e.push(t), (t = t.next)
     return e
   }),
   (function () {
     try {
-      Object.defineProperty(Ji.prototype, 'buffer', {
-        get: Ci(function () {
+      Object.defineProperty(fo.prototype, 'buffer', {
+        get: Ji(function () {
           return this.getBuffer()
         }, '_writableState.buffer is deprecated. Use _writableState.getBuffer instead.')
       })
@@ -21476,50 +21496,50 @@ he($i, ui),
   'function' == typeof Symbol &&
   Symbol.hasInstance &&
   'function' == typeof Function.prototype[Symbol.hasInstance]
-    ? ((Oi = Function.prototype[Symbol.hasInstance]),
-      Object.defineProperty($i, Symbol.hasInstance, {
+    ? ((Vi = Function.prototype[Symbol.hasInstance]),
+      Object.defineProperty(lo, Symbol.hasInstance, {
         value: function (t) {
           return (
-            !!Oi.call(this, t) ||
-            (this === $i && t && t._writableState instanceof Ji)
+            !!Vi.call(this, t) ||
+            (this === lo && t && t._writableState instanceof fo)
           )
         }
       }))
-    : (Oi = function (t) {
+    : (Vi = function (t) {
         return t instanceof this
       }),
-  ($i.prototype.pipe = function () {
-    Ki(this, new zi())
+  (lo.prototype.pipe = function () {
+    uo(this, new no())
   }),
-  ($i.prototype.write = function (t, e, r) {
+  (lo.prototype.write = function (t, e, r) {
     var n,
       i = this._writableState,
       o = !1,
-      s = !i.objectMode && (Li.isBuffer((n = t)) || n instanceof ji)
+      s = !i.objectMode && ($i.isBuffer((n = t)) || n instanceof Xi)
     return (
       s &&
-        !Li.isBuffer(t) &&
+        !$i.isBuffer(t) &&
         (t = (function (t) {
-          return Li.from(t)
+          return $i.from(t)
         })(t)),
       'function' == typeof e && ((r = e), (e = null)),
       s ? (e = 'buffer') : e || (e = i.defaultEncoding),
-      'function' != typeof r && (r = Vi),
+      'function' != typeof r && (r = ho),
       i.ending
         ? (function (t, e) {
-            var r = new Gi()
-            Ki(t, r), process.nextTick(e, r)
+            var r = new so()
+            uo(t, r), process.nextTick(e, r)
           })(this, r)
         : (s ||
             (function (t, e, r, n) {
               var i
               return (
                 null === r
-                  ? (i = new Hi())
+                  ? (i = new oo())
                   : 'string' == typeof r ||
                     e.objectMode ||
-                    (i = new Ui('chunk', ['string', 'Buffer'], r)),
-                !i || (Ki(t, i), process.nextTick(n, i), !1)
+                    (i = new to('chunk', ['string', 'Buffer'], r)),
+                !i || (uo(t, i), process.nextTick(n, i), !1)
               )
             })(this, i, t, r)) &&
           (i.pendingcb++,
@@ -21530,7 +21550,7 @@ he($i, ui),
                   t.objectMode ||
                     !1 === t.decodeStrings ||
                     'string' != typeof e ||
-                    (e = Li.from(e, r)),
+                    (e = $i.from(e, r)),
                   e
                 )
               })(e, n, i)
@@ -21552,16 +21572,16 @@ he($i, ui),
                   ? (h.next = e.lastBufferedRequest)
                   : (e.bufferedRequest = e.lastBufferedRequest),
                 (e.bufferedRequestCount += 1)
-            } else Xi(t, e, !1, a, n, i, o)
+            } else co(t, e, !1, a, n, i, o)
             return u
           })(this, i, s, t, e, r))),
       o
     )
   }),
-  ($i.prototype.cork = function () {
+  (lo.prototype.cork = function () {
     this._writableState.corked++
   }),
-  ($i.prototype.uncork = function () {
+  (lo.prototype.uncork = function () {
     var t = this._writableState
     t.corked &&
       (t.corked--,
@@ -21569,9 +21589,9 @@ he($i, ui),
         t.corked ||
         t.bufferProcessing ||
         !t.bufferedRequest ||
-        Qi(this, t))
+        mo(this, t))
   }),
-  ($i.prototype.setDefaultEncoding = function (t) {
+  (lo.prototype.setDefaultEncoding = function (t) {
     if (
       ('string' == typeof t && (t = t.toLowerCase()),
       !(
@@ -21590,26 +21610,26 @@ he($i, ui),
         ].indexOf((t + '').toLowerCase()) > -1
       ))
     )
-      throw new Zi(t)
+      throw new ao(t)
     return (this._writableState.defaultEncoding = t), this
   }),
-  Object.defineProperty($i.prototype, 'writableBuffer', {
+  Object.defineProperty(lo.prototype, 'writableBuffer', {
     enumerable: !1,
     get: function () {
       return this._writableState && this._writableState.getBuffer()
     }
   }),
-  Object.defineProperty($i.prototype, 'writableHighWaterMark', {
+  Object.defineProperty(lo.prototype, 'writableHighWaterMark', {
     enumerable: !1,
     get: function () {
       return this._writableState.highWaterMark
     }
   }),
-  ($i.prototype._write = function (t, e, r) {
-    r(new Fi('_write()'))
+  (lo.prototype._write = function (t, e, r) {
+    r(new eo('_write()'))
   }),
-  ($i.prototype._writev = null),
-  ($i.prototype.end = function (t, e, r) {
+  (lo.prototype._writev = null),
+  (lo.prototype.end = function (t, e, r) {
     var n = this._writableState
     return (
       'function' == typeof t
@@ -21620,7 +21640,7 @@ he($i, ui),
       n.ending ||
         (function (t, e, r) {
           ;(e.ending = !0),
-            ro(t, e),
+            yo(t, e),
             r && (e.finished ? process.nextTick(r) : t.once('finish', r)),
             (e.ended = !0),
             (t.writable = !1)
@@ -21628,13 +21648,13 @@ he($i, ui),
       this
     )
   }),
-  Object.defineProperty($i.prototype, 'writableLength', {
+  Object.defineProperty(lo.prototype, 'writableLength', {
     enumerable: !1,
     get: function () {
       return this._writableState.length
     }
   }),
-  Object.defineProperty($i.prototype, 'destroyed', {
+  Object.defineProperty(lo.prototype, 'destroyed', {
     enumerable: !1,
     get: function () {
       return void 0 !== this._writableState && this._writableState.destroyed
@@ -21643,61 +21663,61 @@ he($i, ui),
       this._writableState && (this._writableState.destroyed = t)
     }
   }),
-  ($i.prototype.destroy = bi),
-  ($i.prototype._undestroy = wi),
-  ($i.prototype._destroy = function (t, e) {
+  (lo.prototype.destroy = Ci),
+  (lo.prototype._undestroy = Li),
+  (lo.prototype._destroy = function (t, e) {
     e(t)
   })
-var no = Zo,
-  io =
+var bo = as,
+  wo =
     Object.keys ||
     function (t) {
       var e = []
       for (var r in t) e.push(r)
       return e
     },
-  oo = ho
-he(ho, no)
-for (var so = io(Ii.prototype), ao = 0; ao < so.length; ao++) {
-  var uo = so[ao]
-  ho.prototype[uo] || (ho.prototype[uo] = Ii.prototype[uo])
+  Mo = So
+Pe(So, bo)
+for (var _o = wo(Zi.prototype), Ao = 0; Ao < _o.length; Ao++) {
+  var Po = _o[Ao]
+  So.prototype[Po] || (So.prototype[Po] = Zi.prototype[Po])
 }
-function ho(t) {
-  if (!(this instanceof ho)) return new ho(t)
-  no.call(this, t),
-    Ii.call(this, t),
+function So(t) {
+  if (!(this instanceof So)) return new So(t)
+  bo.call(this, t),
+    Zi.call(this, t),
     (this.allowHalfOpen = !0),
     t &&
       (!1 === t.readable && (this.readable = !1),
       !1 === t.writable && (this.writable = !1),
       !1 === t.allowHalfOpen &&
-        ((this.allowHalfOpen = !1), this.once('end', fo)))
+        ((this.allowHalfOpen = !1), this.once('end', To)))
 }
-function fo() {
-  this._writableState.ended || process.nextTick(lo, this)
+function To() {
+  this._writableState.ended || process.nextTick(xo, this)
 }
-function lo(t) {
+function xo(t) {
   t.end()
 }
-Object.defineProperty(ho.prototype, 'writableHighWaterMark', {
+Object.defineProperty(So.prototype, 'writableHighWaterMark', {
   enumerable: !1,
   get: function () {
     return this._writableState.highWaterMark
   }
 }),
-  Object.defineProperty(ho.prototype, 'writableBuffer', {
+  Object.defineProperty(So.prototype, 'writableBuffer', {
     enumerable: !1,
     get: function () {
       return this._writableState && this._writableState.getBuffer()
     }
   }),
-  Object.defineProperty(ho.prototype, 'writableLength', {
+  Object.defineProperty(So.prototype, 'writableLength', {
     enumerable: !1,
     get: function () {
       return this._writableState.length
     }
   }),
-  Object.defineProperty(ho.prototype, 'destroyed', {
+  Object.defineProperty(So.prototype, 'destroyed', {
     enumerable: !1,
     get: function () {
       return (
@@ -21714,9 +21734,9 @@ Object.defineProperty(ho.prototype, 'writableHighWaterMark', {
         (this._writableState.destroyed = t))
     }
   })
-var co = Un.Buffer,
-  po =
-    co.isEncoding ||
+var Eo = ti.Buffer,
+  ko =
+    Eo.isEncoding ||
     function (t) {
       switch ((t = '' + t) && t.toLowerCase()) {
         case 'hex':
@@ -21735,8 +21755,8 @@ var co = Un.Buffer,
           return !1
       }
     },
-  mo = vo
-function vo(t) {
+  Ro = Io
+function Io(t) {
   var e
   switch (
     ((this.encoding = (function (t) {
@@ -21764,29 +21784,29 @@ function vo(t) {
               ;(t = ('' + t).toLowerCase()), (e = !0)
           }
       })(t)
-      if ('string' != typeof e && (co.isEncoding === po || !po(t)))
+      if ('string' != typeof e && (Eo.isEncoding === ko || !ko(t)))
         throw new Error('Unknown encoding: ' + t)
       return e || t
     })(t)),
     this.encoding)
   ) {
     case 'utf16le':
-      ;(this.text = bo), (this.end = wo), (e = 4)
+      ;(this.text = Co), (this.end = Lo), (e = 4)
       break
     case 'utf8':
-      ;(this.fillLast = yo), (e = 4)
+      ;(this.fillLast = Oo), (e = 4)
       break
     case 'base64':
-      ;(this.text = Mo), (this.end = _o), (e = 3)
+      ;(this.text = jo), (this.end = No), (e = 3)
       break
     default:
-      return (this.write = Ao), void (this.end = Po)
+      return (this.write = Do), void (this.end = Uo)
   }
   ;(this.lastNeed = 0),
     (this.lastTotal = 0),
-    (this.lastChar = co.allocUnsafe(e))
+    (this.lastChar = Eo.allocUnsafe(e))
 }
-function go(t) {
+function Bo(t) {
   return t <= 127
     ? 0
     : t >> 5 == 6
@@ -21799,7 +21819,7 @@ function go(t) {
     ? -1
     : -2
 }
-function yo(t) {
+function Oo(t) {
   var e = this.lastTotal - this.lastNeed,
     r = (function (t, e, r) {
       if (128 != (192 & e[0])) return (t.lastNeed = 0), '�'
@@ -21816,7 +21836,7 @@ function yo(t) {
       this.lastChar.toString(this.encoding, 0, this.lastTotal))
     : (t.copy(this.lastChar, e, 0, t.length), void (this.lastNeed -= t.length))
 }
-function bo(t, e) {
+function Co(t, e) {
   if ((t.length - e) % 2 == 0) {
     var r = t.toString('utf16le', e)
     if (r) {
@@ -21839,13 +21859,13 @@ function bo(t, e) {
     t.toString('utf16le', e, t.length - 1)
   )
 }
-function wo(t) {
+function Lo(t) {
   var e = t && t.length ? this.write(t) : ''
   return this.lastNeed
     ? e + this.lastChar.toString('utf16le', 0, this.lastTotal - this.lastNeed)
     : e
 }
-function Mo(t, e) {
+function jo(t, e) {
   var r = (t.length - e) % 3
   return 0 === r
     ? t.toString('base64', e)
@@ -21857,19 +21877,19 @@ function Mo(t, e) {
           (this.lastChar[1] = t[t.length - 1])),
       t.toString('base64', e, t.length - r))
 }
-function _o(t) {
+function No(t) {
   var e = t && t.length ? this.write(t) : ''
   return this.lastNeed
     ? e + this.lastChar.toString('base64', 0, 3 - this.lastNeed)
     : e
 }
-function Ao(t) {
+function Do(t) {
   return t.toString(this.encoding)
 }
-function Po(t) {
+function Uo(t) {
   return t && t.length ? this.write(t) : ''
 }
-;(vo.prototype.write = function (t) {
+;(Io.prototype.write = function (t) {
   if (0 === t.length) return ''
   var e, r
   if (this.lastNeed) {
@@ -21878,24 +21898,24 @@ function Po(t) {
   } else r = 0
   return r < t.length ? (e ? e + this.text(t, r) : this.text(t, r)) : e || ''
 }),
-  (vo.prototype.end = function (t) {
+  (Io.prototype.end = function (t) {
     var e = t && t.length ? this.write(t) : ''
     return this.lastNeed ? e + '�' : e
   }),
-  (vo.prototype.text = function (t, e) {
+  (Io.prototype.text = function (t, e) {
     var r = (function (t, e, r) {
       var n = e.length - 1
       if (n < r) return 0
-      var i = go(e[n])
+      var i = Bo(e[n])
       return i >= 0
         ? (i > 0 && (t.lastNeed = i - 1), i)
         : --n < r || -2 === i
         ? 0
-        : (i = go(e[n])) >= 0
+        : (i = Bo(e[n])) >= 0
         ? (i > 0 && (t.lastNeed = i - 2), i)
         : --n < r || -2 === i
         ? 0
-        : (i = go(e[n])) >= 0
+        : (i = Bo(e[n])) >= 0
         ? (i > 0 && (2 === i ? (i = 0) : (t.lastNeed = i - 3)), i)
         : 0
     })(this, t, e)
@@ -21904,7 +21924,7 @@ function Po(t) {
     var n = t.length - (r - this.lastNeed)
     return t.copy(this.lastChar, 0, n), t.toString('utf8', e, n)
   }),
-  (vo.prototype.fillLast = function (t) {
+  (Io.prototype.fillLast = function (t) {
     if (this.lastNeed <= t.length)
       return (
         t.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed),
@@ -21913,11 +21933,11 @@ function Po(t) {
     t.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, t.length),
       (this.lastNeed -= t.length)
   })
-var So = { StringDecoder: mo },
-  To = Si.codes.ERR_STREAM_PREMATURE_CLOSE
-function xo() {}
-var Eo,
-  ko = function t(e, r, n) {
+var Fo = { StringDecoder: Ro },
+  qo = Fi.codes.ERR_STREAM_PREMATURE_CLOSE
+function zo() {}
+var Wo,
+  Ho = function t(e, r, n) {
     if ('function' == typeof r) return t(e, null, r)
     r || (r = {}),
       (n = (function (t) {
@@ -21930,7 +21950,7 @@ var Eo,
             t.apply(this, n)
           }
         }
-      })(n || xo))
+      })(n || zo))
     var i = r.readable || (!1 !== r.readable && e.readable),
       o = r.writable || (!1 !== r.writable && e.writable),
       s = function () {
@@ -21950,10 +21970,10 @@ var Eo,
       c = function () {
         var t
         return i && !h
-          ? ((e._readableState && e._readableState.ended) || (t = new To()),
+          ? ((e._readableState && e._readableState.ended) || (t = new qo()),
             n.call(e, t))
           : o && !a
-          ? ((e._writableState && e._writableState.ended) || (t = new To()),
+          ? ((e._writableState && e._writableState.ended) || (t = new qo()),
             n.call(e, t))
           : void 0
       },
@@ -21986,7 +22006,7 @@ var Eo,
       }
     )
   }
-function Ro(t, e, r) {
+function Go(t, e, r) {
   return (
     e in t
       ? Object.defineProperty(t, e, {
@@ -21999,63 +22019,63 @@ function Ro(t, e, r) {
     t
   )
 }
-var Io = Symbol('lastResolve'),
-  Bo = Symbol('lastReject'),
-  Oo = Symbol('error'),
-  Co = Symbol('ended'),
-  Lo = Symbol('lastPromise'),
-  jo = Symbol('handlePromise'),
-  No = Symbol('stream')
-function Do(t, e) {
+var Zo = Symbol('lastResolve'),
+  Ko = Symbol('lastReject'),
+  Vo = Symbol('error'),
+  Jo = Symbol('ended'),
+  $o = Symbol('lastPromise'),
+  Xo = Symbol('handlePromise'),
+  Yo = Symbol('stream')
+function Qo(t, e) {
   return { value: t, done: e }
 }
-function Uo(t) {
-  var e = t[Io]
+function ts(t) {
+  var e = t[Zo]
   if (null !== e) {
-    var r = t[No].read()
-    null !== r && ((t[Lo] = null), (t[Io] = null), (t[Bo] = null), e(Do(r, !1)))
+    var r = t[Yo].read()
+    null !== r && ((t[$o] = null), (t[Zo] = null), (t[Ko] = null), e(Qo(r, !1)))
   }
 }
-function Fo(t) {
-  process.nextTick(Uo, t)
+function es(t) {
+  process.nextTick(ts, t)
 }
-var qo,
-  zo = Object.getPrototypeOf(function () {}),
-  Wo = Object.setPrototypeOf(
-    (Ro(
-      (Eo = {
+var rs,
+  ns = Object.getPrototypeOf(function () {}),
+  is = Object.setPrototypeOf(
+    (Go(
+      (Wo = {
         get stream() {
-          return this[No]
+          return this[Yo]
         },
         next: function () {
           var t = this,
-            e = this[Oo]
+            e = this[Vo]
           if (null !== e) return Promise.reject(e)
-          if (this[Co]) return Promise.resolve(Do(void 0, !0))
-          if (this[No].destroyed)
+          if (this[Jo]) return Promise.resolve(Qo(void 0, !0))
+          if (this[Yo].destroyed)
             return new Promise(function (e, r) {
               process.nextTick(function () {
-                t[Oo] ? r(t[Oo]) : e(Do(void 0, !0))
+                t[Vo] ? r(t[Vo]) : e(Qo(void 0, !0))
               })
             })
           var r,
-            n = this[Lo]
+            n = this[$o]
           if (n)
             r = new Promise(
               (function (t, e) {
                 return function (r, n) {
                   t.then(function () {
-                    e[Co] ? r(Do(void 0, !0)) : e[jo](r, n)
+                    e[Jo] ? r(Qo(void 0, !0)) : e[Xo](r, n)
                   }, n)
                 }
               })(n, this)
             )
           else {
-            var i = this[No].read()
-            if (null !== i) return Promise.resolve(Do(i, !1))
-            r = new Promise(this[jo])
+            var i = this[Yo].read()
+            if (null !== i) return Promise.resolve(Qo(i, !1))
+            r = new Promise(this[Xo])
           }
-          return (this[Lo] = r), r
+          return (this[$o] = r), r
         }
       }),
       Symbol.asyncIterator,
@@ -22063,88 +22083,88 @@ var qo,
         return this
       }
     ),
-    Ro(Eo, 'return', function () {
+    Go(Wo, 'return', function () {
       var t = this
       return new Promise(function (e, r) {
-        t[No].destroy(null, function (t) {
-          t ? r(t) : e(Do(void 0, !0))
+        t[Yo].destroy(null, function (t) {
+          t ? r(t) : e(Qo(void 0, !0))
         })
       })
     }),
-    Eo),
-    zo
+    Wo),
+    ns
   ),
-  Ho = function (t) {
+  os = function (t) {
     var e,
       r = Object.create(
-        Wo,
-        (Ro((e = {}), No, { value: t, writable: !0 }),
-        Ro(e, Io, { value: null, writable: !0 }),
-        Ro(e, Bo, { value: null, writable: !0 }),
-        Ro(e, Oo, { value: null, writable: !0 }),
-        Ro(e, Co, { value: t._readableState.endEmitted, writable: !0 }),
-        Ro(e, jo, {
+        is,
+        (Go((e = {}), Yo, { value: t, writable: !0 }),
+        Go(e, Zo, { value: null, writable: !0 }),
+        Go(e, Ko, { value: null, writable: !0 }),
+        Go(e, Vo, { value: null, writable: !0 }),
+        Go(e, Jo, { value: t._readableState.endEmitted, writable: !0 }),
+        Go(e, Xo, {
           value: function (t, e) {
-            var n = r[No].read()
+            var n = r[Yo].read()
             n
-              ? ((r[Lo] = null), (r[Io] = null), (r[Bo] = null), t(Do(n, !1)))
-              : ((r[Io] = t), (r[Bo] = e))
+              ? ((r[$o] = null), (r[Zo] = null), (r[Ko] = null), t(Qo(n, !1)))
+              : ((r[Zo] = t), (r[Ko] = e))
           },
           writable: !0
         }),
         e)
       )
     return (
-      (r[Lo] = null),
-      ko(t, function (t) {
+      (r[$o] = null),
+      Ho(t, function (t) {
         if (t && 'ERR_STREAM_PREMATURE_CLOSE' !== t.code) {
-          var e = r[Bo]
+          var e = r[Ko]
           return (
             null !== e &&
-              ((r[Lo] = null), (r[Io] = null), (r[Bo] = null), e(t)),
-            void (r[Oo] = t)
+              ((r[$o] = null), (r[Zo] = null), (r[Ko] = null), e(t)),
+            void (r[Vo] = t)
           )
         }
-        var n = r[Io]
+        var n = r[Zo]
         null !== n &&
-          ((r[Lo] = null), (r[Io] = null), (r[Bo] = null), n(Do(void 0, !0))),
-          (r[Co] = !0)
+          ((r[$o] = null), (r[Zo] = null), (r[Ko] = null), n(Qo(void 0, !0))),
+          (r[Jo] = !0)
       }),
-      t.on('readable', Fo.bind(null, r)),
+      t.on('readable', es.bind(null, r)),
       r
     )
   },
-  Go = function () {
+  ss = function () {
     throw new Error('Readable.from is not available in the browser')
   },
-  Zo = hs
-hs.ReadableState = us
-var Ko,
-  Vo = function (t, e) {
+  as = Ps
+Ps.ReadableState = As
+var us,
+  hs = function (t, e) {
     return t.listeners(e).length
   },
-  Jo = Pt.Buffer,
-  $o = D.Uint8Array || function () {}
-Ko = ct && ct.debuglog ? ct.debuglog('stream') : function () {}
-var Xo,
-  Yo,
-  Qo,
-  ts = xi,
-  es = Si.codes,
-  rs = es.ERR_INVALID_ARG_TYPE,
-  ns = es.ERR_STREAM_PUSH_AFTER_EOF,
-  is = es.ERR_METHOD_NOT_IMPLEMENTED,
-  os = es.ERR_STREAM_UNSHIFT_AFTER_END_EVENT
-he(hs, ui)
-var ss = Mi,
-  as = ['error', 'close', 'destroy', 'pause', 'resume']
-function us(t, e, r) {
-  ;(qo = qo || Ri),
-    'boolean' != typeof r && (r = e instanceof qo),
+  fs = Ut.Buffer,
+  ls = Q.Uint8Array || function () {}
+us = xt && xt.debuglog ? xt.debuglog('stream') : function () {}
+var cs,
+  ds,
+  ps,
+  ms = zi,
+  vs = Fi.codes,
+  gs = vs.ERR_INVALID_ARG_TYPE,
+  ys = vs.ERR_STREAM_PUSH_AFTER_EOF,
+  bs = vs.ERR_METHOD_NOT_IMPLEMENTED,
+  ws = vs.ERR_STREAM_UNSHIFT_AFTER_END_EVENT
+Pe(Ps, Ai)
+var Ms = ji,
+  _s = ['error', 'close', 'destroy', 'pause', 'resume']
+function As(t, e, r) {
+  ;(rs = rs || Gi),
+    'boolean' != typeof r && (r = e instanceof rs),
     (this.objectMode = !!(t = t || {}).objectMode),
     r && (this.objectMode = this.objectMode || !!t.readableObjectMode),
-    (this.highWaterMark = ts(this, t, 'readableHighWaterMark', r)),
-    (this.buffer = new mi()),
+    (this.highWaterMark = ms(this, t, 'readableHighWaterMark', r)),
+    (this.buffer = new Ri()),
     (this.length = 0),
     (this.pipes = null),
     (this.pipesCount = 0),
@@ -22167,27 +22187,27 @@ function us(t, e, r) {
     (this.decoder = null),
     (this.encoding = null),
     t.encoding &&
-      (Xo || (Xo = So.StringDecoder),
-      (this.decoder = new Xo(t.encoding)),
+      (cs || (cs = Fo.StringDecoder),
+      (this.decoder = new cs(t.encoding)),
       (this.encoding = t.encoding))
 }
-function hs(t) {
-  if (((qo = qo || Ri), !(this instanceof hs))) return new hs(t)
-  ;(this._readableState = new us(t, this, this instanceof qo)),
+function Ps(t) {
+  if (((rs = rs || Gi), !(this instanceof Ps))) return new Ps(t)
+  ;(this._readableState = new As(t, this, this instanceof rs)),
     (this.readable = !0),
     t &&
       ('function' == typeof t.read && (this._read = t.read),
       'function' == typeof t.destroy && (this._destroy = t.destroy)),
-    ui.call(this)
+    Ai.call(this)
 }
-function fs(t, e, r, n, i) {
-  Ko('readableAddChunk', e)
+function Ss(t, e, r, n, i) {
+  us('readableAddChunk', e)
   var o,
     s = t._readableState
   if (null === e)
     (s.reading = !1),
       (function (t, e) {
-        if ((Ko('onEofChunk'), !e.ended)) {
+        if ((us('onEofChunk'), !e.ended)) {
           if (e.decoder) {
             var r = e.decoder.end()
             r &&
@@ -22196,9 +22216,9 @@ function fs(t, e, r, n, i) {
           }
           ;(e.ended = !0),
             e.sync
-              ? ds(t)
+              ? Es(t)
               : ((e.needReadable = !1),
-                e.emittedReadable || ((e.emittedReadable = !0), ps(t)))
+                e.emittedReadable || ((e.emittedReadable = !0), ks(t)))
         }
       })(t, s)
   else if (
@@ -22206,50 +22226,50 @@ function fs(t, e, r, n, i) {
       (o = (function (t, e) {
         var r, n
         return (
-          Jo.isBuffer((n = e)) ||
-            n instanceof $o ||
+          fs.isBuffer((n = e)) ||
+            n instanceof ls ||
             'string' == typeof e ||
             void 0 === e ||
             t.objectMode ||
-            (r = new rs('chunk', ['string', 'Buffer', 'Uint8Array'], e)),
+            (r = new gs('chunk', ['string', 'Buffer', 'Uint8Array'], e)),
           r
         )
       })(s, e)),
     o)
   )
-    ss(t, o)
+    Ms(t, o)
   else if (s.objectMode || (e && e.length > 0))
     if (
       ('string' == typeof e ||
         s.objectMode ||
-        Object.getPrototypeOf(e) === Jo.prototype ||
+        Object.getPrototypeOf(e) === fs.prototype ||
         (e = (function (t) {
-          return Jo.from(t)
+          return fs.from(t)
         })(e)),
       n)
     )
-      s.endEmitted ? ss(t, new os()) : ls(t, s, e, !0)
-    else if (s.ended) ss(t, new ns())
+      s.endEmitted ? Ms(t, new ws()) : Ts(t, s, e, !0)
+    else if (s.ended) Ms(t, new ys())
     else {
       if (s.destroyed) return !1
       ;(s.reading = !1),
         s.decoder && !r
           ? ((e = s.decoder.write(e)),
-            s.objectMode || 0 !== e.length ? ls(t, s, e, !1) : ms(t, s))
-          : ls(t, s, e, !1)
+            s.objectMode || 0 !== e.length ? Ts(t, s, e, !1) : Rs(t, s))
+          : Ts(t, s, e, !1)
     }
-  else n || ((s.reading = !1), ms(t, s))
+  else n || ((s.reading = !1), Rs(t, s))
   return !s.ended && (s.length < s.highWaterMark || 0 === s.length)
 }
-function ls(t, e, r, n) {
+function Ts(t, e, r, n) {
   e.flowing && 0 === e.length && !e.sync
     ? ((e.awaitDrain = 0), t.emit('data', r))
     : ((e.length += e.objectMode ? 1 : r.length),
       n ? e.buffer.unshift(r) : e.buffer.push(r),
-      e.needReadable && ds(t)),
-    ms(t, e)
+      e.needReadable && Es(t)),
+    Rs(t, e)
 }
-function cs(t, e) {
+function xs(t, e) {
   return t <= 0 || (0 === e.length && e.ended)
     ? 0
     : e.objectMode
@@ -22275,28 +22295,28 @@ function cs(t, e) {
         })(t)),
       t <= e.length ? t : e.ended ? e.length : ((e.needReadable = !0), 0))
 }
-function ds(t) {
+function Es(t) {
   var e = t._readableState
-  Ko('emitReadable', e.needReadable, e.emittedReadable),
+  us('emitReadable', e.needReadable, e.emittedReadable),
     (e.needReadable = !1),
     e.emittedReadable ||
-      (Ko('emitReadable', e.flowing),
+      (us('emitReadable', e.flowing),
       (e.emittedReadable = !0),
-      process.nextTick(ps, t))
+      process.nextTick(ks, t))
 }
-function ps(t) {
+function ks(t) {
   var e = t._readableState
-  Ko('emitReadable_', e.destroyed, e.length, e.ended),
+  us('emitReadable_', e.destroyed, e.length, e.ended),
     e.destroyed ||
       (!e.length && !e.ended) ||
       (t.emit('readable'), (e.emittedReadable = !1)),
     (e.needReadable = !e.flowing && !e.ended && e.length <= e.highWaterMark),
-    ws(t)
+    Ls(t)
 }
-function ms(t, e) {
-  e.readingMore || ((e.readingMore = !0), process.nextTick(vs, t, e))
+function Rs(t, e) {
+  e.readingMore || ((e.readingMore = !0), process.nextTick(Is, t, e))
 }
-function vs(t, e) {
+function Is(t, e) {
   for (
     ;
     !e.reading &&
@@ -22305,33 +22325,33 @@ function vs(t, e) {
 
   ) {
     var r = e.length
-    if ((Ko('maybeReadMore read 0'), t.read(0), r === e.length)) break
+    if ((us('maybeReadMore read 0'), t.read(0), r === e.length)) break
   }
   e.readingMore = !1
 }
-function gs(t) {
+function Bs(t) {
   var e = t._readableState
   ;(e.readableListening = t.listenerCount('readable') > 0),
     e.resumeScheduled && !e.paused
       ? (e.flowing = !0)
       : t.listenerCount('data') > 0 && t.resume()
 }
-function ys(t) {
-  Ko('readable nexttick read 0'), t.read(0)
+function Os(t) {
+  us('readable nexttick read 0'), t.read(0)
 }
-function bs(t, e) {
-  Ko('resume', e.reading),
+function Cs(t, e) {
+  us('resume', e.reading),
     e.reading || t.read(0),
     (e.resumeScheduled = !1),
     t.emit('resume'),
-    ws(t),
+    Ls(t),
     e.flowing && !e.reading && t.read(0)
 }
-function ws(t) {
+function Ls(t) {
   var e = t._readableState
-  for (Ko('flow', e.flowing); e.flowing && null !== t.read(); );
+  for (us('flow', e.flowing); e.flowing && null !== t.read(); );
 }
-function Ms(t, e) {
+function js(t, e) {
   return 0 === e.length
     ? null
     : (e.objectMode
@@ -22347,14 +22367,14 @@ function Ms(t, e) {
       r)
   var r
 }
-function _s(t) {
+function Ns(t) {
   var e = t._readableState
-  Ko('endReadable', e.endEmitted),
-    e.endEmitted || ((e.ended = !0), process.nextTick(As, e, t))
+  us('endReadable', e.endEmitted),
+    e.endEmitted || ((e.ended = !0), process.nextTick(Ds, e, t))
 }
-function As(t, e) {
+function Ds(t, e) {
   if (
-    (Ko('endReadableNT', t.endEmitted, t.length),
+    (us('endReadableNT', t.endEmitted, t.length),
     !t.endEmitted &&
       0 === t.length &&
       ((t.endEmitted = !0), (e.readable = !1), e.emit('end'), t.autoDestroy))
@@ -22363,11 +22383,11 @@ function As(t, e) {
     ;(!r || (r.autoDestroy && r.finished)) && e.destroy()
   }
 }
-function Ps(t, e) {
+function Us(t, e) {
   for (var r = 0, n = t.length; r < n; r++) if (t[r] === e) return r
   return -1
 }
-Object.defineProperty(hs.prototype, 'destroyed', {
+Object.defineProperty(Ps.prototype, 'destroyed', {
   enumerable: !1,
   get: function () {
     return void 0 !== this._readableState && this._readableState.destroyed
@@ -22376,12 +22396,12 @@ Object.defineProperty(hs.prototype, 'destroyed', {
     this._readableState && (this._readableState.destroyed = t)
   }
 }),
-  (hs.prototype.destroy = bi),
-  (hs.prototype._undestroy = wi),
-  (hs.prototype._destroy = function (t, e) {
+  (Ps.prototype.destroy = Ci),
+  (Ps.prototype._undestroy = Li),
+  (Ps.prototype._destroy = function (t, e) {
     e(t)
   }),
-  (hs.prototype.push = function (t, e) {
+  (Ps.prototype.push = function (t, e) {
     var r,
       n = this._readableState
     return (
@@ -22389,20 +22409,20 @@ Object.defineProperty(hs.prototype, 'destroyed', {
         ? (r = !0)
         : 'string' == typeof t &&
           ((e = e || n.defaultEncoding) !== n.encoding &&
-            ((t = Jo.from(t, e)), (e = '')),
+            ((t = fs.from(t, e)), (e = '')),
           (r = !0)),
-      fs(this, t, e, !1, r)
+      Ss(this, t, e, !1, r)
     )
   }),
-  (hs.prototype.unshift = function (t) {
-    return fs(this, t, null, !0, !1)
+  (Ps.prototype.unshift = function (t) {
+    return Ss(this, t, null, !0, !1)
   }),
-  (hs.prototype.isPaused = function () {
+  (Ps.prototype.isPaused = function () {
     return !1 === this._readableState.flowing
   }),
-  (hs.prototype.setEncoding = function (t) {
-    Xo || (Xo = So.StringDecoder)
-    var e = new Xo(t)
+  (Ps.prototype.setEncoding = function (t) {
+    cs || (cs = Fo.StringDecoder)
+    var e = new cs(t)
     ;(this._readableState.decoder = e),
       (this._readableState.encoding = this._readableState.decoder.encoding)
     for (var r = this._readableState.buffer.head, n = ''; null !== r; )
@@ -22414,8 +22434,8 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       this
     )
   }),
-  (hs.prototype.read = function (t) {
-    Ko('read', t), (t = parseInt(t, 10))
+  (Ps.prototype.read = function (t) {
+    us('read', t), (t = parseInt(t, 10))
     var e = this._readableState,
       r = t
     if (
@@ -22426,40 +22446,40 @@ Object.defineProperty(hs.prototype, 'destroyed', {
           e.ended))
     )
       return (
-        Ko('read: emitReadable', e.length, e.ended),
-        0 === e.length && e.ended ? _s(this) : ds(this),
+        us('read: emitReadable', e.length, e.ended),
+        0 === e.length && e.ended ? Ns(this) : Es(this),
         null
       )
-    if (0 === (t = cs(t, e)) && e.ended) return 0 === e.length && _s(this), null
+    if (0 === (t = xs(t, e)) && e.ended) return 0 === e.length && Ns(this), null
     var n,
       i = e.needReadable
     return (
-      Ko('need readable', i),
+      us('need readable', i),
       (0 === e.length || e.length - t < e.highWaterMark) &&
-        Ko('length less than watermark', (i = !0)),
+        us('length less than watermark', (i = !0)),
       e.ended || e.reading
-        ? Ko('reading or ended', (i = !1))
+        ? us('reading or ended', (i = !1))
         : i &&
-          (Ko('do read'),
+          (us('do read'),
           (e.reading = !0),
           (e.sync = !0),
           0 === e.length && (e.needReadable = !0),
           this._read(e.highWaterMark),
           (e.sync = !1),
-          e.reading || (t = cs(r, e))),
-      null === (n = t > 0 ? Ms(t, e) : null)
+          e.reading || (t = xs(r, e))),
+      null === (n = t > 0 ? js(t, e) : null)
         ? ((e.needReadable = e.length <= e.highWaterMark), (t = 0))
         : ((e.length -= t), (e.awaitDrain = 0)),
       0 === e.length &&
-        (e.ended || (e.needReadable = !0), r !== t && e.ended && _s(this)),
+        (e.ended || (e.needReadable = !0), r !== t && e.ended && Ns(this)),
       null !== n && this.emit('data', n),
       n
     )
   }),
-  (hs.prototype._read = function (t) {
-    ss(this, new is('_read()'))
+  (Ps.prototype._read = function (t) {
+    Ms(this, new bs('_read()'))
   }),
-  (hs.prototype.pipe = function (t, e) {
+  (Ps.prototype.pipe = function (t, e) {
     var r = this,
       n = this._readableState
     switch (n.pipesCount) {
@@ -22472,22 +22492,22 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       default:
         n.pipes.push(t)
     }
-    ;(n.pipesCount += 1), Ko('pipe count=%d opts=%j', n.pipesCount, e)
+    ;(n.pipesCount += 1), us('pipe count=%d opts=%j', n.pipesCount, e)
     var i =
       (e && !1 === e.end) || t === process.stdout || t === process.stderr
         ? c
         : o
     function o() {
-      Ko('onend'), t.end()
+      us('onend'), t.end()
     }
     n.endEmitted ? process.nextTick(i) : r.once('end', i),
       t.on('unpipe', function e(i, d) {
-        Ko('onunpipe'),
+        us('onunpipe'),
           i === r &&
             d &&
             !1 === d.hasUnpiped &&
             ((d.hasUnpiped = !0),
-            Ko('cleanup'),
+            us('cleanup'),
             t.removeListener('close', f),
             t.removeListener('finish', l),
             t.removeListener('drain', s),
@@ -22504,38 +22524,38 @@ Object.defineProperty(hs.prototype, 'destroyed', {
     var s = (function (t) {
       return function () {
         var e = t._readableState
-        Ko('pipeOnDrain', e.awaitDrain),
+        us('pipeOnDrain', e.awaitDrain),
           e.awaitDrain && e.awaitDrain--,
-          0 === e.awaitDrain && Vo(t, 'data') && ((e.flowing = !0), ws(t))
+          0 === e.awaitDrain && hs(t, 'data') && ((e.flowing = !0), Ls(t))
       }
     })(r)
     t.on('drain', s)
     var a = !1
     function u(e) {
-      Ko('ondata')
+      us('ondata')
       var i = t.write(e)
-      Ko('dest.write', i),
+      us('dest.write', i),
         !1 === i &&
           (((1 === n.pipesCount && n.pipes === t) ||
-            (n.pipesCount > 1 && -1 !== Ps(n.pipes, t))) &&
+            (n.pipesCount > 1 && -1 !== Us(n.pipes, t))) &&
             !a &&
-            (Ko('false write response, pause', n.awaitDrain), n.awaitDrain++),
+            (us('false write response, pause', n.awaitDrain), n.awaitDrain++),
           r.pause())
     }
     function h(e) {
-      Ko('onerror', e),
+      us('onerror', e),
         c(),
         t.removeListener('error', h),
-        0 === Vo(t, 'error') && ss(t, e)
+        0 === hs(t, 'error') && Ms(t, e)
     }
     function f() {
       t.removeListener('finish', l), c()
     }
     function l() {
-      Ko('onfinish'), t.removeListener('close', f), c()
+      us('onfinish'), t.removeListener('close', f), c()
     }
     function c() {
-      Ko('unpipe'), r.unpipe(t)
+      us('unpipe'), r.unpipe(t)
     }
     return (
       r.on('data', u),
@@ -22551,11 +22571,11 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       t.once('close', f),
       t.once('finish', l),
       t.emit('pipe', r),
-      n.flowing || (Ko('pipe resume'), r.resume()),
+      n.flowing || (us('pipe resume'), r.resume()),
       t
     )
   }),
-  (hs.prototype.unpipe = function (t) {
+  (Ps.prototype.unpipe = function (t) {
     var e = this._readableState,
       r = { hasUnpiped: !1 }
     if (0 === e.pipesCount) return this
@@ -22576,7 +22596,7 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       for (var o = 0; o < i; o++) n[o].emit('unpipe', this, { hasUnpiped: !1 })
       return this
     }
-    var s = Ps(e.pipes, t)
+    var s = Us(e.pipes, t)
     return (
       -1 === s ||
         (e.pipes.splice(s, 1),
@@ -22586,9 +22606,9 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       this
     )
   }),
-  (hs.prototype.addListener = hs.prototype.on =
+  (Ps.prototype.addListener = Ps.prototype.on =
     function (t, e) {
-      var r = ui.prototype.on.call(this, t, e),
+      var r = Ai.prototype.on.call(this, t, e),
         n = this._readableState
       return (
         'data' === t
@@ -22600,55 +22620,55 @@ Object.defineProperty(hs.prototype, 'destroyed', {
               ((n.readableListening = n.needReadable = !0),
               (n.flowing = !1),
               (n.emittedReadable = !1),
-              Ko('on readable', n.length, n.reading),
-              n.length ? ds(this) : n.reading || process.nextTick(ys, this))),
+              us('on readable', n.length, n.reading),
+              n.length ? Es(this) : n.reading || process.nextTick(Os, this))),
         r
       )
     }),
-  (hs.prototype.removeListener = function (t, e) {
-    var r = ui.prototype.removeListener.call(this, t, e)
-    return 'readable' === t && process.nextTick(gs, this), r
+  (Ps.prototype.removeListener = function (t, e) {
+    var r = Ai.prototype.removeListener.call(this, t, e)
+    return 'readable' === t && process.nextTick(Bs, this), r
   }),
-  (hs.prototype.removeAllListeners = function (t) {
-    var e = ui.prototype.removeAllListeners.apply(this, arguments)
-    return ('readable' !== t && void 0 !== t) || process.nextTick(gs, this), e
+  (Ps.prototype.removeAllListeners = function (t) {
+    var e = Ai.prototype.removeAllListeners.apply(this, arguments)
+    return ('readable' !== t && void 0 !== t) || process.nextTick(Bs, this), e
   }),
-  (hs.prototype.resume = function () {
+  (Ps.prototype.resume = function () {
     var t = this._readableState
     return (
       t.flowing ||
-        (Ko('resume'),
+        (us('resume'),
         (t.flowing = !t.readableListening),
         (function (t, e) {
           e.resumeScheduled ||
-            ((e.resumeScheduled = !0), process.nextTick(bs, t, e))
+            ((e.resumeScheduled = !0), process.nextTick(Cs, t, e))
         })(this, t)),
       (t.paused = !1),
       this
     )
   }),
-  (hs.prototype.pause = function () {
+  (Ps.prototype.pause = function () {
     return (
-      Ko('call pause flowing=%j', this._readableState.flowing),
+      us('call pause flowing=%j', this._readableState.flowing),
       !1 !== this._readableState.flowing &&
-        (Ko('pause'), (this._readableState.flowing = !1), this.emit('pause')),
+        (us('pause'), (this._readableState.flowing = !1), this.emit('pause')),
       (this._readableState.paused = !0),
       this
     )
   }),
-  (hs.prototype.wrap = function (t) {
+  (Ps.prototype.wrap = function (t) {
     var e = this,
       r = this._readableState,
       n = !1
     for (var i in (t.on('end', function () {
-      if ((Ko('wrapped end'), r.decoder && !r.ended)) {
+      if ((us('wrapped end'), r.decoder && !r.ended)) {
         var t = r.decoder.end()
         t && t.length && e.push(t)
       }
       e.push(null)
     }),
     t.on('data', function (i) {
-      Ko('wrapped data'),
+      us('wrapped data'),
         r.decoder && (i = r.decoder.write(i)),
         (r.objectMode && null == i) ||
           ((r.objectMode || (i && i.length)) &&
@@ -22662,31 +22682,31 @@ Object.defineProperty(hs.prototype, 'destroyed', {
             return t[e].apply(t, arguments)
           }
         })(i))
-    for (var o = 0; o < as.length; o++) t.on(as[o], this.emit.bind(this, as[o]))
+    for (var o = 0; o < _s.length; o++) t.on(_s[o], this.emit.bind(this, _s[o]))
     return (
       (this._read = function (e) {
-        Ko('wrapped _read', e), n && ((n = !1), t.resume())
+        us('wrapped _read', e), n && ((n = !1), t.resume())
       }),
       this
     )
   }),
   'function' == typeof Symbol &&
-    (hs.prototype[Symbol.asyncIterator] = function () {
-      return void 0 === Yo && (Yo = Ho), Yo(this)
+    (Ps.prototype[Symbol.asyncIterator] = function () {
+      return void 0 === ds && (ds = os), ds(this)
     }),
-  Object.defineProperty(hs.prototype, 'readableHighWaterMark', {
+  Object.defineProperty(Ps.prototype, 'readableHighWaterMark', {
     enumerable: !1,
     get: function () {
       return this._readableState.highWaterMark
     }
   }),
-  Object.defineProperty(hs.prototype, 'readableBuffer', {
+  Object.defineProperty(Ps.prototype, 'readableBuffer', {
     enumerable: !1,
     get: function () {
       return this._readableState && this._readableState.buffer
     }
   }),
-  Object.defineProperty(hs.prototype, 'readableFlowing', {
+  Object.defineProperty(Ps.prototype, 'readableFlowing', {
     enumerable: !1,
     get: function () {
       return this._readableState.flowing
@@ -22695,39 +22715,39 @@ Object.defineProperty(hs.prototype, 'destroyed', {
       this._readableState && (this._readableState.flowing = t)
     }
   }),
-  (hs._fromList = Ms),
-  Object.defineProperty(hs.prototype, 'readableLength', {
+  (Ps._fromList = js),
+  Object.defineProperty(Ps.prototype, 'readableLength', {
     enumerable: !1,
     get: function () {
       return this._readableState.length
     }
   }),
   'function' == typeof Symbol &&
-    (hs.from = function (t, e) {
-      return void 0 === Qo && (Qo = Go), Qo(hs, t, e)
+    (Ps.from = function (t, e) {
+      return void 0 === ps && (ps = ss), ps(Ps, t, e)
     })
-var Ss = Bs,
-  Ts = Si.codes,
-  xs = Ts.ERR_METHOD_NOT_IMPLEMENTED,
-  Es = Ts.ERR_MULTIPLE_CALLBACK,
-  ks = Ts.ERR_TRANSFORM_ALREADY_TRANSFORMING,
-  Rs = Ts.ERR_TRANSFORM_WITH_LENGTH_0
-function Is(t, e) {
+var Fs = Ks,
+  qs = Fi.codes,
+  zs = qs.ERR_METHOD_NOT_IMPLEMENTED,
+  Ws = qs.ERR_MULTIPLE_CALLBACK,
+  Hs = qs.ERR_TRANSFORM_ALREADY_TRANSFORMING,
+  Gs = qs.ERR_TRANSFORM_WITH_LENGTH_0
+function Zs(t, e) {
   var r = this._transformState
   r.transforming = !1
   var n = r.writecb
-  if (null === n) return this.emit('error', new Es())
+  if (null === n) return this.emit('error', new Ws())
   ;(r.writechunk = null), (r.writecb = null), null != e && this.push(e), n(t)
   var i = this._readableState
   ;(i.reading = !1),
     (i.needReadable || i.length < i.highWaterMark) &&
       this._read(i.highWaterMark)
 }
-function Bs(t) {
-  if (!(this instanceof Bs)) return new Bs(t)
-  Ri.call(this, t),
+function Ks(t) {
+  if (!(this instanceof Ks)) return new Ks(t)
+  Gi.call(this, t),
     (this._transformState = {
-      afterTransform: Is.bind(this),
+      afterTransform: Zs.bind(this),
       needTransform: !1,
       transforming: !1,
       writecb: null,
@@ -22739,33 +22759,33 @@ function Bs(t) {
     t &&
       ('function' == typeof t.transform && (this._transform = t.transform),
       'function' == typeof t.flush && (this._flush = t.flush)),
-    this.on('prefinish', Os)
+    this.on('prefinish', Vs)
 }
-function Os() {
+function Vs() {
   var t = this
   'function' != typeof this._flush || this._readableState.destroyed
-    ? Cs(this, null, null)
+    ? Js(this, null, null)
     : this._flush(function (e, r) {
-        Cs(t, e, r)
+        Js(t, e, r)
       })
 }
-function Cs(t, e, r) {
+function Js(t, e, r) {
   if (e) return t.emit('error', e)
-  if ((null != r && t.push(r), t._writableState.length)) throw new Rs()
-  if (t._transformState.transforming) throw new ks()
+  if ((null != r && t.push(r), t._writableState.length)) throw new Gs()
+  if (t._transformState.transforming) throw new Hs()
   return t.push(null)
 }
-he(Bs, Ri),
-  (Bs.prototype.push = function (t, e) {
+Pe(Ks, Gi),
+  (Ks.prototype.push = function (t, e) {
     return (
       (this._transformState.needTransform = !1),
-      Ri.prototype.push.call(this, t, e)
+      Gi.prototype.push.call(this, t, e)
     )
   }),
-  (Bs.prototype._transform = function (t, e, r) {
-    r(new xs('_transform()'))
+  (Ks.prototype._transform = function (t, e, r) {
+    r(new zs('_transform()'))
   }),
-  (Bs.prototype._write = function (t, e, r) {
+  (Ks.prototype._write = function (t, e, r) {
     var n = this._transformState
     if (
       ((n.writecb = r),
@@ -22778,35 +22798,35 @@ he(Bs, Ri),
         this._read(i.highWaterMark)
     }
   }),
-  (Bs.prototype._read = function (t) {
+  (Ks.prototype._read = function (t) {
     var e = this._transformState
     null === e.writechunk || e.transforming
       ? (e.needTransform = !0)
       : ((e.transforming = !0),
         this._transform(e.writechunk, e.writeencoding, e.afterTransform))
   }),
-  (Bs.prototype._destroy = function (t, e) {
-    Ri.prototype._destroy.call(this, t, function (t) {
+  (Ks.prototype._destroy = function (t, e) {
+    Gi.prototype._destroy.call(this, t, function (t) {
       e(t)
     })
   })
-var Ls,
-  js = Ns
-function Ns(t) {
-  if (!(this instanceof Ns)) return new Ns(t)
-  Ss.call(this, t)
+var $s,
+  Xs = Ys
+function Ys(t) {
+  if (!(this instanceof Ys)) return new Ys(t)
+  Fs.call(this, t)
 }
-he(Ns, Ss),
-  (Ns.prototype._transform = function (t, e, r) {
+Pe(Ys, Fs),
+  (Ys.prototype._transform = function (t, e, r) {
     r(null, t)
   })
-var Ds = Si.codes,
-  Us = Ds.ERR_MISSING_ARGS,
-  Fs = Ds.ERR_STREAM_DESTROYED
-function qs(t) {
+var Qs = Fi.codes,
+  ta = Qs.ERR_MISSING_ARGS,
+  ea = Qs.ERR_STREAM_DESTROYED
+function ra(t) {
   if (t) throw t
 }
-function zs(t, e, r, n) {
+function na(t, e, r, n) {
   n = (function (t) {
     var e = !1
     return function () {
@@ -22817,8 +22837,8 @@ function zs(t, e, r, n) {
   t.on('close', function () {
     i = !0
   }),
-    void 0 === Ls && (Ls = ko),
-    Ls(t, { readable: e, writable: r }, function (t) {
+    void 0 === $s && ($s = Ho),
+    $s(t, { readable: e, writable: r }, function (t) {
       if (t) return n(t)
       ;(i = !0), n()
     })
@@ -22833,47 +22853,47 @@ function zs(t, e, r, n) {
           ? t.abort()
           : 'function' == typeof t.destroy
           ? t.destroy()
-          : void n(e || new Fs('pipe'))
+          : void n(e || new ea('pipe'))
       )
   }
 }
-function Ws(t) {
+function ia(t) {
   t()
 }
-function Hs(t, e) {
+function oa(t, e) {
   return t.pipe(e)
 }
-function Gs(t) {
-  return t.length ? ('function' != typeof t[t.length - 1] ? qs : t.pop()) : qs
+function sa(t) {
+  return t.length ? ('function' != typeof t[t.length - 1] ? ra : t.pop()) : ra
 }
-var Zs = function () {
+var aa = function () {
     for (var t = arguments.length, e = new Array(t), r = 0; r < t; r++)
       e[r] = arguments[r]
     var n,
-      i = Gs(e)
+      i = sa(e)
     if ((Array.isArray(e[0]) && (e = e[0]), e.length < 2))
-      throw new Us('streams')
+      throw new ta('streams')
     var o = e.map(function (t, r) {
       var s = r < e.length - 1
-      return zs(t, s, r > 0, function (t) {
-        n || (n = t), t && o.forEach(Ws), s || (o.forEach(Ws), i(n))
+      return na(t, s, r > 0, function (t) {
+        n || (n = t), t && o.forEach(ia), s || (o.forEach(ia), i(n))
       })
     })
-    return e.reduce(Hs)
+    return e.reduce(oa)
   },
-  Ks = U(function (t, e) {
-    ;((e = t.exports = no).Stream = e),
+  ua = tt(function (t, e) {
+    ;((e = t.exports = bo).Stream = e),
       (e.Readable = e),
-      (e.Writable = Ii),
-      (e.Duplex = Ri),
-      (e.Transform = Ss),
-      (e.PassThrough = js),
-      (e.finished = ko),
-      (e.pipeline = Zs)
+      (e.Writable = Zi),
+      (e.Duplex = Gi),
+      (e.Transform = Fs),
+      (e.PassThrough = Xs),
+      (e.finished = Ho),
+      (e.pipeline = aa)
   })
-const { Transform: Vs } = Ks
-var Js = (t) =>
-  class e extends Vs {
+const { Transform: ha } = ua
+var fa = (t) =>
+  class e extends ha {
     constructor(e, r, n, i, o) {
       super(o),
         (this._rate = e),
@@ -22935,9 +22955,9 @@ var Js = (t) =>
       return this._state.copy(t._state), (t._finalized = this._finalized), t
     }
   }
-const { Transform: $s } = Ks
-var Xs = (t) =>
-  class e extends $s {
+const { Transform: la } = ua
+var ca = (t) =>
+  class e extends la {
     constructor(e, r, n, i) {
       super(i),
         (this._rate = e),
@@ -22991,7 +23011,7 @@ var Xs = (t) =>
       return this._state.copy(t._state), (t._finalized = this._finalized), t
     }
   }
-const Ys = [
+const da = [
   1, 0, 32898, 0, 32906, 2147483648, 2147516416, 2147483648, 32907, 0,
   2147483649, 0, 2147516545, 2147483648, 32777, 2147483648, 138, 0, 136, 0,
   2147516425, 0, 2147483658, 0, 2147516555, 0, 139, 2147483648, 32905,
@@ -22999,7 +23019,7 @@ const Ys = [
   2147483658, 2147483648, 2147516545, 2147483648, 32896, 2147483648, 2147483649,
   0, 2147516424, 2147483648
 ]
-var Qs = function (t) {
+var pa = function (t) {
   for (let e = 0; e < 24; ++e) {
     const r = t[0] ^ t[10] ^ t[20] ^ t[30] ^ t[40],
       n = t[1] ^ t[11] ^ t[21] ^ t[31] ^ t[41],
@@ -23167,11 +23187,11 @@ var Qs = function (t) {
       (t[39] = Jt ^ (~Xt & dt)),
       (t[48] = Et ^ (~Rt & zt)),
       (t[49] = kt ^ (~It & Wt)),
-      (t[0] ^= Ys[2 * e]),
-      (t[1] ^= Ys[2 * e + 1])
+      (t[0] ^= da[2 * e]),
+      (t[1] ^= da[2 * e + 1])
   }
 }
-function ta() {
+function ma() {
   ;(this.state = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]),
@@ -23179,44 +23199,44 @@ function ta() {
     (this.count = 0),
     (this.squeezing = !1)
 }
-;(ta.prototype.initialize = function (t, e) {
+;(ma.prototype.initialize = function (t, e) {
   for (let t = 0; t < 50; ++t) this.state[t] = 0
   ;(this.blockSize = t / 8), (this.count = 0), (this.squeezing = !1)
 }),
-  (ta.prototype.absorb = function (t) {
+  (ma.prototype.absorb = function (t) {
     for (let e = 0; e < t.length; ++e)
       (this.state[~~(this.count / 4)] ^= t[e] << ((this.count % 4) * 8)),
         (this.count += 1),
-        this.count === this.blockSize && (Qs(this.state), (this.count = 0))
+        this.count === this.blockSize && (pa(this.state), (this.count = 0))
   }),
-  (ta.prototype.absorbLastFewBits = function (t) {
+  (ma.prototype.absorbLastFewBits = function (t) {
     ;(this.state[~~(this.count / 4)] ^= t << ((this.count % 4) * 8)),
-      0 != (128 & t) && this.count === this.blockSize - 1 && Qs(this.state),
+      0 != (128 & t) && this.count === this.blockSize - 1 && pa(this.state),
       (this.state[~~((this.blockSize - 1) / 4)] ^=
         128 << (((this.blockSize - 1) % 4) * 8)),
-      Qs(this.state),
+      pa(this.state),
       (this.count = 0),
       (this.squeezing = !0)
   }),
-  (ta.prototype.squeeze = function (t) {
+  (ma.prototype.squeeze = function (t) {
     this.squeezing || this.absorbLastFewBits(1)
     const e = Buffer.alloc(t)
     for (let r = 0; r < t; ++r)
       (e[r] =
         (this.state[~~(this.count / 4)] >>> ((this.count % 4) * 8)) & 255),
         (this.count += 1),
-        this.count === this.blockSize && (Qs(this.state), (this.count = 0))
+        this.count === this.blockSize && (pa(this.state), (this.count = 0))
     return e
   }),
-  (ta.prototype.copy = function (t) {
+  (ma.prototype.copy = function (t) {
     for (let e = 0; e < 50; ++e) t.state[e] = this.state[e]
     ;(t.blockSize = this.blockSize),
       (t.count = this.count),
       (t.squeezing = this.squeezing)
   })
-var ea = (function (t) {
-    const e = Js(t),
-      r = Xs(t)
+var va = (function (t) {
+    const e = fa(t),
+      r = ca(t)
     return function (t, n) {
       switch ('string' == typeof t ? t.toLowerCase() : t) {
         case 'keccak224':
@@ -23243,37 +23263,37 @@ var ea = (function (t) {
           throw new Error('Invald algorithm: ' + t)
       }
     }
-  })(ta),
-  ra = Zn,
-  na = ra.createHashFunction(function () {
-    return ea('keccak224')
+  })(ma),
+  ga = ai,
+  ya = ga.createHashFunction(function () {
+    return va('keccak224')
   }),
-  ia = ra.createHashFunction(function () {
-    return ea('keccak256')
+  ba = ga.createHashFunction(function () {
+    return va('keccak256')
   }),
-  oa = ra.createHashFunction(function () {
-    return ea('keccak384')
+  wa = ga.createHashFunction(function () {
+    return va('keccak384')
   }),
-  sa = ra.createHashFunction(function () {
-    return ea('keccak512')
+  Ma = ga.createHashFunction(function () {
+    return va('keccak512')
   }),
-  aa = /*#__PURE__*/ Object.defineProperty(
-    { keccak224: na, keccak256: ia, keccak384: oa, keccak512: sa },
+  _a = /*#__PURE__*/ Object.defineProperty(
+    { keccak224: ya, keccak256: ba, keccak384: wa, keccak512: Ma },
     '__esModule',
     { value: !0 }
   ),
-  ua = Un.Buffer,
-  ha = Ks.Transform
-function fa(t) {
-  ha.call(this),
-    (this._block = ua.allocUnsafe(t)),
+  Aa = ti.Buffer,
+  Pa = ua.Transform
+function Sa(t) {
+  Pa.call(this),
+    (this._block = Aa.allocUnsafe(t)),
     (this._blockSize = t),
     (this._blockOffset = 0),
     (this._length = [0, 0, 0, 0]),
     (this._finalized = !1)
 }
-he(fa, ha),
-  (fa.prototype._transform = function (t, e, r) {
+Pe(Sa, Pa),
+  (Sa.prototype._transform = function (t, e, r) {
     var n = null
     try {
       this.update(t, e)
@@ -23282,7 +23302,7 @@ he(fa, ha),
     }
     r(n)
   }),
-  (fa.prototype._flush = function (t) {
+  (Sa.prototype._flush = function (t) {
     var e = null
     try {
       this.push(this.digest())
@@ -23291,16 +23311,16 @@ he(fa, ha),
     }
     t(e)
   }),
-  (fa.prototype.update = function (t, e) {
+  (Sa.prototype.update = function (t, e) {
     if (
       ((function (t, e) {
-        if (!ua.isBuffer(t) && 'string' != typeof t)
+        if (!Aa.isBuffer(t) && 'string' != typeof t)
           throw new TypeError('Data must be a string or a buffer')
       })(t),
       this._finalized)
     )
       throw new Error('Digest already called')
-    ua.isBuffer(t) || (t = ua.from(t, e))
+    Aa.isBuffer(t) || (t = Aa.from(t, e))
     for (
       var r = this._block, n = 0;
       this._blockOffset + t.length - n >= this._blockSize;
@@ -23316,10 +23336,10 @@ he(fa, ha),
           (this._length[o] -= 4294967296 * s)
     return this
   }),
-  (fa.prototype._update = function () {
+  (Sa.prototype._update = function () {
     throw new Error('_update is not implemented')
   }),
-  (fa.prototype.digest = function (t) {
+  (Sa.prototype.digest = function (t) {
     if (this._finalized) throw new Error('Digest already called')
     this._finalized = !0
     var e = this._digest()
@@ -23329,132 +23349,132 @@ he(fa, ha),
     for (var r = 0; r < 4; ++r) this._length[r] = 0
     return e
   }),
-  (fa.prototype._digest = function () {
+  (Sa.prototype._digest = function () {
     throw new Error('_digest is not implemented')
   })
-var la = fa,
-  ca = Un.Buffer,
-  da = new Array(16)
-function pa() {
-  la.call(this, 64),
+var Ta = Sa,
+  xa = ti.Buffer,
+  Ea = new Array(16)
+function ka() {
+  Ta.call(this, 64),
     (this._a = 1732584193),
     (this._b = 4023233417),
     (this._c = 2562383102),
     (this._d = 271733878)
 }
-function ma(t, e) {
+function Ra(t, e) {
   return (t << e) | (t >>> (32 - e))
 }
-function va(t, e, r, n, i, o, s) {
-  return (ma((t + ((e & r) | (~e & n)) + i + o) | 0, s) + e) | 0
+function Ia(t, e, r, n, i, o, s) {
+  return (Ra((t + ((e & r) | (~e & n)) + i + o) | 0, s) + e) | 0
 }
-function ga(t, e, r, n, i, o, s) {
-  return (ma((t + ((e & n) | (r & ~n)) + i + o) | 0, s) + e) | 0
+function Ba(t, e, r, n, i, o, s) {
+  return (Ra((t + ((e & n) | (r & ~n)) + i + o) | 0, s) + e) | 0
 }
-function ya(t, e, r, n, i, o, s) {
-  return (ma((t + (e ^ r ^ n) + i + o) | 0, s) + e) | 0
+function Oa(t, e, r, n, i, o, s) {
+  return (Ra((t + (e ^ r ^ n) + i + o) | 0, s) + e) | 0
 }
-function ba(t, e, r, n, i, o, s) {
-  return (ma((t + (r ^ (e | ~n)) + i + o) | 0, s) + e) | 0
+function Ca(t, e, r, n, i, o, s) {
+  return (Ra((t + (r ^ (e | ~n)) + i + o) | 0, s) + e) | 0
 }
-he(pa, la),
-  (pa.prototype._update = function () {
-    for (var t = da, e = 0; e < 16; ++e) t[e] = this._block.readInt32LE(4 * e)
+Pe(ka, Ta),
+  (ka.prototype._update = function () {
+    for (var t = Ea, e = 0; e < 16; ++e) t[e] = this._block.readInt32LE(4 * e)
     var r = this._a,
       n = this._b,
       i = this._c,
       o = this._d
-    ;(r = va(r, n, i, o, t[0], 3614090360, 7)),
-      (o = va(o, r, n, i, t[1], 3905402710, 12)),
-      (i = va(i, o, r, n, t[2], 606105819, 17)),
-      (n = va(n, i, o, r, t[3], 3250441966, 22)),
-      (r = va(r, n, i, o, t[4], 4118548399, 7)),
-      (o = va(o, r, n, i, t[5], 1200080426, 12)),
-      (i = va(i, o, r, n, t[6], 2821735955, 17)),
-      (n = va(n, i, o, r, t[7], 4249261313, 22)),
-      (r = va(r, n, i, o, t[8], 1770035416, 7)),
-      (o = va(o, r, n, i, t[9], 2336552879, 12)),
-      (i = va(i, o, r, n, t[10], 4294925233, 17)),
-      (n = va(n, i, o, r, t[11], 2304563134, 22)),
-      (r = va(r, n, i, o, t[12], 1804603682, 7)),
-      (o = va(o, r, n, i, t[13], 4254626195, 12)),
-      (i = va(i, o, r, n, t[14], 2792965006, 17)),
-      (r = ga(
+    ;(r = Ia(r, n, i, o, t[0], 3614090360, 7)),
+      (o = Ia(o, r, n, i, t[1], 3905402710, 12)),
+      (i = Ia(i, o, r, n, t[2], 606105819, 17)),
+      (n = Ia(n, i, o, r, t[3], 3250441966, 22)),
+      (r = Ia(r, n, i, o, t[4], 4118548399, 7)),
+      (o = Ia(o, r, n, i, t[5], 1200080426, 12)),
+      (i = Ia(i, o, r, n, t[6], 2821735955, 17)),
+      (n = Ia(n, i, o, r, t[7], 4249261313, 22)),
+      (r = Ia(r, n, i, o, t[8], 1770035416, 7)),
+      (o = Ia(o, r, n, i, t[9], 2336552879, 12)),
+      (i = Ia(i, o, r, n, t[10], 4294925233, 17)),
+      (n = Ia(n, i, o, r, t[11], 2304563134, 22)),
+      (r = Ia(r, n, i, o, t[12], 1804603682, 7)),
+      (o = Ia(o, r, n, i, t[13], 4254626195, 12)),
+      (i = Ia(i, o, r, n, t[14], 2792965006, 17)),
+      (r = Ba(
         r,
-        (n = va(n, i, o, r, t[15], 1236535329, 22)),
+        (n = Ia(n, i, o, r, t[15], 1236535329, 22)),
         i,
         o,
         t[1],
         4129170786,
         5
       )),
-      (o = ga(o, r, n, i, t[6], 3225465664, 9)),
-      (i = ga(i, o, r, n, t[11], 643717713, 14)),
-      (n = ga(n, i, o, r, t[0], 3921069994, 20)),
-      (r = ga(r, n, i, o, t[5], 3593408605, 5)),
-      (o = ga(o, r, n, i, t[10], 38016083, 9)),
-      (i = ga(i, o, r, n, t[15], 3634488961, 14)),
-      (n = ga(n, i, o, r, t[4], 3889429448, 20)),
-      (r = ga(r, n, i, o, t[9], 568446438, 5)),
-      (o = ga(o, r, n, i, t[14], 3275163606, 9)),
-      (i = ga(i, o, r, n, t[3], 4107603335, 14)),
-      (n = ga(n, i, o, r, t[8], 1163531501, 20)),
-      (r = ga(r, n, i, o, t[13], 2850285829, 5)),
-      (o = ga(o, r, n, i, t[2], 4243563512, 9)),
-      (i = ga(i, o, r, n, t[7], 1735328473, 14)),
-      (r = ya(
+      (o = Ba(o, r, n, i, t[6], 3225465664, 9)),
+      (i = Ba(i, o, r, n, t[11], 643717713, 14)),
+      (n = Ba(n, i, o, r, t[0], 3921069994, 20)),
+      (r = Ba(r, n, i, o, t[5], 3593408605, 5)),
+      (o = Ba(o, r, n, i, t[10], 38016083, 9)),
+      (i = Ba(i, o, r, n, t[15], 3634488961, 14)),
+      (n = Ba(n, i, o, r, t[4], 3889429448, 20)),
+      (r = Ba(r, n, i, o, t[9], 568446438, 5)),
+      (o = Ba(o, r, n, i, t[14], 3275163606, 9)),
+      (i = Ba(i, o, r, n, t[3], 4107603335, 14)),
+      (n = Ba(n, i, o, r, t[8], 1163531501, 20)),
+      (r = Ba(r, n, i, o, t[13], 2850285829, 5)),
+      (o = Ba(o, r, n, i, t[2], 4243563512, 9)),
+      (i = Ba(i, o, r, n, t[7], 1735328473, 14)),
+      (r = Oa(
         r,
-        (n = ga(n, i, o, r, t[12], 2368359562, 20)),
+        (n = Ba(n, i, o, r, t[12], 2368359562, 20)),
         i,
         o,
         t[5],
         4294588738,
         4
       )),
-      (o = ya(o, r, n, i, t[8], 2272392833, 11)),
-      (i = ya(i, o, r, n, t[11], 1839030562, 16)),
-      (n = ya(n, i, o, r, t[14], 4259657740, 23)),
-      (r = ya(r, n, i, o, t[1], 2763975236, 4)),
-      (o = ya(o, r, n, i, t[4], 1272893353, 11)),
-      (i = ya(i, o, r, n, t[7], 4139469664, 16)),
-      (n = ya(n, i, o, r, t[10], 3200236656, 23)),
-      (r = ya(r, n, i, o, t[13], 681279174, 4)),
-      (o = ya(o, r, n, i, t[0], 3936430074, 11)),
-      (i = ya(i, o, r, n, t[3], 3572445317, 16)),
-      (n = ya(n, i, o, r, t[6], 76029189, 23)),
-      (r = ya(r, n, i, o, t[9], 3654602809, 4)),
-      (o = ya(o, r, n, i, t[12], 3873151461, 11)),
-      (i = ya(i, o, r, n, t[15], 530742520, 16)),
-      (r = ba(
+      (o = Oa(o, r, n, i, t[8], 2272392833, 11)),
+      (i = Oa(i, o, r, n, t[11], 1839030562, 16)),
+      (n = Oa(n, i, o, r, t[14], 4259657740, 23)),
+      (r = Oa(r, n, i, o, t[1], 2763975236, 4)),
+      (o = Oa(o, r, n, i, t[4], 1272893353, 11)),
+      (i = Oa(i, o, r, n, t[7], 4139469664, 16)),
+      (n = Oa(n, i, o, r, t[10], 3200236656, 23)),
+      (r = Oa(r, n, i, o, t[13], 681279174, 4)),
+      (o = Oa(o, r, n, i, t[0], 3936430074, 11)),
+      (i = Oa(i, o, r, n, t[3], 3572445317, 16)),
+      (n = Oa(n, i, o, r, t[6], 76029189, 23)),
+      (r = Oa(r, n, i, o, t[9], 3654602809, 4)),
+      (o = Oa(o, r, n, i, t[12], 3873151461, 11)),
+      (i = Oa(i, o, r, n, t[15], 530742520, 16)),
+      (r = Ca(
         r,
-        (n = ya(n, i, o, r, t[2], 3299628645, 23)),
+        (n = Oa(n, i, o, r, t[2], 3299628645, 23)),
         i,
         o,
         t[0],
         4096336452,
         6
       )),
-      (o = ba(o, r, n, i, t[7], 1126891415, 10)),
-      (i = ba(i, o, r, n, t[14], 2878612391, 15)),
-      (n = ba(n, i, o, r, t[5], 4237533241, 21)),
-      (r = ba(r, n, i, o, t[12], 1700485571, 6)),
-      (o = ba(o, r, n, i, t[3], 2399980690, 10)),
-      (i = ba(i, o, r, n, t[10], 4293915773, 15)),
-      (n = ba(n, i, o, r, t[1], 2240044497, 21)),
-      (r = ba(r, n, i, o, t[8], 1873313359, 6)),
-      (o = ba(o, r, n, i, t[15], 4264355552, 10)),
-      (i = ba(i, o, r, n, t[6], 2734768916, 15)),
-      (n = ba(n, i, o, r, t[13], 1309151649, 21)),
-      (r = ba(r, n, i, o, t[4], 4149444226, 6)),
-      (o = ba(o, r, n, i, t[11], 3174756917, 10)),
-      (i = ba(i, o, r, n, t[2], 718787259, 15)),
-      (n = ba(n, i, o, r, t[9], 3951481745, 21)),
+      (o = Ca(o, r, n, i, t[7], 1126891415, 10)),
+      (i = Ca(i, o, r, n, t[14], 2878612391, 15)),
+      (n = Ca(n, i, o, r, t[5], 4237533241, 21)),
+      (r = Ca(r, n, i, o, t[12], 1700485571, 6)),
+      (o = Ca(o, r, n, i, t[3], 2399980690, 10)),
+      (i = Ca(i, o, r, n, t[10], 4293915773, 15)),
+      (n = Ca(n, i, o, r, t[1], 2240044497, 21)),
+      (r = Ca(r, n, i, o, t[8], 1873313359, 6)),
+      (o = Ca(o, r, n, i, t[15], 4264355552, 10)),
+      (i = Ca(i, o, r, n, t[6], 2734768916, 15)),
+      (n = Ca(n, i, o, r, t[13], 1309151649, 21)),
+      (r = Ca(r, n, i, o, t[4], 4149444226, 6)),
+      (o = Ca(o, r, n, i, t[11], 3174756917, 10)),
+      (i = Ca(i, o, r, n, t[2], 718787259, 15)),
+      (n = Ca(n, i, o, r, t[9], 3951481745, 21)),
       (this._a = (this._a + r) | 0),
       (this._b = (this._b + n) | 0),
       (this._c = (this._c + i) | 0),
       (this._d = (this._d + o) | 0)
   }),
-  (pa.prototype._digest = function () {
+  (ka.prototype._digest = function () {
     ;(this._block[this._blockOffset++] = 128),
       this._blockOffset > 56 &&
         (this._block.fill(0, this._blockOffset, 64),
@@ -23464,7 +23484,7 @@ he(pa, la),
       this._block.writeUInt32LE(this._length[0], 56),
       this._block.writeUInt32LE(this._length[1], 60),
       this._update()
-    var t = ca.allocUnsafe(16)
+    var t = xa.allocUnsafe(16)
     return (
       t.writeInt32LE(this._a, 0),
       t.writeInt32LE(this._b, 4),
@@ -23473,64 +23493,64 @@ he(pa, la),
       t
     )
   })
-var wa = pa,
-  Ma = Pt.Buffer,
-  _a = new Array(16),
-  Aa = [
+var La = ka,
+  ja = Ut.Buffer,
+  Na = new Array(16),
+  Da = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6,
     15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13,
     11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9,
     7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13
   ],
-  Pa = [
+  Ua = [
     5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5,
     10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10,
     0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10,
     4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11
   ],
-  Sa = [
+  Fa = [
     11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9,
     7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13,
     6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9,
     15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6
   ],
-  Ta = [
+  qa = [
     8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8,
     9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14,
     13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5,
     12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
   ],
-  xa = [0, 1518500249, 1859775393, 2400959708, 2840853838],
-  Ea = [1352829926, 1548603684, 1836072691, 2053994217, 0]
-function ka() {
-  la.call(this, 64),
+  za = [0, 1518500249, 1859775393, 2400959708, 2840853838],
+  Wa = [1352829926, 1548603684, 1836072691, 2053994217, 0]
+function Ha() {
+  Ta.call(this, 64),
     (this._a = 1732584193),
     (this._b = 4023233417),
     (this._c = 2562383102),
     (this._d = 271733878),
     (this._e = 3285377520)
 }
-function Ra(t, e) {
+function Ga(t, e) {
   return (t << e) | (t >>> (32 - e))
 }
-function Ia(t, e, r, n, i, o, s, a) {
-  return (Ra((t + (e ^ r ^ n) + o + s) | 0, a) + i) | 0
+function Za(t, e, r, n, i, o, s, a) {
+  return (Ga((t + (e ^ r ^ n) + o + s) | 0, a) + i) | 0
 }
-function Ba(t, e, r, n, i, o, s, a) {
-  return (Ra((t + ((e & r) | (~e & n)) + o + s) | 0, a) + i) | 0
+function Ka(t, e, r, n, i, o, s, a) {
+  return (Ga((t + ((e & r) | (~e & n)) + o + s) | 0, a) + i) | 0
 }
-function Oa(t, e, r, n, i, o, s, a) {
-  return (Ra((t + ((e | ~r) ^ n) + o + s) | 0, a) + i) | 0
+function Va(t, e, r, n, i, o, s, a) {
+  return (Ga((t + ((e | ~r) ^ n) + o + s) | 0, a) + i) | 0
 }
-function Ca(t, e, r, n, i, o, s, a) {
-  return (Ra((t + ((e & n) | (r & ~n)) + o + s) | 0, a) + i) | 0
+function Ja(t, e, r, n, i, o, s, a) {
+  return (Ga((t + ((e & n) | (r & ~n)) + o + s) | 0, a) + i) | 0
 }
-function La(t, e, r, n, i, o, s, a) {
-  return (Ra((t + (e ^ (r | ~n)) + o + s) | 0, a) + i) | 0
+function $a(t, e, r, n, i, o, s, a) {
+  return (Ga((t + (e ^ (r | ~n)) + o + s) | 0, a) + i) | 0
 }
-he(ka, la),
-  (ka.prototype._update = function () {
-    for (var t = _a, e = 0; e < 16; ++e) t[e] = this._block.readInt32LE(4 * e)
+Pe(Ha, Ta),
+  (Ha.prototype._update = function () {
+    for (var t = Na, e = 0; e < 16; ++e) t[e] = this._block.readInt32LE(4 * e)
     for (
       var r = 0 | this._a,
         n = 0 | this._b,
@@ -23548,27 +23568,27 @@ he(ka, la),
     ) {
       var d, p
       c < 16
-        ? ((d = Ia(r, n, i, o, s, t[Aa[c]], xa[0], Sa[c])),
-          (p = La(a, u, h, f, l, t[Pa[c]], Ea[0], Ta[c])))
+        ? ((d = Za(r, n, i, o, s, t[Da[c]], za[0], Fa[c])),
+          (p = $a(a, u, h, f, l, t[Ua[c]], Wa[0], qa[c])))
         : c < 32
-        ? ((d = Ba(r, n, i, o, s, t[Aa[c]], xa[1], Sa[c])),
-          (p = Ca(a, u, h, f, l, t[Pa[c]], Ea[1], Ta[c])))
+        ? ((d = Ka(r, n, i, o, s, t[Da[c]], za[1], Fa[c])),
+          (p = Ja(a, u, h, f, l, t[Ua[c]], Wa[1], qa[c])))
         : c < 48
-        ? ((d = Oa(r, n, i, o, s, t[Aa[c]], xa[2], Sa[c])),
-          (p = Oa(a, u, h, f, l, t[Pa[c]], Ea[2], Ta[c])))
+        ? ((d = Va(r, n, i, o, s, t[Da[c]], za[2], Fa[c])),
+          (p = Va(a, u, h, f, l, t[Ua[c]], Wa[2], qa[c])))
         : c < 64
-        ? ((d = Ca(r, n, i, o, s, t[Aa[c]], xa[3], Sa[c])),
-          (p = Ba(a, u, h, f, l, t[Pa[c]], Ea[3], Ta[c])))
-        : ((d = La(r, n, i, o, s, t[Aa[c]], xa[4], Sa[c])),
-          (p = Ia(a, u, h, f, l, t[Pa[c]], Ea[4], Ta[c]))),
+        ? ((d = Ja(r, n, i, o, s, t[Da[c]], za[3], Fa[c])),
+          (p = Ka(a, u, h, f, l, t[Ua[c]], Wa[3], qa[c])))
+        : ((d = $a(r, n, i, o, s, t[Da[c]], za[4], Fa[c])),
+          (p = Za(a, u, h, f, l, t[Ua[c]], Wa[4], qa[c]))),
         (r = s),
         (s = o),
-        (o = Ra(i, 10)),
+        (o = Ga(i, 10)),
         (i = n),
         (n = d),
         (a = l),
         (l = f),
-        (f = Ra(h, 10)),
+        (f = Ga(h, 10)),
         (h = u),
         (u = p)
     }
@@ -23579,7 +23599,7 @@ he(ka, la),
       (this._e = (this._a + n + h) | 0),
       (this._a = m)
   }),
-  (ka.prototype._digest = function () {
+  (Ha.prototype._digest = function () {
     ;(this._block[this._blockOffset++] = 128),
       this._blockOffset > 56 &&
         (this._block.fill(0, this._blockOffset, 64),
@@ -23589,7 +23609,7 @@ he(ka, la),
       this._block.writeUInt32LE(this._length[0], 56),
       this._block.writeUInt32LE(this._length[1], 60),
       this._update()
-    var t = Ma.alloc ? Ma.alloc(20) : new Ma(20)
+    var t = ja.alloc ? ja.alloc(20) : new ja(20)
     return (
       t.writeInt32LE(this._a, 0),
       t.writeInt32LE(this._b, 4),
@@ -23599,16 +23619,16 @@ he(ka, la),
       t
     )
   })
-var ja = ka,
-  Na = Un.Buffer
-function Da(t, e) {
-  ;(this._block = Na.alloc(t)),
+var Xa = Ha,
+  Ya = ti.Buffer
+function Qa(t, e) {
+  ;(this._block = Ya.alloc(t)),
     (this._finalSize = e),
     (this._blockSize = t),
     (this._len = 0)
 }
-;(Da.prototype.update = function (t, e) {
-  'string' == typeof t && (t = Na.from(t, (e = e || 'utf8')))
+;(Qa.prototype.update = function (t, e) {
+  'string' == typeof t && (t = Ya.from(t, (e = e || 'utf8')))
   for (
     var r = this._block,
       n = this._blockSize,
@@ -23624,7 +23644,7 @@ function Da(t, e) {
   }
   return (this._len += i), this
 }),
-  (Da.prototype.digest = function (t) {
+  (Qa.prototype.digest = function (t) {
     var e = this._len % this._blockSize
     ;(this._block[e] = 128),
       this._block.fill(0, e + 1),
@@ -23640,28 +23660,28 @@ function Da(t, e) {
     var i = this._hash()
     return t ? i.toString(t) : i
   }),
-  (Da.prototype._update = function () {
+  (Qa.prototype._update = function () {
     throw new Error('_update must be implemented by subclass')
   })
-var Ua = Da,
-  Fa = Un.Buffer,
-  qa = [1518500249, 1859775393, -1894007588, -899497514],
-  za = new Array(80)
-function Wa() {
-  this.init(), (this._w = za), Ua.call(this, 64, 56)
+var tu = Qa,
+  eu = ti.Buffer,
+  ru = [1518500249, 1859775393, -1894007588, -899497514],
+  nu = new Array(80)
+function iu() {
+  this.init(), (this._w = nu), tu.call(this, 64, 56)
 }
-function Ha(t) {
+function ou(t) {
   return (t << 30) | (t >>> 2)
 }
-function Ga(t, e, r, n) {
+function su(t, e, r, n) {
   return 0 === t
     ? (e & r) | (~e & n)
     : 2 === t
     ? (e & r) | (e & n) | (r & n)
     : e ^ r ^ n
 }
-he(Wa, Ua),
-  (Wa.prototype.init = function () {
+Pe(iu, tu),
+  (iu.prototype.init = function () {
     return (
       (this._a = 1732584193),
       (this._b = 4023233417),
@@ -23671,7 +23691,7 @@ he(Wa, Ua),
       this
     )
   }),
-  (Wa.prototype._update = function (t) {
+  (iu.prototype._update = function (t) {
     for (
       var e,
         r = this._w,
@@ -23690,8 +23710,8 @@ he(Wa, Ua),
       var f = ~~(h / 20),
         l =
           0 |
-          ((((e = n) << 5) | (e >>> 27)) + Ga(f, i, o, s) + a + r[h] + qa[f])
-      ;(a = s), (s = o), (o = Ha(i)), (i = n), (n = l)
+          ((((e = n) << 5) | (e >>> 27)) + su(f, i, o, s) + a + r[h] + ru[f])
+      ;(a = s), (s = o), (o = ou(i)), (i = n), (n = l)
     }
     ;(this._a = (n + this._a) | 0),
       (this._b = (i + this._b) | 0),
@@ -23699,8 +23719,8 @@ he(Wa, Ua),
       (this._d = (s + this._d) | 0),
       (this._e = (a + this._e) | 0)
   }),
-  (Wa.prototype._hash = function () {
-    var t = Fa.allocUnsafe(20)
+  (iu.prototype._hash = function () {
+    var t = eu.allocUnsafe(20)
     return (
       t.writeInt32BE(0 | this._a, 0),
       t.writeInt32BE(0 | this._b, 4),
@@ -23710,28 +23730,28 @@ he(Wa, Ua),
       t
     )
   })
-var Za = Wa,
-  Ka = Un.Buffer,
-  Va = [1518500249, 1859775393, -1894007588, -899497514],
-  Ja = new Array(80)
-function $a() {
-  this.init(), (this._w = Ja), Ua.call(this, 64, 56)
+var au = iu,
+  uu = ti.Buffer,
+  hu = [1518500249, 1859775393, -1894007588, -899497514],
+  fu = new Array(80)
+function lu() {
+  this.init(), (this._w = fu), tu.call(this, 64, 56)
 }
-function Xa(t) {
+function cu(t) {
   return (t << 5) | (t >>> 27)
 }
-function Ya(t) {
+function du(t) {
   return (t << 30) | (t >>> 2)
 }
-function Qa(t, e, r, n) {
+function pu(t, e, r, n) {
   return 0 === t
     ? (e & r) | (~e & n)
     : 2 === t
     ? (e & r) | (e & n) | (r & n)
     : e ^ r ^ n
 }
-he($a, Ua),
-  ($a.prototype.init = function () {
+Pe(lu, tu),
+  (lu.prototype.init = function () {
     return (
       (this._a = 1732584193),
       (this._b = 4023233417),
@@ -23741,7 +23761,7 @@ he($a, Ua),
       this
     )
   }),
-  ($a.prototype._update = function (t) {
+  (lu.prototype._update = function (t) {
     for (
       var e,
         r = this._w,
@@ -23760,8 +23780,8 @@ he($a, Ua),
         ((e = r[u - 3] ^ r[u - 8] ^ r[u - 14] ^ r[u - 16]) << 1) | (e >>> 31)
     for (var h = 0; h < 80; ++h) {
       var f = ~~(h / 20),
-        l = (Xa(n) + Qa(f, i, o, s) + a + r[h] + Va[f]) | 0
-      ;(a = s), (s = o), (o = Ya(i)), (i = n), (n = l)
+        l = (cu(n) + pu(f, i, o, s) + a + r[h] + hu[f]) | 0
+      ;(a = s), (s = o), (o = du(i)), (i = n), (n = l)
     }
     ;(this._a = (n + this._a) | 0),
       (this._b = (i + this._b) | 0),
@@ -23769,8 +23789,8 @@ he($a, Ua),
       (this._d = (s + this._d) | 0),
       (this._e = (a + this._e) | 0)
   }),
-  ($a.prototype._hash = function () {
-    var t = Ka.allocUnsafe(20)
+  (lu.prototype._hash = function () {
+    var t = uu.allocUnsafe(20)
     return (
       t.writeInt32BE(0 | this._a, 0),
       t.writeInt32BE(0 | this._b, 4),
@@ -23780,9 +23800,9 @@ he($a, Ua),
       t
     )
   })
-var tu = $a,
-  eu = Un.Buffer,
-  ru = [
+var mu = lu,
+  vu = ti.Buffer,
+  gu = [
     1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993,
     2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987,
     1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774,
@@ -23795,33 +23815,33 @@ var tu = $a,
     1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424,
     2428436474, 2756734187, 3204031479, 3329325298
   ],
-  nu = new Array(64)
-function iu() {
-  this.init(), (this._w = nu), Ua.call(this, 64, 56)
+  yu = new Array(64)
+function bu() {
+  this.init(), (this._w = yu), tu.call(this, 64, 56)
 }
-function ou(t, e, r) {
+function wu(t, e, r) {
   return r ^ (t & (e ^ r))
 }
-function su(t, e, r) {
+function Mu(t, e, r) {
   return (t & e) | (r & (t | e))
 }
-function au(t) {
+function _u(t) {
   return (
     ((t >>> 2) | (t << 30)) ^
     ((t >>> 13) | (t << 19)) ^
     ((t >>> 22) | (t << 10))
   )
 }
-function uu(t) {
+function Au(t) {
   return (
     ((t >>> 6) | (t << 26)) ^ ((t >>> 11) | (t << 21)) ^ ((t >>> 25) | (t << 7))
   )
 }
-function hu(t) {
+function Pu(t) {
   return ((t >>> 7) | (t << 25)) ^ ((t >>> 18) | (t << 14)) ^ (t >>> 3)
 }
-he(iu, Ua),
-  (iu.prototype.init = function () {
+Pe(bu, tu),
+  (bu.prototype.init = function () {
     return (
       (this._a = 1779033703),
       (this._b = 3144134277),
@@ -23834,7 +23854,7 @@ he(iu, Ua),
       this
     )
   }),
-  (iu.prototype._update = function (t) {
+  (bu.prototype._update = function (t) {
     for (
       var e,
         r = this._w,
@@ -23858,11 +23878,11 @@ he(iu, Ua),
           ((e >>> 19) | (e << 13)) ^
           (e >>> 10)) +
           r[l - 7] +
-          hu(r[l - 15]) +
+          Pu(r[l - 15]) +
           r[l - 16])
     for (var c = 0; c < 64; ++c) {
-      var d = (f + uu(a) + ou(a, u, h) + ru[c] + r[c]) | 0,
-        p = (au(n) + su(n, i, o)) | 0
+      var d = (f + Au(a) + wu(a, u, h) + gu[c] + r[c]) | 0,
+        p = (_u(n) + Mu(n, i, o)) | 0
       ;(f = h),
         (h = u),
         (u = a),
@@ -23881,8 +23901,8 @@ he(iu, Ua),
       (this._g = (h + this._g) | 0),
       (this._h = (f + this._h) | 0)
   }),
-  (iu.prototype._hash = function () {
-    var t = eu.allocUnsafe(32)
+  (bu.prototype._hash = function () {
+    var t = vu.allocUnsafe(32)
     return (
       t.writeInt32BE(this._a, 0),
       t.writeInt32BE(this._b, 4),
@@ -23895,14 +23915,14 @@ he(iu, Ua),
       t
     )
   })
-var fu = iu,
-  lu = Un.Buffer,
-  cu = new Array(64)
-function du() {
-  this.init(), (this._w = cu), Ua.call(this, 64, 56)
+var Su = bu,
+  Tu = ti.Buffer,
+  xu = new Array(64)
+function Eu() {
+  this.init(), (this._w = xu), tu.call(this, 64, 56)
 }
-he(du, fu),
-  (du.prototype.init = function () {
+Pe(Eu, Su),
+  (Eu.prototype.init = function () {
     return (
       (this._a = 3238371032),
       (this._b = 914150663),
@@ -23915,8 +23935,8 @@ he(du, fu),
       this
     )
   }),
-  (du.prototype._hash = function () {
-    var t = lu.allocUnsafe(28)
+  (Eu.prototype._hash = function () {
+    var t = Tu.allocUnsafe(28)
     return (
       t.writeInt32BE(this._a, 0),
       t.writeInt32BE(this._b, 4),
@@ -23928,9 +23948,9 @@ he(du, fu),
       t
     )
   })
-var pu = du,
-  mu = Un.Buffer,
-  vu = [
+var ku = Eu,
+  Ru = ti.Buffer,
+  Iu = [
     1116352408, 3609767458, 1899447441, 602891725, 3049323471, 3964484399,
     3921009573, 2173295548, 961987163, 4081628472, 1508970993, 3053834265,
     2453635748, 2937671579, 2870763221, 3664609560, 3624381080, 2734883394,
@@ -23959,49 +23979,49 @@ var pu = du,
     1126000580, 2618297676, 1288033470, 3409855158, 1501505948, 4234509866,
     1607167915, 987167468, 1816402316, 1246189591
   ],
-  gu = new Array(160)
-function yu() {
-  this.init(), (this._w = gu), Ua.call(this, 128, 112)
+  Bu = new Array(160)
+function Ou() {
+  this.init(), (this._w = Bu), tu.call(this, 128, 112)
 }
-function bu(t, e, r) {
+function Cu(t, e, r) {
   return r ^ (t & (e ^ r))
 }
-function wu(t, e, r) {
+function Lu(t, e, r) {
   return (t & e) | (r & (t | e))
 }
-function Mu(t, e) {
+function ju(t, e) {
   return (
     ((t >>> 28) | (e << 4)) ^ ((e >>> 2) | (t << 30)) ^ ((e >>> 7) | (t << 25))
   )
 }
-function _u(t, e) {
+function Nu(t, e) {
   return (
     ((t >>> 14) | (e << 18)) ^
     ((t >>> 18) | (e << 14)) ^
     ((e >>> 9) | (t << 23))
   )
 }
-function Au(t, e) {
+function Du(t, e) {
   return ((t >>> 1) | (e << 31)) ^ ((t >>> 8) | (e << 24)) ^ (t >>> 7)
 }
-function Pu(t, e) {
+function Uu(t, e) {
   return (
     ((t >>> 1) | (e << 31)) ^ ((t >>> 8) | (e << 24)) ^ ((t >>> 7) | (e << 25))
   )
 }
-function Su(t, e) {
+function Fu(t, e) {
   return ((t >>> 19) | (e << 13)) ^ ((e >>> 29) | (t << 3)) ^ (t >>> 6)
 }
-function Tu(t, e) {
+function qu(t, e) {
   return (
     ((t >>> 19) | (e << 13)) ^ ((e >>> 29) | (t << 3)) ^ ((t >>> 6) | (e << 26))
   )
 }
-function xu(t, e) {
+function zu(t, e) {
   return t >>> 0 < e >>> 0 ? 1 : 0
 }
-he(yu, Ua),
-  (yu.prototype.init = function () {
+Pe(Ou, tu),
+  (Ou.prototype.init = function () {
     return (
       (this._ah = 1779033703),
       (this._bh = 3144134277),
@@ -24022,7 +24042,7 @@ he(yu, Ua),
       this
     )
   }),
-  (yu.prototype._update = function (t) {
+  (Ou.prototype._update = function (t) {
     for (
       var e = this._w,
         r = 0 | this._ah,
@@ -24049,61 +24069,61 @@ he(yu, Ua),
     for (; y < 160; y += 2) {
       var b = e[y - 30],
         w = e[y - 30 + 1],
-        M = Au(b, w),
-        _ = Pu(w, b),
-        A = Su((b = e[y - 4]), (w = e[y - 4 + 1])),
-        P = Tu(w, b),
+        M = Du(b, w),
+        _ = Uu(w, b),
+        A = Fu((b = e[y - 4]), (w = e[y - 4 + 1])),
+        P = qu(w, b),
         S = e[y - 32],
         T = e[y - 32 + 1],
         x = (_ + e[y - 14 + 1]) | 0,
-        E = (M + e[y - 14] + xu(x, _)) | 0
+        E = (M + e[y - 14] + zu(x, _)) | 0
       ;(E =
-        ((E = (E + A + xu((x = (x + P) | 0), P)) | 0) +
+        ((E = (E + A + zu((x = (x + P) | 0), P)) | 0) +
           S +
-          xu((x = (x + T) | 0), T)) |
+          zu((x = (x + T) | 0), T)) |
         0),
         (e[y] = E),
         (e[y + 1] = x)
     }
     for (var k = 0; k < 160; k += 2) {
       ;(E = e[k]), (x = e[k + 1])
-      var R = wu(r, n, i),
-        I = wu(f, l, c),
-        B = Mu(r, f),
-        O = Mu(f, r),
-        C = _u(s, p),
-        L = _u(p, s),
-        j = vu[k],
-        N = vu[k + 1],
-        D = bu(s, a, u),
-        U = bu(p, m, v),
+      var R = Lu(r, n, i),
+        I = Lu(f, l, c),
+        B = ju(r, f),
+        O = ju(f, r),
+        C = Nu(s, p),
+        L = Nu(p, s),
+        j = Iu[k],
+        N = Iu[k + 1],
+        D = Cu(s, a, u),
+        U = Cu(p, m, v),
         F = (g + L) | 0,
-        q = (h + C + xu(F, g)) | 0
+        q = (h + C + zu(F, g)) | 0
       q =
         ((q =
-          ((q = (q + D + xu((F = (F + U) | 0), U)) | 0) +
+          ((q = (q + D + zu((F = (F + U) | 0), U)) | 0) +
             j +
-            xu((F = (F + N) | 0), N)) |
+            zu((F = (F + N) | 0), N)) |
           0) +
           E +
-          xu((F = (F + x) | 0), x)) |
+          zu((F = (F + x) | 0), x)) |
         0
       var z = (O + I) | 0,
-        W = (B + R + xu(z, O)) | 0
+        W = (B + R + zu(z, O)) | 0
       ;(h = u),
         (g = v),
         (u = a),
         (v = m),
         (a = s),
         (m = p),
-        (s = (o + q + xu((p = (d + F) | 0), d)) | 0),
+        (s = (o + q + zu((p = (d + F) | 0), d)) | 0),
         (o = i),
         (d = c),
         (i = n),
         (c = l),
         (n = r),
         (l = f),
-        (r = (q + W + xu((f = (F + z) | 0), F)) | 0)
+        (r = (q + W + zu((f = (F + z) | 0), F)) | 0)
     }
     ;(this._al = (this._al + f) | 0),
       (this._bl = (this._bl + l) | 0),
@@ -24113,17 +24133,17 @@ he(yu, Ua),
       (this._fl = (this._fl + m) | 0),
       (this._gl = (this._gl + v) | 0),
       (this._hl = (this._hl + g) | 0),
-      (this._ah = (this._ah + r + xu(this._al, f)) | 0),
-      (this._bh = (this._bh + n + xu(this._bl, l)) | 0),
-      (this._ch = (this._ch + i + xu(this._cl, c)) | 0),
-      (this._dh = (this._dh + o + xu(this._dl, d)) | 0),
-      (this._eh = (this._eh + s + xu(this._el, p)) | 0),
-      (this._fh = (this._fh + a + xu(this._fl, m)) | 0),
-      (this._gh = (this._gh + u + xu(this._gl, v)) | 0),
-      (this._hh = (this._hh + h + xu(this._hl, g)) | 0)
+      (this._ah = (this._ah + r + zu(this._al, f)) | 0),
+      (this._bh = (this._bh + n + zu(this._bl, l)) | 0),
+      (this._ch = (this._ch + i + zu(this._cl, c)) | 0),
+      (this._dh = (this._dh + o + zu(this._dl, d)) | 0),
+      (this._eh = (this._eh + s + zu(this._el, p)) | 0),
+      (this._fh = (this._fh + a + zu(this._fl, m)) | 0),
+      (this._gh = (this._gh + u + zu(this._gl, v)) | 0),
+      (this._hh = (this._hh + h + zu(this._hl, g)) | 0)
   }),
-  (yu.prototype._hash = function () {
-    var t = mu.allocUnsafe(64)
+  (Ou.prototype._hash = function () {
+    var t = Ru.allocUnsafe(64)
     function e(e, r, n) {
       t.writeInt32BE(e, n), t.writeInt32BE(r, n + 4)
     }
@@ -24139,14 +24159,14 @@ he(yu, Ua),
       t
     )
   })
-var Eu = yu,
-  ku = Un.Buffer,
-  Ru = new Array(160)
-function Iu() {
-  this.init(), (this._w = Ru), Ua.call(this, 128, 112)
+var Wu = Ou,
+  Hu = ti.Buffer,
+  Gu = new Array(160)
+function Zu() {
+  this.init(), (this._w = Gu), tu.call(this, 128, 112)
 }
-he(Iu, Eu),
-  (Iu.prototype.init = function () {
+Pe(Zu, Wu),
+  (Zu.prototype.init = function () {
     return (
       (this._ah = 3418070365),
       (this._bh = 1654270250),
@@ -24167,8 +24187,8 @@ he(Iu, Eu),
       this
     )
   }),
-  (Iu.prototype._hash = function () {
-    var t = ku.allocUnsafe(48)
+  (Zu.prototype._hash = function () {
+    var t = Hu.allocUnsafe(48)
     function e(e, r, n) {
       t.writeInt32BE(e, n), t.writeInt32BE(r, n + 4)
     }
@@ -24182,33 +24202,33 @@ he(Iu, Eu),
       t
     )
   })
-var Bu = Iu,
-  Ou = U(function (t) {
+var Ku = Zu,
+  Vu = tt(function (t) {
     var e = (t.exports = function (t) {
       t = t.toLowerCase()
       var r = e[t]
       if (!r) throw new Error(t + ' is not supported (we accept pull requests)')
       return new r()
     })
-    ;(e.sha = Za),
-      (e.sha1 = tu),
-      (e.sha224 = pu),
-      (e.sha256 = fu),
-      (e.sha384 = Bu),
-      (e.sha512 = Eu)
+    ;(e.sha = au),
+      (e.sha1 = mu),
+      (e.sha224 = ku),
+      (e.sha256 = Su),
+      (e.sha384 = Ku),
+      (e.sha512 = Wu)
   }),
-  Cu = Lu
-function Lu(t) {
+  Ju = $u
+function $u(t) {
   if (t)
     return (function (t) {
-      for (var e in Lu.prototype) t[e] = Lu.prototype[e]
+      for (var e in $u.prototype) t[e] = $u.prototype[e]
       return t
     })(t)
 }
-function ju() {
-  Cu.call(this)
+function Xu() {
+  Ju.call(this)
 }
-;(Lu.prototype.on = Lu.prototype.addEventListener =
+;($u.prototype.on = $u.prototype.addEventListener =
   function (t, e) {
     return (
       (this._callbacks = this._callbacks || {}),
@@ -24216,7 +24236,7 @@ function ju() {
       this
     )
   }),
-  (Lu.prototype.once = function (t, e) {
+  ($u.prototype.once = function (t, e) {
     var r = this
     function n() {
       r.off(t, n), e.apply(this, arguments)
@@ -24225,10 +24245,10 @@ function ju() {
       (this._callbacks = this._callbacks || {}), (n.fn = e), this.on(t, n), this
     )
   }),
-  (Lu.prototype.off =
-    Lu.prototype.removeListener =
-    Lu.prototype.removeAllListeners =
-    Lu.prototype.removeEventListener =
+  ($u.prototype.off =
+    $u.prototype.removeListener =
+    $u.prototype.removeAllListeners =
+    $u.prototype.removeEventListener =
       function (t, e) {
         if (((this._callbacks = this._callbacks || {}), 0 == arguments.length))
           return (this._callbacks = {}), this
@@ -24243,7 +24263,7 @@ function ju() {
           }
         return this
       }),
-  (Lu.prototype.emit = function (t) {
+  ($u.prototype.emit = function (t) {
     this._callbacks = this._callbacks || {}
     var e = [].slice.call(arguments, 1),
       r = this._callbacks[t]
@@ -24252,16 +24272,16 @@ function ju() {
         r[n].apply(this, e)
     return this
   }),
-  (Lu.prototype.listeners = function (t) {
+  ($u.prototype.listeners = function (t) {
     return (this._callbacks = this._callbacks || {}), this._callbacks[t] || []
   }),
-  (Lu.prototype.hasListeners = function (t) {
+  ($u.prototype.hasListeners = function (t) {
     return !!this.listeners(t).length
   }),
-  (ju.prototype = new Cu())
-var Nu = ju
-;(ju.Stream = ju),
-  (ju.prototype.pipe = function (t, e) {
+  (Xu.prototype = new Ju())
+var Yu = Xu
+;(Xu.Stream = Xu),
+  (Xu.prototype.pipe = function (t, e) {
     var r = this
     function n(e) {
       t.writable && !1 === t.write(e) && r.pause && r.pause()
@@ -24305,11 +24325,11 @@ var Nu = ju
       t
     )
   })
-var Du = Un.Buffer,
-  Uu = Nu.Transform,
-  Fu = So.StringDecoder
-function qu(t) {
-  Uu.call(this),
+var Qu = ti.Buffer,
+  th = Yu.Transform,
+  eh = Fo.StringDecoder
+function rh(t) {
+  th.call(this),
     (this.hashMode = 'string' == typeof t),
     this.hashMode
       ? (this[t] = this._finalOrDigest)
@@ -24318,23 +24338,23 @@ function qu(t) {
     (this._decoder = null),
     (this._encoding = null)
 }
-he(qu, Uu),
-  (qu.prototype.update = function (t, e, r) {
-    'string' == typeof t && (t = Du.from(t, e))
+Pe(rh, th),
+  (rh.prototype.update = function (t, e, r) {
+    'string' == typeof t && (t = Qu.from(t, e))
     var n = this._update(t)
     return this.hashMode ? this : (r && (n = this._toString(n, r)), n)
   }),
-  (qu.prototype.setAutoPadding = function () {}),
-  (qu.prototype.getAuthTag = function () {
+  (rh.prototype.setAutoPadding = function () {}),
+  (rh.prototype.getAuthTag = function () {
     throw new Error('trying to get auth tag in unsupported state')
   }),
-  (qu.prototype.setAuthTag = function () {
+  (rh.prototype.setAuthTag = function () {
     throw new Error('trying to set auth tag in unsupported state')
   }),
-  (qu.prototype.setAAD = function () {
+  (rh.prototype.setAAD = function () {
     throw new Error('trying to set aad in unsupported state')
   }),
-  (qu.prototype._transform = function (t, e, r) {
+  (rh.prototype._transform = function (t, e, r) {
     var n
     try {
       this.hashMode ? this._update(t) : this.push(this._update(t))
@@ -24344,7 +24364,7 @@ he(qu, Uu),
       r(n)
     }
   }),
-  (qu.prototype._flush = function (t) {
+  (rh.prototype._flush = function (t) {
     var e
     try {
       this.push(this.__final())
@@ -24353,39 +24373,39 @@ he(qu, Uu),
     }
     t(e)
   }),
-  (qu.prototype._finalOrDigest = function (t) {
-    var e = this.__final() || Du.alloc(0)
+  (rh.prototype._finalOrDigest = function (t) {
+    var e = this.__final() || Qu.alloc(0)
     return t && (e = this._toString(e, t, !0)), e
   }),
-  (qu.prototype._toString = function (t, e, r) {
+  (rh.prototype._toString = function (t, e, r) {
     if (
-      (this._decoder || ((this._decoder = new Fu(e)), (this._encoding = e)),
+      (this._decoder || ((this._decoder = new eh(e)), (this._encoding = e)),
       this._encoding !== e)
     )
       throw new Error("can't switch encodings")
     var n = this._decoder.write(t)
     return r && (n += this._decoder.end()), n
   })
-var zu = qu
-function Wu(t) {
-  zu.call(this, 'digest'), (this._hash = t)
+var nh = rh
+function ih(t) {
+  nh.call(this, 'digest'), (this._hash = t)
 }
-he(Wu, zu),
-  (Wu.prototype._update = function (t) {
+Pe(ih, nh),
+  (ih.prototype._update = function (t) {
     this._hash.update(t)
   }),
-  (Wu.prototype._final = function () {
+  (ih.prototype._final = function () {
     return this._hash.digest()
   })
-var Hu = function (t) {
+var oh = function (t) {
     return 'md5' === (t = t.toLowerCase())
-      ? new wa()
+      ? new La()
       : 'rmd160' === t || 'ripemd160' === t
-      ? new ja()
-      : new Wu(Ou(t))
+      ? new Xa()
+      : new ih(Vu(t))
   },
-  Gu = aa,
-  Zu = U(function (t, e) {
+  sh = _a,
+  ah = tt(function (t, e) {
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.rlphash =
         e.ripemd160FromArray =
@@ -24401,15 +24421,15 @@ var Hu = function (t) {
         e.keccak =
           void 0),
       (e.keccak = function (t, e) {
-        switch ((void 0 === e && (e = 256), (0, Hn.assertIsBuffer)(t), e)) {
+        switch ((void 0 === e && (e = 256), (0, oi.assertIsBuffer)(t), e)) {
           case 224:
-            return (0, Gu.keccak224)(t)
+            return (0, sh.keccak224)(t)
           case 256:
-            return (0, Gu.keccak256)(t)
+            return (0, sh.keccak256)(t)
           case 384:
-            return (0, Gu.keccak384)(t)
+            return (0, sh.keccak384)(t)
           case 512:
-            return (0, Gu.keccak512)(t)
+            return (0, sh.keccak512)(t)
           default:
             throw new Error('Invald algorithm: keccak'.concat(e))
         }
@@ -24418,57 +24438,57 @@ var Hu = function (t) {
         return (0, e.keccak)(t)
       }),
       (e.keccakFromString = function (t, r) {
-        void 0 === r && (r = 256), (0, Hn.assertIsString)(t)
+        void 0 === r && (r = 256), (0, oi.assertIsString)(t)
         var n = Buffer.from(t, 'utf8')
         return (0, e.keccak)(n, r)
       }),
       (e.keccakFromHexString = function (t, r) {
         return (
           void 0 === r && (r = 256),
-          (0, Hn.assertIsHexString)(t),
-          (0, e.keccak)((0, Gn.toBuffer)(t), r)
+          (0, oi.assertIsHexString)(t),
+          (0, e.keccak)((0, si.toBuffer)(t), r)
         )
       }),
       (e.keccakFromArray = function (t, r) {
         return (
           void 0 === r && (r = 256),
-          (0, Hn.assertIsArray)(t),
-          (0, e.keccak)((0, Gn.toBuffer)(t), r)
+          (0, oi.assertIsArray)(t),
+          (0, e.keccak)((0, si.toBuffer)(t), r)
         )
       })
     var r = function (t) {
-      return (t = (0, Gn.toBuffer)(t)), Hu('sha256').update(t).digest()
+      return (t = (0, si.toBuffer)(t)), oh('sha256').update(t).digest()
     }
     ;(e.sha256 = function (t) {
-      return (0, Hn.assertIsBuffer)(t), r(t)
+      return (0, oi.assertIsBuffer)(t), r(t)
     }),
       (e.sha256FromString = function (t) {
-        return (0, Hn.assertIsString)(t), r(t)
+        return (0, oi.assertIsString)(t), r(t)
       }),
       (e.sha256FromArray = function (t) {
-        return (0, Hn.assertIsArray)(t), r(t)
+        return (0, oi.assertIsArray)(t), r(t)
       })
     var n = function (t, e) {
-      t = (0, Gn.toBuffer)(t)
-      var r = Hu('rmd160').update(t).digest()
-      return !0 === e ? (0, Gn.setLengthLeft)(r, 32) : r
+      t = (0, si.toBuffer)(t)
+      var r = oh('rmd160').update(t).digest()
+      return !0 === e ? (0, si.setLengthLeft)(r, 32) : r
     }
     ;(e.ripemd160 = function (t, e) {
-      return (0, Hn.assertIsBuffer)(t), n(t, e)
+      return (0, oi.assertIsBuffer)(t), n(t, e)
     }),
       (e.ripemd160FromString = function (t, e) {
-        return (0, Hn.assertIsString)(t), n(t, e)
+        return (0, oi.assertIsString)(t), n(t, e)
       }),
       (e.ripemd160FromArray = function (t, e) {
-        return (0, Hn.assertIsArray)(t), n(t, e)
+        return (0, oi.assertIsArray)(t), n(t, e)
       }),
       (e.rlphash = function (t) {
-        return (0, e.keccak)(Et.rlp.encode(t))
+        return (0, e.keccak)(Wt.rlp.encode(t))
       })
   }),
-  Ku = U(function (t, e) {
+  uh = tt(function (t, e) {
     function r(t) {
-      return (0, Gn.unpadBuffer)(t.toArrayLike(Buffer))
+      return (0, si.unpadBuffer)(t.toArrayLike(Buffer))
     }
     var n
     Object.defineProperty(e, '__esModule', { value: !0 }),
@@ -24494,7 +24514,7 @@ var Hu = function (t) {
       (e.toType = function (t, e) {
         if (null === t) return null
         if (void 0 !== t) {
-          if ('string' == typeof t && !(0, Wn.isHexString)(t))
+          if ('string' == typeof t && !(0, ii.isHexString)(t))
             throw new Error(
               'A string must be provided with a 0x-prefix, given: '.concat(t)
             )
@@ -24502,12 +24522,12 @@ var Hu = function (t) {
             throw new Error(
               'The provided number is greater than MAX_SAFE_INTEGER (please use an alternative input type)'
             )
-          var r = (0, Gn.toBuffer)(t)
+          var r = (0, si.toBuffer)(t)
           if (e === n.Buffer) return r
-          if (e === n.BN) return new Et.BN(r)
+          if (e === n.BN) return new Wt.BN(r)
           if (e === n.Number) {
-            var i = new Et.BN(r),
-              o = new Et.BN(Number.MAX_SAFE_INTEGER.toString())
+            var i = new Wt.BN(r),
+              o = new Wt.BN(Number.MAX_SAFE_INTEGER.toString())
             if (i.gt(o))
               throw new Error(
                 'The provided number is greater than MAX_SAFE_INTEGER (please use an alternative output type)'
@@ -24518,10 +24538,10 @@ var Hu = function (t) {
         }
       })
   }),
-  Vu = zn,
-  Ju = U(function (t, e) {
+  hh = ni,
+  fh = tt(function (t, e) {
     var r =
-        (D && D.__read) ||
+        (Q && Q.__read) ||
         function (t, e) {
           var r = 'function' == typeof Symbol && t[Symbol.iterator]
           if (!r) return t
@@ -24544,7 +24564,7 @@ var Hu = function (t) {
           return s
         },
       n =
-        (D && D.__importDefault) ||
+        (Q && Q.__importDefault) ||
         function (t) {
           return t && t.__esModule ? t : { default: t }
         }
@@ -24565,13 +24585,13 @@ var Hu = function (t) {
         e.isValidAddress =
         e.Account =
           void 0)
-    var i = n(Dt),
+    var i = n(Qt),
       o = (function () {
         function t(t, e, r, n) {
-          void 0 === t && (t = new Et.BN(0)),
-            void 0 === e && (e = new Et.BN(0)),
-            void 0 === r && (r = kt.KECCAK256_RLP),
-            void 0 === n && (n = kt.KECCAK256_NULL),
+          void 0 === t && (t = new Wt.BN(0)),
+            void 0 === e && (e = new Wt.BN(0)),
+            void 0 === r && (r = Ht.KECCAK256_RLP),
+            void 0 === n && (n = Ht.KECCAK256_NULL),
             (this.nonce = t),
             (this.balance = e),
             (this.stateRoot = r),
@@ -24585,14 +24605,14 @@ var Hu = function (t) {
               i = e.stateRoot,
               o = e.codeHash
             return new t(
-              r ? new Et.BN((0, Gn.toBuffer)(r)) : void 0,
-              n ? new Et.BN((0, Gn.toBuffer)(n)) : void 0,
-              i ? (0, Gn.toBuffer)(i) : void 0,
-              o ? (0, Gn.toBuffer)(o) : void 0
+              r ? new Wt.BN((0, si.toBuffer)(r)) : void 0,
+              n ? new Wt.BN((0, si.toBuffer)(n)) : void 0,
+              i ? (0, si.toBuffer)(i) : void 0,
+              o ? (0, si.toBuffer)(o) : void 0
             )
           }),
           (t.fromRlpSerializedAccount = function (t) {
-            var e = Et.rlp.decode(t)
+            var e = Wt.rlp.decode(t)
             if (!Array.isArray(e))
               throw new Error('Invalid serialized account input. Must be array')
             return this.fromValuesArray(e)
@@ -24602,12 +24622,12 @@ var Hu = function (t) {
               i = n[1],
               o = n[2],
               s = n[3]
-            return new t(new Et.BN(n[0]), new Et.BN(i), o, s)
+            return new t(new Wt.BN(n[0]), new Wt.BN(i), o, s)
           }),
           (t.prototype._validate = function () {
-            if (this.nonce.lt(new Et.BN(0)))
+            if (this.nonce.lt(new Wt.BN(0)))
               throw new Error('nonce must be greater than zero')
-            if (this.balance.lt(new Et.BN(0)))
+            if (this.balance.lt(new Wt.BN(0)))
               throw new Error('balance must be greater than zero')
             if (32 !== this.stateRoot.length)
               throw new Error('stateRoot must have a length of 32')
@@ -24616,23 +24636,23 @@ var Hu = function (t) {
           }),
           (t.prototype.raw = function () {
             return [
-              (0, Ku.bnToUnpaddedBuffer)(this.nonce),
-              (0, Ku.bnToUnpaddedBuffer)(this.balance),
+              (0, uh.bnToUnpaddedBuffer)(this.nonce),
+              (0, uh.bnToUnpaddedBuffer)(this.balance),
               this.stateRoot,
               this.codeHash
             ]
           }),
           (t.prototype.serialize = function () {
-            return Et.rlp.encode(this.raw())
+            return Wt.rlp.encode(this.raw())
           }),
           (t.prototype.isContract = function () {
-            return !this.codeHash.equals(kt.KECCAK256_NULL)
+            return !this.codeHash.equals(Ht.KECCAK256_NULL)
           }),
           (t.prototype.isEmpty = function () {
             return (
               this.balance.isZero() &&
               this.nonce.isZero() &&
-              this.codeHash.equals(kt.KECCAK256_NULL)
+              this.codeHash.equals(Ht.KECCAK256_NULL)
             )
           }),
           t
@@ -24641,19 +24661,19 @@ var Hu = function (t) {
     ;(e.Account = o),
       (e.isValidAddress = function (t) {
         try {
-          ;(0, Hn.assertIsString)(t)
+          ;(0, oi.assertIsString)(t)
         } catch (t) {
           return !1
         }
         return /^0x[0-9a-fA-F]{40}$/.test(t)
       }),
       (e.toChecksumAddress = function (t, e) {
-        ;(0, Hn.assertIsHexString)(t)
-        var r = (0, Wn.stripHexPrefix)(t).toLowerCase(),
+        ;(0, oi.assertIsHexString)(t)
+        var r = (0, ii.stripHexPrefix)(t).toLowerCase(),
           n = ''
-        e && (n = (0, Ku.toType)(e, Ku.TypeOutput.BN).toString() + '0x')
+        e && (n = (0, uh.toType)(e, uh.TypeOutput.BN).toString() + '0x')
         for (
-          var i = (0, Zu.keccakFromString)(n + r).toString('hex'),
+          var i = (0, ah.keccakFromString)(n + r).toString('hex'),
             o = '0x',
             s = 0;
           s < r.length;
@@ -24666,57 +24686,57 @@ var Hu = function (t) {
         return (0, e.isValidAddress)(t) && (0, e.toChecksumAddress)(t, r) === t
       }),
       (e.generateAddress = function (t, e) {
-        ;(0, Hn.assertIsBuffer)(t), (0, Hn.assertIsBuffer)(e)
-        var r = new Et.BN(e)
+        ;(0, oi.assertIsBuffer)(t), (0, oi.assertIsBuffer)(e)
+        var r = new Wt.BN(e)
         return r.isZero()
-          ? (0, Zu.rlphash)([t, null]).slice(-20)
-          : (0, Zu.rlphash)([t, Buffer.from(r.toArray())]).slice(-20)
+          ? (0, ah.rlphash)([t, null]).slice(-20)
+          : (0, ah.rlphash)([t, Buffer.from(r.toArray())]).slice(-20)
       }),
       (e.generateAddress2 = function (t, e, r) {
         return (
-          (0, Hn.assertIsBuffer)(t),
-          (0, Hn.assertIsBuffer)(e),
-          (0, Hn.assertIsBuffer)(r),
+          (0, oi.assertIsBuffer)(t),
+          (0, oi.assertIsBuffer)(e),
+          (0, oi.assertIsBuffer)(r),
           (0, i.default)(20 === t.length),
           (0, i.default)(32 === e.length),
-          (0, Zu.keccak256)(
+          (0, ah.keccak256)(
             Buffer.concat([
               Buffer.from('ff', 'hex'),
               t,
               e,
-              (0, Zu.keccak256)(r)
+              (0, ah.keccak256)(r)
             ])
           ).slice(-20)
         )
       }),
       (e.isValidPrivate = function (t) {
-        return (0, Vu.privateKeyVerify)(t)
+        return (0, hh.privateKeyVerify)(t)
       }),
       (e.isValidPublic = function (t, e) {
         return (
           void 0 === e && (e = !1),
-          (0, Hn.assertIsBuffer)(t),
+          (0, oi.assertIsBuffer)(t),
           64 === t.length
-            ? (0, Vu.publicKeyVerify)(Buffer.concat([Buffer.from([4]), t]))
-            : !!e && (0, Vu.publicKeyVerify)(t)
+            ? (0, hh.publicKeyVerify)(Buffer.concat([Buffer.from([4]), t]))
+            : !!e && (0, hh.publicKeyVerify)(t)
         )
       }),
       (e.pubToAddress = function (t, e) {
         return (
           void 0 === e && (e = !1),
-          (0, Hn.assertIsBuffer)(t),
+          (0, oi.assertIsBuffer)(t),
           e &&
             64 !== t.length &&
-            (t = Buffer.from((0, Vu.publicKeyConvert)(t, !1).slice(1))),
+            (t = Buffer.from((0, hh.publicKeyConvert)(t, !1).slice(1))),
           (0, i.default)(64 === t.length),
-          (0, Zu.keccak)(t).slice(-20)
+          (0, ah.keccak)(t).slice(-20)
         )
       }),
       (e.publicToAddress = e.pubToAddress),
       (e.privateToPublic = function (t) {
         return (
-          (0, Hn.assertIsBuffer)(t),
-          Buffer.from((0, Vu.publicKeyCreate)(t, !1)).slice(1)
+          (0, oi.assertIsBuffer)(t),
+          Buffer.from((0, hh.publicKeyCreate)(t, !1)).slice(1)
         )
       }),
       (e.privateToAddress = function (t) {
@@ -24724,33 +24744,33 @@ var Hu = function (t) {
       }),
       (e.importPublic = function (t) {
         return (
-          (0, Hn.assertIsBuffer)(t),
+          (0, oi.assertIsBuffer)(t),
           64 !== t.length &&
-            (t = Buffer.from((0, Vu.publicKeyConvert)(t, !1).slice(1))),
+            (t = Buffer.from((0, hh.publicKeyConvert)(t, !1).slice(1))),
           t
         )
       }),
       (e.zeroAddress = function () {
-        var t = (0, Gn.zeros)(20)
-        return (0, Gn.bufferToHex)(t)
+        var t = (0, si.zeros)(20)
+        return (0, si.bufferToHex)(t)
       }),
       (e.isZeroAddress = function (t) {
         try {
-          ;(0, Hn.assertIsString)(t)
+          ;(0, oi.assertIsString)(t)
         } catch (t) {
           return !1
         }
         return (0, e.zeroAddress)() === t
       })
   }),
-  $u = U(function (t, e) {
+  lh = tt(function (t, e) {
     var r =
-      (D && D.__importDefault) ||
+      (Q && Q.__importDefault) ||
       function (t) {
         return t && t.__esModule ? t : { default: t }
       }
     Object.defineProperty(e, '__esModule', { value: !0 }), (e.Address = void 0)
-    var n = r(Dt),
+    var n = r(Qt),
       i = (function () {
         function t(t) {
           ;(0, n.default)(20 === t.length, 'Invalid address length'),
@@ -24758,18 +24778,18 @@ var Hu = function (t) {
         }
         return (
           (t.zero = function () {
-            return new t((0, Gn.zeros)(20))
+            return new t((0, si.zeros)(20))
           }),
           (t.fromString = function (e) {
             return (
-              (0, n.default)((0, Ju.isValidAddress)(e), 'Invalid address'),
-              new t((0, Gn.toBuffer)(e))
+              (0, n.default)((0, fh.isValidAddress)(e), 'Invalid address'),
+              new t((0, si.toBuffer)(e))
             )
           }),
           (t.fromPublicKey = function (e) {
             return (
               (0, n.default)(Buffer.isBuffer(e), 'Public key should be Buffer'),
-              new t((0, Ju.pubToAddress)(e))
+              new t((0, fh.pubToAddress)(e))
             )
           }),
           (t.fromPrivateKey = function (e) {
@@ -24778,20 +24798,20 @@ var Hu = function (t) {
                 Buffer.isBuffer(e),
                 'Private key should be Buffer'
               ),
-              new t((0, Ju.privateToAddress)(e))
+              new t((0, fh.privateToAddress)(e))
             )
           }),
           (t.generate = function (e, r) {
             return (
-              (0, n.default)(Et.BN.isBN(r)),
-              new t((0, Ju.generateAddress)(e.buf, r.toArrayLike(Buffer)))
+              (0, n.default)(Wt.BN.isBN(r)),
+              new t((0, fh.generateAddress)(e.buf, r.toArrayLike(Buffer)))
             )
           }),
           (t.generate2 = function (e, r, i) {
             return (
               (0, n.default)(Buffer.isBuffer(r)),
               (0, n.default)(Buffer.isBuffer(i)),
-              new t((0, Ju.generateAddress2)(e.buf, r, i))
+              new t((0, fh.generateAddress2)(e.buf, r, i))
             )
           }),
           (t.prototype.equals = function (t) {
@@ -24801,9 +24821,9 @@ var Hu = function (t) {
             return this.equals(t.zero())
           }),
           (t.prototype.isPrecompileOrSystemAddress = function () {
-            var t = new Et.BN(this.buf),
-              e = new Et.BN(0),
-              r = new Et.BN('ffff', 'hex')
+            var t = new Wt.BN(this.buf),
+              e = new Wt.BN(0),
+              r = new Wt.BN('ffff', 'hex')
             return t.gte(e) && t.lte(r)
           }),
           (t.prototype.toString = function () {
@@ -24817,15 +24837,15 @@ var Hu = function (t) {
       })()
     e.Address = i
   }),
-  Xu = U(function (t, e) {
+  ch = tt(function (t, e) {
     function r(t, e) {
-      var r = (0, Ku.toType)(t, Ku.TypeOutput.BN)
+      var r = (0, uh.toType)(t, uh.TypeOutput.BN)
       if (!e) return r.subn(27)
-      var n = (0, Ku.toType)(e, Ku.TypeOutput.BN)
+      var n = (0, uh.toType)(e, uh.TypeOutput.BN)
       return r.sub(n.muln(2).addn(35))
     }
     function n(t) {
-      var e = new Et.BN(t)
+      var e = new Wt.BN(t)
       return e.eqn(0) || e.eqn(1)
     }
     Object.defineProperty(e, '__esModule', { value: !0 }),
@@ -24838,7 +24858,7 @@ var Hu = function (t) {
         e.ecsign =
           void 0),
       (e.ecsign = function (t, e, r) {
-        var n = (0, Vu.ecdsaSign)(t, e),
+        var n = (0, hh.ecdsaSign)(t, e),
           i = n.signature,
           o = n.recid,
           s = Buffer.from(i.slice(0, 32)),
@@ -24853,7 +24873,7 @@ var Hu = function (t) {
         return {
           r: s,
           s: a,
-          v: (0, Ku.toType)(r, Ku.TypeOutput.BN)
+          v: (0, uh.toType)(r, uh.TypeOutput.BN)
             .muln(2)
             .addn(35)
             .addn(o)
@@ -24862,35 +24882,35 @@ var Hu = function (t) {
       }),
       (e.ecrecover = function (t, e, i, o, s) {
         var a = Buffer.concat(
-            [(0, Gn.setLengthLeft)(i, 32), (0, Gn.setLengthLeft)(o, 32)],
+            [(0, si.setLengthLeft)(i, 32), (0, si.setLengthLeft)(o, 32)],
             64
           ),
           u = r(e, s)
         if (!n(u)) throw new Error('Invalid signature v value')
-        var h = (0, Vu.ecdsaRecover)(a, u.toNumber(), t)
-        return Buffer.from((0, Vu.publicKeyConvert)(h, !1).slice(1))
+        var h = (0, hh.ecdsaRecover)(a, u.toNumber(), t)
+        return Buffer.from((0, hh.publicKeyConvert)(h, !1).slice(1))
       }),
       (e.toRpcSig = function (t, e, i, o) {
         if (!n(r(t, o))) throw new Error('Invalid signature v value')
-        return (0, Gn.bufferToHex)(
+        return (0, si.bufferToHex)(
           Buffer.concat([
-            (0, Gn.setLengthLeft)(e, 32),
-            (0, Gn.setLengthLeft)(i, 32),
-            (0, Gn.toBuffer)(t)
+            (0, si.setLengthLeft)(e, 32),
+            (0, si.setLengthLeft)(i, 32),
+            (0, si.toBuffer)(t)
           ])
         )
       }),
       (e.toCompactSig = function (t, e, i, o) {
         if (!n(r(t, o))) throw new Error('Invalid signature v value')
-        var s = (0, Ku.toType)(t, Ku.TypeOutput.Number),
+        var s = (0, uh.toType)(t, uh.TypeOutput.Number),
           a = i
         return (
           ((s > 28 && s % 2 == 1) || 1 === s || 28 === s) &&
             ((a = Buffer.from(i))[0] |= 128),
-          (0, Gn.bufferToHex)(
+          (0, si.bufferToHex)(
             Buffer.concat([
-              (0, Gn.setLengthLeft)(e, 32),
-              (0, Gn.setLengthLeft)(a, 32)
+              (0, si.setLengthLeft)(e, 32),
+              (0, si.setLengthLeft)(a, 32)
             ])
           )
         )
@@ -24899,34 +24919,34 @@ var Hu = function (t) {
         var e,
           r,
           n,
-          i = (0, Gn.toBuffer)(t)
+          i = (0, si.toBuffer)(t)
         if (i.length >= 65)
           (e = i.slice(0, 32)),
             (r = i.slice(32, 64)),
-            (n = (0, Gn.bufferToInt)(i.slice(64)))
+            (n = (0, si.bufferToInt)(i.slice(64)))
         else {
           if (64 !== i.length) throw new Error('Invalid signature length')
           ;(e = i.slice(0, 32)),
             (r = i.slice(32, 64)),
-            (n = (0, Gn.bufferToInt)(i.slice(32, 33)) >> 7),
+            (n = (0, si.bufferToInt)(i.slice(32, 33)) >> 7),
             (r[0] &= 127)
         }
         return n < 27 && (n += 27), { v: n, r: e, s: r }
       }),
       (e.isValidSignature = function (t, e, i, o, s) {
         void 0 === o && (o = !0)
-        var a = new Et.BN(
+        var a = new Wt.BN(
             '7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0',
             16
           ),
-          u = new Et.BN(
+          u = new Wt.BN(
             'fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141',
             16
           )
         if (32 !== e.length || 32 !== i.length) return !1
         if (!n(r(t, s))) return !1
-        var h = new Et.BN(e),
-          f = new Et.BN(i)
+        var h = new Wt.BN(e),
+          f = new Wt.BN(i)
         return !(
           h.isZero() ||
           h.gt(u) ||
@@ -24936,23 +24956,23 @@ var Hu = function (t) {
         )
       }),
       (e.hashPersonalMessage = function (t) {
-        ;(0, Hn.assertIsBuffer)(t)
+        ;(0, oi.assertIsBuffer)(t)
         var e = Buffer.from(
           'Ethereum Signed Message:\n'.concat(t.length),
           'utf-8'
         )
-        return (0, Zu.keccak)(Buffer.concat([e, t]))
+        return (0, ah.keccak)(Buffer.concat([e, t]))
       })
   }),
-  Yu = U(function (t, e) {
+  dh = tt(function (t, e) {
     var r =
-      (D && D.__importDefault) ||
+      (Q && Q.__importDefault) ||
       function (t) {
         return t && t.__esModule ? t : { default: t }
       }
     Object.defineProperty(e, '__esModule', { value: !0 }),
       (e.defineProperties = void 0)
-    var n = r(Dt)
+    var n = r(Qt)
     e.defineProperties = function (t, e, r) {
       if (
         ((t.raw = []),
@@ -24967,21 +24987,21 @@ var Hu = function (t) {
               r
             )
           }
-          return (0, Gn.baToJSON)(t.raw)
+          return (0, si.baToJSON)(t.raw)
         }),
         (t.serialize = function () {
-          return Et.rlp.encode(t.raw)
+          return Wt.rlp.encode(t.raw)
         }),
         e.forEach(function (e, r) {
           function i() {
             return t.raw[r]
           }
           function o(i) {
-            '00' !== (i = (0, Gn.toBuffer)(i)).toString('hex') ||
+            '00' !== (i = (0, si.toBuffer)(i)).toString('hex') ||
               e.allowZero ||
               (i = Buffer.allocUnsafe(0)),
               e.allowLess && e.length
-                ? ((i = (0, Gn.unpadBuffer)(i)),
+                ? ((i = (0, si.unpadBuffer)(i)),
                   (0, n.default)(
                     e.length >= i.length,
                     'The field '
@@ -25018,14 +25038,14 @@ var Hu = function (t) {
       )
         if (
           ('string' == typeof r &&
-            (r = Buffer.from((0, Wn.stripHexPrefix)(r), 'hex')),
-          Buffer.isBuffer(r) && (r = Et.rlp.decode(r)),
+            (r = Buffer.from((0, ii.stripHexPrefix)(r), 'hex')),
+          Buffer.isBuffer(r) && (r = Wt.rlp.decode(r)),
           Array.isArray(r))
         ) {
           if (r.length > t._fields.length)
             throw new Error('wrong number of fields in data')
           r.forEach(function (e, r) {
-            t[t._fields[r]] = (0, Gn.toBuffer)(e)
+            t[t._fields[r]] = (0, si.toBuffer)(e)
           })
         } else {
           if ('object' != typeof r) throw new Error('invalid data')
@@ -25037,9 +25057,9 @@ var Hu = function (t) {
         }
     }
   }),
-  Qu = U(function (t, e) {
+  ph = tt(function (t, e) {
     var r =
-        (D && D.__createBinding) ||
+        (Q && Q.__createBinding) ||
         (Object.create
           ? function (t, e, r, n) {
               void 0 === n && (n = r),
@@ -25054,7 +25074,7 @@ var Hu = function (t) {
               void 0 === n && (n = r), (t[n] = e[r])
             }),
       n =
-        (D && D.__exportStar) ||
+        (Q && Q.__exportStar) ||
         function (t, e) {
           for (var n in t)
             'default' === n ||
@@ -25073,77 +25093,77 @@ var Hu = function (t) {
         e.stripHexPrefix =
         e.isHexPrefixed =
           void 0),
-      n(kt, e),
-      n(Ju, e),
-      n($u, e),
-      n(Zu, e),
-      n(Xu, e),
-      n(Gn, e),
-      n(Yu, e),
-      n(Et, e),
-      n(Ku, e),
+      n(Ht, e),
+      n(fh, e),
+      n(lh, e),
+      n(ah, e),
+      n(ch, e),
+      n(si, e),
+      n(dh, e),
+      n(Wt, e),
+      n(uh, e),
       Object.defineProperty(e, 'isHexPrefixed', {
         enumerable: !0,
         get: function () {
-          return Wn.isHexPrefixed
+          return ii.isHexPrefixed
         }
       }),
       Object.defineProperty(e, 'stripHexPrefix', {
         enumerable: !0,
         get: function () {
-          return Wn.stripHexPrefix
+          return ii.stripHexPrefix
         }
       }),
       Object.defineProperty(e, 'padToEven', {
         enumerable: !0,
         get: function () {
-          return Wn.padToEven
+          return ii.padToEven
         }
       }),
       Object.defineProperty(e, 'getBinarySize', {
         enumerable: !0,
         get: function () {
-          return Wn.getBinarySize
+          return ii.getBinarySize
         }
       }),
       Object.defineProperty(e, 'arrayContainsArray', {
         enumerable: !0,
         get: function () {
-          return Wn.arrayContainsArray
+          return ii.arrayContainsArray
         }
       }),
       Object.defineProperty(e, 'toAscii', {
         enumerable: !0,
         get: function () {
-          return Wn.toAscii
+          return ii.toAscii
         }
       }),
       Object.defineProperty(e, 'fromUtf8', {
         enumerable: !0,
         get: function () {
-          return Wn.fromUtf8
+          return ii.fromUtf8
         }
       }),
       Object.defineProperty(e, 'fromAscii', {
         enumerable: !0,
         get: function () {
-          return Wn.fromAscii
+          return ii.fromAscii
         }
       }),
       Object.defineProperty(e, 'getKeys', {
         enumerable: !0,
         get: function () {
-          return Wn.getKeys
+          return ii.getKeys
         }
       }),
       Object.defineProperty(e, 'isHexString', {
         enumerable: !0,
         get: function () {
-          return Wn.isHexString
+          return ii.isHexString
         }
       })
   }),
-  th = U(function (t) {
+  mh = tt(function (t) {
     !(function () {
       var e = 'input is invalid type',
         r = 'object' == typeof window,
@@ -25154,7 +25174,7 @@ var Hu = function (t) {
       'object' == typeof process &&
       process.versions &&
       process.versions.node
-        ? (n = D)
+        ? (n = Q)
         : i && (n = self)
       var o = !n.JS_SHA3_NO_COMMON_JS && t.exports,
         s = !n.JS_SHA3_NO_ARRAY_BUFFER && 'undefined' != typeof ArrayBuffer,
@@ -25772,7 +25792,7 @@ var Hu = function (t) {
       else for (P = 0; P < A.length; ++P) n[A[P]] = _[A[P]]
     })()
   })
-function eh(t) {
+function vh(t) {
   if (null == t) throw new Error('cannot convert null value to array')
   if ('string' == typeof t) {
     const e = t.match(/^(0x)?[0-9a-fA-F]*$/)
@@ -25781,7 +25801,7 @@ function eh(t) {
     ;(t = t.substring(2)).length % 2 && (t = '0' + t)
     const r = []
     for (let e = 0; e < t.length; e += 2) r.push(parseInt(t.substr(e, 2), 16))
-    return rh(new Uint8Array(r))
+    return gh(new Uint8Array(r))
   }
   if (
     (function (t) {
@@ -25794,23 +25814,23 @@ function eh(t) {
       return !0
     })(t)
   )
-    return rh(new Uint8Array(t))
+    return gh(new Uint8Array(t))
   throw new Error('invalid arrayify value')
 }
-function rh(t) {
+function gh(t) {
   return (
     void 0 !== t.slice ||
       (t.slice = () => {
         const e = Array.prototype.slice.call(arguments)
-        return rh(new Uint8Array(Array.prototype.slice.apply(t, e)))
+        return gh(new Uint8Array(Array.prototype.slice.apply(t, e)))
       }),
     t
   )
 }
-var nh = /*#__PURE__*/ Object.defineProperty(
+var yh = /*#__PURE__*/ Object.defineProperty(
   {
     keccak256: function (t) {
-      return '0x' + th.keccak_256(eh(t))
+      return '0x' + mh.keccak_256(vh(t))
     },
     padLeft: (t, e) => {
       const r = /^0x/i.test(t) || 'number' == typeof t
@@ -25827,102 +25847,102 @@ var nh = /*#__PURE__*/ Object.defineProperty(
         e.push((t[r] >>> 4).toString(16)), e.push((15 & t[r]).toString(16))
       return `0x${e.join('').replace(/^0+/, '')}`
     },
-    toByteArray: eh
+    toByteArray: vh
   },
   '__esModule',
   { value: !0 }
 )
-function ih(t) {
+function bh(t) {
   return !(
     'string' != typeof t ||
     !/^(0x)?[0-9a-f]{512}$/i.test(t) ||
     (!/^(0x)?[0-9a-f]{512}$/.test(t) && !/^(0x)?[0-9A-F]{512}$/.test(t))
   )
 }
-function oh(t, e) {
-  'object' == typeof e && e.constructor === Uint8Array && (e = nh.bytesToHex(e))
-  const r = nh.keccak256(e).replace('0x', '')
+function wh(t, e) {
+  'object' == typeof e && e.constructor === Uint8Array && (e = yh.bytesToHex(e))
+  const r = yh.keccak256(e).replace('0x', '')
   for (let e = 0; e < 12; e += 4) {
     const n =
         ((parseInt(r.substr(e, 2), 16) << 8) +
           parseInt(r.substr(e + 2, 2), 16)) &
         2047,
       i = 1 << n % 4
-    if ((sh(t.charCodeAt(t.length - 1 - Math.floor(n / 4))) & i) !== i)
+    if ((Mh(t.charCodeAt(t.length - 1 - Math.floor(n / 4))) & i) !== i)
       return !1
   }
   return !0
 }
-function sh(t) {
+function Mh(t) {
   if (t >= 48 && t <= 57) return t - 48
   if (t >= 65 && t <= 70) return t - 55
   if (t >= 97 && t <= 102) return t - 87
   throw new Error('invalid bloom')
 }
-function ah(t) {
+function _h(t) {
   return !(
     'string' != typeof t ||
     !/^(0x)?[0-9a-f]{64}$/i.test(t) ||
     (!/^(0x)?[0-9a-f]{64}$/.test(t) && !/^(0x)?[0-9A-F]{64}$/.test(t))
   )
 }
-function uh(t) {
+function Ah(t) {
   return !(
     'string' != typeof t ||
     (!t.match(/^(0x)?[0-9a-fA-F]{40}$/) &&
       !t.match(/^XE[0-9]{2}[0-9A-Za-z]{30,31}$/))
   )
 }
-var hh = /*#__PURE__*/ Object.defineProperty(
+var Ph = /*#__PURE__*/ Object.defineProperty(
     {
-      isBloom: ih,
-      isInBloom: oh,
+      isBloom: bh,
+      isInBloom: wh,
       isUserEthereumAddressInBloom: function (t, e) {
-        if (!ih(t)) throw new Error('Invalid bloom given')
-        if (!uh(e)) throw new Error(`Invalid ethereum address given: "${e}"`)
-        return oh(t, nh.padLeft(e, 64))
+        if (!bh(t)) throw new Error('Invalid bloom given')
+        if (!Ah(e)) throw new Error(`Invalid ethereum address given: "${e}"`)
+        return wh(t, yh.padLeft(e, 64))
       },
       isContractAddressInBloom: function (t, e) {
-        if (!ih(t)) throw new Error('Invalid bloom given')
-        if (!uh(e)) throw new Error(`Invalid contract address given: "${e}"`)
-        return oh(t, e)
+        if (!bh(t)) throw new Error('Invalid bloom given')
+        if (!Ah(e)) throw new Error(`Invalid contract address given: "${e}"`)
+        return wh(t, e)
       },
       isTopicInBloom: function (t, e) {
-        if (!ih(t)) throw new Error('Invalid bloom given')
-        if (!ah(e)) throw new Error('Invalid topic')
-        return oh(t, e)
+        if (!bh(t)) throw new Error('Invalid bloom given')
+        if (!_h(e)) throw new Error('Invalid topic')
+        return wh(t, e)
       },
-      isTopic: ah,
-      isAddress: uh
+      isTopic: _h,
+      isAddress: Ah
     },
     '__esModule',
     { value: !0 }
   ),
-  fh = function (t) {
-    return dt.isBN(t)
+  Sh = function (t) {
+    return Et.isBN(t)
   },
-  lh = function (t) {
+  Th = function (t) {
     return t && t.constructor && 'BigNumber' === t.constructor.name
   },
-  ch = function (t) {
+  xh = function (t) {
     try {
-      return ot.apply(null, arguments)
+      return wt.apply(null, arguments)
     } catch (e) {
       throw new Error(e + ' Given value: "' + t + '"')
     }
   },
-  dh = function (t) {
+  Eh = function (t) {
     return (
       !!/^(0x)?[0-9a-f]{40}$/i.test(t) &&
       (!(
         !/^(0x|0X)?[0-9a-f]{40}$/.test(t) && !/^(0x|0X)?[0-9A-F]{40}$/.test(t)
       ) ||
-        ph(t))
+        kh(t))
     )
   },
-  ph = function (t) {
+  kh = function (t) {
     t = t.replace(/^0x/i, '')
-    for (var e = _h(t.toLowerCase()).replace(/^0x/i, ''), r = 0; r < 40; r++)
+    for (var e = Nh(t.toLowerCase()).replace(/^0x/i, ''), r = 0; r < 40; r++)
       if (
         (parseInt(e[r], 16) > 7 && t[r].toUpperCase() !== t[r]) ||
         (parseInt(e[r], 16) <= 7 && t[r].toLowerCase() !== t[r])
@@ -25930,9 +25950,9 @@ var hh = /*#__PURE__*/ Object.defineProperty(
         return !1
     return !0
   },
-  mh = function (t) {
+  Rh = function (t) {
     var e = ''
-    t = (t = (t = (t = (t = pt.encode(t)).replace(/^(?:\u0000)*/, ''))
+    t = (t = (t = (t = (t = kt.encode(t)).replace(/^(?:\u0000)*/, ''))
       .split('')
       .reverse()
       .join('')).replace(/^(?:\u0000)*/, ''))
@@ -25945,84 +25965,84 @@ var hh = /*#__PURE__*/ Object.defineProperty(
     }
     return '0x' + e
   },
-  vh = function (t) {
+  Ih = function (t) {
     if (!t) return t
-    if ('string' == typeof t && !bh(t))
+    if ('string' == typeof t && !Ch(t))
       throw new Error('Given value "' + t + '" is not a valid hex string.')
-    return ch(t).toNumber()
+    return xh(t).toNumber()
   },
-  gh = function (t) {
+  Bh = function (t) {
     if (null == t) return t
-    if (!isFinite(t) && !bh(t))
+    if (!isFinite(t) && !Ch(t))
       throw new Error('Given input "' + t + '" is not a number.')
-    var e = ch(t),
+    var e = xh(t),
       r = e.toString(16)
-    return e.lt(new dt(0)) ? '-0x' + r.substr(1) : '0x' + r
+    return e.lt(new Et(0)) ? '-0x' + r.substr(1) : '0x' + r
   },
-  yh = function (t, e) {
-    if (dh(t)) return e ? 'address' : '0x' + t.toLowerCase().replace(/^0x/i, '')
+  Oh = function (t, e) {
+    if (Eh(t)) return e ? 'address' : '0x' + t.toLowerCase().replace(/^0x/i, '')
     if ('boolean' == typeof t) return e ? 'bool' : t ? '0x01' : '0x00'
     if (Buffer.isBuffer(t)) return '0x' + t.toString('hex')
-    if ('object' == typeof t && t && !lh(t) && !fh(t))
-      return e ? 'string' : mh(JSON.stringify(t))
+    if ('object' == typeof t && t && !Th(t) && !Sh(t))
+      return e ? 'string' : Rh(JSON.stringify(t))
     if ('string' == typeof t) {
       if (0 === t.indexOf('-0x') || 0 === t.indexOf('-0X'))
-        return e ? 'int256' : gh(t)
+        return e ? 'int256' : Bh(t)
       if (0 === t.indexOf('0x') || 0 === t.indexOf('0X')) return e ? 'bytes' : t
-      if (!isFinite(t)) return e ? 'string' : mh(t)
+      if (!isFinite(t)) return e ? 'string' : Rh(t)
     }
-    return e ? (t < 0 ? 'int256' : 'uint256') : gh(t)
+    return e ? (t < 0 ? 'int256' : 'uint256') : Bh(t)
   },
-  bh = function (t) {
+  Ch = function (t) {
     return (
       ('string' == typeof t || 'number' == typeof t) &&
       /^(-)?0x[0-9a-f]*$/i.test(t)
     )
   },
-  wh = function (t) {
+  Lh = function (t) {
     return (
       ('string' == typeof t || 'number' == typeof t) &&
       /^(-0x|0x)?[0-9a-f]*$/i.test(t)
     )
   },
-  Mh = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470',
-  _h = function (t) {
-    fh(t) && (t = t.toString()),
-      bh(t) && /^0x/i.test(t.toString())
-        ? (t = Qu.toBuffer(t))
+  jh = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470',
+  Nh = function (t) {
+    Sh(t) && (t = t.toString()),
+      Ch(t) && /^0x/i.test(t.toString())
+        ? (t = ph.toBuffer(t))
         : 'string' == typeof t && (t = Buffer.from(t, 'utf-8'))
-    var e = Qu.bufferToHex(Qu.keccak256(t))
-    return e === Mh ? null : e
+    var e = ph.bufferToHex(ph.keccak256(t))
+    return e === jh ? null : e
   }
-_h._Hash = Qu.keccak256
-var Ah = {
-    BN: dt,
-    isBN: fh,
-    isBigNumber: lh,
-    toBN: ch,
-    isAddress: dh,
+Nh._Hash = ph.keccak256
+var Dh = {
+    BN: Et,
+    isBN: Sh,
+    isBigNumber: Th,
+    toBN: xh,
+    isAddress: Eh,
     isBloom: function (t) {
-      return hh.isBloom(t)
+      return Ph.isBloom(t)
     },
     isUserEthereumAddressInBloom: function (t, e) {
-      return hh.isUserEthereumAddressInBloom(t, e)
+      return Ph.isUserEthereumAddressInBloom(t, e)
     },
     isContractAddressInBloom: function (t, e) {
-      return hh.isContractAddressInBloom(t, e)
+      return Ph.isContractAddressInBloom(t, e)
     },
     isTopic: function (t) {
-      return hh.isTopic(t)
+      return Ph.isTopic(t)
     },
     isTopicInBloom: function (t, e) {
-      return hh.isTopicInBloom(t, e)
+      return Ph.isTopicInBloom(t, e)
     },
     isInBloom: function (t, e) {
-      return hh.isInBloom(t, e)
+      return Ph.isInBloom(t, e)
     },
-    checkAddressChecksum: ph,
-    utf8ToHex: mh,
+    checkAddressChecksum: kh,
+    utf8ToHex: Rh,
     hexToUtf8: function (t) {
-      if (!bh(t))
+      if (!Ch(t))
         throw new Error('The parameter "' + t + '" must be a valid HEX string.')
       for (
         var e = '',
@@ -26042,19 +26062,19 @@ var Ah = {
         i += 2
       )
         (r = parseInt(t.substr(i, 2), 16)), (e += String.fromCharCode(r))
-      return pt.decode(e)
+      return kt.decode(e)
     },
-    hexToNumber: vh,
+    hexToNumber: Ih,
     hexToNumberString: function (t) {
       if (!t) return t
-      if ('string' == typeof t && !bh(t))
+      if ('string' == typeof t && !Ch(t))
         throw new Error('Given value "' + t + '" is not a valid hex string.')
-      return ch(t).toString(10)
+      return xh(t).toString(10)
     },
-    numberToHex: gh,
-    toHex: yh,
+    numberToHex: Bh,
+    toHex: Oh,
     hexToBytes: function (t) {
-      if (((t = t.toString(16)), !bh(t)))
+      if (((t = t.toString(16)), !Ch(t)))
         throw new Error('Given value "' + t + '" is not a valid hex string.')
       t = t.replace(/^0x/i, '')
       for (var e = [], r = 0; r < t.length; r += 2)
@@ -26066,10 +26086,10 @@ var Ah = {
         e.push((t[r] >>> 4).toString(16)), e.push((15 & t[r]).toString(16))
       return '0x' + e.join('')
     },
-    isHex: wh,
-    isHexStrict: bh,
+    isHex: Lh,
+    isHexStrict: Ch,
     stripHexPrefix: function (t) {
-      return 0 !== t && wh(t) ? t.replace(/^(-)?0x/i, '$1') : t
+      return 0 !== t && Lh(t) ? t.replace(/^(-)?0x/i, '$1') : t
     },
     leftPad: function (t, e, r) {
       var n = /^0x/i.test(t) || 'number' == typeof t
@@ -26090,28 +26110,28 @@ var Ah = {
       )
     },
     toTwosComplement: function (t) {
-      return '0x' + ch(t).toTwos(256).toString(16, 64)
+      return '0x' + xh(t).toTwos(256).toString(16, 64)
     },
-    sha3: _h,
+    sha3: Nh,
     sha3Raw: function (t) {
-      return null === (t = _h(t)) ? Mh : t
+      return null === (t = Nh(t)) ? jh : t
     },
     toNumber: function (t) {
-      return 'number' == typeof t ? t : vh(yh(t))
+      return 'number' == typeof t ? t : Ih(Oh(t))
     }
   },
-  Ph = function (t) {
+  Uh = function (t) {
     var e = typeof t
     if ('string' === e)
-      return Ah.isHexStrict(t)
-        ? new dt(t.replace(/0x/i, ''), 16)
-        : new dt(t, 10)
-    if ('number' === e) return new dt(t)
-    if (Ah.isBigNumber(t)) return new dt(t.toString(10))
-    if (Ah.isBN(t)) return t
+      return Dh.isHexStrict(t)
+        ? new Et(t.replace(/0x/i, ''), 16)
+        : new Et(t, 10)
+    if ('number' === e) return new Et(t)
+    if (Dh.isBigNumber(t)) return new Et(t.toString(10))
+    if (Dh.isBN(t)) return t
     throw new Error(t + ' is not a number')
   },
-  Sh = function (t, e, r) {
+  Fh = function (t, e, r) {
     var n, i, o
     if (
       'bytes' ===
@@ -26137,14 +26157,14 @@ var Ah = {
         throw new Error('Invalid bytes characters ' + e.length)
       return e
     }
-    if ('string' === t) return Ah.utf8ToHex(e)
+    if ('string' === t) return Dh.utf8ToHex(e)
     if ('bool' === t) return e ? '01' : '00'
     if (t.startsWith('address')) {
-      if (((n = r ? 64 : 40), !Ah.isAddress(e)))
+      if (((n = r ? 64 : 40), !Dh.isAddress(e)))
         throw new Error(
           e + ' is not a valid address, or the checksum is invalid.'
         )
-      return Ah.leftPad(e.toLowerCase(), n)
+      return Dh.leftPad(e.toLowerCase(), n)
     }
     if (
       ((n = (function (t) {
@@ -26158,35 +26178,35 @@ var Ah = {
         (r && (n = 32), n < 1 || n > 32 || n < e.replace(/^0x/i, '').length / 2)
       )
         throw new Error('Invalid bytes' + n + ' for ' + e)
-      return Ah.rightPad(e, 2 * n)
+      return Dh.rightPad(e, 2 * n)
     }
     if (t.startsWith('uint')) {
       if (n % 8 || n < 8 || n > 256)
         throw new Error('Invalid uint' + n + ' size')
-      if ((i = Ph(e)).bitLength() > n)
+      if ((i = Uh(e)).bitLength() > n)
         throw new Error(
           'Supplied uint exceeds width: ' + n + ' vs ' + i.bitLength()
         )
-      if (i.lt(new dt(0)))
+      if (i.lt(new Et(0)))
         throw new Error('Supplied uint ' + i.toString() + ' is negative')
-      return n ? Ah.leftPad(i.toString('hex'), (n / 8) * 2) : i
+      return n ? Dh.leftPad(i.toString('hex'), (n / 8) * 2) : i
     }
     if (t.startsWith('int')) {
       if (n % 8 || n < 8 || n > 256)
         throw new Error('Invalid int' + n + ' size')
-      if ((i = Ph(e)).bitLength() > n)
+      if ((i = Uh(e)).bitLength() > n)
         throw new Error(
           'Supplied int exceeds width: ' + n + ' vs ' + i.bitLength()
         )
-      return i.lt(new dt(0))
+      return i.lt(new Et(0))
         ? i.toTwos(n).toString('hex')
         : n
-        ? Ah.leftPad(i.toString('hex'), (n / 8) * 2)
+        ? Dh.leftPad(i.toString('hex'), (n / 8) * 2)
         : i
     }
     throw new Error('Unsupported or invalid type: ' + t)
   },
-  Th = function (t) {
+  qh = function (t) {
     if (Array.isArray(t))
       throw new Error('Autodetection of array types is not supported.')
     var e,
@@ -26201,13 +26221,13 @@ var Ah = {
         t.hasOwnProperty('type'))
         ? ((e = t.hasOwnProperty('t') ? t.t : t.type),
           (n = t.hasOwnProperty('v') ? t.v : t.value))
-        : ((e = Ah.toHex(t, !0)),
-          (n = Ah.toHex(t)),
+        : ((e = Dh.toHex(t, !0)),
+          (n = Dh.toHex(t)),
           e.startsWith('int') || e.startsWith('uint') || (e = 'bytes')),
       (!e.startsWith('int') && !e.startsWith('uint')) ||
         'string' != typeof n ||
         /^(-)?0x/i.test(n) ||
-        (n = new dt(n)),
+        (n = new Et(n)),
       Array.isArray(n))
     ) {
       if (
@@ -26225,29 +26245,29 @@ var Ah = {
     return Array.isArray(n)
       ? n
           .map(function (t) {
-            return Sh(e, t, r).toString('hex').replace('0x', '')
+            return Fh(e, t, r).toString('hex').replace('0x', '')
           })
           .join('')
-      : Sh(e, n, r).toString('hex').replace('0x', '')
+      : Fh(e, n, r).toString('hex').replace('0x', '')
   },
-  xh = {
+  zh = {
     soliditySha3: function () {
       var t = Array.prototype.slice.call(arguments),
-        e = t.map(Th)
-      return Ah.sha3('0x' + e.join(''))
+        e = t.map(qh)
+      return Dh.sha3('0x' + e.join(''))
     },
     soliditySha3Raw: function () {
-      return Ah.sha3Raw(
-        '0x' + Array.prototype.slice.call(arguments).map(Th).join('')
+      return Dh.sha3Raw(
+        '0x' + Array.prototype.slice.call(arguments).map(qh).join('')
       )
     },
     encodePacked: function () {
       var t = Array.prototype.slice.call(arguments),
-        e = t.map(Th)
+        e = t.map(qh)
       return '0x' + e.join('').toLowerCase()
     }
   },
-  Eh = function (t, e) {
+  Wh = function (t, e) {
     var r = []
     return (
       e.forEach(function (e) {
@@ -26259,7 +26279,7 @@ var Ah = {
           var n = '',
             i = e.type.indexOf('[')
           i >= 0 && (n = e.type.substring(i))
-          var o = Eh(t, e.components)
+          var o = Wh(t, e.components)
           Array.isArray(o) && t
             ? r.push('tuple(' + o.join(',') + ')' + n)
             : r.push(t ? '(' + o + ')' : '(' + o.join(',') + ')' + n)
@@ -26268,8 +26288,8 @@ var Ah = {
       r
     )
   },
-  kh = function (t) {
-    if (!Ah.isHexStrict(t))
+  Hh = function (t) {
+    if (!Dh.isHexStrict(t))
       throw new Error('The parameter must be a valid HEX string.')
     var e = '',
       r = 0,
@@ -26280,7 +26300,7 @@ var Ah = {
     }
     return e
   },
-  Rh = function (t) {
+  Gh = function (t) {
     if (!t) return '0x00'
     for (var e = '', r = 0; r < t.length; r++) {
       var n = t.charCodeAt(r).toString(16)
@@ -26288,17 +26308,17 @@ var Ah = {
     }
     return '0x' + e
   },
-  Ih = function (t) {
-    if (((t = t ? t.toLowerCase() : 'ether'), !lt.unitMap[t]))
+  Zh = function (t) {
+    if (((t = t ? t.toLowerCase() : 'ether'), !Tt.unitMap[t]))
       throw new Error(
         'This unit "' +
           t +
           '" doesn\'t exist, please use the one of the following units' +
-          JSON.stringify(lt.unitMap, null, 2)
+          JSON.stringify(Tt.unitMap, null, 2)
       )
     return t
   },
-  Bh = {
+  Kh = {
     _fireError: function (t, e, r, n, i) {
       return (
         !t ||
@@ -26330,25 +26350,25 @@ var Ah = {
     _jsonInterfaceMethodToString: function (t) {
       return t && 'object' == typeof t && t.name && -1 !== t.name.indexOf('(')
         ? t.name
-        : t.name + '(' + Eh(!1, t.inputs).join(',') + ')'
+        : t.name + '(' + Wh(!1, t.inputs).join(',') + ')'
     },
-    _flattenTypes: Eh,
+    _flattenTypes: Wh,
     randomHex: function (t) {
-      return '0x' + Fn(t).toString('hex')
+      return '0x' + ei(t).toString('hex')
     },
-    BN: Ah.BN,
-    isBN: Ah.isBN,
-    isBigNumber: Ah.isBigNumber,
-    isHex: Ah.isHex,
-    isHexStrict: Ah.isHexStrict,
-    sha3: Ah.sha3,
-    sha3Raw: Ah.sha3Raw,
-    keccak256: Ah.sha3,
-    soliditySha3: xh.soliditySha3,
-    soliditySha3Raw: xh.soliditySha3Raw,
-    encodePacked: xh.encodePacked,
-    isAddress: Ah.isAddress,
-    checkAddressChecksum: Ah.checkAddressChecksum,
+    BN: Dh.BN,
+    isBN: Dh.isBN,
+    isBigNumber: Dh.isBigNumber,
+    isHex: Dh.isHex,
+    isHexStrict: Dh.isHexStrict,
+    sha3: Dh.sha3,
+    sha3Raw: Dh.sha3Raw,
+    keccak256: Dh.sha3,
+    soliditySha3: zh.soliditySha3,
+    soliditySha3Raw: zh.soliditySha3Raw,
+    encodePacked: zh.encodePacked,
+    isAddress: Dh.isAddress,
+    checkAddressChecksum: Dh.checkAddressChecksum,
     toChecksumAddress: function (t) {
       if (void 0 === t) return ''
       if (!/^(0x)?[0-9a-f]{40}$/i.test(t))
@@ -26357,59 +26377,59 @@ var Ah = {
         )
       t = t.toLowerCase().replace(/^0x/i, '')
       for (
-        var e = Ah.sha3(t).replace(/^0x/i, ''), r = '0x', n = 0;
+        var e = Dh.sha3(t).replace(/^0x/i, ''), r = '0x', n = 0;
         n < t.length;
         n++
       )
         parseInt(e[n], 16) > 7 ? (r += t[n].toUpperCase()) : (r += t[n])
       return r
     },
-    toHex: Ah.toHex,
-    toBN: Ah.toBN,
-    bytesToHex: Ah.bytesToHex,
-    hexToBytes: Ah.hexToBytes,
-    hexToNumberString: Ah.hexToNumberString,
-    hexToNumber: Ah.hexToNumber,
-    toDecimal: Ah.hexToNumber,
-    numberToHex: Ah.numberToHex,
-    fromDecimal: Ah.numberToHex,
-    hexToUtf8: Ah.hexToUtf8,
-    hexToString: Ah.hexToUtf8,
-    toUtf8: Ah.hexToUtf8,
-    stripHexPrefix: Ah.stripHexPrefix,
-    utf8ToHex: Ah.utf8ToHex,
-    stringToHex: Ah.utf8ToHex,
-    fromUtf8: Ah.utf8ToHex,
-    hexToAscii: kh,
-    toAscii: kh,
-    asciiToHex: Rh,
-    fromAscii: Rh,
-    unitMap: lt.unitMap,
+    toHex: Dh.toHex,
+    toBN: Dh.toBN,
+    bytesToHex: Dh.bytesToHex,
+    hexToBytes: Dh.hexToBytes,
+    hexToNumberString: Dh.hexToNumberString,
+    hexToNumber: Dh.hexToNumber,
+    toDecimal: Dh.hexToNumber,
+    numberToHex: Dh.numberToHex,
+    fromDecimal: Dh.numberToHex,
+    hexToUtf8: Dh.hexToUtf8,
+    hexToString: Dh.hexToUtf8,
+    toUtf8: Dh.hexToUtf8,
+    stripHexPrefix: Dh.stripHexPrefix,
+    utf8ToHex: Dh.utf8ToHex,
+    stringToHex: Dh.utf8ToHex,
+    fromUtf8: Dh.utf8ToHex,
+    hexToAscii: Hh,
+    toAscii: Hh,
+    asciiToHex: Gh,
+    fromAscii: Gh,
+    unitMap: Tt.unitMap,
     toWei: function (t, e) {
-      if (((e = Ih(e)), !Ah.isBN(t) && 'string' != typeof t))
+      if (((e = Zh(e)), !Dh.isBN(t) && 'string' != typeof t))
         throw new Error(
           'Please pass numbers as strings or BN objects to avoid precision errors.'
         )
-      return Ah.isBN(t) ? lt.toWei(t, e) : lt.toWei(t, e).toString(10)
+      return Dh.isBN(t) ? Tt.toWei(t, e) : Tt.toWei(t, e).toString(10)
     },
     fromWei: function (t, e) {
-      if (((e = Ih(e)), !Ah.isBN(t) && 'string' != typeof t))
+      if (((e = Zh(e)), !Dh.isBN(t) && 'string' != typeof t))
         throw new Error(
           'Please pass numbers as strings or BN objects to avoid precision errors.'
         )
-      return Ah.isBN(t) ? lt.fromWei(t, e) : lt.fromWei(t, e).toString(10)
+      return Dh.isBN(t) ? Tt.fromWei(t, e) : Tt.fromWei(t, e).toString(10)
     },
-    padLeft: Ah.leftPad,
-    leftPad: Ah.leftPad,
-    padRight: Ah.rightPad,
-    rightPad: Ah.rightPad,
-    toTwosComplement: Ah.toTwosComplement,
-    isBloom: Ah.isBloom,
-    isUserEthereumAddressInBloom: Ah.isUserEthereumAddressInBloom,
-    isContractAddressInBloom: Ah.isContractAddressInBloom,
-    isTopic: Ah.isTopic,
-    isTopicInBloom: Ah.isTopicInBloom,
-    isInBloom: Ah.isInBloom,
+    padLeft: Dh.leftPad,
+    leftPad: Dh.leftPad,
+    padRight: Dh.rightPad,
+    rightPad: Dh.rightPad,
+    toTwosComplement: Dh.toTwosComplement,
+    isBloom: Dh.isBloom,
+    isUserEthereumAddressInBloom: Dh.isUserEthereumAddressInBloom,
+    isContractAddressInBloom: Dh.isContractAddressInBloom,
+    isTopic: Dh.isTopic,
+    isTopicInBloom: Dh.isTopicInBloom,
+    isInBloom: Dh.isInBloom,
     compareBlockNumbers: function (t, e) {
       if (t == e) return 0
       if (
@@ -26423,16 +26443,16 @@ var Ah = {
         if ('pending' == t) return 1
         if ('pending' == e) return -1
         {
-          let r = new dt(t),
-            n = new dt(e)
+          let r = new Et(t),
+            n = new Et(e)
           return r.lt(n) ? -1 : r.eq(n) ? 0 : 1
         }
       }
       return 0
     },
-    toNumber: Ah.toNumber
+    toNumber: Dh.toNumber
   }
-function Oh(t, e, r) {
+function Vh(t, e, r) {
   var n = !1
   if ('allow' === r) {
     if (t && t.allow) {
@@ -26451,8 +26471,8 @@ function Oh(t, e, r) {
   }
   return n
 }
-function Ch(t, e, r) {
-  var n = Oh(t.credentials, e, r)
+function Jh(t, e, r) {
+  var n = Vh(t.credentials, e, r)
   return (
     'allow' === r
       ? (n &&
@@ -26472,24 +26492,24 @@ function Ch(t, e, r) {
     t
   )
 }
-function Lh(t, e, r, n) {
-  var i = Oh(t.credentials, e, n)
+function $h(t, e, r, n) {
+  var i = Vh(t.credentials, e, n)
   return (
     'allow' === n
       ? i
         ? t.credentials.allow.find(function (t) {
             t.type === e && (t.values = r)
           })
-        : (t = jh(t, e, r, n))
+        : (t = Xh(t, e, r, n))
       : i
       ? t.credentials.deny.find(function (t) {
           t.type === e && (t.values = r)
         })
-      : (t = jh(t, e, r, n)),
+      : (t = Xh(t, e, r, n)),
     t
   )
 }
-function jh(t, e, r, n) {
+function Xh(t, e, r, n) {
   var i = { type: e, values: r }
   return (
     'allow' === n
@@ -26508,13 +26528,13 @@ function jh(t, e, r, n) {
     t
   )
 }
-var Nh = /*#__PURE__*/ (function (t) {
+var Yh = /*#__PURE__*/ (function (t) {
   function e() {
     for (var e, r = arguments.length, n = new Array(r), i = 0; i < r; i++)
       n[i] = arguments[i]
     return ((e = t.call.apply(t, [this].concat(n)) || this).baseUrl = void 0), e
   }
-  A(e, t),
+  U(e, t),
     (e.getInstance = function (t) {
       try {
         var r,
@@ -26586,7 +26606,7 @@ var Nh = /*#__PURE__*/ (function (t) {
         return Promise.reject(t)
       }
     }),
-    M(e, [
+    N(e, [
       {
         key: 'url',
         get: function () {
@@ -26596,8 +26616,8 @@ var Nh = /*#__PURE__*/ (function (t) {
     ]),
     e
   )
-})(K)
-function Dh(t, e) {
+})(ut)
+function Qh(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -26605,22 +26625,22 @@ function Dh(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-function Uh(t, e, r) {
+function tf(t, e, r) {
   if (!t.s) {
-    if (r instanceof zh) {
-      if (!r.s) return void (r.o = Uh.bind(null, t, e))
+    if (r instanceof nf) {
+      if (!r.s) return void (r.o = tf.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(Uh.bind(null, t, e), Uh.bind(null, t, 2))
+      return void r.then(tf.bind(null, t, e), tf.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     var n = t.o
     n && n(t)
   }
 }
-var Fh,
-  qh,
-  zh = /*#__PURE__*/ (function () {
+var ef,
+  rf,
+  nf = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.prototype.then = function (e, r) {
@@ -26630,9 +26650,9 @@ var Fh,
           var o = 1 & i ? e : r
           if (o) {
             try {
-              Uh(n, 1, o(this.v))
+              tf(n, 1, o(this.v))
             } catch (t) {
-              Uh(n, 2, t)
+              tf(n, 2, t)
             }
             return n
           }
@@ -26643,12 +26663,12 @@ var Fh,
             try {
               var i = t.v
               1 & t.s
-                ? Uh(n, 1, e ? e(i) : i)
+                ? tf(n, 1, e ? e(i) : i)
                 : r
-                ? Uh(n, 1, r(i))
-                : Uh(n, 2, i)
+                ? tf(n, 1, r(i))
+                : tf(n, 2, i)
             } catch (t) {
-              Uh(n, 2, t)
+              tf(n, 2, t)
             }
           }),
           n
@@ -26664,16 +26684,16 @@ var Fh,
     (t[(t.FilesEncrypted = 3)] = 'FilesEncrypted'),
     (t[(t.StoringDdo = 4)] = 'StoringDdo'),
     (t[(t.DdoStored = 5)] = 'DdoStored')
-})(Fh || (Fh = {})),
+})(ef || (ef = {})),
   (function (t) {
     t[(t.TransferDataToken = 0)] = 'TransferDataToken'
-  })(qh || (qh = {}))
-var Wh,
-  Hh = /*#__PURE__*/ (function (t) {
+  })(rf || (rf = {}))
+var of,
+  sf = /*#__PURE__*/ (function (t) {
     function e() {
       return t.apply(this, arguments) || this
     }
-    A(e, t),
+    U(e, t),
       (e.getInstance = function (t) {
         try {
           var r = new e()
@@ -26688,7 +26708,7 @@ var Wh,
         var u = this
         return (
           void 0 === r && (r = []),
-          n && !Bh.isAddress(n)
+          n && !Kh.isAddress(n)
             ? (this.logger.error(
                 'Passed Data Token address ' +
                   n +
@@ -26696,7 +26716,7 @@ var Wh,
               ),
               null)
             : (this.logger.log('Creating asset'),
-              new N(function (h) {
+              new Y(function (h) {
                 try {
                   var f,
                     l = function (l) {
@@ -26706,9 +26726,9 @@ var Wh,
                           d.encrypt(p.getDid(), t.main.files, e)
                         ).then(function (a) {
                           u.logger.log('Files encrypted'),
-                            h.next(Fh.FilesEncrypted)
+                            h.next(ef.FilesEncrypted)
                           var f = 0,
-                            l = new Q({
+                            l = new pt({
                               id: p.getDid(),
                               dataToken: n,
                               authentication: [
@@ -26727,7 +26747,7 @@ var Wh,
                               service: [
                                 {
                                   type: 'metadata',
-                                  attributes: _(
+                                  attributes: D(
                                     {
                                       status: {
                                         isListed: !0,
@@ -26738,12 +26758,12 @@ var Wh,
                                     t,
                                     {
                                       encryptedFiles: a,
-                                      main: _({}, t.main, {
+                                      main: D({}, t.main, {
                                         files: t.main.files.map(function (
                                           t,
                                           e
                                         ) {
-                                          return _({}, t, {
+                                          return D({}, t, {
                                             index: e,
                                             url: void 0
                                           })
@@ -26765,7 +26785,7 @@ var Wh,
                                 })
                                 .reverse()
                                 .map(function (t) {
-                                  return _({}, t, { index: f++ })
+                                  return D({}, t, { index: f++ })
                                 })
                             })
                           return Promise.resolve(
@@ -26784,13 +26804,13 @@ var Wh,
                         })
                       }
                       var d,
-                        p = $.generate(n)
+                        p = lt.generate(n)
                       u.logger.log('Encrypting files'),
-                        h.next(Fh.EncryptingFiles)
+                        h.next(ef.EncryptingFiles)
                       var m = (function () {
                         if (a)
                           return Promise.resolve(
-                            et.getInstance(u.instanceConfig)
+                            vt.getInstance(u.instanceConfig)
                           ).then(function (t) {
                             return (
                               (d = t),
@@ -26812,11 +26832,11 @@ var Wh,
                       if (!n)
                         return (
                           u.logger.log('Creating datatoken'),
-                          h.next(Fh.CreatingDataToken),
+                          h.next(ef.CreatingDataToken),
                           Promise.resolve(
                             c.create('', e.getId(), i, o, s)
                           ).then(function (t) {
-                            if (!Bh.isAddress((n = t)))
+                            if (!Kh.isAddress((n = t)))
                               return (
                                 u.logger.error(
                                   'Created Data Token address ' +
@@ -26827,7 +26847,7 @@ var Wh,
                                 null
                               )
                             u.logger.log('DataToken ' + n + ' created'),
-                              h.next(Fh.DataTokenCreated)
+                              h.next(ef.DataTokenCreated)
                           })
                         )
                     })()
@@ -26879,8 +26899,8 @@ var Wh,
         try {
           var i
           return (
-            r && r.length > 0 ? Lh(t, e, r, 'allow') : Ch(t, e, 'allow'),
-            (i = n && n.length > 0 ? Lh(t, e, n, 'deny') : Ch(t, e, 'deny')),
+            r && r.length > 0 ? $h(t, e, r, 'allow') : Jh(t, e, 'allow'),
+            (i = n && n.length > 0 ? $h(t, e, n, 'deny') : Jh(t, e, 'deny')),
             Promise.resolve(i)
           )
         } catch (t) {
@@ -26949,7 +26969,7 @@ var Wh,
       (r.creator = function (t) {
         try {
           var e = this
-          return Promise.resolve(H(t, e.ocean)).then(function (t) {
+          return Promise.resolve(ot(t, e.ocean)).then(function (t) {
             var r = t.did,
               n = t.ddo,
               i = n.getChecksum(),
@@ -26979,7 +26999,7 @@ var Wh,
       }),
       (r.getServiceByType = function (t, e) {
         try {
-          return Promise.resolve(H(t, this.ocean)).then(function (t) {
+          return Promise.resolve(ot(t, this.ocean)).then(function (t) {
             var r
             return (
               t.ddo.service.forEach(function (t) {
@@ -26994,7 +27014,7 @@ var Wh,
       }),
       (r.getServiceByIndex = function (t, e) {
         try {
-          return Promise.resolve(H(t, this.ocean)).then(function (t) {
+          return Promise.resolve(ot(t, this.ocean)).then(function (t) {
             var r
             return (
               t.ddo.service.forEach(function (t) {
@@ -27047,7 +27067,7 @@ var Wh,
       (r.initialize = function (t, e, r, n, i, o) {
         void 0 === n && (n = -1)
         try {
-          return Promise.resolve(et.getInstance(this.instanceConfig)).then(
+          return Promise.resolve(vt.getInstance(this.instanceConfig)).then(
             function (s) {
               return Promise.resolve(s.setBaseUrl(i)).then(function () {
                 return Promise.resolve(s.initialize(t, n, e, r, o)).then(
@@ -27069,7 +27089,7 @@ var Wh,
         try {
           var h,
             f = this
-          return Promise.resolve(H(t, f.ocean)).then(function (t) {
+          return Promise.resolve(ot(t, f.ocean)).then(function (t) {
             var l = t.ddo
             return Promise.resolve(f.isConsumable(l, r, 'address', a)).then(
               function (t) {
@@ -27084,7 +27104,7 @@ var Wh,
                       throw new Error(
                         'Order asset failed, Missing required fiels in userCustomParameters'
                       )
-                    return Dh(
+                    return Qh(
                       function () {
                         return Promise.resolve(
                           f.initialize(l, e, r, n, h.serviceEndpoint, s)
@@ -27096,8 +27116,8 @@ var Wh,
                               : Promise.resolve(
                                   f.ocean.datatokens.balance(t.dataToken, r)
                                 ).then(function (e) {
-                                  var s = new q(e),
-                                    a = new q(String(t.numTokens))
+                                  var s = new rt(e),
+                                    a = new rt(String(t.numTokens))
                                   if (s.isLessThan(a))
                                     throw (
                                       (f.logger.error(
@@ -27206,16 +27226,16 @@ var Wh,
                   try {
                     for (; ++o < t.length; )
                       if ((s = e(o)) && s.then) {
-                        if (!((a = s) instanceof zh && 1 & a.s))
+                        if (!((a = s) instanceof nf && 1 & a.s))
                           return void s.then(
                             r,
-                            i || (i = Uh.bind(null, (n = new zh()), 2))
+                            i || (i = tf.bind(null, (n = new nf()), 2))
                           )
                         s = s.v
                       }
-                    n ? Uh(n, 1, s) : (n = s)
+                    n ? tf(n, 1, s) : (n = s)
                   } catch (t) {
-                    Uh(n || (n = new zh()), 2, t)
+                    tf(n || (n = new nf()), 2, t)
                   }
                   var a
                 })(),
@@ -27232,7 +27252,7 @@ var Wh,
                   payer:
                     '0x' + t[r].topics[2].substring(t[r].topics[2].length - 40)
                 },
-                s = Dh(
+                s = Qh(
                   function () {
                     var s = n.web3.eth.abi.decodeParameters(
                       ['uint256', 'uint256', 'uint256', 'uint256'],
@@ -27242,7 +27262,7 @@ var Wh,
                       (o.serviceId = parseInt(s[1])),
                       (o.timestamp = parseInt(s[2])),
                       (o.amount = n.web3.utils.fromWei(s[0])),
-                      (o.did = I(C(o.dtAddress))),
+                      (o.did = Z(J(o.dtAddress))),
                       Promise.resolve(
                         n.getServiceByIndex(o.did, o.serviceId)
                       ).then(function (t) {
@@ -27289,7 +27309,7 @@ var Wh,
             f = (function () {
               var i
               if (e && null != h && null != (i = h.config) && i.rbacUri)
-                return Promise.resolve(Nh.getInstance(s.instanceConfig)).then(
+                return Promise.resolve(Yh.getInstance(s.instanceConfig)).then(
                   function (i) {
                     return Promise.resolve(
                       i.isPermit('market', 'consume', n, e, r, t.id)
@@ -27315,7 +27335,7 @@ var Wh,
       (r.isUserCustomParametersValid = function (t, e) {
         try {
           if (t)
-            for (var r, n = T(t); !(r = n()).done; ) {
+            for (var r, n = z(t); !(r = n()).done; ) {
               var i = r.value,
                 o = i.name
               if (i.required && (!e || !e[o]))
@@ -27331,19 +27351,19 @@ var Wh,
       }),
       e
     )
-  })(K)
+  })(ut)
 !(function (t) {
   ;(t.Loading = 'Loading'),
     (t.Unknown = 'Unknown'),
     (t.Stopped = 'Stopped'),
     (t.Working = 'Working')
-})(Wh || (Wh = {}))
-var Gh = /*#__PURE__*/ (function (t) {
+})(of || (of = {}))
+var af = /*#__PURE__*/ (function (t) {
   function e() {
     return t.apply(this, arguments) || this
   }
   return (
-    A(e, t),
+    U(e, t),
     (e.getInstance = function (t) {
       try {
         var r = new e()
@@ -27359,7 +27379,7 @@ var Gh = /*#__PURE__*/ (function (t) {
             return (
               (r.status = {
                 ok: !t.find(function (t) {
-                  return t.status !== Wh.Working
+                  return t.status !== of.Working
                 })
               }),
               r
@@ -27371,7 +27391,7 @@ var Gh = /*#__PURE__*/ (function (t) {
           name: 'Lib',
           version: '0.20.2',
           commit: '2be0918d8355395a4206396d5b592d6cc2d88eab',
-          status: Wh.Working
+          status: of.Working
         }
         var n = (function (t, n) {
           try {
@@ -27380,7 +27400,7 @@ var Gh = /*#__PURE__*/ (function (t) {
             ).then(function (t) {
               r.metadataCache = {
                 name: t.software,
-                status: Wh.Working,
+                status: of.Working,
                 version: t.version
               }
             })
@@ -27389,7 +27409,7 @@ var Gh = /*#__PURE__*/ (function (t) {
           }
           return i && i.then ? i.then(void 0, n) : i
         })(0, function () {
-          r.metadataCache = { name: 'MetadataCache', status: Wh.Stopped }
+          r.metadataCache = { name: 'MetadataCache', status: of.Stopped }
         })
         return Promise.resolve(n && n.then ? n.then(t) : t())
       } catch (t) {
@@ -27398,8 +27418,8 @@ var Gh = /*#__PURE__*/ (function (t) {
     }),
     e
   )
-})(K)
-function Zh(t, e) {
+})(ut)
+function uf(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -27407,7 +27427,7 @@ function Zh(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var Kh = /*#__PURE__*/ (function () {
+var hf = /*#__PURE__*/ (function () {
   function t(t, e) {
     ;(this.web3 = void 0),
       (this.logger = void 0),
@@ -27424,7 +27444,7 @@ var Kh = /*#__PURE__*/ (function () {
             n.web3.currentProvider &&
             n.web3.currentProvider.isMetaMask
         return Promise.resolve(
-          Zh(
+          uf(
             function () {
               return Promise.resolve(n.web3.eth.personal.sign(t, e, r))
             },
@@ -27433,7 +27453,7 @@ var Kh = /*#__PURE__*/ (function () {
               return (
                 n.logger.warn('Error on personal sign.'),
                 n.logger.warn(r),
-                Zh(
+                uf(
                   function () {
                     return Promise.resolve(n.web3.eth.sign(t, e))
                   },
@@ -27462,7 +27482,7 @@ var Kh = /*#__PURE__*/ (function () {
             n.web3.currentProvider &&
             n.web3.currentProvider.isMetaMask
         return Promise.resolve(
-          Zh(
+          uf(
             function () {
               return Promise.resolve(n.web3.eth.personal.sign(i, e, r))
             },
@@ -27471,7 +27491,7 @@ var Kh = /*#__PURE__*/ (function () {
               return (
                 n.logger.warn('Error on personal sign.'),
                 n.logger.warn(t),
-                Zh(
+                uf(
                   function () {
                     return Promise.resolve(n.web3.eth.sign(i, e))
                   },
@@ -27531,17 +27551,17 @@ var Kh = /*#__PURE__*/ (function () {
     t
   )
 })()
-function Vh(t) {
+function ff(t) {
   if (!Number.isInteger(t))
     throw new TypeError('Expected an integer, got ' + typeof t)
   var e = new WeakMap(),
-    r = new i(),
+    r = new P.default(),
     n = setTimeout(function () {
       r.abort()
     }, t)
   return e.set(r.signal, n), r.signal
 }
-var Jh = /*#__PURE__*/ (function () {
+var lf = /*#__PURE__*/ (function () {
     function t(t, e) {
       ;(this.logger = void 0),
         (this.requestTimeout = 5e3),
@@ -27568,16 +27588,16 @@ var Jh = /*#__PURE__*/ (function () {
                 method: 'POST',
                 body: e,
                 headers: r,
-                signal: Vh(this.requestTimeout)
+                signal: ff(this.requestTimeout)
               }
-            : { method: 'POST', signal: Vh(this.requestTimeout) }
+            : { method: 'POST', signal: ff(this.requestTimeout) }
         )
       }),
       (e.get = function (t) {
         return this.fetch(t, {
           method: 'GET',
           headers: { 'Content-type': 'application/json' },
-          signal: Vh(this.requestTimeout)
+          signal: ff(this.requestTimeout)
         })
       }),
       (e.put = function (t, e) {
@@ -27588,12 +27608,12 @@ var Jh = /*#__PURE__*/ (function () {
                 method: 'PUT',
                 body: e,
                 headers: { 'Content-type': 'application/json' },
-                signal: Vh(this.requestTimeout)
+                signal: ff(this.requestTimeout)
               }
             : {
                 method: 'PUT',
                 headers: { 'Content-type': 'application/json' },
-                signal: Vh(this.requestTimeout)
+                signal: ff(this.requestTimeout)
               }
         )
       }),
@@ -27605,34 +27625,34 @@ var Jh = /*#__PURE__*/ (function () {
                 method: 'DELETE',
                 body: e,
                 headers: { 'Content-type': 'application/json' },
-                signal: Vh(this.requestTimeout)
+                signal: ff(this.requestTimeout)
               }
             : {
                 method: 'DELETE',
                 headers: { 'Content-type': 'application/json' },
-                signal: Vh(this.requestTimeout)
+                signal: ff(this.requestTimeout)
               }
         )
       }),
       (e.fetch = function (t, e) {
         try {
-          var n = this
-          return Promise.resolve(r(t, e)).then(function (r) {
+          var r = this
+          return Promise.resolve(A.default(t, e)).then(function (n) {
             var i = (function () {
-              if (!r.ok) {
-                n.logger.error('Error requesting [' + e.method + '] ' + t)
-                var i = n.logger,
+              if (!n.ok) {
+                r.logger.error('Error requesting [' + e.method + '] ' + t)
+                var i = r.logger,
                   o = i.error
-                return Promise.resolve(r.text()).then(function (t) {
-                  throw (o.call(i, 'Response message: \n' + t), r)
+                return Promise.resolve(n.text()).then(function (t) {
+                  throw (o.call(i, 'Response message: \n' + t), n)
                 })
               }
             })()
             return i && i.then
               ? i.then(function (t) {
-                  return r
+                  return n
                 })
-              : r
+              : n
           })
         } catch (t) {
           return Promise.reject(t)
@@ -27641,7 +27661,7 @@ var Jh = /*#__PURE__*/ (function () {
       t
     )
   })(),
-  $h = /*#__PURE__*/ (function (t) {
+  cf = /*#__PURE__*/ (function (t) {
     function e() {
       for (var e, r = arguments.length, n = new Array(r), i = 0; i < r; i++)
         n[i] = arguments[i]
@@ -27652,15 +27672,15 @@ var Jh = /*#__PURE__*/ (function () {
       )
     }
     return (
-      A(e, t),
+      U(e, t),
       (e.getInstance = function (t) {
         try {
           var r,
             n = new e()
           return (
             n.setInstanceConfig(t),
-            (n.signature = new Kh(t.web3, t.logger)),
-            (n.fetch = new Jh(
+            (n.signature = new hf(t.web3, t.logger)),
+            (n.fetch = new lf(
               t.logger,
               null == (r = t.config) ? void 0 : r.requestTimeout
             )),
@@ -27672,8 +27692,8 @@ var Jh = /*#__PURE__*/ (function () {
       }),
       e
     )
-  })(K)
-function Xh(t, e) {
+  })(ut)
+function df(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -27681,21 +27701,21 @@ function Xh(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var Yh = '/api/v1/aquarius/assets/ddo'
-function Qh(t, e, r) {
+var pf = '/api/v1/aquarius/assets/ddo'
+function mf(t, e, r) {
   if (!t.s) {
-    if (r instanceof tf) {
-      if (!r.s) return void (r.o = Qh.bind(null, t, e))
+    if (r instanceof vf) {
+      if (!r.s) return void (r.o = mf.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(Qh.bind(null, t, e), Qh.bind(null, t, 2))
+      return void r.then(mf.bind(null, t, e), mf.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     const n = t.o
     n && n(t)
   }
 }
-var tf = /*#__PURE__*/ (function () {
+var vf = /*#__PURE__*/ (function () {
   function t() {}
   return (
     (t.prototype.then = function (e, r) {
@@ -27705,9 +27725,9 @@ var tf = /*#__PURE__*/ (function () {
         var o = 1 & i ? e : r
         if (o) {
           try {
-            Qh(n, 1, o(this.v))
+            mf(n, 1, o(this.v))
           } catch (t) {
-            Qh(n, 2, t)
+            mf(n, 2, t)
           }
           return n
         }
@@ -27717,9 +27737,9 @@ var tf = /*#__PURE__*/ (function () {
         (this.o = function (t) {
           try {
             var i = t.v
-            1 & t.s ? Qh(n, 1, e ? e(i) : i) : r ? Qh(n, 1, r(i)) : Qh(n, 2, i)
+            1 & t.s ? mf(n, 1, e ? e(i) : i) : r ? mf(n, 1, r(i)) : mf(n, 2, i)
           } catch (t) {
-            Qh(n, 2, t)
+            mf(n, 2, t)
           }
         }),
         n
@@ -27728,15 +27748,15 @@ var tf = /*#__PURE__*/ (function () {
     t
   )
 })()
-function ef(t) {
-  return t instanceof tf && 1 & t.s
+function gf(t) {
+  return t instanceof vf && 1 & t.s
 }
-var rf = /*#__PURE__*/ (function () {
+var yf = /*#__PURE__*/ (function () {
   function t(t, e, r) {
     ;(this.fetch = void 0),
       (this.logger = void 0),
       (this.metadataCacheUri = void 0),
-      (this.fetch = new Jh(e, r)),
+      (this.fetch = new lf(e, r)),
       (this.logger = e),
       (this.metadataCacheUri = t)
   }
@@ -27842,11 +27862,11 @@ var rf = /*#__PURE__*/ (function () {
       try {
         var e = this,
           r = { valid: !1 },
-          n = G(t) ? '/validate-remote' : '/validate',
-          i = Xh(
+          n = st(t) ? '/validate-remote' : '/validate',
+          i = df(
             function () {
               return Promise.resolve(
-                e.fetch.post('' + e.url + Yh + n, JSON.stringify(t))
+                e.fetch.post('' + e.url + pf + n, JSON.stringify(t))
               ).then(function (t) {
                 var n = (function () {
                   if (t.ok)
@@ -27880,8 +27900,8 @@ var rf = /*#__PURE__*/ (function () {
     (e.retrieveDDO = function (t, e) {
       try {
         var r = this
-        t = t && $.parse(t)
-        var n = e || '' + r.url + Yh + '/' + t.getDid()
+        t = t && lt.parse(t)
+        var n = e || '' + r.url + pf + '/' + t.getDid()
         return Promise.resolve(
           r.fetch
             .get(n)
@@ -27897,7 +27917,7 @@ var rf = /*#__PURE__*/ (function () {
                   null)
             })
             .then(function (t) {
-              return new Q(t)
+              return new pt(t)
             })
             .catch(function (t) {
               return (
@@ -27929,7 +27949,7 @@ var rf = /*#__PURE__*/ (function () {
     }),
     (e.waitForAqua = function (t, e) {
       try {
-        var r,
+        var n,
           i = this,
           o = 0,
           s = (function (t, e) {
@@ -27937,66 +27957,66 @@ var rf = /*#__PURE__*/ (function () {
             do {
               var n = t()
               if (n && n.then) {
-                if (!ef(n)) {
+                if (!gf(n)) {
                   r = !0
                   break
                 }
                 n = n.v
               }
               var i = e()
-              if ((ef(i) && (i = i.v), !i)) return n
+              if ((gf(i) && (i = i.v), !i)) return n
             } while (!i.then)
-            var o = new tf(),
-              s = Qh.bind(null, o, 2)
+            var o = new vf(),
+              s = mf.bind(null, o, 2)
             return (r ? n.then(a) : i.then(u)).then(void 0, s), o
             function a(r) {
-              for (n = r; ef((i = e())) && (i = i.v), i; ) {
+              for (n = r; gf((i = e())) && (i = i.v), i; ) {
                 if (i.then) return void i.then(u).then(void 0, s)
                 if ((n = t()) && n.then) {
-                  if (!ef(n)) return void n.then(a).then(void 0, s)
+                  if (!gf(n)) return void n.then(a).then(void 0, s)
                   n = n.v
                 }
               }
-              Qh(o, 1, n)
+              mf(o, 1, n)
             }
             function u(r) {
               if (r) {
                 do {
                   if ((n = t()) && n.then) {
-                    if (!ef(n)) return void n.then(a).then(void 0, s)
+                    if (!gf(n)) return void n.then(a).then(void 0, s)
                     n = n.v
                   }
-                  if ((ef((r = e())) && (r = r.v), !r)) return void Qh(o, 1, n)
+                  if ((gf((r = e())) && (r = r.v), !r)) return void mf(o, 1, n)
                 } while (!r.then)
                 r.then(u).then(void 0, s)
-              } else Qh(o, 1, n)
+              } else mf(o, 1, n)
             }
           })(
             function () {
               function s() {
-                if (!r)
+                if (!n)
                   return Promise.resolve(i.sleep(1500)).then(function () {
                     o++
                   })
               }
-              var a = Xh(
+              var a = df(
                 function () {
                   return Promise.resolve(
-                    n(i.getURI() + '/api/v1/aquarius/assets/ddo/' + t)
+                    r.fetch(i.getURI() + '/api/v1/aquarius/assets/ddo/' + t)
                   ).then(function (t) {
-                    var n = (function () {
+                    var r = (function () {
                       if (t.ok) {
-                        var n = (function () {
+                        var r = (function () {
                           if (e)
                             return Promise.resolve(t.json()).then(function (t) {
-                              t.event && t.event.txid === e && (r = 1)
+                              t.event && t.event.txid === e && (n = 1)
                             })
-                          r = 1
+                          n = 1
                         })()
-                        if (n && n.then) return n.then(function () {})
+                        if (r && r.then) return r.then(function () {})
                       }
                     })()
-                    if (n && n.then) return n.then(function () {})
+                    if (r && r.then) return r.then(function () {})
                   })
                 },
                 function () {}
@@ -28004,7 +28024,7 @@ var rf = /*#__PURE__*/ (function () {
               return a && a.then ? a.then(s) : s()
             },
             function () {
-              return !r && o < 100
+              return !n && o < 100
             }
           )
         return Promise.resolve(s && s.then ? s.then(function () {}) : void 0)
@@ -28012,7 +28032,7 @@ var rf = /*#__PURE__*/ (function () {
         return Promise.reject(t)
       }
     }),
-    M(t, [
+    N(t, [
       {
         key: 'url',
         get: function () {
@@ -28023,7 +28043,7 @@ var rf = /*#__PURE__*/ (function () {
     t
   )
 })()
-function nf(t, e) {
+function bf(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -28031,8 +28051,8 @@ function nf(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var of = /*#__PURE__*/ (function () {
-  function t(t, e, r, n, i, s) {
+var wf = /*#__PURE__*/ (function () {
+  function t(t, e, r, n, i, o) {
     void 0 === r && (r = null),
       void 0 === n && (n = null),
       (this.GASLIMIT_DEFAULT = 1e6),
@@ -28044,11 +28064,11 @@ var of = /*#__PURE__*/ (function () {
       (this.metadataCache = void 0),
       (this.config = void 0),
       (this.web3 = t),
-      (this.config = s),
+      (this.config = o),
       (this.DDOContractAddress = r),
-      (this.DDOContractABI = n || o.abi),
+      (this.DDOContractABI = n || S.default.abi),
       t &&
-        (this.DDOContract = W(
+        (this.DDOContract = it(
           new this.web3.eth.Contract(
             this.DDOContractABI,
             this.DDOContractAddress
@@ -28062,8 +28082,8 @@ var of = /*#__PURE__*/ (function () {
   return (
     (e.compressDDO = function (t) {
       try {
-        s.disableEndMark = !0
-        var e = s.compress(t, 9)
+        o.LZMA.disableEndMark = !0
+        var e = o.LZMA.compress(t, 9)
         return Promise.resolve(e)
       } catch (t) {
         return Promise.reject(t)
@@ -28074,7 +28094,7 @@ var of = /*#__PURE__*/ (function () {
       try {
         var o = function (i) {
             return Promise.resolve(s.prepareRawData(e, n)).then(function (e) {
-              if (e) return s.publishRaw(O(t), e.flags, e.data, r)
+              if (e) return s.publishRaw(V(t), e.flags, e.data, r)
               throw new Error('Could not prepare raw data for publish')
             })
           },
@@ -28097,7 +28117,7 @@ var of = /*#__PURE__*/ (function () {
       try {
         var o = function (i) {
             return Promise.resolve(s.prepareRawData(e, n)).then(function (e) {
-              if (e) return s.updateRaw(O(t), e.flags, e.data, r)
+              if (e) return s.updateRaw(V(t), e.flags, e.data, r)
               throw new Error('Could not prepare raw data for udate')
             })
           },
@@ -28124,7 +28144,7 @@ var of = /*#__PURE__*/ (function () {
           },
           i = this,
           o = 0,
-          s = Q.serialize(t),
+          s = pt.serialize(t),
           a =
             !1 === e
               ? Promise.resolve(i.compressDDO(s)).then(function (t) {
@@ -28144,12 +28164,12 @@ var of = /*#__PURE__*/ (function () {
     (e.publishRaw = function (t, e, r, n) {
       try {
         var i = function () {
-            return nf(
+            return bf(
               function () {
-                var i = o.DDOContract.methods.create(O(t), e, r),
+                var i = o.DDOContract.methods.create(V(t), e, r),
                   a = i.send,
                   u = s + 1
-                return Promise.resolve(z(o.web3, o.config)).then(function (t) {
+                return Promise.resolve(nt(o.web3, o.config)).then(function (t) {
                   return Promise.resolve(
                     a.call(i, { from: n, gas: u, gasPrice: t })
                   )
@@ -28172,11 +28192,11 @@ var of = /*#__PURE__*/ (function () {
           )
         var s,
           a = o.GASLIMIT_DEFAULT,
-          u = nf(
+          u = bf(
             function () {
               return Promise.resolve(
                 o.DDOContract.methods
-                  .create(O(t), e, r)
+                  .create(V(t), e, r)
                   .estimateGas({ from: n }, function (t, e) {
                     return t ? a : e
                   })
@@ -28196,12 +28216,12 @@ var of = /*#__PURE__*/ (function () {
     (e.updateRaw = function (t, e, r, n) {
       try {
         var i = function () {
-            return nf(
+            return bf(
               function () {
-                var i = o.DDOContract.methods.update(O(t), e, r),
+                var i = o.DDOContract.methods.update(V(t), e, r),
                   a = i.send,
                   u = s + 1
-                return Promise.resolve(z(o.web3, o.config)).then(function (t) {
+                return Promise.resolve(nt(o.web3, o.config)).then(function (t) {
                   return Promise.resolve(
                     a.call(i, { from: n, gas: u, gasPrice: t })
                   )
@@ -28224,11 +28244,11 @@ var of = /*#__PURE__*/ (function () {
           )
         var s,
           a = o.GASLIMIT_DEFAULT,
-          u = nf(
+          u = bf(
             function () {
               return Promise.resolve(
                 o.DDOContract.methods
-                  .update(O(t), e, r)
+                  .update(V(t), e, r)
                   .estimateGas({ from: n }, function (t, e) {
                     return t ? a : e
                   })
@@ -28250,11 +28270,11 @@ var of = /*#__PURE__*/ (function () {
         var n = this
         return Promise.resolve(
           n.DDOContract
-            ? nf(
+            ? bf(
                 function () {
                   return Promise.resolve(
                     n.DDOContract.methods
-                      .transferOwnership(O(t), e)
+                      .transferOwnership(V(t), e)
                       .send({ from: r })
                   )
                 },
@@ -28306,7 +28326,7 @@ var of = /*#__PURE__*/ (function () {
     t
   )
 })()
-function sf(t, e) {
+function Mf(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -28314,20 +28334,20 @@ function sf(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-function af(t, e, r) {
+function _f(t, e, r) {
   if (!t.s) {
-    if (r instanceof uf) {
-      if (!r.s) return void (r.o = af.bind(null, t, e))
+    if (r instanceof Af) {
+      if (!r.s) return void (r.o = _f.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(af.bind(null, t, e), af.bind(null, t, 2))
+      return void r.then(_f.bind(null, t, e), _f.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     var n = t.o
     n && n(t)
   }
 }
-var uf = /*#__PURE__*/ (function () {
+var Af = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.prototype.then = function (e, r) {
@@ -28337,9 +28357,9 @@ var uf = /*#__PURE__*/ (function () {
           var o = 1 & i ? e : r
           if (o) {
             try {
-              af(n, 1, o(this.v))
+              _f(n, 1, o(this.v))
             } catch (t) {
-              af(n, 2, t)
+              _f(n, 2, t)
             }
             return n
           }
@@ -28350,12 +28370,12 @@ var uf = /*#__PURE__*/ (function () {
             try {
               var i = t.v
               1 & t.s
-                ? af(n, 1, e ? e(i) : i)
+                ? _f(n, 1, e ? e(i) : i)
                 : r
-                ? af(n, 1, r(i))
-                : af(n, 2, i)
+                ? _f(n, 1, r(i))
+                : _f(n, 2, i)
             } catch (t) {
-              af(n, 2, t)
+              _f(n, 2, t)
             }
           }),
           n
@@ -28364,8 +28384,8 @@ var uf = /*#__PURE__*/ (function () {
       t
     )
   })(),
-  hf = /*#__PURE__*/ (function () {
-    function e(t, e, r, n, i, o) {
+  Pf = /*#__PURE__*/ (function () {
+    function t(t, e, r, n, i, o) {
       ;(this.GASLIMIT_DEFAULT = 1e6),
         (this.factoryAddress = void 0),
         (this.factoryABI = void 0),
@@ -28375,18 +28395,18 @@ var uf = /*#__PURE__*/ (function () {
         (this.startBlock = void 0),
         (this.config = void 0),
         (this.factoryAddress = t),
-        (this.factoryABI = e || a.abi),
-        (this.datatokensABI = r || u.abi),
+        (this.factoryABI = e || T.default.abi),
+        (this.datatokensABI = r || x.default.abi),
         (this.web3 = n),
         (this.logger = i),
         (this.config = o),
         (this.startBlock = (o && o.startBlock) || 0)
     }
-    var r = e.prototype
+    var e = t.prototype
     return (
-      (r.generateDtName = function (t) {
+      (e.generateDtName = function (t) {
         var e = (function (t) {
-          var e = t || Z,
+          var e = t || at,
             r = Math.floor(Math.random() * e.adjectives.length),
             n = Math.floor(Math.random() * e.nouns.length),
             i = Math.floor(100 * Math.random()),
@@ -28404,13 +28424,13 @@ var uf = /*#__PURE__*/ (function () {
         })(t)
         return { name: e.name, symbol: e.symbol }
       }),
-      (r.create = function (t, e, r, n, i) {
+      (e.create = function (t, e, r, n, i) {
         try {
           var o = function () {
               var o = h.methods.createToken(t, n, i, s.web3.utils.toWei(r)),
                 a = o.send,
                 f = u + 1
-              return Promise.resolve(z(s.web3, s.config)).then(function (t) {
+              return Promise.resolve(nt(s.web3, s.config)).then(function (t) {
                 return Promise.resolve(
                   a.call(o, { from: e, gas: f, gasPrice: t })
                 ).then(function (t) {
@@ -28432,14 +28452,14 @@ var uf = /*#__PURE__*/ (function () {
             ;(n = a.name), (i = a.symbol)
           }
           var u,
-            h = W(
+            h = it(
               new s.web3.eth.Contract(s.factoryABI, s.factoryAddress, {
                 from: e
               }),
               s.config
             ),
             f = s.GASLIMIT_DEFAULT,
-            l = sf(
+            l = Mf(
               function () {
                 return Promise.resolve(
                   h.methods
@@ -28460,26 +28480,26 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.approve = function (t, e, r, n) {
+      (e.approve = function (t, e, r, n) {
         try {
           var i,
             o = function () {
               var t = a.methods.approve(e, s.web3.utils.toWei(r)),
                 o = t.send,
                 u = i + 1
-              return Promise.resolve(z(s.web3, s.config)).then(function (e) {
+              return Promise.resolve(nt(s.web3, s.config)).then(function (e) {
                 return Promise.resolve(
                   o.call(t, { from: n, gas: u, gasPrice: e })
                 )
               })
             },
             s = this,
-            a = W(
+            a = it(
               new s.web3.eth.Contract(s.datatokensABI, t, { from: n }),
               s.config
             ),
             u = s.GASLIMIT_DEFAULT,
-            h = sf(
+            h = Mf(
               function () {
                 return Promise.resolve(
                   a.methods
@@ -28500,46 +28520,46 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.mint = function (e, r, n, i) {
+      (e.mint = function (t, e, r, n) {
         try {
-          var o = this,
-            s = W(
-              new o.web3.eth.Contract(o.datatokensABI, e, { from: r }),
-              o.config
+          var i = this,
+            o = it(
+              new i.web3.eth.Contract(i.datatokensABI, t, { from: e }),
+              i.config
             )
-          return Promise.resolve(o.getCap(e)).then(function (e) {
-            if (new t(e).gte(n)) {
-              var a,
-                u = function () {
-                  var t = s.methods.mint(i || r, o.web3.utils.toWei(n)),
-                    e = t.send,
-                    u = a + 1
-                  return Promise.resolve(z(o.web3, o.config)).then(function (
-                    n
+          return Promise.resolve(i.getCap(t)).then(function (t) {
+            if (new M.default(t).gte(r)) {
+              var s,
+                a = function () {
+                  var t = o.methods.mint(n || e, i.web3.utils.toWei(r)),
+                    a = t.send,
+                    u = s + 1
+                  return Promise.resolve(nt(i.web3, i.config)).then(function (
+                    r
                   ) {
                     return Promise.resolve(
-                      e.call(t, { from: r, gas: u, gasPrice: n })
+                      a.call(t, { from: e, gas: u, gasPrice: r })
                     )
                   })
                 },
-                h = o.GASLIMIT_DEFAULT,
-                f = sf(
+                u = i.GASLIMIT_DEFAULT,
+                h = Mf(
                   function () {
                     return Promise.resolve(
-                      s.methods
-                        .mint(i || r, o.web3.utils.toWei(n))
-                        .estimateGas({ from: r }, function (t, e) {
-                          return t ? h : e
+                      o.methods
+                        .mint(n || e, i.web3.utils.toWei(r))
+                        .estimateGas({ from: e }, function (t, e) {
+                          return t ? u : e
                         })
                     ).then(function (t) {
-                      a = t
+                      s = t
                     })
                   },
                   function () {
-                    a = h
+                    s = u
                   }
                 )
-              return f && f.then ? f.then(u) : u()
+              return h && h.then ? h.then(a) : a()
             }
             throw new Error('Mint amount exceeds cap available')
           })
@@ -28547,14 +28567,14 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.transfer = function (t, e, r, n) {
+      (e.transfer = function (t, e, r, n) {
         try {
           return Promise.resolve(this.transferToken(t, e, r, n))
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (r.transferToken = function (t, e, r, n) {
+      (e.transferToken = function (t, e, r, n) {
         try {
           var i = this.web3.utils.toWei(r)
           return Promise.resolve(this.transferWei(t, e, i, n))
@@ -28562,26 +28582,26 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.transferWei = function (t, e, r, n) {
+      (e.transferWei = function (t, e, r, n) {
         try {
           var i,
             o = function () {
               var t = a.methods.transfer(e, r),
                 o = t.send,
                 u = i + 1
-              return Promise.resolve(z(s.web3, s.config)).then(function (e) {
+              return Promise.resolve(nt(s.web3, s.config)).then(function (e) {
                 return Promise.resolve(
                   o.call(t, { from: n, gas: u, gasPrice: e })
                 )
               })
             },
             s = this,
-            a = W(
+            a = it(
               new s.web3.eth.Contract(s.datatokensABI, t, { from: n }),
               s.config
             ),
             u = s.GASLIMIT_DEFAULT,
-            h = sf(
+            h = Mf(
               function () {
                 return Promise.resolve(
                   a.methods
@@ -28602,26 +28622,26 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.transferFrom = function (t, e, r, n) {
+      (e.transferFrom = function (t, e, r, n) {
         try {
           var i,
             o = function () {
               var t = a.methods.transferFrom(e, n, s.web3.utils.toWei(r)),
                 o = t.send,
                 u = i + 1
-              return Promise.resolve(z(s.web3, s.config)).then(function (e) {
+              return Promise.resolve(nt(s.web3, s.config)).then(function (e) {
                 return Promise.resolve(
                   o.call(t, { from: n, gas: u, gasPrice: e })
                 )
               })
             },
             s = this,
-            a = W(
+            a = it(
               new s.web3.eth.Contract(s.datatokensABI, t, { from: n }),
               s.config
             ),
             u = s.GASLIMIT_DEFAULT,
-            h = sf(
+            h = Mf(
               function () {
                 return Promise.resolve(
                   a.methods
@@ -28642,10 +28662,10 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.balance = function (t, e) {
+      (e.balance = function (t, e) {
         try {
           var r = this,
-            n = W(
+            n = it(
               new r.web3.eth.Contract(r.datatokensABI, t, { from: e }),
               r.config
             )
@@ -28658,10 +28678,10 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.allowance = function (t, e, r) {
+      (e.allowance = function (t, e, r) {
         try {
           var n = this,
-            i = W(
+            i = it(
               new n.web3.eth.Contract(n.datatokensABI, t, { from: r }),
               n.config
             )
@@ -28674,37 +28694,37 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.getBlob = function (t) {
+      (e.getBlob = function (t) {
         try {
           var e = this,
-            r = W(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
+            r = it(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
           return Promise.resolve(r.methods.blob().call())
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (r.getName = function (t) {
+      (e.getName = function (t) {
         try {
           var e = this,
-            r = W(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
+            r = it(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
           return Promise.resolve(r.methods.name().call())
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (r.getSymbol = function (t) {
+      (e.getSymbol = function (t) {
         try {
           var e = this,
-            r = W(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
+            r = it(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
           return Promise.resolve(r.methods.symbol().call())
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (r.getCap = function (t) {
+      (e.getCap = function (t) {
         try {
           var e = this,
-            r = W(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
+            r = it(new e.web3.eth.Contract(e.datatokensABI, t), e.config)
           return Promise.resolve(r.methods.cap().call()).then(function (t) {
             return e.web3.utils.fromWei(t)
           })
@@ -28712,23 +28732,23 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.toWei = function (t) {
+      (e.toWei = function (t) {
         return this.web3.utils.toWei(t)
       }),
-      (r.fromWei = function (t) {
+      (e.fromWei = function (t) {
         return this.web3.utils.fromWei(t)
       }),
-      (r.startOrder = function (t, e, r, n, i, o) {
+      (e.startOrder = function (t, e, r, n, i, o) {
         try {
           var s = this,
-            a = W(
+            a = it(
               new s.web3.eth.Contract(s.datatokensABI, t, { from: o }),
               s.config
             )
           return (
             i || (i = '0x0000000000000000000000000000000000000000'),
             Promise.resolve(
-              sf(
+              Mf(
                 function () {
                   function t() {
                     var t = a.methods.startOrder(
@@ -28739,7 +28759,7 @@ var uf = /*#__PURE__*/ (function () {
                       ),
                       h = t.send,
                       f = u + 1
-                    return Promise.resolve(z(s.web3, s.config)).then(function (
+                    return Promise.resolve(nt(s.web3, s.config)).then(function (
                       e
                     ) {
                       return Promise.resolve(
@@ -28749,7 +28769,7 @@ var uf = /*#__PURE__*/ (function () {
                   }
                   var u,
                     h = s.GASLIMIT_DEFAULT,
-                    f = sf(
+                    f = Mf(
                       function () {
                         return Promise.resolve(
                           a.methods
@@ -28782,7 +28802,7 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.getPreviousValidOrders = function (t, e, r, n, i) {
+      (e.getPreviousValidOrders = function (t, e, r, n, i) {
         try {
           var o,
             s = function () {
@@ -28803,16 +28823,16 @@ var uf = /*#__PURE__*/ (function () {
                         try {
                           for (; ++o < t.length && (!r || !r()); )
                             if ((a = e(o)) && a.then) {
-                              if (!((u = a) instanceof uf && 1 & u.s))
+                              if (!((u = a) instanceof Af && 1 & u.s))
                                 return void a.then(
                                   s,
-                                  i || (i = af.bind(null, (n = new uf()), 2))
+                                  i || (i = _f.bind(null, (n = new Af()), 2))
                                 )
                               a = a.v
                             }
-                          n ? af(n, 1, a) : (n = a)
+                          n ? _f(n, 1, a) : (n = a)
                         } catch (t) {
-                          af(n || (n = new uf()), 2, t)
+                          _f(n || (n = new Af()), 2, t)
                         }
                         var u
                       })(),
@@ -28834,9 +28854,9 @@ var uf = /*#__PURE__*/ (function () {
                             : Promise.resolve(
                                 a.web3.eth.getBlock(t[s].blockHash)
                               ).then(function (e) {
-                                var r = new q(e.timestamp).plus(n)
+                                var r = new rt(e.timestamp).plus(n)
                                 if (
-                                  new q(
+                                  new rt(
                                     Math.floor(Date.now() / 1e3)
                                   ).isLessThan(r)
                                 )
@@ -28858,7 +28878,7 @@ var uf = /*#__PURE__*/ (function () {
               })
             },
             a = this,
-            u = W(
+            u = it(
               new a.web3.eth.Contract(a.datatokensABI, t, { from: i }),
               a.config
             ),
@@ -28876,22 +28896,22 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.getStartOrderEventSignature = function () {
+      (e.getStartOrderEventSignature = function () {
         var t = this.datatokensABI.find(function (t) {
           if ('OrderStarted' === t.name && 'event' === t.type) return t
         })
         return this.web3.eth.abi.encodeEventSignature(t)
       }),
-      (r.proposeMinter = function (t, e, r) {
+      (e.proposeMinter = function (t, e, r) {
         try {
           var n,
             i = function () {
-              return sf(
+              return Mf(
                 function () {
                   var t = s.methods.proposeMinter(e),
                     i = t.send,
                     a = n + 1
-                  return Promise.resolve(z(o.web3, o.config)).then(function (
+                  return Promise.resolve(nt(o.web3, o.config)).then(function (
                     e
                   ) {
                     return Promise.resolve(
@@ -28905,12 +28925,12 @@ var uf = /*#__PURE__*/ (function () {
               )
             },
             o = this,
-            s = W(
+            s = it(
               new o.web3.eth.Contract(o.datatokensABI, t, { from: r }),
               o.config
             ),
             a = o.GASLIMIT_DEFAULT,
-            u = sf(
+            u = Mf(
               function () {
                 return Promise.resolve(
                   s.methods
@@ -28931,16 +28951,16 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.approveMinter = function (t, e) {
+      (e.approveMinter = function (t, e) {
         try {
           var r,
             n = function () {
-              return sf(
+              return Mf(
                 function () {
                   var t = o.methods.approveMinter(),
                     n = t.send,
                     s = r + 1
-                  return Promise.resolve(z(i.web3, i.config)).then(function (
+                  return Promise.resolve(nt(i.web3, i.config)).then(function (
                     r
                   ) {
                     return Promise.resolve(
@@ -28954,12 +28974,12 @@ var uf = /*#__PURE__*/ (function () {
               )
             },
             i = this,
-            o = W(
+            o = it(
               new i.web3.eth.Contract(i.datatokensABI, t, { from: e }),
               i.config
             ),
             s = i.GASLIMIT_DEFAULT,
-            a = sf(
+            a = Mf(
               function () {
                 return Promise.resolve(
                   o.methods
@@ -28980,23 +29000,23 @@ var uf = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (r.isMinter = function (t, e) {
+      (e.isMinter = function (t, e) {
         try {
           var r = this,
-            n = W(new r.web3.eth.Contract(r.datatokensABI, t), r.config)
+            n = it(new r.web3.eth.Contract(r.datatokensABI, t), r.config)
           return Promise.resolve(n.methods.isMinter(e).call())
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      e
+      t
     )
   })(),
-  ff = /*#__PURE__*/ (function (t) {
+  Sf = /*#__PURE__*/ (function (t) {
     function e() {
       return t.apply(this, arguments) || this
     }
-    A(e, t)
+    U(e, t)
     var r = e.prototype
     return (
       (r.getNetworkId = function () {
@@ -29006,7 +29026,7 @@ var uf = /*#__PURE__*/ (function () {
         try {
           return Promise.resolve(
             this.web3.eth.net.getId().then(function (t) {
-              var e = h(t)
+              var e = u.lookup(t)
               return e && e.name ? e.name : 'Development'
             })
           )
@@ -29016,26 +29036,26 @@ var uf = /*#__PURE__*/ (function () {
       }),
       e
     )
-  })(K)
-const lf =
+  })(ut)
+const Tf =
   'undefined' != typeof Symbol
     ? Symbol.iterator || (Symbol.iterator = Symbol('Symbol.iterator'))
     : '@@iterator'
-function cf(t, e, r) {
+function xf(t, e, r) {
   if (!t.s) {
-    if (r instanceof pf) {
-      if (!r.s) return void (r.o = cf.bind(null, t, e))
+    if (r instanceof kf) {
+      if (!r.s) return void (r.o = xf.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(cf.bind(null, t, e), cf.bind(null, t, 2))
+      return void r.then(xf.bind(null, t, e), xf.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     var n = t.o
     n && n(t)
   }
 }
-var df,
-  pf = /*#__PURE__*/ (function () {
+var Ef,
+  kf = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.prototype.then = function (e, r) {
@@ -29045,9 +29065,9 @@ var df,
           var o = 1 & i ? e : r
           if (o) {
             try {
-              cf(n, 1, o(this.v))
+              xf(n, 1, o(this.v))
             } catch (t) {
-              cf(n, 2, t)
+              xf(n, 2, t)
             }
             return n
           }
@@ -29058,12 +29078,12 @@ var df,
             try {
               var i = t.v
               1 & t.s
-                ? cf(n, 1, e ? e(i) : i)
+                ? xf(n, 1, e ? e(i) : i)
                 : r
-                ? cf(n, 1, r(i))
-                : cf(n, 2, i)
+                ? xf(n, 1, r(i))
+                : xf(n, 2, i)
             } catch (t) {
-              cf(n, 2, t)
+              xf(n, 2, t)
             }
           }),
           n
@@ -29072,10 +29092,10 @@ var df,
       t
     )
   })()
-function mf(t) {
-  return t instanceof pf && 1 & t.s
+function Rf(t) {
+  return t instanceof kf && 1 & t.s
 }
-function vf(t, e) {
+function If(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -29085,7 +29105,7 @@ function vf(t, e) {
 }
 !(function (t) {
   t[(t.TransferDataToken = 0)] = 'TransferDataToken'
-})(df || (df = {})),
+})(Ef || (Ef = {})),
   Object.freeze({
     WarmingUp: 1,
     Started: 10,
@@ -29100,11 +29120,11 @@ function vf(t, e) {
     Stopped: 80,
     Deleted: 90
   })
-var gf = /*#__PURE__*/ (function (t) {
+var Bf = /*#__PURE__*/ (function (t) {
   function e() {
     return t.apply(this, arguments) || this
   }
-  A(e, t),
+  U(e, t),
     (e.getInstance = function (t) {
       try {
         var r = new e()
@@ -29121,7 +29141,7 @@ var gf = /*#__PURE__*/ (function (t) {
         var r,
           n = function () {
             var t = r.serviceEndpoint
-            return Promise.resolve(et.getInstance(i.instanceConfig)).then(
+            return Promise.resolve(vt.getInstance(i.instanceConfig)).then(
               function (e) {
                 return Promise.resolve(e.setBaseUrl(t)).then(function () {
                   return e.computeAddress
@@ -29218,7 +29238,7 @@ var gf = /*#__PURE__*/ (function (t) {
     (r.isOrderable = function (t, e, r, n) {
       try {
         var i = this
-        return Promise.resolve(H(t, i.ocean)).then(function (t) {
+        return Promise.resolve(ot(t, i.ocean)).then(function (t) {
           var o,
             s = t.ddo.findServiceById(e)
           if (!s) return !1
@@ -29265,31 +29285,31 @@ var gf = /*#__PURE__*/ (function (t) {
                               )
                                 return (o = 1), !1
                               var n = (function (t, e, r) {
-                                if ('function' == typeof t[lf]) {
+                                if ('function' == typeof t[Tf]) {
                                   var n,
                                     i,
                                     o,
-                                    s = t[lf]()
+                                    s = t[Tf]()
                                   if (
                                     ((function t(r) {
                                       try {
                                         for (; !(n = s.next()).done; )
                                           if ((r = e(n.value)) && r.then) {
-                                            if (!mf(r))
+                                            if (!Rf(r))
                                               return void r.then(
                                                 t,
                                                 o ||
-                                                  (o = cf.bind(
+                                                  (o = xf.bind(
                                                     null,
-                                                    (i = new pf()),
+                                                    (i = new kf()),
                                                     2
                                                   ))
                                               )
                                             r = r.v
                                           }
-                                        i ? cf(i, 1, r) : (i = r)
+                                        i ? xf(i, 1, r) : (i = r)
                                       } catch (t) {
-                                        cf(i || (i = new pf()), 2, t)
+                                        xf(i || (i = new kf()), 2, t)
                                       }
                                     })(),
                                     s.return)
@@ -29321,21 +29341,21 @@ var gf = /*#__PURE__*/ (function (t) {
                                       try {
                                         for (; ++o < t.length; )
                                           if ((s = e(o)) && s.then) {
-                                            if (!mf(s))
+                                            if (!Rf(s))
                                               return void s.then(
                                                 r,
                                                 i ||
-                                                  (i = cf.bind(
+                                                  (i = xf.bind(
                                                     null,
-                                                    (n = new pf()),
+                                                    (n = new kf()),
                                                     2
                                                   ))
                                               )
                                             s = s.v
                                           }
-                                        n ? cf(n, 1, s) : (n = s)
+                                        n ? xf(n, 1, s) : (n = s)
                                       } catch (t) {
-                                        cf(n || (n = new pf()), 2, t)
+                                        xf(n || (n = new kf()), 2, t)
                                       }
                                     })(),
                                     n
@@ -29389,13 +29409,13 @@ var gf = /*#__PURE__*/ (function (t) {
                                 return (function () {
                                   if (e && 'compute' === e.type)
                                     return Promise.resolve(
-                                      et.getInstance(i.instanceConfig)
+                                      vt.getInstance(i.instanceConfig)
                                     ).then(function (t) {
                                       return Promise.resolve(
                                         t.setBaseUrl(e.serviceEndpoint)
                                       ).then(function () {
                                         return Promise.resolve(
-                                          et.getInstance(i.instanceConfig)
+                                          vt.getInstance(i.instanceConfig)
                                         ).then(function (e) {
                                           return Promise.resolve(
                                             e.setBaseUrl(s.serviceEndpoint)
@@ -29450,9 +29470,9 @@ var gf = /*#__PURE__*/ (function (t) {
       return (
         void 0 === a && (a = 'json'),
         void 0 === u && (u = !0),
-        new N(function (f) {
+        new Y(function (f) {
           try {
-            return Promise.resolve(H(e, h.ocean)).then(function (e) {
+            return Promise.resolve(ot(e, h.ocean)).then(function (e) {
               var f = e.ddo
               return Promise.resolve(h.isOrderable(f, r, n)).then(function (e) {
                 if (!e)
@@ -29464,7 +29484,7 @@ var gf = /*#__PURE__*/ (function (t) {
                   throw new Error(
                     'Dataset order failed, Could not find service for the DDO'
                   )
-                return vf(
+                return If(
                   function () {
                     return Promise.resolve(
                       h.ocean.assets.order(f, n.type, t, -1, i, o, s, a, u)
@@ -29492,7 +29512,7 @@ var gf = /*#__PURE__*/ (function (t) {
       try {
         var h = this
         return Promise.resolve(
-          vf(
+          If(
             function () {
               return Promise.resolve(
                 h.ocean.assets.order(t, e, r, n, i, o, s, a, u)
@@ -29564,13 +29584,17 @@ var gf = /*#__PURE__*/ (function (t) {
               i.attributes.main.files
               ? {
                   did: t,
-                  containerSectionChecksum: f(
-                    JSON.stringify(i.attributes.main.algorithm.container)
-                  ).toString(),
-                  filesChecksum: f(
-                    i.attributes.encryptedFiles +
-                      JSON.stringify(i.attributes.main.files)
-                  ).toString()
+                  containerSectionChecksum: h
+                    .SHA256(
+                      JSON.stringify(i.attributes.main.algorithm.container)
+                    )
+                    .toString(),
+                  filesChecksum: h
+                    .SHA256(
+                      i.attributes.encryptedFiles +
+                        JSON.stringify(i.attributes.main.files)
+                    )
+                    .toString()
                 }
               : null
           },
@@ -29630,7 +29654,7 @@ var gf = /*#__PURE__*/ (function (t) {
           return Promise.resolve(!0)
         for (
           var i,
-            o = T(
+            o = z(
               t.service[e].attributes.main.privacy.publisherTrustedAlgorithms
             );
           !(i = o()).done;
@@ -29669,8 +29693,8 @@ var gf = /*#__PURE__*/ (function (t) {
     }),
     e
   )
-})(K)
-function yf(t, e) {
+})(ut)
+function Of(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -29678,7 +29702,7 @@ function yf(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var bf = /*#__PURE__*/ (function () {
+var Cf = /*#__PURE__*/ (function () {
   function t(t, e, r, n, i) {
     void 0 === r && (r = null),
       void 0 === n && (n = null),
@@ -29689,7 +29713,7 @@ var bf = /*#__PURE__*/ (function () {
       (this.logger = void 0),
       (this.config = void 0),
       (this.web3 = t),
-      (this.factoryABI = r || c.abi),
+      (this.factoryABI = r || k.default.abi),
       n && (this.factoryAddress = n),
       (this.logger = e),
       (this.config = i)
@@ -29698,12 +29722,12 @@ var bf = /*#__PURE__*/ (function () {
     (t.prototype.createPool = function (t) {
       try {
         var e = function () {
-            var e = yf(
+            var e = Of(
               function () {
                 var e = i.methods.newBPool(),
                   s = e.send,
                   a = n + 1
-                return Promise.resolve(z(r.web3, r.config)).then(function (r) {
+                return Promise.resolve(nt(r.web3, r.config)).then(function (r) {
                   return Promise.resolve(
                     s.call(e, { from: t, gas: a, gasPrice: r })
                   ).then(function (t) {
@@ -29732,7 +29756,7 @@ var bf = /*#__PURE__*/ (function () {
             Promise.resolve(null)
           )
         var n,
-          i = W(
+          i = it(
             new r.web3.eth.Contract(r.factoryABI, r.factoryAddress, {
               from: t
             }),
@@ -29740,7 +29764,7 @@ var bf = /*#__PURE__*/ (function () {
           ),
           o = null,
           s = r.GASLIMIT_DEFAULT,
-          a = yf(
+          a = Of(
             function () {
               return Promise.resolve(
                 i.methods.newBPool().estimateGas({ from: t }, function (t, e) {
@@ -29764,7 +29788,7 @@ var bf = /*#__PURE__*/ (function () {
     t
   )
 })()
-function wf(t, e) {
+function Lf(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -29772,26 +29796,26 @@ function wf(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var Mf =
+var jf =
   '115792089237316195423570985008687907853269984665640564039457584007913129639934'
-const _f =
+const Nf =
   'undefined' != typeof Symbol
     ? Symbol.iterator || (Symbol.iterator = Symbol('Symbol.iterator'))
     : '@@iterator'
-function Af(t, e, r) {
+function Df(t, e, r) {
   if (!t.s) {
-    if (r instanceof Pf) {
-      if (!r.s) return void (r.o = Af.bind(null, t, e))
+    if (r instanceof Uf) {
+      if (!r.s) return void (r.o = Df.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(Af.bind(null, t, e), Af.bind(null, t, 2))
+      return void r.then(Df.bind(null, t, e), Df.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     var n = t.o
     n && n(t)
   }
 }
-var Pf = /*#__PURE__*/ (function () {
+var Uf = /*#__PURE__*/ (function () {
   function t() {}
   return (
     (t.prototype.then = function (e, r) {
@@ -29801,9 +29825,9 @@ var Pf = /*#__PURE__*/ (function () {
         var o = 1 & i ? e : r
         if (o) {
           try {
-            Af(n, 1, o(this.v))
+            Df(n, 1, o(this.v))
           } catch (t) {
-            Af(n, 2, t)
+            Df(n, 2, t)
           }
           return n
         }
@@ -29813,9 +29837,9 @@ var Pf = /*#__PURE__*/ (function () {
         (this.o = function (t) {
           try {
             var i = t.v
-            1 & t.s ? Af(n, 1, e ? e(i) : i) : r ? Af(n, 1, r(i)) : Af(n, 2, i)
+            1 & t.s ? Df(n, 1, e ? e(i) : i) : r ? Df(n, 1, r(i)) : Df(n, 2, i)
           } catch (t) {
-            Af(n, 2, t)
+            Df(n, 2, t)
           }
         }),
         n
@@ -29824,41 +29848,41 @@ var Pf = /*#__PURE__*/ (function () {
     t
   )
 })()
-function Sf(t) {
-  return t instanceof Pf && 1 & t.s
+function Ff(t) {
+  return t instanceof Uf && 1 & t.s
 }
-var Tf = /*#__PURE__*/ (function (e) {
-  function r(t, r, n, i, o, s) {
+var qf = /*#__PURE__*/ (function (t) {
+  function e(e, r, n, i, o, s) {
     var a
     return (
       void 0 === n && (n = null),
       void 0 === i && (i = null),
       void 0 === o && (o = null),
-      ((a = e.call(this, t, r, n, o, s) || this).poolABI = void 0),
-      (a.poolABI = i || l.abi),
+      ((a = t.call(this, e, r, n, o, s) || this).poolABI = void 0),
+      (a.poolABI = i || E.default.abi),
       a
     )
   }
-  A(r, e)
-  var n = r.prototype
+  U(e, t)
+  var r = e.prototype
   return (
-    (n.createPool = function (t) {
+    (r.createPool = function (e) {
       try {
-        return Promise.resolve(e.prototype.createPool.call(this, t))
+        return Promise.resolve(t.prototype.createPool.call(this, e))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.setup = function (t, e, r, n, i, o, s, a, u) {
+    (r.setup = function (t, e, r, n, i, o, s, a, u) {
       try {
         var h,
           f = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = c.methods.setup(r, n, i, o, s, a, u),
                   f = e.send,
                   p = h
-                return Promise.resolve(z(l.web3, l.config)).then(function (r) {
+                return Promise.resolve(nt(l.web3, l.config)).then(function (r) {
                   return Promise.resolve(
                     f.call(e, { from: t, gas: p, gasPrice: r })
                   ).then(function (t) {
@@ -29877,10 +29901,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : d
           },
           l = this,
-          c = W(new l.web3.eth.Contract(l.poolABI, e, { from: t }), l.config),
+          c = it(new l.web3.eth.Contract(l.poolABI, e, { from: t }), l.config),
           d = null,
           p = l.GASLIMIT_DEFAULT,
-          m = wf(
+          m = Lf(
             function () {
               return Promise.resolve(
                 c.methods
@@ -29901,10 +29925,13 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.allowance = function (t, e, r) {
+    (r.allowance = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(u.abi, t, { from: r }), n.config)
+          i = it(
+            new n.web3.eth.Contract(x.default.abi, t, { from: r }),
+            n.config
+          )
         return Promise.resolve(i.methods.allowance(e, r).call()).then(function (
           t
         ) {
@@ -29914,65 +29941,65 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.approve = function (e, r, n, i, o) {
-      void 0 === o && (o = !1)
+    (r.approve = function (t, e, r, n, i) {
+      void 0 === i && (i = !1)
       try {
-        var s,
-          a = function (t) {
-            if (s) return t
-            function r() {
-              var t = wf(
+        var o,
+          s = function (e) {
+            if (o) return e
+            function i() {
+              var e = Lf(
                 function () {
-                  var t = h.methods.approve(n, i),
-                    r = t.send,
-                    s = o + 1
-                  return Promise.resolve(z(u.web3, u.config)).then(function (
-                    n
+                  var e = u.methods.approve(r, n),
+                    i = e.send,
+                    o = s + 1
+                  return Promise.resolve(nt(a.web3, a.config)).then(function (
+                    r
                   ) {
                     return Promise.resolve(
-                      r.call(t, { from: e, gas: s, gasPrice: n })
+                      i.call(e, { from: t, gas: o, gasPrice: r })
                     ).then(function (t) {
-                      a = t
+                      h = t
                     })
                   })
                 },
                 function (t) {
-                  u.logger.error(
+                  a.logger.error(
                     'ERRPR: Failed to approve spender to spend tokens : ' +
                       t.message
                   )
                 }
               )
-              return t && t.then
-                ? t.then(function () {
-                    return a
+              return e && e.then
+                ? e.then(function () {
+                    return h
                   })
-                : a
+                : h
             }
-            var o,
-              a = null,
-              f = u.GASLIMIT_DEFAULT,
-              l = wf(
+            var s,
+              h = null,
+              f = a.GASLIMIT_DEFAULT,
+              l = Lf(
                 function () {
                   return Promise.resolve(
-                    h.methods
-                      .approve(n, i)
-                      .estimateGas({ from: e }, function (t, e) {
+                    u.methods
+                      .approve(r, n)
+                      .estimateGas({ from: t }, function (t, e) {
                         return t ? f : e
                       })
                   ).then(function (t) {
-                    o = t
+                    s = t
                   })
                 },
                 function () {
-                  o = f
+                  s = f
                 }
               )
-            return l && l.then ? l.then(r) : r()
+            return l && l.then ? l.then(i) : i()
           },
-          u = this,
-          h = W(
-            new u.web3.eth.Contract(
+          a = this,
+          u = it(
+            new a.web3.eth.Contract(
               [
                 {
                   constant: !1,
@@ -29987,30 +30014,32 @@ var Tf = /*#__PURE__*/ (function (e) {
                   type: 'function'
                 }
               ],
-              r,
-              { from: e }
+              e,
+              { from: t }
             ),
-            u.config
+            a.config
           ),
-          f = (function () {
-            if (!o)
-              return Promise.resolve(u.allowance(r, e, n)).then(function (e) {
-                if (new t(u.web3.utils.toWei(e)).greaterThanOrEqualTo(i))
-                  return (s = 1), e
+          h = (function () {
+            if (!i)
+              return Promise.resolve(a.allowance(e, t, r)).then(function (t) {
+                if (
+                  new M.default(a.web3.utils.toWei(t)).greaterThanOrEqualTo(n)
+                )
+                  return (o = 1), t
               })
           })()
-        return Promise.resolve(f && f.then ? f.then(a) : a(f))
+        return Promise.resolve(h && h.then ? h.then(s) : s(h))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.sharesBalance = function (t, e) {
+    (r.sharesBalance = function (t, e) {
       try {
         var r = this,
           n = null,
-          i = wf(
+          i = Lf(
             function () {
-              var i = W(new r.web3.eth.Contract(r.poolABI, e), r.config)
+              var i = it(new r.web3.eth.Contract(r.poolABI, e), r.config)
               return Promise.resolve(i.methods.balanceOf(t).call()).then(
                 function (t) {
                   n = r.web3.utils.fromWei(t)
@@ -30034,32 +30063,32 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.addToPool = function (t, e, r) {
+    (r.addToPool = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config)
+          i = it(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config)
         return Promise.resolve(
           (function (t, e, r) {
-            if ('function' == typeof t[_f]) {
+            if ('function' == typeof t[Nf]) {
               var n,
                 i,
                 o,
-                s = t[_f]()
+                s = t[Nf]()
               if (
                 ((function t(r) {
                   try {
                     for (; !(n = s.next()).done; )
                       if ((r = e(n.value)) && r.then) {
-                        if (!Sf(r))
+                        if (!Ff(r))
                           return void r.then(
                             t,
-                            o || (o = Af.bind(null, (i = new Pf()), 2))
+                            o || (o = Df.bind(null, (i = new Uf()), 2))
                           )
                         r = r.v
                       }
-                    i ? Af(i, 1, r) : (i = r)
+                    i ? Df(i, 1, r) : (i = r)
                   } catch (t) {
-                    Af(i || (i = new Pf()), 2, t)
+                    Df(i || (i = new Uf()), 2, t)
                   }
                 })(),
                 s.return)
@@ -30089,16 +30118,16 @@ var Tf = /*#__PURE__*/ (function (e) {
                   try {
                     for (; ++o < t.length; )
                       if ((s = e(o)) && s.then) {
-                        if (!Sf(s))
+                        if (!Ff(s))
                           return void s.then(
                             r,
-                            i || (i = Af.bind(null, (n = new Pf()), 2))
+                            i || (i = Df.bind(null, (n = new Uf()), 2))
                           )
                         s = s.v
                       }
-                    n ? Af(n, 1, s) : (n = s)
+                    n ? Df(n, 1, s) : (n = s)
                   } catch (t) {
-                    Af(n || (n = new Pf()), 2, t)
+                    Df(n || (n = new Uf()), 2, t)
                   }
                 })(),
                 n
@@ -30107,7 +30136,7 @@ var Tf = /*#__PURE__*/ (function (e) {
               return e(u[t])
             })
           })(r, function (r) {
-            var o = wf(
+            var o = Lf(
               function () {
                 return Promise.resolve(
                   n.approve(t, r.address, e, n.web3.utils.toWei('' + r.amount))
@@ -30119,7 +30148,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                     ),
                     o = e.send,
                     s = n.GASLIMIT_DEFAULT
-                  return Promise.resolve(z(n.web3, n.config)).then(function (
+                  return Promise.resolve(nt(n.web3, n.config)).then(function (
                     r
                   ) {
                     return Promise.resolve(
@@ -30141,17 +30170,17 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.setSwapFee = function (t, e, r) {
+    (r.setSwapFee = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config),
+          i = it(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config),
           o = null,
-          s = wf(
+          s = Lf(
             function () {
               var e = i.methods.setSwapFee(n.web3.utils.toWei(r)),
                 s = e.send,
                 a = n.GASLIMIT_DEFAULT
-              return Promise.resolve(z(n.web3, n.config)).then(function (r) {
+              return Promise.resolve(nt(n.web3, n.config)).then(function (r) {
                 return Promise.resolve(
                   s.call(e, { from: t, gas: a, gasPrice: r })
                 ).then(function (t) {
@@ -30174,17 +30203,17 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.finalize = function (t, e) {
+    (r.finalize = function (t, e) {
       try {
         var r = this,
-          n = W(new r.web3.eth.Contract(r.poolABI, e, { from: t }), r.config),
+          n = it(new r.web3.eth.Contract(r.poolABI, e, { from: t }), r.config),
           i = null,
-          o = wf(
+          o = Lf(
             function () {
               var e = n.methods.finalize(),
                 o = e.send,
                 s = r.GASLIMIT_DEFAULT
-              return Promise.resolve(z(r.web3, r.config)).then(function (r) {
+              return Promise.resolve(nt(r.web3, r.config)).then(function (r) {
                 return Promise.resolve(
                   o.call(e, { from: t, gas: s, gasPrice: r })
                 ).then(function (t) {
@@ -30207,12 +30236,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getNumTokens = function (t) {
+    (r.getNumTokens = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.getNumTokens().call()).then(
                 function (t) {
@@ -30237,12 +30266,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolSharesTotalSupply = function (t) {
+    (r.getPoolSharesTotalSupply = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.totalSupply().call()).then(
                 function (t) {
@@ -30267,12 +30296,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getCurrentTokens = function (t) {
+    (r.getCurrentTokens = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.getCurrentTokens().call()).then(
                 function (t) {
@@ -30297,12 +30326,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getFinalTokens = function (t) {
+    (r.getFinalTokens = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.getFinalTokens().call()).then(
                 function (t) {
@@ -30327,12 +30356,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getController = function (t) {
+    (r.getController = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.getController().call()).then(
                 function (t) {
@@ -30357,12 +30386,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.setController = function (t, e, r) {
+    (r.setController = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config),
+          i = it(new n.web3.eth.Contract(n.poolABI, e, { from: t }), n.config),
           o = null,
-          s = wf(
+          s = Lf(
             function () {
               return Promise.resolve(
                 i.methods
@@ -30389,12 +30418,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.isBound = function (t, e) {
+    (r.isBound = function (t, e) {
       try {
         var r = this,
-          n = W(new r.web3.eth.Contract(r.poolABI, t), r.config),
+          n = it(new r.web3.eth.Contract(r.poolABI, t), r.config),
           i = null,
-          o = wf(
+          o = Lf(
             function () {
               return Promise.resolve(n.methods.isBound(e).call()).then(
                 function (t) {
@@ -30420,13 +30449,13 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getReserve = function (t, e) {
+    (r.getReserve = function (t, e) {
       try {
         var r = this,
           n = null,
-          i = wf(
+          i = Lf(
             function () {
-              var i = W(new r.web3.eth.Contract(r.poolABI, t), r.config)
+              var i = it(new r.web3.eth.Contract(r.poolABI, t), r.config)
               return Promise.resolve(i.methods.getBalance(e).call()).then(
                 function (t) {
                   n = r.web3.utils.fromWei(t)
@@ -30451,12 +30480,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.isFinalized = function (t) {
+    (r.isFinalized = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.isFinalized().call()).then(
                 function (t) {
@@ -30481,12 +30510,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getSwapFee = function (t) {
+    (r.getSwapFee = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(r.methods.getSwapFee().call()).then(
                 function (t) {
@@ -30509,12 +30538,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getNormalizedWeight = function (t, e) {
+    (r.getNormalizedWeight = function (t, e) {
       try {
         var r = this,
-          n = W(new r.web3.eth.Contract(r.poolABI, t), r.config),
+          n = it(new r.web3.eth.Contract(r.poolABI, t), r.config),
           i = null,
-          o = wf(
+          o = Lf(
             function () {
               return Promise.resolve(
                 n.methods.getNormalizedWeight(e).call()
@@ -30540,12 +30569,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getDenormalizedWeight = function (t, e) {
+    (r.getDenormalizedWeight = function (t, e) {
       try {
         var r = this,
-          n = W(new r.web3.eth.Contract(r.poolABI, t), r.config),
+          n = it(new r.web3.eth.Contract(r.poolABI, t), r.config),
           i = null,
-          o = wf(
+          o = Lf(
             function () {
               return Promise.resolve(
                 n.methods.getDenormalizedWeight(e).call()
@@ -30570,12 +30599,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getTotalDenormalizedWeight = function (t) {
+    (r.getTotalDenormalizedWeight = function (t) {
       try {
         var e = this,
-          r = W(new e.web3.eth.Contract(e.poolABI, t), e.config),
+          r = it(new e.web3.eth.Contract(e.poolABI, t), e.config),
           n = null,
-          i = wf(
+          i = Lf(
             function () {
               return Promise.resolve(
                 r.methods.getTotalDenormalizedWeight().call()
@@ -30600,22 +30629,22 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.swapExactAmountIn = function (t, e, r, n, i, o, s) {
+    (r.swapExactAmountIn = function (t, e, r, n, i, o, s) {
       try {
         var a,
           u = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = f.methods.swapExactAmountIn(
                     r,
                     h.web3.utils.toWei(n),
                     i,
                     h.web3.utils.toWei(o),
-                    s ? h.web3.utils.toWei(s) : Mf
+                    s ? h.web3.utils.toWei(s) : jf
                   ),
                   u = e.send,
                   c = a + 1
-                return Promise.resolve(z(h.web3, h.config)).then(function (r) {
+                return Promise.resolve(nt(h.web3, h.config)).then(function (r) {
                   return Promise.resolve(
                     u.call(e, { from: t, gas: c, gasPrice: r })
                   ).then(function (t) {
@@ -30636,10 +30665,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : l
           },
           h = this,
-          f = W(new h.web3.eth.Contract(h.poolABI, e, { from: t }), h.config),
+          f = it(new h.web3.eth.Contract(h.poolABI, e, { from: t }), h.config),
           l = null,
           c = h.GASLIMIT_DEFAULT,
-          d = wf(
+          d = Lf(
             function () {
               return Promise.resolve(
                 f.methods
@@ -30648,7 +30677,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                     h.web3.utils.toWei(n),
                     i,
                     h.web3.utils.toWei(o),
-                    s ? h.web3.utils.toWei(s) : Mf
+                    s ? h.web3.utils.toWei(s) : jf
                   )
                   .estimateGas({ from: t }, function (t, e) {
                     return t ? c : e
@@ -30668,22 +30697,22 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.swapExactAmountOut = function (t, e, r, n, i, o, s) {
+    (r.swapExactAmountOut = function (t, e, r, n, i, o, s) {
       try {
         var a,
           u = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = f.methods.swapExactAmountOut(
                     r,
                     h.web3.utils.toWei(n),
                     i,
                     h.web3.utils.toWei(o),
-                    s ? h.web3.utils.toWei(s) : Mf
+                    s ? h.web3.utils.toWei(s) : jf
                   ),
                   u = e.send,
                   c = a + 1
-                return Promise.resolve(z(h.web3, h.config)).then(function (r) {
+                return Promise.resolve(nt(h.web3, h.config)).then(function (r) {
                   return Promise.resolve(
                     u.call(e, { from: t, gas: c, gasPrice: r })
                   ).then(function (t) {
@@ -30704,10 +30733,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : l
           },
           h = this,
-          f = W(new h.web3.eth.Contract(h.poolABI, e, { from: t }), h.config),
+          f = it(new h.web3.eth.Contract(h.poolABI, e, { from: t }), h.config),
           l = null,
           c = h.GASLIMIT_DEFAULT,
-          d = wf(
+          d = Lf(
             function () {
               return Promise.resolve(
                 f.methods
@@ -30716,7 +30745,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                     h.web3.utils.toWei(n),
                     i,
                     h.web3.utils.toWei(o),
-                    s ? h.web3.utils.toWei(s) : Mf
+                    s ? h.web3.utils.toWei(s) : jf
                   )
                   .estimateGas({ from: t }, function (t, e) {
                     return t ? c : e
@@ -30736,17 +30765,17 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.joinPool = function (t, e, r, n) {
+    (r.joinPool = function (t, e, r, n) {
       try {
         for (
           var i,
             o = function () {
-              var e = wf(
+              var e = Lf(
                 function () {
                   var e = a.methods.joinPool(s.web3.utils.toWei(r), u),
                     n = e.send,
                     i = f + 1
-                  return Promise.resolve(z(s.web3, s.config)).then(function (
+                  return Promise.resolve(nt(s.web3, s.config)).then(function (
                     r
                   ) {
                     return Promise.resolve(
@@ -30767,9 +30796,12 @@ var Tf = /*#__PURE__*/ (function (e) {
                 : l
             },
             s = this,
-            a = W(new s.web3.eth.Contract(s.poolABI, e, { from: t }), s.config),
+            a = it(
+              new s.web3.eth.Contract(s.poolABI, e, { from: t }),
+              s.config
+            ),
             u = [],
-            h = T(n);
+            h = z(n);
           !(i = h()).done;
 
         )
@@ -30777,7 +30809,7 @@ var Tf = /*#__PURE__*/ (function (e) {
         var f,
           l = null,
           c = s.GASLIMIT_DEFAULT,
-          d = wf(
+          d = Lf(
             function () {
               return Promise.resolve(
                 a.methods
@@ -30798,17 +30830,17 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.exitPool = function (t, e, r, n) {
+    (r.exitPool = function (t, e, r, n) {
       try {
         for (
           var i,
             o = function () {
-              var e = wf(
+              var e = Lf(
                 function () {
                   var e = a.methods.exitPool(s.web3.utils.toWei(r), u),
                     n = e.send,
                     i = f
-                  return Promise.resolve(z(s.web3, s.config)).then(function (
+                  return Promise.resolve(nt(s.web3, s.config)).then(function (
                     r
                   ) {
                     return Promise.resolve(
@@ -30829,9 +30861,12 @@ var Tf = /*#__PURE__*/ (function (e) {
                 : l
             },
             s = this,
-            a = W(new s.web3.eth.Contract(s.poolABI, e, { from: t }), s.config),
+            a = it(
+              new s.web3.eth.Contract(s.poolABI, e, { from: t }),
+              s.config
+            ),
             u = [],
-            h = T(n);
+            h = z(n);
           !(i = h()).done;
 
         )
@@ -30839,7 +30874,7 @@ var Tf = /*#__PURE__*/ (function (e) {
         var f,
           l = null,
           c = s.GASLIMIT_DEFAULT,
-          d = wf(
+          d = Lf(
             function () {
               return Promise.resolve(
                 a.methods
@@ -30860,11 +30895,11 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.joinswapExternAmountIn = function (t, e, r, n, i) {
+    (r.joinswapExternAmountIn = function (t, e, r, n, i) {
       try {
         var o,
           s = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = u.methods.joinswapExternAmountIn(
                     r,
@@ -30873,7 +30908,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                   ),
                   s = e.send,
                   f = o + 1
-                return Promise.resolve(z(a.web3, a.config)).then(function (r) {
+                return Promise.resolve(nt(a.web3, a.config)).then(function (r) {
                   return Promise.resolve(
                     s.call(e, { from: t, gas: f, gasPrice: r })
                   ).then(function (t) {
@@ -30895,10 +30930,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : h
           },
           a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
           h = null,
           f = a.GASLIMIT_DEFAULT,
-          l = wf(
+          l = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -30923,11 +30958,11 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.joinswapPoolAmountOut = function (t, e, r, n, i) {
+    (r.joinswapPoolAmountOut = function (t, e, r, n, i) {
       try {
         var o,
           s = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = u.methods.joinswapPoolAmountOut(
                     r,
@@ -30936,7 +30971,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                   ),
                   s = e.send,
                   f = o + 1
-                return Promise.resolve(z(a.web3, a.config)).then(function (r) {
+                return Promise.resolve(nt(a.web3, a.config)).then(function (r) {
                   return Promise.resolve(
                     s.call(e, { from: t, gas: f, gasPrice: r })
                   ).then(function (t) {
@@ -30955,10 +30990,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : h
           },
           a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
           h = null,
           f = a.GASLIMIT_DEFAULT,
-          l = wf(
+          l = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -30983,11 +31018,11 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.exitswapPoolAmountIn = function (t, e, r, n, i) {
+    (r.exitswapPoolAmountIn = function (t, e, r, n, i) {
       try {
         var o,
           s = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = u.methods.exitswapPoolAmountIn(
                     r,
@@ -30996,7 +31031,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                   ),
                   s = e.send,
                   f = o + 1
-                return Promise.resolve(z(a.web3, a.config)).then(function (r) {
+                return Promise.resolve(nt(a.web3, a.config)).then(function (r) {
                   return Promise.resolve(
                     s.call(e, { from: t, gas: f, gasPrice: r })
                   ).then(function (t) {
@@ -31017,10 +31052,10 @@ var Tf = /*#__PURE__*/ (function (e) {
               : h
           },
           a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
           h = null,
           f = a.GASLIMIT_DEFAULT,
-          l = wf(
+          l = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31045,11 +31080,11 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.exitswapExternAmountOut = function (t, e, r, n, i) {
+    (r.exitswapExternAmountOut = function (t, e, r, n, i) {
       try {
         var o,
           s = function () {
-            var e = wf(
+            var e = Lf(
               function () {
                 var e = h.methods.exitswapExternAmountOut(
                     r,
@@ -31058,7 +31093,7 @@ var Tf = /*#__PURE__*/ (function (e) {
                   ),
                   s = e.send,
                   u = o + 1
-                return Promise.resolve(z(a.web3, a.config)).then(function (r) {
+                return Promise.resolve(nt(a.web3, a.config)).then(function (r) {
                   return Promise.resolve(
                     s.call(e, { from: t, gas: u, gasPrice: r })
                   ).then(function (t) {
@@ -31078,9 +31113,9 @@ var Tf = /*#__PURE__*/ (function (e) {
           },
           a = this,
           u = a.GASLIMIT_DEFAULT,
-          h = W(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
+          h = it(new a.web3.eth.Contract(a.poolABI, e, { from: t }), a.config),
           f = null,
-          l = wf(
+          l = Lf(
             function () {
               return Promise.resolve(
                 h.methods
@@ -31105,12 +31140,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getSpotPrice = function (t, e, r) {
+    (r.getSpotPrice = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(n.poolABI, t), n.config),
+          i = it(new n.web3.eth.Contract(n.poolABI, t), n.config),
           o = null,
-          s = wf(
+          s = Lf(
             function () {
               return Promise.resolve(i.methods.getSpotPrice(e, r).call()).then(
                 function (t) {
@@ -31135,12 +31170,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getSpotPriceSansFee = function (t, e, r) {
+    (r.getSpotPriceSansFee = function (t, e, r) {
       try {
         var n = this,
-          i = W(new n.web3.eth.Contract(n.poolABI, t), n.config),
+          i = it(new n.web3.eth.Contract(n.poolABI, t), n.config),
           o = null,
-          s = wf(
+          s = Lf(
             function () {
               return Promise.resolve(
                 i.methods.getSpotPriceSansFee(e, r).call()
@@ -31163,12 +31198,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcSpotPrice = function (t, e, r, n, i, o) {
+    (r.calcSpotPrice = function (t, e, r, n, i, o) {
       try {
         var s = this,
-          a = W(new s.web3.eth.Contract(s.poolABI, t), s.config),
+          a = it(new s.web3.eth.Contract(s.poolABI, t), s.config),
           u = '0',
-          h = wf(
+          h = Lf(
             function () {
               return Promise.resolve(
                 a.methods
@@ -31199,50 +31234,50 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcInGivenOut = function (e, r, n, i, o, s, a) {
+    (r.calcInGivenOut = function (t, e, r, n, i, o, s) {
       try {
-        var u = this,
-          h = W(new u.web3.eth.Contract(u.poolABI, e), u.config),
-          f = null
-        if (new t(s).gte(i)) return Promise.resolve(null)
-        var l = wf(
+        var a = this,
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          h = null
+        if (new M.default(o).gte(n)) return Promise.resolve(null)
+        var f = Lf(
           function () {
             return Promise.resolve(
-              h.methods
+              u.methods
                 .calcInGivenOut(
-                  u.web3.utils.toWei(r),
-                  u.web3.utils.toWei(n),
-                  u.web3.utils.toWei(i),
-                  u.web3.utils.toWei(o),
-                  u.web3.utils.toWei(s),
-                  u.web3.utils.toWei(a)
+                  a.web3.utils.toWei(e),
+                  a.web3.utils.toWei(r),
+                  a.web3.utils.toWei(n),
+                  a.web3.utils.toWei(i),
+                  a.web3.utils.toWei(o),
+                  a.web3.utils.toWei(s)
                 )
                 .call()
             ).then(function (t) {
-              f = u.web3.utils.fromWei(t)
+              h = a.web3.utils.fromWei(t)
             })
           },
           function () {
-            u.logger.error('ERROR: Failed to calcInGivenOut')
+            a.logger.error('ERROR: Failed to calcInGivenOut')
           }
         )
         return Promise.resolve(
-          l && l.then
-            ? l.then(function () {
-                return f
+          f && f.then
+            ? f.then(function () {
+                return h
               })
-            : f
+            : h
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.calcOutGivenIn = function (t, e, r, n, i, o, s) {
+    (r.calcOutGivenIn = function (t, e, r, n, i, o, s) {
       try {
         var a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
           h = null,
-          f = wf(
+          f = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31274,12 +31309,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcPoolOutGivenSingleIn = function (t, e, r, n, i, o, s) {
+    (r.calcPoolOutGivenSingleIn = function (t, e, r, n, i, o, s) {
       try {
         var a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
           h = null,
-          f = wf(
+          f = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31313,12 +31348,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcSingleInGivenPoolOut = function (t, e, r, n, i, o, s) {
+    (r.calcSingleInGivenPoolOut = function (t, e, r, n, i, o, s) {
       try {
         var a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
           h = null,
-          f = wf(
+          f = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31352,12 +31387,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcSingleOutGivenPoolIn = function (t, e, r, n, i, o, s) {
+    (r.calcSingleOutGivenPoolIn = function (t, e, r, n, i, o, s) {
       try {
         var a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
           h = null,
-          f = wf(
+          f = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31391,12 +31426,12 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcPoolInGivenSingleOut = function (t, e, r, n, i, o, s) {
+    (r.calcPoolInGivenSingleOut = function (t, e, r, n, i, o, s) {
       try {
         var a = this,
-          u = W(new a.web3.eth.Contract(a.poolABI, t), a.config),
+          u = it(new a.web3.eth.Contract(a.poolABI, t), a.config),
           h = null,
-          f = wf(
+          f = Lf(
             function () {
               return Promise.resolve(
                 u.methods
@@ -31430,42 +31465,42 @@ var Tf = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getSwapEventSignature = function () {
+    (r.getSwapEventSignature = function () {
       var t = this.poolABI.find(function (t) {
         if ('LOG_SWAP' === t.name && 'event' === t.type) return t
       })
       return this.web3.eth.abi.encodeEventSignature(t)
     }),
-    (n.getJoinEventSignature = function () {
+    (r.getJoinEventSignature = function () {
       var t = this.poolABI.find(function (t) {
         if ('LOG_JOIN' === t.name && 'event' === t.type) return t
       })
       return this.web3.eth.abi.encodeEventSignature(t)
     }),
-    (n.getExitEventSignature = function () {
+    (r.getExitEventSignature = function () {
       var t = this.poolABI.find(function (t) {
         if ('LOG_EXIT' === t.name && 'event' === t.type) return t
       })
       return this.web3.eth.abi.encodeEventSignature(t)
     }),
-    r
+    e
   )
-})(bf)
-function xf(t, e, r) {
+})(Cf)
+function zf(t, e, r) {
   if (!t.s) {
-    if (r instanceof kf) {
-      if (!r.s) return void (r.o = xf.bind(null, t, e))
+    if (r instanceof Hf) {
+      if (!r.s) return void (r.o = zf.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(xf.bind(null, t, e), xf.bind(null, t, 2))
+      return void r.then(zf.bind(null, t, e), zf.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     var n = t.o
     n && n(t)
   }
 }
-var Ef,
-  kf = /*#__PURE__*/ (function () {
+var Wf,
+  Hf = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.prototype.then = function (e, r) {
@@ -31475,9 +31510,9 @@ var Ef,
           var o = 1 & i ? e : r
           if (o) {
             try {
-              xf(n, 1, o(this.v))
+              zf(n, 1, o(this.v))
             } catch (t) {
-              xf(n, 2, t)
+              zf(n, 2, t)
             }
             return n
           }
@@ -31488,12 +31523,12 @@ var Ef,
             try {
               var i = t.v
               1 & t.s
-                ? xf(n, 1, e ? e(i) : i)
+                ? zf(n, 1, e ? e(i) : i)
                 : r
-                ? xf(n, 1, r(i))
-                : xf(n, 2, i)
+                ? zf(n, 1, r(i))
+                : zf(n, 2, i)
             } catch (t) {
-              xf(n, 2, t)
+              zf(n, 2, t)
             }
           }),
           n
@@ -31502,7 +31537,7 @@ var Ef,
       t
     )
   })()
-function Rf(t, e, r) {
+function Gf(t, e, r) {
   var n,
     i,
     o = -1
@@ -31511,13 +31546,13 @@ function Rf(t, e, r) {
       try {
         for (; ++o < t.length && (!r || !r()); )
           if ((a = e(o)) && a.then) {
-            if (!((u = a) instanceof kf && 1 & u.s))
-              return void a.then(s, i || (i = xf.bind(null, (n = new kf()), 2)))
+            if (!((u = a) instanceof Hf && 1 & u.s))
+              return void a.then(s, i || (i = zf.bind(null, (n = new Hf()), 2)))
             a = a.v
           }
-        n ? xf(n, 1, a) : (n = a)
+        n ? zf(n, 1, a) : (n = a)
       } catch (t) {
-        xf(n || (n = new kf()), 2, t)
+        zf(n || (n = new Hf()), 2, t)
       }
       var u
     })(),
@@ -31529,16 +31564,16 @@ function Rf(t, e, r) {
     (t[(t.ApprovingDatatoken = 1)] = 'ApprovingDatatoken'),
     (t[(t.ApprovingOcean = 2)] = 'ApprovingOcean'),
     (t[(t.SetupPool = 3)] = 'SetupPool')
-})(Ef || (Ef = {}))
-var If = /*#__PURE__*/ (function (e) {
-  function r(t, r, n, i, o, s, a) {
+})(Wf || (Wf = {}))
+var Zf = /*#__PURE__*/ (function (t) {
+  function e(e, r, n, i, o, s, a) {
     var u
     return (
       void 0 === n && (n = null),
       void 0 === i && (i = null),
       void 0 === o && (o = null),
       void 0 === s && (s = null),
-      ((u = e.call(this, t, r, n, i, o, a) || this).oceanAddress = null),
+      ((u = t.call(this, e, r, n, i, o, a) || this).oceanAddress = null),
       (u.dtAddress = null),
       (u.startBlock = void 0),
       s && (u.oceanAddress = s),
@@ -31546,10 +31581,10 @@ var If = /*#__PURE__*/ (function (e) {
       u
     )
   }
-  A(r, e)
-  var n = r.prototype
+  U(e, t)
+  var r = e.prototype
   return (
-    (n.create = function (t, r, n, i, o, s) {
+    (r.create = function (e, r, n, i, o, s) {
       var a = this
       if (null == this.oceanAddress)
         throw (
@@ -31575,11 +31610,11 @@ var If = /*#__PURE__*/ (function (e) {
           (this.logger.error('ERROR: Weight out of bounds (min 1, max9)'),
           new Error('ERROR: Weight out of bounds (min 1, max9)'))
         )
-      return new N(function (u) {
+      return new Y(function (u) {
         try {
           return (
-            u.next(Ef.CreatingPool),
-            Promise.resolve(e.prototype.createPool.call(a, t)).then(function (
+            u.next(Wf.CreatingPool),
+            Promise.resolve(t.prototype.createPool.call(a, e)).then(function (
               h
             ) {
               if (!h)
@@ -31591,9 +31626,9 @@ var If = /*#__PURE__*/ (function (e) {
                 l = 10 - parseFloat(i)
               return (
                 (a.dtAddress = r),
-                u.next(Ef.ApprovingDatatoken),
+                u.next(Wf.ApprovingDatatoken),
                 Promise.resolve(
-                  a.approve(t, r, f, a.web3.utils.toWei(String(n)))
+                  a.approve(e, r, f, a.web3.utils.toWei(String(n)))
                 ).then(function (c) {
                   if (!c)
                     throw (
@@ -31601,10 +31636,10 @@ var If = /*#__PURE__*/ (function (e) {
                       new Error('ERROR: Failed to call approve DT token'))
                     )
                   return (
-                    u.next(Ef.ApprovingOcean),
+                    u.next(Wf.ApprovingOcean),
                     Promise.resolve(
                       a.approve(
-                        t,
+                        e,
                         a.oceanAddress,
                         f,
                         a.web3.utils.toWei(String(o))
@@ -31620,11 +31655,11 @@ var If = /*#__PURE__*/ (function (e) {
                           ))
                         )
                       return (
-                        u.next(Ef.SetupPool),
+                        u.next(Wf.SetupPool),
                         Promise.resolve(
-                          e.prototype.setup.call(
+                          t.prototype.setup.call(
                             a,
-                            t,
+                            e,
                             f,
                             r,
                             a.web3.utils.toWei(String(n)),
@@ -31656,7 +31691,7 @@ var If = /*#__PURE__*/ (function (e) {
         }
       })
     }),
-    (n.getDTAddress = function (t) {
+    (r.getDTAddress = function (t) {
       try {
         var e = this
         return (
@@ -31664,7 +31699,7 @@ var If = /*#__PURE__*/ (function (e) {
           Promise.resolve(e.getCurrentTokens(t)).then(function (t) {
             var r
             if (null != t)
-              for (var n, i = T(t); !(n = i()).done; )
+              for (var n, i = z(t); !(n = i()).done; )
                 (r = n.value).toLowerCase() !== e.oceanAddress.toLowerCase() &&
                   (e.dtAddress = r)
             return e.dtAddress
@@ -31674,46 +31709,46 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanReserve = function (t) {
+    (r.getOceanReserve = function (e) {
       try {
         var r = this
         return null == r.oceanAddress
           ? (r.logger.error('ERROR: oceanAddress is not defined'),
             Promise.resolve(null))
-          : Promise.resolve(e.prototype.getReserve.call(r, t, r.oceanAddress))
+          : Promise.resolve(t.prototype.getReserve.call(r, e, r.oceanAddress))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTReserve = function (t) {
+    (r.getDTReserve = function (e) {
       try {
         var r = this
-        return Promise.resolve(r.getDTAddress(t)).then(function (n) {
-          return e.prototype.getReserve.call(r, t, n)
+        return Promise.resolve(r.getDTAddress(e)).then(function (n) {
+          return t.prototype.getReserve.call(r, e, n)
         })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getMaxBuyQuantity = function (r, n) {
+    (r.getMaxBuyQuantity = function (e, r) {
       try {
-        return Promise.resolve(e.prototype.getReserve.call(this, r, n)).then(
-          function (e) {
-            return new t(e).div(3).toString()
+        return Promise.resolve(t.prototype.getReserve.call(this, e, r)).then(
+          function (t) {
+            return new M.default(t).div(3).toString()
           }
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanMaxBuyQuantity = function (t) {
+    (r.getOceanMaxBuyQuantity = function (t) {
       try {
         return Promise.resolve(this.getMaxBuyQuantity(t, this.oceanAddress))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTMaxBuyQuantity = function (t) {
+    (r.getDTMaxBuyQuantity = function (t) {
       try {
         var e = this,
           r = e.getMaxBuyQuantity
@@ -31724,22 +31759,22 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcInGivenOut = function (t, r, n, i) {
+    (r.calcInGivenOut = function (e, r, n, i) {
       try {
         var o = this,
-          s = e.prototype.calcInGivenOut
-        return Promise.resolve(e.prototype.getReserve.call(o, t, r)).then(
+          s = t.prototype.calcInGivenOut
+        return Promise.resolve(t.prototype.getReserve.call(o, e, r)).then(
           function (a) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(o, t, r)
+              t.prototype.getDenormalizedWeight.call(o, e, r)
             ).then(function (r) {
-              return Promise.resolve(e.prototype.getReserve.call(o, t, n)).then(
+              return Promise.resolve(t.prototype.getReserve.call(o, e, n)).then(
                 function (u) {
                   return Promise.resolve(
-                    e.prototype.getDenormalizedWeight.call(o, t, n)
-                  ).then(function (e) {
-                    return Promise.resolve(o.getSwapFee(t)).then(function (n) {
-                      return Promise.resolve(s.call(o, t, a, r, u, e, i, n))
+                    t.prototype.getDenormalizedWeight.call(o, e, n)
+                  ).then(function (t) {
+                    return Promise.resolve(o.getSwapFee(e)).then(function (n) {
+                      return Promise.resolve(s.call(o, e, a, r, u, t, i, n))
                     })
                   })
                 }
@@ -31751,24 +31786,24 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcOutGivenIn = function (t, r, n, i) {
+    (r.calcOutGivenIn = function (e, r, n, i) {
       try {
         var o = this,
-          s = e.prototype.calcOutGivenIn
-        return Promise.resolve(e.prototype.getReserve.call(o, t, r)).then(
+          s = t.prototype.calcOutGivenIn
+        return Promise.resolve(t.prototype.getReserve.call(o, e, r)).then(
           function (a) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(o, t, r)
+              t.prototype.getDenormalizedWeight.call(o, e, r)
             ).then(function (r) {
-              return Promise.resolve(e.prototype.getReserve.call(o, t, n)).then(
+              return Promise.resolve(t.prototype.getReserve.call(o, e, n)).then(
                 function (u) {
                   return Promise.resolve(
-                    e.prototype.getDenormalizedWeight.call(o, t, n)
+                    t.prototype.getDenormalizedWeight.call(o, e, n)
                   ).then(function (n) {
                     return Promise.resolve(
-                      e.prototype.getSwapFee.call(o, t)
-                    ).then(function (e) {
-                      return Promise.resolve(s.call(o, t, a, r, u, n, i, e))
+                      t.prototype.getSwapFee.call(o, e)
+                    ).then(function (t) {
+                      return Promise.resolve(s.call(o, e, a, r, u, n, i, t))
                     })
                   })
                 }
@@ -31780,25 +31815,25 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcPoolOutGivenSingleIn = function (t, r, n) {
+    (r.calcPoolOutGivenSingleIn = function (e, r, n) {
       try {
         var i = this,
-          o = e.prototype.calcPoolOutGivenSingleIn
-        return Promise.resolve(e.prototype.getReserve.call(i, t, r)).then(
+          o = t.prototype.calcPoolOutGivenSingleIn
+        return Promise.resolve(t.prototype.getReserve.call(i, e, r)).then(
           function (s) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(i, t, r)
+              t.prototype.getDenormalizedWeight.call(i, e, r)
             ).then(function (r) {
               return Promise.resolve(
-                e.prototype.getPoolSharesTotalSupply.call(i, t)
+                t.prototype.getPoolSharesTotalSupply.call(i, e)
               ).then(function (a) {
                 return Promise.resolve(
-                  e.prototype.getTotalDenormalizedWeight.call(i, t)
+                  t.prototype.getTotalDenormalizedWeight.call(i, e)
                 ).then(function (u) {
                   return Promise.resolve(
-                    e.prototype.getSwapFee.call(i, t)
-                  ).then(function (e) {
-                    return o.call(i, t, s, r, a, u, n, e)
+                    t.prototype.getSwapFee.call(i, e)
+                  ).then(function (t) {
+                    return o.call(i, e, s, r, a, u, n, t)
                   })
                 })
               })
@@ -31809,25 +31844,25 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcSingleInGivenPoolOut = function (t, r, n) {
+    (r.calcSingleInGivenPoolOut = function (e, r, n) {
       try {
         var i = this,
-          o = e.prototype.calcSingleInGivenPoolOut
-        return Promise.resolve(e.prototype.getReserve.call(i, t, r)).then(
+          o = t.prototype.calcSingleInGivenPoolOut
+        return Promise.resolve(t.prototype.getReserve.call(i, e, r)).then(
           function (s) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(i, t, r)
+              t.prototype.getDenormalizedWeight.call(i, e, r)
             ).then(function (r) {
               return Promise.resolve(
-                e.prototype.getPoolSharesTotalSupply.call(i, t)
+                t.prototype.getPoolSharesTotalSupply.call(i, e)
               ).then(function (a) {
                 return Promise.resolve(
-                  e.prototype.getTotalDenormalizedWeight.call(i, t)
+                  t.prototype.getTotalDenormalizedWeight.call(i, e)
                 ).then(function (u) {
                   return Promise.resolve(
-                    e.prototype.getSwapFee.call(i, t)
-                  ).then(function (e) {
-                    return o.call(i, t, s, r, a, u, n, e)
+                    t.prototype.getSwapFee.call(i, e)
+                  ).then(function (t) {
+                    return o.call(i, e, s, r, a, u, n, t)
                   })
                 })
               })
@@ -31838,25 +31873,25 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcSingleOutGivenPoolIn = function (t, r, n) {
+    (r.calcSingleOutGivenPoolIn = function (e, r, n) {
       try {
         var i = this,
-          o = e.prototype.calcSingleOutGivenPoolIn
-        return Promise.resolve(e.prototype.getReserve.call(i, t, r)).then(
+          o = t.prototype.calcSingleOutGivenPoolIn
+        return Promise.resolve(t.prototype.getReserve.call(i, e, r)).then(
           function (s) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(i, t, r)
+              t.prototype.getDenormalizedWeight.call(i, e, r)
             ).then(function (r) {
               return Promise.resolve(
-                e.prototype.getPoolSharesTotalSupply.call(i, t)
+                t.prototype.getPoolSharesTotalSupply.call(i, e)
               ).then(function (a) {
                 return Promise.resolve(
-                  e.prototype.getTotalDenormalizedWeight.call(i, t)
+                  t.prototype.getTotalDenormalizedWeight.call(i, e)
                 ).then(function (u) {
                   return Promise.resolve(
-                    e.prototype.getSwapFee.call(i, t)
-                  ).then(function (e) {
-                    return o.call(i, t, s, r, a, u, n, e)
+                    t.prototype.getSwapFee.call(i, e)
+                  ).then(function (t) {
+                    return o.call(i, e, s, r, a, u, n, t)
                   })
                 })
               })
@@ -31867,25 +31902,25 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.calcPoolInGivenSingleOut = function (t, r, n) {
+    (r.calcPoolInGivenSingleOut = function (e, r, n) {
       try {
         var i = this,
-          o = e.prototype.calcPoolInGivenSingleOut
-        return Promise.resolve(e.prototype.getReserve.call(i, t, r)).then(
+          o = t.prototype.calcPoolInGivenSingleOut
+        return Promise.resolve(t.prototype.getReserve.call(i, e, r)).then(
           function (s) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(i, t, r)
+              t.prototype.getDenormalizedWeight.call(i, e, r)
             ).then(function (r) {
               return Promise.resolve(
-                e.prototype.getPoolSharesTotalSupply.call(i, t)
+                t.prototype.getPoolSharesTotalSupply.call(i, e)
               ).then(function (a) {
                 return Promise.resolve(
-                  e.prototype.getTotalDenormalizedWeight.call(i, t)
+                  t.prototype.getTotalDenormalizedWeight.call(i, e)
                 ).then(function (u) {
                   return Promise.resolve(
-                    e.prototype.getSwapFee.call(i, t)
-                  ).then(function (e) {
-                    return o.call(i, t, s, r, a, u, n, e)
+                    t.prototype.getSwapFee.call(i, e)
+                  ).then(function (t) {
+                    return o.call(i, e, s, r, a, u, n, t)
                   })
                 })
               })
@@ -31896,7 +31931,7 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolSharesRequiredToRemoveDT = function (t, e) {
+    (r.getPoolSharesRequiredToRemoveDT = function (t, e) {
       try {
         var r = this
         return Promise.resolve(r.getDTAddress(t)).then(function (n) {
@@ -31906,7 +31941,7 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTRemovedforPoolShares = function (t, e) {
+    (r.getDTRemovedforPoolShares = function (t, e) {
       try {
         var r = this
         return Promise.resolve(r.getDTAddress(t)).then(function (n) {
@@ -31916,7 +31951,7 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolSharesRequiredToRemoveOcean = function (t, e) {
+    (r.getPoolSharesRequiredToRemoveOcean = function (t, e) {
       try {
         return Promise.resolve(
           this.calcPoolInGivenSingleOut(t, this.oceanAddress, e)
@@ -31925,7 +31960,7 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanRemovedforPoolShares = function (t, e) {
+    (r.getOceanRemovedforPoolShares = function (t, e) {
       try {
         return Promise.resolve(
           this.calcSingleOutGivenPoolIn(t, this.oceanAddress, e)
@@ -31934,39 +31969,39 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getTokensRemovedforPoolShares = function (e, r) {
+    (r.getTokensRemovedforPoolShares = function (t, e) {
       try {
-        var n = this
+        var r = this
         return Promise.resolve(
-          (function (i, o) {
+          (function (n, i) {
             try {
-              var s = Promise.resolve(n.getPoolSharesTotalSupply(e)).then(
-                function (i) {
-                  return Promise.resolve(n.getDTReserve(e)).then(function (o) {
-                    return Promise.resolve(n.getOceanReserve(e)).then(function (
-                      e
+              var o = Promise.resolve(r.getPoolSharesTotalSupply(t)).then(
+                function (n) {
+                  return Promise.resolve(r.getDTReserve(t)).then(function (i) {
+                    return Promise.resolve(r.getOceanReserve(t)).then(function (
+                      t
                     ) {
                       return {
-                        dtAmount: new t(r).div(i).mul(o).toString(),
-                        oceanAmount: new t(r).div(i).mul(e).toString()
+                        dtAmount: new M.default(e).div(n).mul(i).toString(),
+                        oceanAmount: new M.default(e).div(n).mul(t).toString()
                       }
                     })
                   })
                 }
               )
             } catch (t) {
-              return o(t)
+              return i(t)
             }
-            return s && s.then ? s.then(void 0, o) : s
+            return o && o.then ? o.then(void 0, i) : o
           })(0, function (t) {
-            n.logger.error('ERROR: Unable to get token info. ' + t.message)
+            r.logger.error('ERROR: Unable to get token info. ' + t.message)
           })
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTMaxAddLiquidity = function (t) {
+    (r.getDTMaxAddLiquidity = function (t) {
       try {
         var e = this
         return Promise.resolve(e.getDTAddress(t)).then(function (r) {
@@ -31976,36 +32011,40 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanMaxAddLiquidity = function (t) {
+    (r.getOceanMaxAddLiquidity = function (t) {
       try {
         return Promise.resolve(this.getMaxAddLiquidity(t, this.oceanAddress))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getMaxAddLiquidity = function (r, n) {
+    (r.getMaxAddLiquidity = function (e, r) {
       try {
-        return Promise.resolve(e.prototype.getReserve.call(this, r, n)).then(
-          function (e) {
-            return parseFloat(e) > 0 ? new t(e).mul(0.25).toString() : '0'
+        return Promise.resolve(t.prototype.getReserve.call(this, e, r)).then(
+          function (t) {
+            return parseFloat(t) > 0
+              ? new M.default(t).mul(0.25).toString()
+              : '0'
           }
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getMaxRemoveLiquidity = function (r, n) {
+    (r.getMaxRemoveLiquidity = function (e, r) {
       try {
-        return Promise.resolve(e.prototype.getReserve.call(this, r, n)).then(
-          function (e) {
-            return parseFloat(e) > 0 ? new t(e).mul(0.25).toString() : '0'
+        return Promise.resolve(t.prototype.getReserve.call(this, e, r)).then(
+          function (t) {
+            return parseFloat(t) > 0
+              ? new M.default(t).mul(0.25).toString()
+              : '0'
           }
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTMaxRemoveLiquidity = function (t) {
+    (r.getDTMaxRemoveLiquidity = function (t) {
       try {
         var e = this
         return Promise.resolve(e.getDTAddress(t)).then(function (r) {
@@ -32015,46 +32054,46 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanMaxRemoveLiquidity = function (t) {
+    (r.getOceanMaxRemoveLiquidity = function (t) {
       try {
         return Promise.resolve(this.getMaxRemoveLiquidity(t, this.oceanAddress))
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.buyDT = function (r, n, i, o, s) {
+    (r.buyDT = function (e, r, n, i, o) {
       try {
-        var a = this
-        return null == a.oceanAddress
-          ? (a.logger.error('ERROR: undefined ocean token contract address'),
+        var s = this
+        return null == s.oceanAddress
+          ? (s.logger.error('ERROR: undefined ocean token contract address'),
             Promise.resolve(null))
-          : Promise.resolve(a.getDTAddress(n)).then(function (u) {
-              var h = new t(i),
-                f = h.greaterThan
-              return Promise.resolve(a.getDTMaxBuyQuantity(n)).then(function (
-                l
+          : Promise.resolve(s.getDTAddress(r)).then(function (a) {
+              var u = new M.default(n),
+                h = u.greaterThan
+              return Promise.resolve(s.getDTMaxBuyQuantity(r)).then(function (
+                f
               ) {
-                return f.call(h, l)
-                  ? (a.logger.error(
+                return h.call(u, f)
+                  ? (s.logger.error(
                       'ERROR: Buy quantity exceeds quantity allowed'
                     ),
                     null)
-                  : Promise.resolve(a.getOceanNeeded(n, i)).then(function (h) {
-                      return new t(h).greaterThan(o)
-                        ? (a.logger.error('ERROR: Not enough Ocean Tokens'),
+                  : Promise.resolve(s.getOceanNeeded(r, n)).then(function (u) {
+                      return new M.default(u).greaterThan(i)
+                        ? (s.logger.error('ERROR: Not enough Ocean Tokens'),
                           null)
                         : Promise.resolve(
-                            e.prototype.approve.call(
-                              a,
+                            t.prototype.approve.call(
+                              s,
+                              e,
+                              s.oceanAddress,
                               r,
-                              a.oceanAddress,
-                              n,
-                              a.web3.utils.toWei(o)
+                              s.web3.utils.toWei(i)
                             )
-                          ).then(function (t) {
-                            if (!t)
+                          ).then(function (u) {
+                            if (!u)
                               throw (
-                                (a.logger.error(
+                                (s.logger.error(
                                   'ERROR: Failed to call approve OCEAN token'
                                 ),
                                 new Error(
@@ -32062,15 +32101,15 @@ var If = /*#__PURE__*/ (function (e) {
                                 ))
                               )
                             return Promise.resolve(
-                              e.prototype.swapExactAmountOut.call(
-                                a,
+                              t.prototype.swapExactAmountOut.call(
+                                s,
+                                e,
                                 r,
-                                n,
-                                a.oceanAddress,
-                                o,
-                                u,
+                                s.oceanAddress,
                                 i,
-                                s
+                                a,
+                                n,
+                                o
                               )
                             )
                           })
@@ -32081,39 +32120,39 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.buyDTWithExactOcean = function (r, n, i, o, s) {
+    (r.buyDTWithExactOcean = function (e, r, n, i, o) {
       try {
-        var a = this
-        return null == a.oceanAddress
-          ? (a.logger.error('ERROR: undefined ocean token contract address'),
+        var s = this
+        return null == s.oceanAddress
+          ? (s.logger.error('ERROR: undefined ocean token contract address'),
             Promise.resolve(null))
-          : Promise.resolve(a.getDTAddress(n)).then(function (u) {
-              var h = new t(i),
-                f = h.greaterThan
-              return Promise.resolve(a.getDTMaxBuyQuantity(n)).then(function (
-                l
+          : Promise.resolve(s.getDTAddress(r)).then(function (a) {
+              var u = new M.default(n),
+                h = u.greaterThan
+              return Promise.resolve(s.getDTMaxBuyQuantity(r)).then(function (
+                f
               ) {
-                return f.call(h, l)
-                  ? (a.logger.error(
+                return h.call(u, f)
+                  ? (s.logger.error(
                       'ERROR: Buy quantity exceeds quantity allowed'
                     ),
                     null)
-                  : Promise.resolve(a.getOceanNeeded(n, i)).then(function (h) {
-                      return new t(h).greaterThan(o)
-                        ? (a.logger.error('ERROR: Not enough Ocean Tokens'),
+                  : Promise.resolve(s.getOceanNeeded(r, n)).then(function (u) {
+                      return new M.default(u).greaterThan(i)
+                        ? (s.logger.error('ERROR: Not enough Ocean Tokens'),
                           null)
                         : Promise.resolve(
-                            e.prototype.approve.call(
-                              a,
+                            t.prototype.approve.call(
+                              s,
+                              e,
+                              s.oceanAddress,
                               r,
-                              a.oceanAddress,
-                              n,
-                              a.web3.utils.toWei(o)
+                              s.web3.utils.toWei(i)
                             )
-                          ).then(function (t) {
-                            if (!t)
+                          ).then(function (u) {
+                            if (!u)
                               throw (
-                                (a.logger.error(
+                                (s.logger.error(
                                   'ERROR: Failed to call approve OCEAN token'
                                 ),
                                 new Error(
@@ -32121,15 +32160,15 @@ var If = /*#__PURE__*/ (function (e) {
                                 ))
                               )
                             return Promise.resolve(
-                              e.prototype.swapExactAmountIn.call(
-                                a,
+                              t.prototype.swapExactAmountIn.call(
+                                s,
+                                e,
                                 r,
-                                n,
-                                a.oceanAddress,
-                                o,
-                                u,
+                                s.oceanAddress,
                                 i,
-                                s
+                                a,
+                                n,
+                                o
                               )
                             )
                           })
@@ -32140,40 +32179,40 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.sellDT = function (r, n, i, o, s) {
+    (r.sellDT = function (e, r, n, i, o) {
       try {
-        var a = this
-        return null == a.oceanAddress
-          ? (a.logger.error('ERROR: oceanAddress is not defined'),
+        var s = this
+        return null == s.oceanAddress
+          ? (s.logger.error('ERROR: oceanAddress is not defined'),
             Promise.resolve(null))
-          : Promise.resolve(a.getDTAddress(n)).then(function (u) {
-              var h = new t(o),
-                f = h.greaterThan
-              return Promise.resolve(a.getOceanMaxBuyQuantity(n)).then(
-                function (l) {
-                  return f.call(h, l)
-                    ? (a.logger.error(
+          : Promise.resolve(s.getDTAddress(r)).then(function (a) {
+              var u = new M.default(i),
+                h = u.greaterThan
+              return Promise.resolve(s.getOceanMaxBuyQuantity(r)).then(
+                function (f) {
+                  return h.call(u, f)
+                    ? (s.logger.error(
                         'ERROR: Buy quantity exceeds quantity allowed'
                       ),
                       null)
-                    : Promise.resolve(a.getOceanReceived(n, i)).then(function (
-                        h
+                    : Promise.resolve(s.getOceanReceived(r, n)).then(function (
+                        u
                       ) {
-                        return new t(h).lessThan(o)
-                          ? (a.logger.error('ERROR: Not enough datatokens'),
+                        return new M.default(u).lessThan(i)
+                          ? (s.logger.error('ERROR: Not enough datatokens'),
                             null)
                           : Promise.resolve(
-                              e.prototype.approve.call(
+                              t.prototype.approve.call(
+                                s,
+                                e,
                                 a,
                                 r,
-                                u,
-                                n,
-                                a.web3.utils.toWei(i)
+                                s.web3.utils.toWei(n)
                               )
-                            ).then(function (t) {
-                              if (!t)
+                            ).then(function (u) {
+                              if (!u)
                                 throw (
-                                  (a.logger.error(
+                                  (s.logger.error(
                                     'ERROR: Failed to call approve DT token'
                                   ),
                                   new Error(
@@ -32181,15 +32220,15 @@ var If = /*#__PURE__*/ (function (e) {
                                   ))
                                 )
                               return Promise.resolve(
-                                e.prototype.swapExactAmountIn.call(
-                                  a,
+                                t.prototype.swapExactAmountIn.call(
+                                  s,
+                                  e,
                                   r,
+                                  a,
                                   n,
-                                  u,
+                                  s.oceanAddress,
                                   i,
-                                  a.oceanAddress,
-                                  o,
-                                  s
+                                  o
                                 )
                               )
                             })
@@ -32201,23 +32240,23 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.addDTLiquidity = function (r, n, i) {
+    (r.addDTLiquidity = function (e, r, n) {
       try {
-        var o = this
-        return Promise.resolve(o.getDTAddress(n)).then(function (s) {
-          return Promise.resolve(o.getMaxAddLiquidity(n, s)).then(function (a) {
-            return new t(i).greaterThan(a)
-              ? (o.logger.error('ERROR: Too much reserve to add'), null)
+        var i = this
+        return Promise.resolve(i.getDTAddress(r)).then(function (o) {
+          return Promise.resolve(i.getMaxAddLiquidity(r, o)).then(function (s) {
+            return new M.default(n).greaterThan(s)
+              ? (i.logger.error('ERROR: Too much reserve to add'), null)
               : Promise.resolve(
-                  e.prototype.approve.call(o, r, s, n, o.web3.utils.toWei(i))
-                ).then(function (t) {
-                  if (!t)
+                  t.prototype.approve.call(i, e, o, r, i.web3.utils.toWei(n))
+                ).then(function (s) {
+                  if (!s)
                     throw (
-                      (o.logger.error('ERROR: Failed to call approve DT token'),
+                      (i.logger.error('ERROR: Failed to call approve DT token'),
                       new Error('ERROR: Failed to call approve DT token'))
                     )
                   return Promise.resolve(
-                    e.prototype.joinswapExternAmountIn.call(o, r, n, s, i, '0')
+                    t.prototype.joinswapExternAmountIn.call(i, e, r, o, n, '0')
                   )
                 })
           })
@@ -32226,27 +32265,27 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.removeDTLiquidity = function (e, r, n, i) {
+    (r.removeDTLiquidity = function (t, e, r, n) {
       try {
-        var o = this
-        return Promise.resolve(o.getDTAddress(r)).then(function (s) {
-          return Promise.resolve(o.getDTMaxRemoveLiquidity(r)).then(function (
-            a
+        var i = this
+        return Promise.resolve(i.getDTAddress(e)).then(function (o) {
+          return Promise.resolve(i.getDTMaxRemoveLiquidity(e)).then(function (
+            s
           ) {
-            return new t(n).greaterThan(a)
-              ? (o.logger.error('ERROR: Too much reserve to remove'), null)
-              : Promise.resolve(o.sharesBalance(e, r)).then(function (a) {
-                  return new t(a).lessThan(i)
-                    ? (o.logger.error('ERROR: Not enough poolShares'), null)
+            return new M.default(r).greaterThan(s)
+              ? (i.logger.error('ERROR: Too much reserve to remove'), null)
+              : Promise.resolve(i.sharesBalance(t, e)).then(function (s) {
+                  return new M.default(s).lessThan(n)
+                    ? (i.logger.error('ERROR: Not enough poolShares'), null)
                     : Promise.resolve(
-                        o.getPoolSharesRequiredToRemoveDT(r, n)
-                      ).then(function (a) {
-                        return new t(i).lessThan(a)
-                          ? (o.logger.error('ERROR: Not enough poolShares'),
+                        i.getPoolSharesRequiredToRemoveDT(e, r)
+                      ).then(function (s) {
+                        return new M.default(n).lessThan(s)
+                          ? (i.logger.error('ERROR: Not enough poolShares'),
                             null)
-                          : (new t(i).lessThan(a) &&
-                              (i = new t(i).mul(0.9999).toString()),
-                            o.exitswapExternAmountOut(e, r, s, n, i))
+                          : (new M.default(n).lessThan(s) &&
+                              (n = new M.default(n).mul(0.9999).toString()),
+                            i.exitswapExternAmountOut(t, e, o, r, n))
                       })
                 })
           })
@@ -32255,38 +32294,38 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.addOceanLiquidity = function (r, n, i) {
+    (r.addOceanLiquidity = function (e, r, n) {
       try {
-        var o = this
-        return null == o.oceanAddress
-          ? (o.logger.error('ERROR: oceanAddress is not defined'),
+        var i = this
+        return null == i.oceanAddress
+          ? (i.logger.error('ERROR: oceanAddress is not defined'),
             Promise.resolve(null))
-          : Promise.resolve(o.getOceanMaxAddLiquidity(n)).then(function (s) {
-              return new t(i).greaterThan(s)
-                ? (o.logger.error('ERROR: Too much reserve to add'), null)
+          : Promise.resolve(i.getOceanMaxAddLiquidity(r)).then(function (o) {
+              return new M.default(n).greaterThan(o)
+                ? (i.logger.error('ERROR: Too much reserve to add'), null)
                 : Promise.resolve(
-                    e.prototype.approve.call(
-                      o,
+                    t.prototype.approve.call(
+                      i,
+                      e,
+                      i.oceanAddress,
                       r,
-                      o.oceanAddress,
-                      n,
-                      o.web3.utils.toWei(i)
+                      i.web3.utils.toWei(n)
                     )
-                  ).then(function (t) {
-                    if (!t)
+                  ).then(function (o) {
+                    if (!o)
                       throw (
-                        (o.logger.error(
+                        (i.logger.error(
                           'ERROR: Failed to call approve OCEAN token'
                         ),
                         new Error('ERROR: Failed to call approve OCEAN token'))
                       )
                     return Promise.resolve(
-                      e.prototype.joinswapExternAmountIn.call(
-                        o,
-                        r,
-                        n,
-                        o.oceanAddress,
+                      t.prototype.joinswapExternAmountIn.call(
                         i,
+                        e,
+                        r,
+                        i.oceanAddress,
+                        n,
                         '0'
                       )
                     )
@@ -32296,55 +32335,55 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.removeOceanLiquidityWithMinimum = function (r, n, i, o) {
+    (r.removeOceanLiquidityWithMinimum = function (e, r, n, i) {
       try {
-        var s = this
-        return null == s.oceanAddress
-          ? (s.logger.error('ERROR: oceanAddress is not defined'),
+        var o = this
+        return null == o.oceanAddress
+          ? (o.logger.error('ERROR: oceanAddress is not defined'),
             Promise.resolve(null))
-          : Promise.resolve(s.sharesBalance(r, n)).then(function (a) {
-              return new t(a).lessThan(i)
-                ? (s.logger.error('ERROR: Not enough poolShares'), null)
-                : e.prototype.exitswapPoolAmountIn.call(
-                    s,
+          : Promise.resolve(o.sharesBalance(e, r)).then(function (s) {
+              return new M.default(s).lessThan(n)
+                ? (o.logger.error('ERROR: Not enough poolShares'), null)
+                : t.prototype.exitswapPoolAmountIn.call(
+                    o,
+                    e,
                     r,
+                    o.oceanAddress,
                     n,
-                    s.oceanAddress,
-                    i,
-                    o
+                    i
                   )
             })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.removeOceanLiquidity = function (r, n, i, o) {
+    (r.removeOceanLiquidity = function (e, r, n, i) {
       try {
-        var s = this
-        return null == s.oceanAddress
-          ? (s.logger.error('ERROR: oceanAddress is not defined'),
+        var o = this
+        return null == o.oceanAddress
+          ? (o.logger.error('ERROR: oceanAddress is not defined'),
             Promise.resolve(null))
-          : Promise.resolve(s.getOceanMaxRemoveLiquidity(n)).then(function (a) {
-              return new t(i).greaterThan(a)
-                ? (s.logger.error('ERROR: Too much reserve to remove'), null)
-                : Promise.resolve(s.sharesBalance(r, n)).then(function (a) {
-                    return new t(a).lessThan(o)
-                      ? (s.logger.error('ERROR: Not enough poolShares'), null)
+          : Promise.resolve(o.getOceanMaxRemoveLiquidity(r)).then(function (s) {
+              return new M.default(n).greaterThan(s)
+                ? (o.logger.error('ERROR: Too much reserve to remove'), null)
+                : Promise.resolve(o.sharesBalance(e, r)).then(function (s) {
+                    return new M.default(s).lessThan(i)
+                      ? (o.logger.error('ERROR: Not enough poolShares'), null)
                       : Promise.resolve(
-                          s.getPoolSharesRequiredToRemoveOcean(n, i)
-                        ).then(function (a) {
-                          return new t(o).lessThan(a)
-                            ? (s.logger.error('ERROR: Not enough poolShares'),
+                          o.getPoolSharesRequiredToRemoveOcean(r, n)
+                        ).then(function (s) {
+                          return new M.default(i).lessThan(s)
+                            ? (o.logger.error('ERROR: Not enough poolShares'),
                               null)
-                            : (new t(o).lessThan(a) &&
-                                (o = new t(o).mul(0.9999).toString()),
-                              e.prototype.exitswapExternAmountOut.call(
-                                s,
+                            : (new M.default(i).lessThan(s) &&
+                                (i = new M.default(i).mul(0.9999).toString()),
+                              t.prototype.exitswapExternAmountOut.call(
+                                o,
+                                e,
                                 r,
+                                o.oceanAddress,
                                 n,
-                                s.oceanAddress,
-                                i,
-                                o
+                                i
                               ))
                         })
                   })
@@ -32353,21 +32392,22 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.removePoolLiquidity = function (e, r, n, i, o) {
-      void 0 === i && (i = '0'), void 0 === o && (o = '0')
+    (r.removePoolLiquidity = function (t, e, r, n, i) {
+      void 0 === n && (n = '0'), void 0 === i && (i = '0')
       try {
-        var s = this
-        return Promise.resolve(s.sharesBalance(e, r)).then(function (a) {
-          return new t(a).lessThan(n)
-            ? (s.logger.error('ERROR: Not enough poolShares'), null)
-            : (new t(a).equals(n) && (n = new t(n).mul(0.9999).toString()),
-              s.exitPool(e, r, n, [i, o]))
+        var o = this
+        return Promise.resolve(o.sharesBalance(t, e)).then(function (s) {
+          return new M.default(s).lessThan(r)
+            ? (o.logger.error('ERROR: Not enough poolShares'), null)
+            : (new M.default(s).equals(r) &&
+                (r = new M.default(r).mul(0.9999).toString()),
+              o.exitPool(t, e, r, [n, i]))
         })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTPrice = function (t) {
+    (r.getDTPrice = function (t) {
       try {
         var e = this
         return null == e.oceanAddress
@@ -32378,11 +32418,11 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.searchPoolforDT = function (t) {
+    (r.searchPoolforDT = function (e) {
       try {
         var r = this,
           n = [],
-          i = W(
+          i = it(
             new r.web3.eth.Contract(r.factoryABI, r.factoryAddress),
             r.config
           )
@@ -32396,11 +32436,11 @@ var If = /*#__PURE__*/ (function (e) {
           i.sort(function (t, e) {
             return t.blockNumber > e.blockNumber ? 1 : -1
           })
-          var o = Rf(i, function (o) {
+          var o = Gf(i, function (o) {
             return Promise.resolve(
-              e.prototype.getCurrentTokens.call(r, i[o].returnValues[0])
-            ).then(function (e) {
-              e.includes(t) && n.push(i[o].returnValues[0])
+              t.prototype.getCurrentTokens.call(r, i[o].returnValues[0])
+            ).then(function (t) {
+              t.includes(e) && n.push(i[o].returnValues[0])
             })
           })
           return o && o.then
@@ -32413,23 +32453,23 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanNeeded = function (e, r) {
+    (r.getOceanNeeded = function (t, e) {
       try {
-        var n = this
-        return Promise.resolve(n.getDTAddress(e)).then(function (i) {
-          var o = new t(r),
-            s = o.greaterThan
-          return Promise.resolve(n.getDTMaxBuyQuantity(e)).then(function (t) {
-            return s.call(o, t)
+        var r = this
+        return Promise.resolve(r.getDTAddress(t)).then(function (n) {
+          var i = new M.default(e),
+            o = i.greaterThan
+          return Promise.resolve(r.getDTMaxBuyQuantity(t)).then(function (s) {
+            return o.call(i, s)
               ? '0'
-              : n.calcInGivenOut(e, n.oceanAddress, i, r)
+              : r.calcInGivenOut(t, r.oceanAddress, n, e)
           })
         })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getOceanReceived = function (t, e) {
+    (r.getOceanReceived = function (t, e) {
       try {
         var r = this
         return Promise.resolve(r.getDTAddress(t)).then(function (n) {
@@ -32439,7 +32479,7 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTReceived = function (t, e) {
+    (r.getDTReceived = function (t, e) {
       try {
         var r = this
         return Promise.resolve(r.getDTAddress(t)).then(function (n) {
@@ -32449,29 +32489,29 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getDTNeeded = function (e, r) {
+    (r.getDTNeeded = function (t, e) {
       try {
-        var n = this
-        return Promise.resolve(n.getDTAddress(e)).then(function (i) {
-          var o = new t(r),
-            s = o.greaterThan
-          return Promise.resolve(n.getOceanMaxBuyQuantity(e)).then(function (
-            t
+        var r = this
+        return Promise.resolve(r.getDTAddress(t)).then(function (n) {
+          var i = new M.default(e),
+            o = i.greaterThan
+          return Promise.resolve(r.getOceanMaxBuyQuantity(t)).then(function (
+            s
           ) {
-            return s.call(o, t)
+            return o.call(i, s)
               ? '0'
-              : n.calcInGivenOut(e, i, n.oceanAddress, r)
+              : r.calcInGivenOut(t, n, r.oceanAddress, e)
           })
         })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolsbyCreator = function (t) {
+    (r.getPoolsbyCreator = function (t) {
       try {
         var e = this,
           r = [],
-          n = W(
+          n = it(
             new e.web3.eth.Contract(e.factoryABI, e.factoryAddress),
             e.config
           )
@@ -32482,7 +32522,7 @@ var If = /*#__PURE__*/ (function (e) {
             toBlock: 'latest'
           })
         ).then(function (n) {
-          var i = Rf(n, function (i) {
+          var i = Gf(n, function (i) {
             var o = (function () {
               if (
                 !t ||
@@ -32508,11 +32548,11 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getResult = function (t, r) {
+    (r.getResult = function (e, r) {
       try {
         var n = this
         return Promise.resolve(
-          e.prototype.sharesBalance.call(n, t, r.returnValues[0])
+          t.prototype.sharesBalance.call(n, e, r.returnValues[0])
         ).then(function (t) {
           return (function () {
             if (parseFloat(t) > 0)
@@ -32522,7 +32562,7 @@ var If = /*#__PURE__*/ (function (e) {
                     return {
                       shares: t,
                       poolAddress: r.returnValues[0],
-                      did: I(C(e))
+                      did: Z(J(e))
                     }
                 }
               )
@@ -32532,11 +32572,11 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolSharesByAddress = function (t) {
+    (r.getPoolSharesByAddress = function (t) {
       try {
         var e = this,
           r = [],
-          n = W(
+          n = it(
             new e.web3.eth.Contract(e.factoryABI, e.factoryAddress),
             e.config
           )
@@ -32563,7 +32603,7 @@ var If = /*#__PURE__*/ (function (e) {
             return e && e.then ? e.then(t) : t()
           }
           var o = [],
-            s = Rf(n, function (i) {
+            s = Gf(n, function (i) {
               o.push(e.getResult(t, n[i]))
               var s = (function () {
                 if (o.length > 10)
@@ -32580,40 +32620,40 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolDetails = function (t) {
+    (r.getPoolDetails = function (e) {
       try {
-        return Promise.resolve(e.prototype.getFinalTokens.call(this, t)).then(
-          function (e) {
-            return { poolAddress: t, tokens: e }
+        return Promise.resolve(t.prototype.getFinalTokens.call(this, e)).then(
+          function (t) {
+            return { poolAddress: e, tokens: t }
           }
         )
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.getPoolLogs = function (t, r, n) {
+    (r.getPoolLogs = function (e, r, n) {
       void 0 === r && (r = 0)
       try {
         var i = this,
           o = []
-        return Promise.resolve(i.getDTAddress(t)).then(function (s) {
+        return Promise.resolve(i.getDTAddress(e)).then(function (s) {
           0 === r && (r = i.startBlock)
           var a,
-            u = e.prototype.getSwapEventSignature.call(i),
-            h = e.prototype.getJoinEventSignature.call(i),
-            f = e.prototype.getExitEventSignature.call(i)
+            u = t.prototype.getSwapEventSignature.call(i),
+            h = t.prototype.getJoinEventSignature.call(i),
+            f = t.prototype.getExitEventSignature.call(i)
           return (
             (a = n
               ? '0x000000000000000000000000' + n.substring(2).toLowerCase()
               : null),
             Promise.resolve(
               i.web3.eth.getPastLogs({
-                address: t,
+                address: e,
                 topics: [[u, h, f], a],
                 fromBlock: r,
                 toBlock: 'latest'
               })
-            ).then(function (e) {
+            ).then(function (t) {
               function r() {
                 function t() {
                   return o.filter(function (t) {
@@ -32630,8 +32670,8 @@ var If = /*#__PURE__*/ (function (e) {
                 return e && e.then ? e.then(t) : t()
               }
               var n = [],
-                a = Rf(e, function (r) {
-                  n.push(i.getEventData(t, s, e[r]))
+                a = Gf(t, function (r) {
+                  n.push(i.getEventData(e, s, t[r]))
                   var a = (function () {
                     if (n.length > 10)
                       return Promise.resolve(Promise.all(n)).then(function (t) {
@@ -32649,11 +32689,11 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getAllPoolLogs = function (t) {
+    (r.getAllPoolLogs = function (t) {
       try {
         var e = this,
           r = [],
-          n = W(
+          n = it(
             new e.web3.eth.Contract(e.factoryABI, e.factoryAddress),
             e.config
           )
@@ -32680,7 +32720,7 @@ var If = /*#__PURE__*/ (function (e) {
             return e && e.then ? e.then(t) : t()
           }
           var o = [],
-            s = Rf(n, function (i) {
+            s = Gf(n, function (i) {
               o.push(e.getPoolLogs(n[i].returnValues[0], n[i].blockNumber, t))
               var s = (function () {
                 if (o.length > 10)
@@ -32697,15 +32737,15 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.getEventData = function (t, r, n) {
+    (r.getEventData = function (e, r, n) {
       try {
         var i = this
         return Promise.resolve(i.web3.eth.getBlock(n.blockNumber)).then(
           function (o) {
             var s,
-              a = e.prototype.getSwapEventSignature.call(i),
-              u = e.prototype.getJoinEventSignature.call(i),
-              h = e.prototype.getExitEventSignature.call(i)
+              a = t.prototype.getSwapEventSignature.call(i),
+              u = t.prototype.getJoinEventSignature.call(i),
+              h = t.prototype.getExitEventSignature.call(i)
             switch (n.topics[0]) {
               case a:
                 s = 'swap'
@@ -32718,7 +32758,7 @@ var If = /*#__PURE__*/ (function (e) {
             }
             var f,
               l = {
-                poolAddress: t,
+                poolAddress: e,
                 dtAddress: r,
                 caller: n.topics[1],
                 transactionHash: n.transactionHash,
@@ -32732,7 +32772,7 @@ var If = /*#__PURE__*/ (function (e) {
                   ['uint256', 'uint256'],
                   n.data
                 )),
-                  (l = _({}, l, {
+                  (l = D({}, l, {
                     tokenIn:
                       '0x' + n.topics[2].substring(n.topics[2].length - 40),
                     tokenOut:
@@ -32743,7 +32783,7 @@ var If = /*#__PURE__*/ (function (e) {
                 break
               case 'join':
                 ;(f = i.web3.eth.abi.decodeParameters(['uint256'], n.data)),
-                  (l = _({}, l, {
+                  (l = D({}, l, {
                     tokenIn:
                       '0x' + n.topics[2].substring(n.topics[2].length - 40),
                     tokenAmountIn: i.web3.utils.fromWei(f[0])
@@ -32751,7 +32791,7 @@ var If = /*#__PURE__*/ (function (e) {
                 break
               case 'exit':
                 ;(f = i.web3.eth.abi.decodeParameters(['uint256'], n.data)),
-                  (l = _({}, l, {
+                  (l = D({}, l, {
                     tokenOut:
                       '0x' + n.topics[2].substring(n.topics[2].length - 40),
                     tokenAmountOut: i.web3.utils.fromWei(f[0])
@@ -32764,52 +32804,52 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.computeSlippage = function (r, n, i, o, s, a, u, h) {
+    (r.computeSlippage = function (e, r, n, i, o, s, a, u) {
       try {
-        var f = this
+        var h = this
         return Promise.resolve(
-          e.prototype.calcSpotPrice.call(f, r, n, i, o, s, h)
-        ).then(function (n) {
+          t.prototype.calcSpotPrice.call(h, e, r, n, i, o, u)
+        ).then(function (r) {
           return Promise.resolve(
-            e.prototype.calcSpotPrice.call(f, r, a, i, u, s, h)
-          ).then(function (e) {
-            return new t(e).mul(100).div(n).minus(100).toString()
+            t.prototype.calcSpotPrice.call(h, e, s, n, a, o, u)
+          ).then(function (t) {
+            return new M.default(t).mul(100).div(r).minus(100).toString()
           })
         })
       } catch (t) {
         return Promise.reject(t)
       }
     }),
-    (n.computeBuySlippage = function (t, r) {
+    (r.computeBuySlippage = function (e, r) {
       try {
         var n = this
-        return Promise.resolve(n.getDTAddress(t)).then(function (i) {
+        return Promise.resolve(n.getDTAddress(e)).then(function (i) {
           return Promise.resolve(
-            e.prototype.getDenormalizedWeight.call(n, t, i)
+            t.prototype.getDenormalizedWeight.call(n, e, i)
           ).then(function (o) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(n, t, n.oceanAddress)
+              t.prototype.getDenormalizedWeight.call(n, e, n.oceanAddress)
             ).then(function (s) {
-              return Promise.resolve(e.prototype.getReserve.call(n, t, i)).then(
+              return Promise.resolve(t.prototype.getReserve.call(n, e, i)).then(
                 function (a) {
                   return Promise.resolve(
-                    e.prototype.getReserve.call(n, t, i)
+                    t.prototype.getReserve.call(n, e, i)
                   ).then(function (i) {
                     return Promise.resolve(
-                      e.prototype.getSwapFee.call(n, t)
+                      t.prototype.getSwapFee.call(n, e)
                     ).then(function (u) {
                       return Promise.resolve(
-                        e.prototype.calcOutGivenIn.call(n, t, i, s, a, o, r, u)
-                      ).then(function (e) {
-                        var h = new q(n.web3.utils.toWei(a)).minus(
-                            n.web3.utils.toWei(e)
+                        t.prototype.calcOutGivenIn.call(n, e, i, s, a, o, r, u)
+                      ).then(function (t) {
+                        var h = new rt(n.web3.utils.toWei(a)).minus(
+                            n.web3.utils.toWei(t)
                           ),
-                          f = new q(n.web3.utils.toWei(i)).plus(
+                          f = new rt(n.web3.utils.toWei(i)).plus(
                             n.web3.utils.toWei(r)
                           )
                         return Promise.resolve(
                           n.computeSlippage(
-                            t,
+                            e,
                             i,
                             s,
                             a,
@@ -32831,36 +32871,36 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    (n.computeSellSlippage = function (t, r) {
+    (r.computeSellSlippage = function (e, r) {
       try {
         var n = this
-        return Promise.resolve(n.getDTAddress(t)).then(function (i) {
+        return Promise.resolve(n.getDTAddress(e)).then(function (i) {
           return Promise.resolve(
-            e.prototype.getDenormalizedWeight.call(n, t, i)
+            t.prototype.getDenormalizedWeight.call(n, e, i)
           ).then(function (o) {
             return Promise.resolve(
-              e.prototype.getDenormalizedWeight.call(n, t, n.oceanAddress)
+              t.prototype.getDenormalizedWeight.call(n, e, n.oceanAddress)
             ).then(function (s) {
-              return Promise.resolve(e.prototype.getReserve.call(n, t, i)).then(
+              return Promise.resolve(t.prototype.getReserve.call(n, e, i)).then(
                 function (a) {
                   return Promise.resolve(
-                    e.prototype.getReserve.call(n, t, i)
+                    t.prototype.getReserve.call(n, e, i)
                   ).then(function (i) {
                     return Promise.resolve(
-                      e.prototype.getSwapFee.call(n, t)
+                      t.prototype.getSwapFee.call(n, e)
                     ).then(function (u) {
                       return Promise.resolve(
-                        e.prototype.calcOutGivenIn.call(n, t, a, o, i, s, r, u)
-                      ).then(function (e) {
-                        var h = new q(n.web3.utils.toWei(a)).plus(
+                        t.prototype.calcOutGivenIn.call(n, e, a, o, i, s, r, u)
+                      ).then(function (t) {
+                        var h = new rt(n.web3.utils.toWei(a)).plus(
                             n.web3.utils.toWei(r)
                           ),
-                          f = new q(n.web3.utils.toWei(i)).minus(
-                            n.web3.utils.toWei(e)
+                          f = new rt(n.web3.utils.toWei(i)).minus(
+                            n.web3.utils.toWei(t)
                           )
                         return Promise.resolve(
                           n.computeSlippage(
-                            t,
+                            e,
                             a,
                             o,
                             i,
@@ -32882,10 +32922,10 @@ var If = /*#__PURE__*/ (function (e) {
         return Promise.reject(t)
       }
     }),
-    r
+    e
   )
-})(Tf)
-function Bf(t, e) {
+})(qf)
+function Kf(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -32893,21 +32933,21 @@ function Bf(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-function Of(t, e, r) {
+function Vf(t, e, r) {
   if (!t.s) {
-    if (r instanceof Lf) {
-      if (!r.s) return void (r.o = Of.bind(null, t, e))
+    if (r instanceof $f) {
+      if (!r.s) return void (r.o = Vf.bind(null, t, e))
       1 & e && (e = r.s), (r = r.v)
     }
     if (r && r.then)
-      return void r.then(Of.bind(null, t, e), Of.bind(null, t, 2))
+      return void r.then(Vf.bind(null, t, e), Vf.bind(null, t, 2))
     ;(t.s = e), (t.v = r)
     const n = t.o
     n && n(t)
   }
 }
-var Cf,
-  Lf = /*#__PURE__*/ (function () {
+var Jf,
+  $f = /*#__PURE__*/ (function () {
     function t() {}
     return (
       (t.prototype.then = function (e, r) {
@@ -32917,9 +32957,9 @@ var Cf,
           var o = 1 & i ? e : r
           if (o) {
             try {
-              Of(n, 1, o(this.v))
+              Vf(n, 1, o(this.v))
             } catch (t) {
-              Of(n, 2, t)
+              Vf(n, 2, t)
             }
             return n
           }
@@ -32930,12 +32970,12 @@ var Cf,
             try {
               var i = t.v
               1 & t.s
-                ? Of(n, 1, e ? e(i) : i)
+                ? Vf(n, 1, e ? e(i) : i)
                 : r
-                ? Of(n, 1, r(i))
-                : Of(n, 2, i)
+                ? Vf(n, 1, r(i))
+                : Vf(n, 2, i)
             } catch (t) {
-              Of(n, 2, t)
+              Vf(n, 2, t)
             }
           }),
           n
@@ -32944,7 +32984,7 @@ var Cf,
       t
     )
   })()
-function jf(t, e, r) {
+function Xf(t, e, r) {
   var n,
     i,
     o = -1
@@ -32953,13 +32993,13 @@ function jf(t, e, r) {
       try {
         for (; ++o < t.length && (!r || !r()); )
           if ((a = e(o)) && a.then) {
-            if (!((u = a) instanceof Lf && 1 & u.s))
-              return void a.then(s, i || (i = Of.bind(null, (n = new Lf()), 2)))
+            if (!((u = a) instanceof $f && 1 & u.s))
+              return void a.then(s, i || (i = Vf.bind(null, (n = new $f()), 2)))
             a = a.v
           }
-        n ? Of(n, 1, a) : (n = a)
+        n ? Vf(n, 1, a) : (n = a)
       } catch (t) {
-        Of(n || (n = new Lf()), 2, t)
+        Vf(n || (n = new $f()), 2, t)
       }
       var u
     })(),
@@ -32969,10 +33009,10 @@ function jf(t, e, r) {
 !(function (t) {
   ;(t[(t.CreatingExchange = 0)] = 'CreatingExchange'),
     (t[(t.ApprovingDatatoken = 1)] = 'ApprovingDatatoken')
-})(Cf || (Cf = {}))
-var Nf,
-  Df,
-  Uf = /*#__PURE__*/ (function () {
+})(Jf || (Jf = {}))
+var Yf,
+  Qf,
+  tl = /*#__PURE__*/ (function () {
     function t(t, e, r, n, i, o, s) {
       void 0 === r && (r = null),
         void 0 === n && (n = null),
@@ -32991,11 +33031,11 @@ var Nf,
         (this.fixedRateExchangeAddress = r),
         (this.config = s),
         (this.startBlock = (s && s.startBlock) || 0),
-        (this.fixedRateExchangeABI = n || d.abi),
+        (this.fixedRateExchangeABI = n || R.default.abi),
         (this.oceanAddress = i),
         (this.datatokens = o),
         t &&
-          (this.contract = W(
+          (this.contract = it(
             new this.web3.eth.Contract(
               this.fixedRateExchangeABI,
               this.fixedRateExchangeAddress
@@ -33011,7 +33051,7 @@ var Nf,
       }),
       (e.createExchange = function (t, e, r, n, i) {
         var o = this
-        return new N(function (s) {
+        return new Y(function (s) {
           try {
             var a,
               u = function () {
@@ -33019,7 +33059,7 @@ var Nf,
                   return (
                     i &&
                       h &&
-                      (s.next(Cf.ApprovingDatatoken),
+                      (s.next(Jf.ApprovingDatatoken),
                       o.datatokens.approve(
                         e,
                         o.fixedRateExchangeAddress,
@@ -33031,7 +33071,7 @@ var Nf,
                 }
                 var h = null,
                   f = null,
-                  l = Bf(
+                  l = Kf(
                     function () {
                       var i = o.contract.methods.create(
                           t,
@@ -33040,7 +33080,7 @@ var Nf,
                         ),
                         s = i.send,
                         u = a + 1
-                      return Promise.resolve(z(o.web3, o.config)).then(
+                      return Promise.resolve(nt(o.web3, o.config)).then(
                         function (t) {
                           return Promise.resolve(
                             s.call(i, { from: n, gas: u, gasPrice: t })
@@ -33058,9 +33098,9 @@ var Nf,
                   )
                 return l && l.then ? l.then(u) : u()
               }
-            s.next(Cf.CreatingExchange)
+            s.next(Jf.CreatingExchange)
             var h = o.GASLIMIT_DEFAULT,
-              f = Bf(
+              f = Kf(
                 function () {
                   return Promise.resolve(
                     o.contract.methods
@@ -33097,7 +33137,7 @@ var Nf,
         try {
           var n,
             i = function () {
-              return Bf(
+              return Kf(
                 function () {
                   var i = o.contract.methods.swap(
                       t,
@@ -33105,7 +33145,7 @@ var Nf,
                     ),
                     s = i.send,
                     a = n + 1
-                  return Promise.resolve(z(o.web3, o.config)).then(function (
+                  return Promise.resolve(nt(o.web3, o.config)).then(function (
                     t
                   ) {
                     return Promise.resolve(
@@ -33125,7 +33165,7 @@ var Nf,
             },
             o = this,
             s = o.GASLIMIT_DEFAULT,
-            a = Bf(
+            a = Kf(
               function () {
                 return Promise.resolve(
                   o.contract.methods
@@ -33165,7 +33205,7 @@ var Nf,
                 ),
                 s = i.send,
                 a = n + 1
-              return Promise.resolve(z(o.web3, o.config)).then(function (t) {
+              return Promise.resolve(nt(o.web3, o.config)).then(function (t) {
                 return Promise.resolve(
                   s.call(i, { from: r, gas: a, gasPrice: t })
                 )
@@ -33173,7 +33213,7 @@ var Nf,
             },
             o = this,
             s = o.GASLIMIT_DEFAULT,
-            a = Bf(
+            a = Kf(
               function () {
                 return Promise.resolve(
                   o.contract.methods
@@ -33202,7 +33242,7 @@ var Nf,
               var n = r.contract.methods.toggleExchangeState(t),
                 i = n.send,
                 s = o + 1
-              return Promise.resolve(z(r.web3, r.config)).then(function (t) {
+              return Promise.resolve(nt(r.web3, r.config)).then(function (t) {
                 return Promise.resolve(
                   i.call(n, { from: e, gas: s, gasPrice: t })
                 )
@@ -33212,7 +33252,7 @@ var Nf,
             if (!0 === n.active) return null
             var o,
               s = r.GASLIMIT_DEFAULT,
-              a = Bf(
+              a = Kf(
                 function () {
                   return Promise.resolve(
                     r.contract.methods
@@ -33242,7 +33282,7 @@ var Nf,
               var n = r.contract.methods.toggleExchangeState(t),
                 i = n.send,
                 s = o + 1
-              return Promise.resolve(z(r.web3, r.config)).then(function (t) {
+              return Promise.resolve(nt(r.web3, r.config)).then(function (t) {
                 return Promise.resolve(
                   i.call(n, { from: e, gas: s, gasPrice: t })
                 )
@@ -33252,7 +33292,7 @@ var Nf,
             if (!1 === n.active) return null
             var o,
               s = r.GASLIMIT_DEFAULT,
-              a = Bf(
+              a = Kf(
                 function () {
                   return Promise.resolve(
                     r.contract.methods
@@ -33365,7 +33405,7 @@ var Nf,
             })
           ).then(function (i) {
             var o = [],
-              s = jf(i, function (s) {
+              s = Xf(i, function (s) {
                 o.push(r.getExchange(i[s].returnValues[0]))
                 var a = (function () {
                   if (o.length > 10 || s === i.length - 1)
@@ -33376,8 +33416,8 @@ var Nf,
                           !0 === s.active &&
                           s.dataToken.toLowerCase() === t.toLowerCase()
                         ) {
-                          var a = new q(s.supply),
-                            u = new q(e)
+                          var a = new rt(s.supply),
+                            u = new rt(e)
                           a.gte(u) && n.push(s)
                         }
                       }
@@ -33407,7 +33447,7 @@ var Nf,
               toBlock: 'latest'
             })
           ).then(function (n) {
-            var i = jf(n, function (i) {
+            var i = Xf(n, function (i) {
               var o = (function () {
                 if (
                   !t ||
@@ -33464,7 +33504,7 @@ var Nf,
               toBlock: 'latest'
             })
           ).then(function (n) {
-            var i = jf(n, function (i) {
+            var i = Xf(n, function (i) {
               return Promise.resolve(
                 e.getExchangeSwaps(n[i].returnValues[0], t)
               ).then(function (t) {
@@ -33494,7 +33534,7 @@ var Nf,
       t
     )
   })()
-function Ff(t, e) {
+function el(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -33505,14 +33545,14 @@ function Ff(t, e) {
 !(function (t) {
   ;(t[(t.MakeDispenserMinter = 0)] = 'MakeDispenserMinter'),
     (t[(t.AcceptingNewMinter = 1)] = 'AcceptingNewMinter')
-})(Nf || (Nf = {})),
+})(Yf || (Yf = {})),
   (function (t) {
     ;(t[(t.MakeOwnerMinter = 0)] = 'MakeOwnerMinter'),
       (t[(t.AcceptingNewMinter = 1)] = 'AcceptingNewMinter')
-  })(Df || (Df = {}))
-var qf,
-  zf = /*#__PURE__*/ (function () {
-    function e(t, e, r, n, i, o) {
+  })(Qf || (Qf = {}))
+var rl,
+  nl = /*#__PURE__*/ (function () {
+    function t(t, e, r, n, i, o) {
       void 0 === r && (r = null),
         void 0 === n && (n = null),
         (this.GASLIMIT_DEFAULT = 1e6),
@@ -33528,10 +33568,10 @@ var qf,
         (this.config = o),
         (this.dispenserAddress = r),
         (this.startBlock = (o && o.startBlock) || 0),
-        (this.dispenserABI = n || p.abi),
+        (this.dispenserABI = n || I.default.abi),
         (this.datatokens = i),
         t &&
-          (this.contract = W(
+          (this.contract = it(
             new this.web3.eth.Contract(
               this.dispenserABI,
               this.dispenserAddress
@@ -33540,13 +33580,13 @@ var qf,
           )),
         (this.logger = e)
     }
-    var r = e.prototype
+    var e = t.prototype
     return (
-      (r.status = function (t) {
+      (e.status = function (t) {
         try {
           var e,
             r = this,
-            n = Ff(
+            n = el(
               function () {
                 return Promise.resolve(
                   r.contract.methods.status(t).call()
@@ -33577,12 +33617,12 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      (r.activate = function (t, e, r, n) {
+      (e.activate = function (t, e, r, n) {
         try {
           var i,
             o = function () {
               var o = null,
-                a = Ff(
+                a = el(
                   function () {
                     var a = s.contract.methods.activate(
                         t,
@@ -33591,7 +33631,7 @@ var qf,
                       ),
                       u = a.send,
                       h = i + 1
-                    return Promise.resolve(z(s.web3, s.config)).then(function (
+                    return Promise.resolve(nt(s.web3, s.config)).then(function (
                       t
                     ) {
                       return Promise.resolve(
@@ -33615,7 +33655,7 @@ var qf,
             },
             s = this,
             a = s.GASLIMIT_DEFAULT,
-            u = Ff(
+            u = el(
               function () {
                 return Promise.resolve(
                   s.contract.methods
@@ -33636,17 +33676,17 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      (r.deactivate = function (t, e) {
+      (e.deactivate = function (t, e) {
         try {
           var r,
             n = function () {
               var n = null,
-                o = Ff(
+                o = el(
                   function () {
                     var o = i.contract.methods.deactivate(t),
                       s = o.send,
                       a = r + 1
-                    return Promise.resolve(z(i.web3, i.config)).then(function (
+                    return Promise.resolve(nt(i.web3, i.config)).then(function (
                       t
                     ) {
                       return Promise.resolve(
@@ -33670,7 +33710,7 @@ var qf,
             },
             i = this,
             o = i.GASLIMIT_DEFAULT,
-            s = Ff(
+            s = el(
               function () {
                 return Promise.resolve(
                   i.contract.methods
@@ -33691,24 +33731,24 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      (r.makeMinter = function (t, e) {
+      (e.makeMinter = function (t, e) {
         var r = this
-        return new N(function (n) {
+        return new Y(function (n) {
           try {
             var i
-            n.next(Nf.MakeDispenserMinter)
+            n.next(Yf.MakeDispenserMinter)
             var o = r.GASLIMIT_DEFAULT
             return Promise.resolve(
               r.datatokens.proposeMinter(t, r.dispenserAddress, e)
             ).then(function (s) {
               function a() {
                 var n = null,
-                  o = Ff(
+                  o = el(
                     function () {
                       var o = r.contract.methods.acceptMinter(t),
                         s = o.send,
                         a = i + 1
-                      return Promise.resolve(z(r.web3, r.config)).then(
+                      return Promise.resolve(nt(r.web3, r.config)).then(
                         function (t) {
                           return Promise.resolve(
                             s.call(o, { from: e, gas: a, gasPrice: t })
@@ -33731,8 +33771,8 @@ var qf,
                   : n
               }
               if (!s) return null
-              n.next(Nf.AcceptingNewMinter)
-              var u = Ff(
+              n.next(Yf.AcceptingNewMinter)
+              var u = el(
                 function () {
                   return Promise.resolve(
                     r.contract.methods
@@ -33755,25 +33795,25 @@ var qf,
           }
         })
       }),
-      (r.cancelMinter = function (t, e) {
+      (e.cancelMinter = function (t, e) {
         var r = this
-        return new N(function (n) {
+        return new Y(function (n) {
           try {
             var i,
               o = function () {
                 function o() {
                   return s
-                    ? (n.next(Df.AcceptingNewMinter),
+                    ? (n.next(Qf.AcceptingNewMinter),
                       Promise.resolve(r.datatokens.approveMinter(t, e)))
                     : null
                 }
                 var s = null,
-                  a = Ff(
+                  a = el(
                     function () {
                       var n = r.contract.methods.removeMinter(t),
                         o = n.send,
                         a = i + 1
-                      return Promise.resolve(z(r.web3, r.config)).then(
+                      return Promise.resolve(nt(r.web3, r.config)).then(
                         function (t) {
                           return Promise.resolve(
                             o.call(n, { from: e, gas: a, gasPrice: t })
@@ -33791,9 +33831,9 @@ var qf,
                   )
                 return a && a.then ? a.then(o) : o()
               }
-            n.next(Df.MakeOwnerMinter)
+            n.next(Qf.MakeOwnerMinter)
             var s = r.GASLIMIT_DEFAULT,
-              a = Ff(
+              a = el(
                 function () {
                   return Promise.resolve(
                     r.contract.methods
@@ -33815,13 +33855,13 @@ var qf,
           }
         })
       }),
-      (r.dispense = function (t, e, r) {
+      (e.dispense = function (t, e, r) {
         void 0 === r && (r = '1')
         try {
           var n,
             i = function () {
               var i = null,
-                s = Ff(
+                s = el(
                   function () {
                     var s = o.contract.methods.dispense(
                         t,
@@ -33829,7 +33869,7 @@ var qf,
                       ),
                       a = s.send,
                       u = n + 1
-                    return Promise.resolve(z(o.web3, o.config)).then(function (
+                    return Promise.resolve(nt(o.web3, o.config)).then(function (
                       t
                     ) {
                       return Promise.resolve(
@@ -33853,7 +33893,7 @@ var qf,
             },
             o = this,
             s = o.GASLIMIT_DEFAULT,
-            a = Ff(
+            a = el(
               function () {
                 return Promise.resolve(
                   o.contract.methods
@@ -33874,17 +33914,17 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      (r.ownerWithdraw = function (t, e) {
+      (e.ownerWithdraw = function (t, e) {
         try {
           var r,
             n = function () {
               var n = null,
-                o = Ff(
+                o = el(
                   function () {
                     var o = i.contract.methods.ownerWithdraw(t),
                       s = o.send,
                       a = r + 1
-                    return Promise.resolve(z(i.web3, i.config)).then(function (
+                    return Promise.resolve(nt(i.web3, i.config)).then(function (
                       t
                     ) {
                       return Promise.resolve(
@@ -33908,7 +33948,7 @@ var qf,
             },
             i = this,
             o = i.GASLIMIT_DEFAULT,
-            s = Ff(
+            s = el(
               function () {
                 return Promise.resolve(
                   i.contract.methods
@@ -33929,20 +33969,20 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      (r.isDispensable = function (e, r, n) {
-        void 0 === n && (n = '1')
+      (e.isDispensable = function (t, e, r) {
+        void 0 === r && (r = '1')
         try {
-          var i = this
-          return Promise.resolve(i.status(e)).then(function (o) {
+          var n = this
+          return Promise.resolve(n.status(t)).then(function (i) {
             return (
-              !!o &&
-              !1 !== o.active &&
-              Promise.resolve(i.datatokens.balance(e, r)).then(function (e) {
+              !!i &&
+              !1 !== i.active &&
+              Promise.resolve(n.datatokens.balance(t, e)).then(function (t) {
                 return !(
-                  new t(e).greaterThanOrEqualTo(o.maxBalance) ||
-                  new t(String(n)).greaterThan(o.maxTokens) ||
-                  (!new t(o.balance).greaterThanOrEqualTo(n) &&
-                    !0 !== o.isTrueMinter)
+                  new M.default(t).greaterThanOrEqualTo(i.maxBalance) ||
+                  new M.default(String(r)).greaterThan(i.maxTokens) ||
+                  (!new M.default(i.balance).greaterThanOrEqualTo(r) &&
+                    !0 !== i.isTrueMinter)
                 )
               })
             )
@@ -33951,10 +33991,10 @@ var qf,
           return Promise.reject(t)
         }
       }),
-      e
+      t
     )
   })(),
-  Wf = /*#__PURE__*/ (function (t) {
+  il = /*#__PURE__*/ (function (t) {
     function e() {
       for (var e, r = arguments.length, n = new Array(r), i = 0; i < r; i++)
         n[i] = arguments[i]
@@ -33978,47 +34018,47 @@ var qf,
       )
     }
     return (
-      A(e, t),
+      U(e, t),
       (e.getInstance = function (t) {
         try {
           var r = new e(),
-            n = _(
+            n = D(
               {},
               (function (t) {
-                return { config: t, web3: t.web3Provider, logger: E }
+                return { config: t, web3: t.web3Provider, logger: W }
               })(t),
               { ocean: r }
             )
           return (
             r.setInstanceConfig(n),
-            Promise.resolve($h.getInstance(n)).then(function (t) {
+            Promise.resolve(cf.getInstance(n)).then(function (t) {
               return (
                 (r.utils = t),
-                Promise.resolve(et.getInstance(n)).then(function (t) {
+                Promise.resolve(vt.getInstance(n)).then(function (t) {
                   return (
                     (r.provider = t),
-                    Promise.resolve(Nh.getInstance(n)).then(function (t) {
+                    Promise.resolve(Yh.getInstance(n)).then(function (t) {
                       var e
                       return (
                         (r.eventAccessControl = t),
-                        (r.metadataCache = new rf(
+                        (r.metadataCache = new yf(
                           n.config.metadataCacheUri,
                           n.logger,
                           null == (e = n.config) ? void 0 : e.requestTimeout
                         )),
-                        Promise.resolve(X.getInstance(n)).then(function (t) {
+                        Promise.resolve(ct.getInstance(n)).then(function (t) {
                           return (
                             (r.accounts = t),
-                            Promise.resolve(Hh.getInstance(n)).then(function (
+                            Promise.resolve(sf.getInstance(n)).then(function (
                               t
                             ) {
                               return (
                                 (r.assets = t),
-                                Promise.resolve(gf.getInstance(n)).then(
+                                Promise.resolve(Bf.getInstance(n)).then(
                                   function (t) {
                                     return (
                                       (r.compute = t),
-                                      (r.datatokens = new hf(
+                                      (r.datatokens = new Pf(
                                         n.config.factoryAddress,
                                         n.config.factoryABI,
                                         n.config.datatokensABI,
@@ -34026,7 +34066,7 @@ var qf,
                                         n.logger,
                                         n.config
                                       )),
-                                      (r.pool = new If(
+                                      (r.pool = new Zf(
                                         n.config.web3Provider,
                                         n.logger,
                                         n.config.poolFactoryABI,
@@ -34035,7 +34075,7 @@ var qf,
                                         n.config.oceanTokenAddress,
                                         n.config
                                       )),
-                                      (r.fixedRateExchange = new Uf(
+                                      (r.fixedRateExchange = new tl(
                                         n.config.web3Provider,
                                         n.logger,
                                         n.config.fixedRateExchangeAddress,
@@ -34044,7 +34084,7 @@ var qf,
                                         r.datatokens,
                                         n.config
                                       )),
-                                      (r.OceanDispenser = new zf(
+                                      (r.OceanDispenser = new nl(
                                         n.config.web3Provider,
                                         n.logger,
                                         n.config.dispenserAddress,
@@ -34052,7 +34092,7 @@ var qf,
                                         r.datatokens,
                                         n.config
                                       )),
-                                      (r.onChainMetadata = new of(
+                                      (r.onChainMetadata = new wf(
                                         n.config.web3Provider,
                                         n.logger,
                                         n.config.metadataContractAddress,
@@ -34060,11 +34100,11 @@ var qf,
                                         r.metadataCache,
                                         n.config
                                       )),
-                                      Promise.resolve(Gh.getInstance(n)).then(
+                                      Promise.resolve(af.getInstance(n)).then(
                                         function (t) {
                                           return (
                                             (r.versions = t),
-                                            (r.network = new ff()),
+                                            (r.network = new Sf()),
                                             r
                                           )
                                         }
@@ -34089,8 +34129,8 @@ var qf,
       }),
       e
     )
-  })(K),
-  Hf = {
+  })(ut),
+  ol = {
     networkId: null,
     network: 'unknown',
     metadataCacheUri: 'https://aquarius.oceanprotocol.com',
@@ -34111,15 +34151,15 @@ var qf,
     transactionPollingTimeout: 750,
     gasFeeMultiplier: 1
   },
-  Gf = [
-    _({}, Hf),
-    _({}, Hf, {
+  sl = [
+    D({}, ol),
+    D({}, ol, {
       networkId: 8996,
       network: 'development',
       metadataCacheUri: 'http://127.0.0.1:5000',
       rbacUri: 'http://127.0.0.1:3000'
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 3,
       network: 'ropsten',
       nodeUri: 'https://ropsten.infura.io/v3',
@@ -34128,7 +34168,7 @@ var qf,
       explorerUri: 'https://ropsten.etherscan.io',
       startBlock: 9227563
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 4,
       network: 'rinkeby',
       nodeUri: 'https://rinkeby.infura.io/v3',
@@ -34137,7 +34177,7 @@ var qf,
       explorerUri: 'https://rinkeby.etherscan.io',
       startBlock: 7294090
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 1,
       network: 'mainnet',
       nodeUri: 'https://mainnet.infura.io/v3',
@@ -34150,7 +34190,7 @@ var qf,
       transactionPollingTimeout: 1750,
       gasFeeMultiplier: 1.05
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 137,
       network: 'polygon',
       nodeUri: 'https://polygon-mainnet.infura.io/v3',
@@ -34161,7 +34201,7 @@ var qf,
       startBlock: 11005222,
       gasFeeMultiplier: 1.05
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 1287,
       network: 'moonbeamalpha',
       nodeUri: 'https://rpc.testnet.moonbeam.network',
@@ -34170,7 +34210,7 @@ var qf,
       explorerUri: 'https://moonbase-blockscout.testnet.moonbeam.network/',
       startBlock: 90707
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 2021e3,
       network: 'gaiaxtestnet',
       nodeUri: 'https://rpc.gaiaxtestnet.oceanprotocol.com',
@@ -34178,7 +34218,7 @@ var qf,
       subgraphUri: 'https://subgraph.gaiaxtestnet.oceanprotocol.com',
       explorerUri: 'https://blockscout.gaiaxtestnet.oceanprotocol.com'
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 2021001,
       network: 'catenaxtestnet',
       nodeUri: 'https://rpc.catenaxtestnet.oceanprotocol.com',
@@ -34187,7 +34227,7 @@ var qf,
       explorerUri: 'https://blockscout.catenaxtestnet.oceanprotocol.com',
       metadataCacheUri: 'https://aquarius.catenaxtestnet.oceanprotocol.com'
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 80001,
       network: 'mumbai',
       nodeUri: 'https://polygon-mumbai.infura.io/v3',
@@ -34195,7 +34235,7 @@ var qf,
       subgraphUri: 'https://subgraph.mumbai.oceanprotocol.com',
       explorerUri: 'https://mumbai.polygonscan.com'
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 56,
       network: 'bsc',
       nodeUri: 'https://bsc-dataseed.binance.org',
@@ -34204,7 +34244,7 @@ var qf,
       explorerUri: 'https://bscscan.com/',
       gasFeeMultiplier: 1.05
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 44787,
       network: 'celoalfajores',
       nodeUri: 'https://alfajores-forno.celo-testnet.org',
@@ -34212,7 +34252,7 @@ var qf,
       subgraphUri: 'https://subgraph.celoalfajores.oceanprotocol.com',
       explorerUri: 'https://alfajores-blockscout.celo-testnet.org'
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 246,
       network: 'energyweb',
       nodeUri: 'https://rpc.energyweb.org',
@@ -34221,7 +34261,7 @@ var qf,
       explorerUri: 'https://explorer.energyweb.org',
       gasFeeMultiplier: 1.05
     }),
-    _({}, Hf, {
+    D({}, ol, {
       networkId: 1285,
       network: 'moonriver',
       nodeUri: 'https://moonriver.api.onfinality.io/public',
@@ -34231,15 +34271,15 @@ var qf,
       gasFeeMultiplier: 1.05
     })
   ],
-  Zf = /*#__PURE__*/ (function () {
+  al = /*#__PURE__*/ (function () {
     function t() {}
     var e = t.prototype
     return (
       (e.getAddressesFromEnv = function (t) {
         var e
-        if (g[t]) {
-          var r = g[t]
-          e = _(
+        if (O.default[t]) {
+          var r = O.default[t]
+          e = D(
             {
               factoryAddress: r.DTFactory,
               poolFactoryAddress: r.BFactory,
@@ -34255,16 +34295,16 @@ var qf,
             }
           )
         }
-        if (m && process.env.ADDRESS_FILE)
+        if (B.default && process.env.ADDRESS_FILE)
           try {
             var n = JSON.parse(
-              m.readFileSync(
+              B.default.readFileSync(
                 process.env.ADDRESS_FILE ||
-                  v + '/.ocean/ocean-contracts/artifacts/address.json',
+                  m.homedir + '/.ocean/ocean-contracts/artifacts/address.json',
                 'utf8'
               )
             )[t]
-            e = _(
+            e = D(
               {
                 factoryAddress: n.DTFactory,
                 poolFactoryAddress: n.BFactory,
@@ -34284,28 +34324,28 @@ var qf,
       }),
       (e.getConfig = function (t, e) {
         var r = 'string' == typeof t ? 'network' : 'networkId',
-          n = Gf.find(function (e) {
+          n = sl.find(function (e) {
             return e[r] === t
           })
         return n
-          ? ((n = _({}, n, this.getAddressesFromEnv(n.network))),
-            _({}, n, { nodeUri: e ? n.nodeUri + '/' + e : n.nodeUri }))
-          : (E.error("No config found for given network '" + t + "'"), null)
+          ? ((n = D({}, n, this.getAddressesFromEnv(n.network))),
+            D({}, n, { nodeUri: e ? n.nodeUri + '/' + e : n.nodeUri }))
+          : (W.error("No config found for given network '" + t + "'"), null)
       }),
       t
     )
   })(),
-  Kf = function (t, e) {
+  ul = function (t, e) {
     try {
       return Promise.resolve(
         (function (r, n) {
           try {
             var i = Promise.resolve(
-              y.get(e + '/api/v1/aquarius/assets/ddo/' + t)
+              C.default.get(e + '/api/v1/aquarius/assets/ddo/' + t)
             ).then(function (t) {
               if (t && 200 === t.status && t.data) {
-                var e = _({}, t.data)
-                return new Q(e)
+                var e = D({}, t.data)
+                return new pt(e)
               }
             })
           } catch (t) {
@@ -34313,23 +34353,23 @@ var qf,
           }
           return i && i.then ? i.then(void 0, n) : i
         })(0, function (t) {
-          y.isCancel(t) ? E.log(t.message) : E.error(t.message)
+          C.default.isCancel(t) ? W.log(t.message) : W.error(t.message)
         })
       )
     } catch (t) {
       return Promise.reject(t)
     }
   },
-  Vf = function (t, e, r, n, i, o) {
+  hl = function (t, e, r, n, i, o) {
     try {
-      return Promise.resolve(Kf(t, i)).then(function (t) {
-        return Promise.resolve(Jf(e, t, r, n, o))
+      return Promise.resolve(ul(t, i)).then(function (t) {
+        return Promise.resolve(fl(e, t, r, n, o))
       })
     } catch (t) {
       return Promise.reject(t)
     }
   },
-  Jf = function (t, e, r, n, i) {
+  fl = function (t, e, r, n, i) {
     try {
       var o = new Date(Date.now()).toISOString().split('.')[0] + 'Z',
         s = {
@@ -34349,7 +34389,7 @@ var qf,
             source: 'ddmdev'
           }
         },
-        a = _(
+        a = D(
           {
             id: t,
             type: e.service[1].type,
@@ -34381,7 +34421,7 @@ var qf,
       return Promise.reject(t)
     }
   },
-  $f = [
+  ll = [
     {
       inputs: [
         { internalType: 'address', name: '_template721', type: 'address' },
@@ -35247,7 +35287,7 @@ var qf,
       type: 'function'
     }
   ],
-  Xf = [
+  cl = [
     {
       anonymous: !1,
       inputs: [
@@ -36305,12 +36345,12 @@ var qf,
     },
     { stateMutability: 'payable', type: 'receive' }
   ],
-  Yf = function (t) {
+  dl = function (t) {
     try {
       return Promise.resolve(t.eth.getGasPrice()).then(function (t) {
-        return new q(t)
+        return new rt(t)
           .multipliedBy(1.05)
-          .integerValue(q.ROUND_DOWN)
+          .integerValue(rt.ROUND_DOWN)
           .toString(10)
       })
     } catch (t) {
@@ -36323,10 +36363,10 @@ var qf,
     (t[(t.Warn = 1)] = 'Warn'),
     (t[(t.Log = 2)] = 'Log'),
     (t[(t.Verbose = 3)] = 'Verbose')
-})(qf || (qf = {}))
-var Qf = new /*#__PURE__*/ ((function () {
+})(rl || (rl = {}))
+var pl = new /*#__PURE__*/ ((function () {
   function t(t) {
-    void 0 === t && (t = qf.Error),
+    void 0 === t && (t = rl.Error),
       (this.logLevel = void 0),
       (this.logLevel = t)
   }
@@ -36344,25 +36384,25 @@ var Qf = new /*#__PURE__*/ ((function () {
     (e.debug = function () {
       this.dispatch.apply(
         this,
-        ['debug', qf.Verbose].concat([].slice.call(arguments))
+        ['debug', rl.Verbose].concat([].slice.call(arguments))
       )
     }),
     (e.log = function () {
       this.dispatch.apply(
         this,
-        ['log', qf.Log].concat([].slice.call(arguments))
+        ['log', rl.Log].concat([].slice.call(arguments))
       )
     }),
     (e.warn = function () {
       this.dispatch.apply(
         this,
-        ['warn', qf.Warn].concat([].slice.call(arguments))
+        ['warn', rl.Warn].concat([].slice.call(arguments))
       )
     }),
     (e.error = function () {
       this.dispatch.apply(
         this,
-        ['error', qf.Error].concat([].slice.call(arguments))
+        ['error', rl.Error].concat([].slice.call(arguments))
       )
     }),
     (e.dispatch = function (t, e) {
@@ -36373,7 +36413,7 @@ var Qf = new /*#__PURE__*/ ((function () {
     t
   )
 })())()
-function tl(t, e) {
+function ml(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -36381,20 +36421,20 @@ function tl(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var el = /*#__PURE__*/ (function () {
+var vl = /*#__PURE__*/ (function () {
     function t() {}
     var e = t.prototype
     return (
       (e.getEndpoints = function (t) {
         try {
           return Promise.resolve(
-            tl(
+            ml(
               function () {
                 return Promise.resolve(
                   (function (t) {
                     try {
                       return Promise.resolve(
-                        r(t, {
+                        A.default(t, {
                           method: 'GET',
                           headers: { 'Content-type': 'application/json' }
                         })
@@ -36409,7 +36449,7 @@ var el = /*#__PURE__*/ (function () {
               },
               function (t) {
                 return (
-                  Qf.error('Finding the service endpoints failed:', t), null
+                  pl.error('Finding the service endpoints failed:', t), null
                 )
               }
             )
@@ -36439,21 +36479,21 @@ var el = /*#__PURE__*/ (function () {
           return Promise.reject(t)
         }
       }),
-      (e.getNonce = function (t, e, n, i, o) {
+      (e.getNonce = function (t, e, r, n, i) {
         try {
-          var s = function () {
-              function s() {
-                var t = a.getEndpointURL(o, 'nonce')
-                  ? a.getEndpointURL(o, 'nonce').urlPath
+          var o = function () {
+              function o() {
+                var t = s.getEndpointURL(i, 'nonce')
+                  ? s.getEndpointURL(i, 'nonce').urlPath
                   : null
                 return t
-                  ? tl(
+                  ? ml(
                       function () {
                         return Promise.resolve(
-                          r(t + '?userAddress=' + e, {
+                          A.default(t + '?userAddress=' + e, {
                             method: 'GET',
                             headers: { 'Content-Type': 'application/json' },
-                            signal: n
+                            signal: r
                           })
                         ).then(function (t) {
                           var e = String
@@ -36463,61 +36503,61 @@ var el = /*#__PURE__*/ (function () {
                         })
                       },
                       function (t) {
-                        throw (Qf.error(t), new Error('HTTP request failed'))
+                        throw (pl.error(t), new Error('HTTP request failed'))
                       }
                     )
                   : null
               }
-              var u = (function () {
-                if (!o)
-                  return Promise.resolve(a.getServiceEndpoints(t, i)).then(
+              var a = (function () {
+                if (!i)
+                  return Promise.resolve(s.getServiceEndpoints(t, n)).then(
                     function (t) {
-                      o = t
+                      i = t
                     }
                   )
               })()
-              return u && u.then ? u.then(s) : s()
+              return a && a.then ? a.then(o) : o()
             },
-            a = this,
-            u = (function () {
-              if (!i)
-                return Promise.resolve(a.getEndpoints(t)).then(function (t) {
-                  i = t
+            s = this,
+            a = (function () {
+              if (!n)
+                return Promise.resolve(s.getEndpoints(t)).then(function (t) {
+                  n = t
                 })
             })()
-          return Promise.resolve(u && u.then ? u.then(s) : s())
+          return Promise.resolve(a && a.then ? a.then(o) : o())
         } catch (t) {
           return Promise.reject(t)
         }
       }),
-      (e.encrypt = function (t, e, n) {
+      (e.encrypt = function (t, e, r) {
         try {
-          var i = this
-          return Promise.resolve(i.getEndpoints(e)).then(function (o) {
-            return Promise.resolve(i.getServiceEndpoints(e, o)).then(function (
+          var n = this
+          return Promise.resolve(n.getEndpoints(e)).then(function (i) {
+            return Promise.resolve(n.getServiceEndpoints(e, i)).then(function (
               e
             ) {
-              var o = i.getEndpointURL(e, 'encrypt')
-                ? i.getEndpointURL(e, 'encrypt').urlPath
+              var i = n.getEndpointURL(e, 'encrypt')
+                ? n.getEndpointURL(e, 'encrypt').urlPath
                 : null
-              return o
-                ? tl(
+              return i
+                ? ml(
                     function () {
                       return Promise.resolve(
-                        r(o, {
+                        A.default(i, {
                           method: 'POST',
                           body: decodeURI(JSON.stringify(t)),
                           headers: {
                             'Content-Type': 'application/octet-stream'
                           },
-                          signal: n
+                          signal: r
                         })
                       ).then(function (t) {
                         return Promise.resolve(t.text())
                       })
                     },
                     function (t) {
-                      throw (Qf.error(t), new Error('HTTP request failed'))
+                      throw (pl.error(t), new Error('HTTP request failed'))
                     }
                   )
                 : null
@@ -36530,8 +36570,8 @@ var el = /*#__PURE__*/ (function () {
       t
     )
   })(),
-  rl = new el()
-function nl(t, e) {
+  gl = new vl()
+function yl(t, e) {
   try {
     var r = t()
   } catch (t) {
@@ -36539,7 +36579,7 @@ function nl(t, e) {
   }
   return r && r.then ? r.then(void 0, e) : r
 }
-var il = /*#__PURE__*/ (function () {
+var bl = /*#__PURE__*/ (function () {
   function t(t, e) {
     ;(this.GASLIMIT_DEFAULT = 1e6),
       (this.web3 = void 0),
@@ -36551,7 +36591,7 @@ var il = /*#__PURE__*/ (function () {
   return (
     (e.generateDidv4 = function (t) {
       try {
-        var e = f(t + (1).toString(10))
+        var e = h.SHA256(t + (1).toString(10))
         return Promise.resolve('did:op:' + e.toString())
       } catch (t) {
         return Promise.reject(t)
@@ -36571,7 +36611,7 @@ var il = /*#__PURE__*/ (function () {
         var r = e || 'https://v4.aquarius.oceanprotocol.com',
           n = JSON.stringify(t)
         return Promise.resolve(
-          y.post(r + '/api/aquarius/assets/ddo/validate', n, {
+          C.default.post(r + '/api/aquarius/assets/ddo/validate', n, {
             headers: { 'Content-Type': 'application/octet-stream' }
           })
         ).then(function (t) {
@@ -36598,12 +36638,12 @@ var il = /*#__PURE__*/ (function () {
           o = this
         if ('v4-testing' === r)
           return Promise.resolve('http://oceanprotocol.com/test')
-        var s = nl(
+        var s = yl(
           function () {
-            var s = new Zf().getConfig(r, n)
+            var s = new al().getConfig(r, n)
             return (
               (s.web3Provider = o.web3),
-              Promise.resolve(Wf.getInstance(s)).then(function (r) {
+              Promise.resolve(il.getInstance(s)).then(function (r) {
                 return Promise.resolve(r.provider.getAssetURL(t, e, 1)).then(
                   function (t) {
                     i = t
@@ -36631,9 +36671,9 @@ var il = /*#__PURE__*/ (function () {
       try {
         return Promise.resolve(this.getAssetURL(e, r, n)).then(function (e) {
           var r = [{ type: 'url', url: e, method: 'GET' }]
-          return nl(
+          return yl(
             function () {
-              return Promise.resolve(rl.encrypt(r, t))
+              return Promise.resolve(gl.encrypt(r, t))
             },
             function (t) {
               console.error('Error parsing json: ' + t.message)
@@ -36664,12 +36704,12 @@ var il = /*#__PURE__*/ (function () {
     ) {
       try {
         var v,
-          g = new this.web3.eth.Contract($f, r),
+          g = new this.web3.eth.Contract(ll, r),
           y = this.GASLIMIT_DEFAULT,
           b = Buffer.from(
             JSON.stringify({ name: n, symbol: i, description: e })
           ).toString('base64'),
-          w = nl(
+          w = yl(
             function () {
               return Promise.resolve(
                 g.methods
@@ -36735,7 +36775,7 @@ var il = /*#__PURE__*/ (function () {
     ) {
       try {
         var v = this,
-          g = new v.web3.eth.Contract($f, r)
+          g = new v.web3.eth.Contract(ll, r)
         return Promise.resolve(
           v.estGasPublishFixedRateAsset(
             t,
@@ -36760,7 +36800,7 @@ var il = /*#__PURE__*/ (function () {
             y = Buffer.from(
               JSON.stringify({ name: n, symbol: i, description: e })
             ).toString('base64'),
-            b = nl(
+            b = yl(
               function () {
                 var e = g.methods.createNftWithErc20WithFixedRate(
                     {
@@ -36783,7 +36823,7 @@ var il = /*#__PURE__*/ (function () {
                     }
                   ),
                   b = e.send
-                return Promise.resolve(Yf(v.web3)).then(function (n) {
+                return Promise.resolve(dl(v.web3)).then(function (n) {
                   return Promise.resolve(
                     b.call(e, { from: o, gas: t + 1, gasPrice: n })
                   ).then(function (t) {
@@ -36808,12 +36848,12 @@ var il = /*#__PURE__*/ (function () {
     (e.estGaspublishFreeAsset = function (t, e, r, n, i, o, s, a, u, h, f, l) {
       try {
         var c,
-          d = new this.web3.eth.Contract($f, e),
+          d = new this.web3.eth.Contract(ll, e),
           p = Buffer.from(
             JSON.stringify({ name: r, symbol: n, description: t })
           ).toString('base64'),
           m = this.GASLIMIT_DEFAULT,
-          v = nl(
+          v = yl(
             function () {
               return Promise.resolve(
                 d.methods
@@ -36858,7 +36898,7 @@ var il = /*#__PURE__*/ (function () {
     (e.publishFreeAsset = function (t, e, r, n, i, o, s, a, u, h, f, l) {
       try {
         var c = this,
-          d = new c.web3.eth.Contract($f, e)
+          d = new c.web3.eth.Contract(ll, e)
         return Promise.resolve(
           c.estGaspublishFreeAsset(t, e, r, n, i, o, s, a, u, h, f, l)
         ).then(function (e) {
@@ -36866,7 +36906,7 @@ var il = /*#__PURE__*/ (function () {
             m = Buffer.from(
               JSON.stringify({ name: r, symbol: n, description: t })
             ).toString('base64'),
-            v = nl(
+            v = yl(
               function () {
                 var t = d.methods.createNftWithErc20WithDispenser(
                     {
@@ -36885,7 +36925,7 @@ var il = /*#__PURE__*/ (function () {
                     l
                   ),
                   v = t.send
-                return Promise.resolve(Yf(c.web3)).then(function (r) {
+                return Promise.resolve(dl(c.web3)).then(function (r) {
                   return Promise.resolve(
                     v.call(t, { from: i, gas: e + 1, gasPrice: r })
                   ).then(function (t) {
@@ -36913,10 +36953,10 @@ var il = /*#__PURE__*/ (function () {
           f = this.GASLIMIT_DEFAULT
         u || (u = [])
         var l = new this.web3.eth.Contract(
-            Xf,
+            cl,
             e.events.NFTCreated.returnValues.newTokenAddress
           ),
-          c = nl(
+          c = yl(
             function () {
               return Promise.resolve(
                 l.methods
@@ -36948,18 +36988,18 @@ var il = /*#__PURE__*/ (function () {
         var h = this
         u || (u = [])
         var f = new h.web3.eth.Contract(
-          Xf,
+          cl,
           e.events.NFTCreated.returnValues.newTokenAddress
         )
         return Promise.resolve(
           h.estGasUpdateMetadata(t, e, r, n, i, o, s, a, u)
         ).then(function (e) {
           var l,
-            c = nl(
+            c = yl(
               function () {
                 var c = f.methods.setMetaData(r, n, i, o, s, a, u),
                   d = c.send
-                return Promise.resolve(Yf(h.web3)).then(function (r) {
+                return Promise.resolve(dl(h.web3)).then(function (r) {
                   return Promise.resolve(
                     d.call(c, { from: t, gas: e + 1, gasPrice: r })
                   ).then(function (t) {
@@ -37001,50 +37041,50 @@ var il = /*#__PURE__*/ (function () {
       v,
       g,
       y,
+      b,
       w,
       M,
       _,
-      A,
-      P
+      A
     ) {
       try {
-        var S,
-          T = this
-        return Promise.resolve(Kf(t, g)).then(function (x) {
-          function E() {
-            var e = S.events.NFTCreated.returnValues.newTokenAddress,
-              r = S.events.TokenCreated.returnValues.newTokenAddress
-            return Promise.resolve(T.getEncryptedFiles(v, o, t, _)).then(
+        var P,
+          S = this
+        return Promise.resolve(ul(t, g)).then(function (T) {
+          function x() {
+            var e = P.events.NFTCreated.returnValues.newTokenAddress,
+              r = P.events.TokenCreated.returnValues.newTokenAddress
+            return Promise.resolve(S.getEncryptedFiles(v, o, t, M)).then(
               function (n) {
-                return Promise.resolve(T.generateDidv4(e)).then(function (o) {
-                  return Promise.resolve(Vf(t, o, e, r, g, n)).then(function (
+                return Promise.resolve(S.generateDidv4(e)).then(function (o) {
+                  return Promise.resolve(hl(t, o, e, r, g, n)).then(function (
                     t
                   ) {
-                    return Promise.resolve(rl).then(function (e) {
-                      return Promise.resolve(e.encrypt(t, P || v)).then(
+                    return Promise.resolve(gl).then(function (e) {
+                      return Promise.resolve(e.encrypt(t, A || v)).then(
                         function (e) {
-                          var r = '0x' + b(JSON.stringify(t)).toString()
+                          var r = '0x' + L.default(JSON.stringify(t)).toString()
                           return Promise.resolve(
-                            T.validateAssetAquariusV4(t, A)
+                            S.validateAssetAquariusV4(t, _)
                           ).then(function (t) {
                             var n,
                               o = t.validation
                             function s() {
-                              return { txReceipt: S, txReceipt2: n }
+                              return { txReceipt: P, txReceipt2: n }
                             }
                             if (0 == (t.response.hash === r))
                               return (
                                 console.log('Asset is not valid'),
                                 new Error('Invalid DDO hash')
                               )
-                            var a = nl(
+                            var a = yl(
                               function () {
                                 return Promise.resolve(
-                                  T.updateMetadata(
+                                  S.updateMetadata(
                                     i,
-                                    S,
+                                    P,
                                     p,
-                                    P || v,
+                                    A || v,
                                     m,
                                     u,
                                     e,
@@ -37069,13 +37109,13 @@ var il = /*#__PURE__*/ (function () {
               }
             )
           }
-          var k = x.service[0].attributes.additionalInformation.description,
-            R = nl(
+          var E = T.service[0].attributes.additionalInformation.description,
+            k = yl(
               function () {
                 return Promise.resolve(
-                  T.publishFixedRateAsset(
+                  S.publishFixedRateAsset(
                     t,
-                    k,
+                    E,
                     e,
                     r,
                     n,
@@ -37088,18 +37128,18 @@ var il = /*#__PURE__*/ (function () {
                     c,
                     d,
                     y,
-                    w,
-                    M
+                    b,
+                    w
                   )
                 ).then(function (t) {
-                  S = t
+                  P = t
                 })
               },
               function (t) {
                 console.log('publishFixedRateAsset Error', t)
               }
             )
-          return R && R.then ? R.then(E) : E()
+          return k && k.then ? k.then(x) : x()
         })
       } catch (t) {
         return Promise.reject(t)
@@ -37125,43 +37165,43 @@ var il = /*#__PURE__*/ (function () {
       v,
       g,
       y,
-      w
+      b
     ) {
       try {
-        var M,
-          _ = this
-        return Promise.resolve(Kf(t, d)).then(function (A) {
-          function P() {
-            var e = M.events.NFTCreated.returnValues.newTokenAddress,
-              r = M.events.TokenCreated.returnValues.newTokenAddress
-            return Promise.resolve(_.getEncryptedFiles(c, o, t, g)).then(
+        var w,
+          M = this
+        return Promise.resolve(ul(t, d)).then(function (_) {
+          function A() {
+            var e = w.events.NFTCreated.returnValues.newTokenAddress,
+              r = w.events.TokenCreated.returnValues.newTokenAddress
+            return Promise.resolve(M.getEncryptedFiles(c, o, t, g)).then(
               function (n) {
-                return Promise.resolve(_.generateDidv4(e)).then(function (o) {
-                  return Promise.resolve(Vf(t, o, e, r, d, n)).then(function (
+                return Promise.resolve(M.generateDidv4(e)).then(function (o) {
+                  return Promise.resolve(hl(t, o, e, r, d, n)).then(function (
                     t
                   ) {
-                    return Promise.resolve(rl).then(function (e) {
+                    return Promise.resolve(gl).then(function (e) {
                       return Promise.resolve(e.encrypt(t, c)).then(function (
                         e
                       ) {
-                        var r = '0x' + b(JSON.stringify(t)).toString()
+                        var r = '0x' + L.default(JSON.stringify(t)).toString()
                         return Promise.resolve(
-                          _.validateAssetAquariusV4(t, w)
+                          M.validateAssetAquariusV4(t, b)
                         ).then(function (t) {
                           var n,
                             o = t.validation
                           function s() {
-                            return { txReceipt: M, txReceipt2: n }
+                            return { txReceipt: w, txReceipt2: n }
                           }
                           if (0 == (t.response.hash === r))
                             return (
                               console.log('Asset is not valid'),
                               new Error('Invalid DDO hash')
                             )
-                          var u = nl(
+                          var u = yl(
                             function () {
                               return Promise.resolve(
-                                _.updateMetadata(i, M, f, c, l, a, e, r, [o])
+                                M.updateMetadata(i, w, f, c, l, a, e, r, [o])
                               ).then(function (t) {
                                 n = t
                               })
@@ -37179,20 +37219,20 @@ var il = /*#__PURE__*/ (function () {
               }
             )
           }
-          var S = A.service[0].attributes.additionalInformation.description,
-            T = nl(
+          var P = _.service[0].attributes.additionalInformation.description,
+            S = yl(
               function () {
                 return Promise.resolve(
-                  _.publishFreeAsset(S, e, r, n, i, s, u, h, p, m, v, y)
+                  M.publishFreeAsset(P, e, r, n, i, s, u, h, p, m, v, y)
                 ).then(function (t) {
-                  M = t
+                  w = t
                 })
               },
               function (t) {
                 console.log('publishFixedRateAsset Error', t)
               }
             )
-          return T && T.then ? T.then(P) : P()
+          return S && S.then ? S.then(A) : A()
         })
       } catch (t) {
         return Promise.reject(t)
@@ -37201,10 +37241,8 @@ var il = /*#__PURE__*/ (function () {
     t
   )
 })()
-export {
-  il as Migration,
-  Jf as convertDDO,
-  Vf as getAndConvertDDO,
-  Kf as getDDO
-}
-//# sourceMappingURL=index.module.js.map
+;(exports.Migration = bl),
+  (exports.convertDDO = fl),
+  (exports.getAndConvertDDO = hl),
+  (exports.getDDO = ul)
+//# sourceMappingURL=index.cjs.map

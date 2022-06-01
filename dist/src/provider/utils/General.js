@@ -134,11 +134,14 @@ var __generator =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.sleep = void 0
+/**
+ * Simple blocking sleep function
+ */
 function sleep(ms) {
   return __awaiter(this, void 0, void 0, function () {
     return __generator(this, function (_a) {
       return [
-        2,
+        2 /*return*/,
         new Promise(function (resolve) {
           setTimeout(resolve, ms)
         })

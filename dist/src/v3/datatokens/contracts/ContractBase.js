@@ -185,7 +185,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.ContractBase = void 0
 var ContractHandler_1 = __importDefault(require('../ContractHandler'))
 var Instantiable_abstract_1 = require('../../Instantiable.abstract')
-var ContractBase = (function (_super) {
+var ContractBase = /** @class */ (function (_super) {
   __extends(ContractBase, _super)
   function ContractBase(contractName, optional) {
     if (optional === void 0) {
@@ -214,7 +214,7 @@ var ContractBase = (function (_super) {
               .concat(this.contractName, '"')
           )
         }
-        return [2, this.contract.getPastEvents(eventName, options)]
+        return [2 /*return*/, this.contract.getPastEvents(eventName, options)]
       })
     })
   }
@@ -245,10 +245,13 @@ var ContractBase = (function (_super) {
             this.setInstanceConfig(config)
             contractHandler = new ContractHandler_1.default(config)
             _a = this
-            return [4, contractHandler.get(this.contractName, this.optional)]
+            return [
+              4 /*yield*/,
+              contractHandler.get(this.contractName, this.optional)
+            ]
           case 1:
             _a.contract = _b.sent()
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -258,13 +261,13 @@ var ContractBase = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!!from) return [3, 2]
-            return [4, this.web3.eth.getAccounts()]
+            if (!!from) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.web3.eth.getAccounts()]
           case 1:
             from = _a.sent()[0]
             _a.label = 2
           case 2:
-            return [2, from]
+            return [2 /*return*/, from]
         }
       })
     })
@@ -274,10 +277,10 @@ var ContractBase = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getFromAddress(from)]
+            return [4 /*yield*/, this.getFromAddress(from)]
           case 1:
             from = _a.sent()
-            return [2, this.send(name, from, args)]
+            return [2 /*return*/, this.send(name, from, args)]
         }
       })
     })
@@ -301,7 +304,7 @@ var ContractBase = (function (_super) {
             _a.trys.push([1, 3, , 4])
             methodInstance = method.apply(void 0, args)
             return [
-              4,
+              4 /*yield*/,
               methodInstance.estimateGas(args, {
                 from: from
               })
@@ -312,7 +315,7 @@ var ContractBase = (function (_super) {
               from: from,
               gas: estimatedGas
             })
-            return [2, tx]
+            return [2 /*return*/, tx]
           case 3:
             err_1 = _a.sent()
             mappedArgs = this.searchMethod(name, args).inputs.map(function (
@@ -338,7 +341,7 @@ var ContractBase = (function (_super) {
             this.logger.error('-'.repeat(40))
             throw err_1
           case 4:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -355,9 +358,10 @@ var ContractBase = (function (_super) {
               .concat(this.contractName)
           )
         }
+        // Logger.log(name)
         try {
           method = (_a = this.contract.methods)[name].apply(_a, args)
-          return [2, method.call(from ? { from: from } : null)]
+          return [2 /*return*/, method.call(from ? { from: from } : null)]
         } catch (err) {
           this.logger.error(
             'Calling method "'
@@ -368,10 +372,18 @@ var ContractBase = (function (_super) {
           )
           throw err
         }
-        return [2]
+        return [2 /*return*/]
       })
     })
   }
+  // protected getEvent(eventName: string, filter: { [key: string]: any }) {
+  //     if (!this.contract.events[eventName]) {
+  //         throw new Error(
+  //             `Event ${eventName} is not part of contract ${this.contractName}`
+  //         )
+  //     }
+  //     return this.ocean.keeper.utils.eventHandler.getEvent(this, eventName, filter)
+  // }
   ContractBase.prototype.searchMethod = function (methodName, args) {
     if (args === void 0) {
       args = []

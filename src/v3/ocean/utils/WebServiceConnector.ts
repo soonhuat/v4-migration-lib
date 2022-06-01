@@ -102,51 +102,6 @@ export class WebServiceConnector {
     }
   }
 
-  public async downloadFile(
-    url: string,
-    destination?: string,
-    index?: number
-  ): Promise<string> {
-    const response = await this.get(url)
-    if (!response.ok) {
-      throw new Error('Response error.')
-    }
-    let filename: string
-    try {
-      filename = response.headers
-        .get('content-disposition')
-        .match(/attachment;filename=(.+)/)[1]
-    } catch {
-      try {
-        filename = url.split('/').pop()
-      } catch {
-        filename = `file${index}`
-      }
-    }
-
-    if (destination) {
-      // eslint-disable-next-line no-async-promise-executor
-      await new Promise(async (resolve, reject) => {
-        fs.mkdirSync(destination, { recursive: true })
-        const fileStream = fs.createWriteStream(`${destination}${filename}`)
-        response.body.pipe(fileStream)
-        response.body.on('error', reject)
-        fileStream.on('finish', resolve)
-      })
-
-      return destination
-    } else {
-      save(await response.arrayBuffer(), filename)
-    }
-  }
-
-  public async downloadFileBrowser(url: string): Promise<void> {
-    const anchor = document.createElement('a')
-    anchor.download = ''
-    anchor.href = url
-    anchor.click()
-  }
-
   private async fetch(url: string, opts: RequestInit): Promise<Response> {
     const result = await fetch(url, opts)
     if (!result.ok) {

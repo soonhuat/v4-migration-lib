@@ -199,7 +199,6 @@ var DDO_1 = require('../ddo/DDO')
 var DID_1 = __importDefault(require('./DID'))
 var utils_1 = require('../utils')
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var WebServiceConnector_1 = require('./utils/WebServiceConnector')
 var bignumber_js_1 = __importDefault(require('bignumber.js'))
 var Provider_1 = require('../provider/Provider')
 var web3_utils_1 = require('web3-utils')
@@ -229,21 +228,40 @@ var OrderProgressStep
   (OrderProgressStep =
     exports.OrderProgressStep || (exports.OrderProgressStep = {}))
 )
-var Assets = (function (_super) {
+/**
+ * Assets submodule of Ocean Protocol.
+ */
+var Assets = /** @class */ (function (_super) {
   __extends(Assets, _super)
   function Assets() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of Assets.
+   * @return {Promise<Assets>}
+   */
   Assets.getInstance = function (config) {
     return __awaiter(this, void 0, void 0, function () {
       var instance
       return __generator(this, function (_a) {
         instance = new Assets()
         instance.setInstanceConfig(config)
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }
+  /**
+   * Creates a new DDO. After this, Call ocean.onChainMetadata.to publish
+   * @param  {Metadata} metadata DDO metadata.
+   * @param  {Account}  publisher Publisher account.
+   * @param  {list} services list of Service description documents
+   * @param {String} dtAddress existing Data Token Address
+   * @param {String} cap Maximum cap (Number) - will be converted to wei
+   * @param {String} name Token name
+   * @param {String} symbol Token symbol
+   * @param {String} providerUri
+   * @return {SubscribablePromise<CreateProgressStep, DDO>}
+   */
   Assets.prototype.create = function (
     metadata,
     publisher,
@@ -280,14 +298,16 @@ var Assets = (function (_super) {
                 )
               }
               datatokens = this.ocean.datatokens
-              if (!!dtAddress) return [3, 2]
+              if (!!dtAddress) return [3 /*break*/, 2]
               this.logger.log('Creating datatoken')
               observer.next(CreateProgressStep.CreatingDataToken)
               return [
-                4,
+                4 /*yield*/,
                 datatokens.create('', publisher.getId(), cap, name, symbol)
               ]
             case 1:
+              // const metadataCacheUri = this.ocean.metadataCache.getURI()
+              // const jsonBlob = { t: 1, url: metadataCacheUri }
               dtAddress = _a.sent()
               if (!(0, web3_utils_1.isAddress)(dtAddress)) {
                 this.logger.error(
@@ -296,7 +316,7 @@ var Assets = (function (_super) {
                     ' is not valid. Aborting publishing.'
                   )
                 )
-                return [2, null]
+                return [2 /*return*/, null]
               }
               this.logger.log('DataToken '.concat(dtAddress, ' created'))
               observer.next(CreateProgressStep.DataTokenCreated)
@@ -305,20 +325,23 @@ var Assets = (function (_super) {
               did = DID_1.default.generate(dtAddress)
               this.logger.log('Encrypting files')
               observer.next(CreateProgressStep.EncryptingFiles)
-              if (!providerUri) return [3, 5]
-              return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
+              if (!providerUri) return [3 /*break*/, 5]
+              return [
+                4 /*yield*/,
+                Provider_1.Provider.getInstance(this.instanceConfig)
+              ]
             case 3:
               provider = _a.sent()
-              return [4, provider.setBaseUrl(providerUri)]
+              return [4 /*yield*/, provider.setBaseUrl(providerUri)]
             case 4:
               _a.sent()
-              return [3, 6]
+              return [3 /*break*/, 6]
             case 5:
               provider = this.ocean.provider
               _a.label = 6
             case 6:
               return [
-                4,
+                4 /*yield*/,
                 provider.encrypt(did.getDid(), metadata.main.files, publisher)
               ]
             case 7:
@@ -349,6 +372,7 @@ var Assets = (function (_super) {
                       attributes: __assign(
                         __assign(
                           {
+                            // Default values
                             status: {
                               isListed: true,
                               isRetired: false,
@@ -359,6 +383,7 @@ var Assets = (function (_super) {
                         ),
                         {
                           encryptedFiles: encryptedFiles,
+                          // Cleaning not needed information
                           main: __assign(__assign({}, metadata.main), {
                             files: metadata.main.files.map(function (
                               file,
@@ -388,11 +413,12 @@ var Assets = (function (_super) {
                     )
                   })
                   .reverse()
+                  // Adding index
                   .map(function (_) {
                     return __assign(__assign({}, _), { index: indexCount++ })
                   })
               })
-              return [4, ddo.addProof(this.ocean, publisher.getId())]
+              return [4 /*yield*/, ddo.addProof(this.ocean, publisher.getId())]
             case 8:
               _a.sent()
               ddo.dataTokenInfo = {
@@ -401,25 +427,57 @@ var Assets = (function (_super) {
                 address: dtAddress,
                 cap: parseFloat(cap)
               }
-              return [2, ddo]
+              return [
+                2 /*return*/,
+                ddo
+                /* Remeber to call ocean.onChainMetadata.publish after creating the DDO.
+                            
+                            this.logger.log('Storing DDO')
+                            observer.next(CreateProgressStep.StoringDdo)
+                            const storeTx = await this.ocean.onChainMetadata.publish(
+                              ddo.id,
+                              ddo,
+                              publisher.getId()
+                            )
+                            this.logger.log('DDO stored ' + ddo.id)
+                            observer.next(CreateProgressStep.DdoStored)
+                            if (storeTx) return ddo
+                            else return null
+                            */
+              ]
           }
         })
       })
     })
   }
+  /**
+   * Returns a DDO by DID.
+   * @param  {string} did Decentralized ID.
+   * @return {Promise<DDO>}
+   */
   Assets.prototype.resolve = function (did) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.ocean.metadataCache.retrieveDDO(did)]
+        return [2 /*return*/, this.ocean.metadataCache.retrieveDDO(did)]
       })
     })
   }
+  /**    Metadata updates
+   *  Don't forget to call ocean.OnChainmetadataCache.update after using this functions
+   * ie:  ocean.OnChainmetadataCache.update(ddo.id,ddo,account.getId())
+   */
+  /**
+   * Edit Metadata for a DID.
+   * @param  {ddo} DDO
+   * @param  {newMetadata}  EditableMetadata Metadata fields & new values.
+   * @return {Promise<DDO>} the new DDO
+   */
   Assets.prototype.editMetadata = function (ddo, newMetadata) {
     var _a
     return __awaiter(this, void 0, void 0, function () {
       var i
       return __generator(this, function (_b) {
-        if (!ddo) return [2, null]
+        if (!ddo) return [2 /*return*/, null]
         for (i = 0; i < ddo.service.length; i++) {
           if (ddo.service[i].type !== 'metadata') continue
           if (newMetadata.title)
@@ -450,10 +508,18 @@ var Assets = (function (_super) {
                   newMetadata.status.isOrderDisabled)
           }
         }
-        return [2, ddo]
+        return [2 /*return*/, ddo]
       })
     })
   }
+  /**
+   * Update Credentials attribute in DDO
+   * @param  {ddo} DDO
+   * @param {credentialType} string e.g. address / credentail3Box
+   * @param {allowList} string[] List of allow credential
+   * @param {denyList} string[] List of deny credential
+   * @return {Promise<DDO>} Updated DDO
+   */
   Assets.prototype.updateCredentials = function (
     ddo,
     credentialType,
@@ -491,10 +557,17 @@ var Assets = (function (_super) {
             'deny'
           )
         }
-        return [2, newDDo]
+        return [2 /*return*/, newDDo]
       })
     })
   }
+  /**
+   * check if a credential can consume a dataset
+   * @param  {ddo} DDO
+   * @param {credentialType} string e.g. address / credentail3Box
+   * @param {value} string credential
+   * @return {Consumable} allowed  0 = OK , 2 - Credential not in allow list, 3 - Credential in deny list
+   */
   Assets.prototype.checkCredential = function (ddo, credentialType, value) {
     var status = 0
     var message = 'All good'
@@ -525,6 +598,13 @@ var Assets = (function (_super) {
     }
     return { status: status, message: message, result: result }
   }
+  /**
+   * Publish DDO on chain.
+   * @param  {ddo} DDO
+   * @param {String} consumerAccount
+   * @param {boolean} encrypt
+   * @return {Promise<TransactionReceipt>} transaction
+   */
   Assets.prototype.publishDdo = function (ddo, consumerAccount, encrypt) {
     if (encrypt === void 0) {
       encrypt = false
@@ -534,7 +614,7 @@ var Assets = (function (_super) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.ocean.onChainMetadata.publish(
                 ddo.id,
                 ddo,
@@ -543,46 +623,66 @@ var Assets = (function (_super) {
               )
             ]
           case 1:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
         }
       })
     })
   }
+  /**
+   * Update Metadata on chain.
+   * @param  {ddo} DDO
+   * @param {String} consumerAccount
+   * @return {Promise<TransactionReceipt>} transaction
+   */
   Assets.prototype.updateMetadata = function (ddo, consumerAccount) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.ocean.onChainMetadata.update(ddo.id, ddo, consumerAccount)
             ]
           case 1:
-            return [2, _a.sent()]
+            return [2 /*return*/, _a.sent()]
         }
       })
     })
   }
+  /**
+   * Edit Service Timeouts
+   * @param  {ddo} DDO if empty, will trigger a retrieve
+   * @param  {number} serviceIndex Index of the compute service in the DDO.
+   * @param  {number} timeout New timeout setting
+   * @return {Promise<DDO>}
+   */
   Assets.prototype.editServiceTimeout = function (ddo, serviceIndex, timeout) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        if (!ddo) return [2, null]
-        if (typeof ddo.service[serviceIndex] === 'undefined') return [2, null]
-        if (timeout < 0) return [2, null]
+        if (!ddo) return [2 /*return*/, null]
+        if (typeof ddo.service[serviceIndex] === 'undefined')
+          return [2 /*return*/, null]
+        if (timeout < 0) return [2 /*return*/, null]
         ddo.service[serviceIndex].attributes.main.timeout = parseInt(
           timeout.toFixed()
         )
-        return [2, ddo]
+        return [2 /*return*/, ddo]
       })
     })
   }
+  /**    End metadata updates   */
+  /**
+   * Returns the creator of a asset.
+   * @param  {DDO|string} asset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier.
+   * @return {Promise<string>} Returns eth address
+   */
   Assets.prototype.creator = function (asset) {
     return __awaiter(this, void 0, void 0, function () {
       var _a, did, ddo, checksum, _b, creator, signatureValue, signer
       return __generator(this, function (_c) {
         switch (_c.label) {
           case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
+            return [4 /*yield*/, (0, utils_1.assetResolve)(asset, this.ocean)]
           case 1:
             ;(_a = _c.sent()), (did = _a.did), (ddo = _a.ddo)
             checksum = ddo.getChecksum()
@@ -590,7 +690,7 @@ var Assets = (function (_super) {
               (creator = _b.creator),
               (signatureValue = _b.signatureValue)
             return [
-              4,
+              4 /*yield*/,
               this.ocean.utils.signature.verifyText(checksum, signatureValue)
             ]
           case 2:
@@ -603,7 +703,7 @@ var Assets = (function (_super) {
                   .concat(signer, '.')
               )
             }
-            return [2, creator]
+            return [2 /*return*/, creator]
         }
       })
     })
@@ -614,7 +714,7 @@ var Assets = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
+            return [4 /*yield*/, (0, utils_1.assetResolve)(asset, this.ocean)]
           case 1:
             ddo = _a.sent().ddo
             services = ddo.service
@@ -623,7 +723,7 @@ var Assets = (function (_super) {
                 service = serv
               }
             })
-            return [2, service]
+            return [2 /*return*/, service]
         }
       })
     })
@@ -634,7 +734,7 @@ var Assets = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
+            return [4 /*yield*/, (0, utils_1.assetResolve)(asset, this.ocean)]
           case 1:
             ddo = _a.sent().ddo
             services = ddo.service
@@ -643,18 +743,33 @@ var Assets = (function (_super) {
                 service = serv
               }
             })
-            return [2, service]
+            return [2 /*return*/, service]
         }
       })
     })
   }
+  /**
+   * Search over the assets using a query.
+   * @param  {SearchQuery} query Query to filter the assets.
+   * @return {Promise<QueryResult>}
+   */
   Assets.prototype.query = function (query) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.ocean.metadataCache.queryMetadata(query)]
+        return [2 /*return*/, this.ocean.metadataCache.queryMetadata(query)]
       })
     })
   }
+  /**
+   * Creates an access service
+   * @param {Account} creator
+   * @param {String} cost  number of datatokens needed for this service
+   * @param {String} datePublished
+   * @param {Number} timeout
+   * @param {String} providerUri
+   * @param {ServiceCustomParametersRequired} requiredParameters
+   * @return {Promise<ServiceAccess>} service
+   */
   Assets.prototype.createAccessServiceAttributes = function (
     creator,
     cost,
@@ -697,10 +812,21 @@ var Assets = (function (_super) {
         )
           service.attributes.algoCustomParameters =
             requiredParameters.algoCustomParameters
-        return [2, service]
+        return [2 /*return*/, service]
       })
     })
   }
+  /**
+   * Initialize a service
+   * Can be used to compute totalCost for ordering a service
+   * @param {DDO|string} asset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier.
+   * @param {String} serviceType
+   * @param {String} consumerAddress
+   * @param {Number} serviceIndex
+   * @param {String} serviceEndpoint
+   * @param {UserCustomParameters} userCustomParameters
+   * @return {Promise<any>} Order details
+   */
   Assets.prototype.initialize = function (
     asset,
     serviceType,
@@ -717,14 +843,17 @@ var Assets = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
+            return [
+              4 /*yield*/,
+              Provider_1.Provider.getInstance(this.instanceConfig)
+            ]
           case 1:
             provider = _a.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
+            return [4 /*yield*/, provider.setBaseUrl(serviceEndpoint)]
           case 2:
             _a.sent()
             return [
-              4,
+              4 /*yield*/,
               provider.initialize(
                 asset,
                 serviceIndex,
@@ -735,13 +864,24 @@ var Assets = (function (_super) {
             ]
           case 3:
             res = _a.sent()
-            if (res === null) return [2, null]
+            if (res === null) return [2 /*return*/, null]
             providerData = JSON.parse(res)
-            return [2, providerData]
+            return [2 /*return*/, providerData]
         }
       })
     })
   }
+  /**
+   * Orders & pays for a service
+   * @param {DDO|string} asset DID Descriptor Object containing all the data related to an asset or a Decentralized identifier.
+   * @param {String} serviceType
+   * @param {String} payerAddress
+   * @param {Number} serviceIndex
+   * @param {String} mpAddress Marketplace fee collector address
+   * @param {String} consumerAddress Optionally, if the consumer is another address than payer
+   * @param {UserCustomParameters} userCustomParameters
+   * @return {Promise<String>} transactionHash of the payment
+   */
   Assets.prototype.order = function (
     asset,
     serviceType,
@@ -776,11 +916,11 @@ var Assets = (function (_super) {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
+            return [4 /*yield*/, (0, utils_1.assetResolve)(asset, this.ocean)]
           case 1:
             ddo = _b.sent().ddo
             return [
-              4,
+              4 /*yield*/,
               this.isConsumable(ddo, payerAddress, 'address', authService)
             ]
           case 2:
@@ -789,27 +929,28 @@ var Assets = (function (_super) {
               throw new Error('Order asset failed, ' + consumable.message)
             }
             if (!consumerAddress) consumerAddress = payerAddress
-            if (!(serviceIndex === -1)) return [3, 4]
-            return [4, this.getServiceByType(ddo, serviceType)]
+            if (!(serviceIndex === -1)) return [3 /*break*/, 4]
+            return [4 /*yield*/, this.getServiceByType(ddo, serviceType)]
           case 3:
             service = _b.sent()
             serviceIndex = service.index
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 4:
-            return [4, this.getServiceByIndex(ddo, serviceIndex)]
+            return [4 /*yield*/, this.getServiceByIndex(ddo, serviceIndex)]
           case 5:
             service = _b.sent()
             serviceType = service.type
             _b.label = 6
           case 6:
             return [
-              4,
+              4 /*yield*/,
               this.isUserCustomParametersValid(
                 service.attributes.userCustomParameters,
                 userCustomParameters
               )
             ]
           case 7:
+            // TODO validate userCustomParameters
             if (!_b.sent()) {
               throw new Error(
                 'Order asset failed, Missing required fiels in userCustomParameters'
@@ -819,7 +960,7 @@ var Assets = (function (_super) {
           case 8:
             _b.trys.push([8, 14, , 15])
             return [
-              4,
+              4 /*yield*/,
               this.initialize(
                 ddo,
                 serviceType,
@@ -835,9 +976,9 @@ var Assets = (function (_super) {
               throw new Error(
                 'Order asset failed, Failed to initialize service to compute totalCost for ordering'
               )
-            if (!searchPreviousOrders) return [3, 11]
+            if (!searchPreviousOrders) return [3 /*break*/, 11]
             return [
-              4,
+              4 /*yield*/,
               this.ocean.datatokens.getPreviousValidOrders(
                 providerData.dataToken,
                 providerData.numTokens,
@@ -848,12 +989,12 @@ var Assets = (function (_super) {
             ]
           case 10:
             previousOrder = _b.sent()
-            if (previousOrder) return [2, previousOrder]
+            if (previousOrder) return [2 /*return*/, previousOrder]
             _b.label = 11
           case 11:
             _a = bignumber_js_1.default.bind
             return [
-              4,
+              4 /*yield*/,
               this.ocean.datatokens.balance(
                 providerData.dataToken,
                 payerAddress
@@ -882,7 +1023,7 @@ var Assets = (function (_super) {
               )
             }
             return [
-              4,
+              4 /*yield*/,
               this.ocean.datatokens.startOrder(
                 providerData.dataToken,
                 consumerAddress,
@@ -894,8 +1035,8 @@ var Assets = (function (_super) {
             ]
           case 13:
             txid = _b.sent()
-            if (txid) return [2, txid.transactionHash]
-            return [3, 15]
+            if (txid) return [2 /*return*/, txid.transactionHash]
+            return [3 /*break*/, 15]
           case 14:
             e_1 = _b.sent()
             this.logger.error(
@@ -903,118 +1044,18 @@ var Assets = (function (_super) {
             )
             throw new Error(''.concat(e_1.message))
           case 15:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
-  Assets.prototype.download = function (
-    asset,
-    txId,
-    tokenAddress,
-    consumerAccount,
-    destination,
-    index,
-    userCustomParameters
-  ) {
-    if (index === void 0) {
-      index = -1
-    }
-    return __awaiter(this, void 0, void 0, function () {
-      var _a, did, ddo, attributes, service, files, serviceEndpoint, provider
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4, (0, utils_1.assetResolve)(asset, this.ocean)]
-          case 1:
-            ;(_a = _b.sent()), (did = _a.did), (ddo = _a.ddo)
-            attributes = ddo.findServiceByType('metadata').attributes
-            service = ddo.findServiceByType('access')
-            files = attributes.main.files
-            serviceEndpoint = service.serviceEndpoint
-            if (!serviceEndpoint) {
-              throw new Error(
-                'Consume asset failed, service definition is missing the `serviceEndpoint`.'
-              )
-            }
-            this.logger.log('Consuming files')
-            destination = destination
-              ? ''
-                  .concat(destination, '/datafile.')
-                  .concat(ddo.shortId(), '.')
-                  .concat(service.index, '/')
-              : undefined
-            return [4, Provider_1.Provider.getInstance(this.instanceConfig)]
-          case 2:
-            provider = _b.sent()
-            return [4, provider.setBaseUrl(serviceEndpoint)]
-          case 3:
-            _b.sent()
-            return [
-              4,
-              provider.download(
-                did,
-                txId,
-                tokenAddress,
-                service.type,
-                service.index.toString(),
-                destination,
-                consumerAccount,
-                files,
-                index,
-                userCustomParameters
-              )
-            ]
-          case 4:
-            _b.sent()
-            return [2, true]
-        }
-      })
-    })
-  }
-  Assets.prototype.simpleDownload = function (
-    dtAddress,
-    serviceEndpoint,
-    txId,
-    account
-  ) {
-    var _a, _b
-    return __awaiter(this, void 0, void 0, function () {
-      var consumeUrl, serviceConnector, e_2
-      return __generator(this, function (_c) {
-        switch (_c.label) {
-          case 0:
-            consumeUrl = serviceEndpoint
-            consumeUrl += '?consumerAddress='.concat(account)
-            consumeUrl += '&tokenAddress='.concat(dtAddress)
-            consumeUrl += '&transferTxId='.concat(txId)
-            serviceConnector = new WebServiceConnector_1.WebServiceConnector(
-              this.logger,
-              (_b =
-                (_a = this.instanceConfig) === null || _a === void 0
-                  ? void 0
-                  : _a.config) === null || _b === void 0
-                ? void 0
-                : _b.requestTimeout
-            )
-            _c.label = 1
-          case 1:
-            _c.trys.push([1, 3, , 4])
-            return [4, serviceConnector.downloadFile(consumeUrl)]
-          case 2:
-            _c.sent()
-            return [3, 4]
-          case 3:
-            e_2 = _c.sent()
-            this.logger.error('Error consuming assets')
-            this.logger.error(e_2)
-            throw e_2
-          case 4:
-            return [2, serviceEndpoint]
-        }
-      })
-    })
-  }
+  /**
+   * get Order History
+   * @param {Account} account
+   * @param {string} serviceType Optional, filter by
+   * @param {number} fromBlock Optional, start at block
+   * @return {Promise<OrderHistory[]>} transactionHash of the payment
+   */
   Assets.prototype.getOrderHistory = function (
     account,
     serviceType,
@@ -1031,7 +1072,7 @@ var Assets = (function (_super) {
         order,
         params,
         service,
-        e_3
+        e_2
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -1041,7 +1082,7 @@ var Assets = (function (_super) {
             topic1 = '0x000000000000000000000000' + address.substring(2)
             topic0 = datatokens.getStartOrderEventSignature()
             return [
-              4,
+              4 /*yield*/,
               this.web3.eth.getPastLogs({
                 topics: [topic0, null, topic1],
                 fromBlock: fromBlock || 0,
@@ -1053,7 +1094,7 @@ var Assets = (function (_super) {
             i = 0
             _a.label = 2
           case 2:
-            if (!(i < events.length)) return [3, 7]
+            if (!(i < events.length)) return [3 /*break*/, 7]
             order = {
               dtAddress: events[i].address,
               timestamp: 0,
@@ -1079,25 +1120,35 @@ var Assets = (function (_super) {
             order.did = (0, utils_1.didPrefixed)(
               (0, utils_1.didNoZeroX)(order.dtAddress)
             )
-            return [4, this.getServiceByIndex(order.did, order.serviceId)]
+            return [
+              4 /*yield*/,
+              this.getServiceByIndex(order.did, order.serviceId)
+            ]
           case 4:
             service = _a.sent()
             order.serviceType = service.type
             if (!serviceType || (serviceType && serviceType === service.type))
               results.push(order)
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 5:
-            e_3 = _a.sent()
-            return [3, 6]
+            e_2 = _a.sent()
+            console.error(e_2)
+            return [3 /*break*/, 6]
           case 6:
             i++
-            return [3, 2]
+            return [3 /*break*/, 2]
           case 7:
-            return [2, results]
+            return [2 /*return*/, results]
         }
       })
     })
   }
+  /**
+   *
+   * @param {DDO} ddo
+   * @param {consumer} string
+   * @return {Promise<Consumable>}
+   */
   Assets.prototype.isConsumable = function (
     ddo,
     consumer,
@@ -1135,7 +1186,7 @@ var Assets = (function (_super) {
                 ? void 0
                 : _a.isOrderDisabled
             )
-              return [2, orderDisabled]
+              return [2 /*return*/, orderDisabled]
             config = this.instanceConfig
             if (
               !(
@@ -1148,9 +1199,9 @@ var Assets = (function (_super) {
                   : _b.rbacUri)
               )
             )
-              return [3, 3]
+              return [3 /*break*/, 3]
             return [
-              4,
+              4 /*yield*/,
               EventAccessControl_1.EventAccessControl.getInstance(
                 this.instanceConfig
               )
@@ -1158,7 +1209,7 @@ var Assets = (function (_super) {
           case 1:
             eventAccessControl = _c.sent()
             return [
-              4,
+              4 /*yield*/,
               eventAccessControl.isPermit(
                 'market',
                 'consume',
@@ -1170,14 +1221,20 @@ var Assets = (function (_super) {
             ]
           case 2:
             isPermit = _c.sent()
-            if (!isPermit) return [2, denyConsume]
+            if (!isPermit) return [2 /*return*/, denyConsume]
             _c.label = 3
           case 3:
-            return [2, allowedConsume]
+            return [2 /*return*/, allowedConsume]
         }
       })
     })
   }
+  /**
+   * Validate custom user parameters (user & algorithms)
+   * @param {ServiceCustomParameter[]} serviceCustomParameters
+   * @param {UserCustomParameters} userCustomParameters
+   * @return {Promise<Boolean>}
+   */
   Assets.prototype.isUserCustomParametersValid = function (
     serviceCustomParameters,
     userCustomParameters
@@ -1198,10 +1255,10 @@ var Assets = (function (_super) {
               (!userCustomParameters || !userCustomParameters[keyname])
             ) {
               this.logger.error('Missing key: ' + keyname + ' from customData')
-              return [2, false]
+              return [2 /*return*/, false]
             }
           }
-        return [2, true]
+        return [2 /*return*/, true]
       })
     })
   }

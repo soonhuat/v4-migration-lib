@@ -21,7 +21,7 @@ var LogLevel
   LogLevel[(LogLevel['Log'] = 2)] = 'Log'
   LogLevel[(LogLevel['Verbose'] = 3)] = 'Verbose'
 })((LogLevel = exports.LogLevel || (exports.LogLevel = {})))
-var Logger = (function () {
+var Logger = /** @class */ (function () {
   function Logger(logLevel) {
     if (logLevel === void 0) {
       logLevel = LogLevel.Error

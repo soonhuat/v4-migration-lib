@@ -363,7 +363,7 @@ export class Assets extends Instantiable {
   public async publishDdo(
     ddo: DDO,
     consumerAccount: string,
-    encrypt: boolean = false
+    encrypt = false
   ): Promise<TransactionReceipt> {
     return await this.ocean.onChainMetadata.publish(
       ddo.id,
@@ -486,7 +486,7 @@ export class Assets extends Instantiable {
     creator: Account,
     cost: string,
     datePublished: string,
-    timeout: number = 0,
+    timeout = 0,
     providerUri?: string,
     requiredParameters?: ServiceCustomParametersRequired
   ): Promise<ServiceAccess> {
@@ -528,7 +528,7 @@ export class Assets extends Instantiable {
     asset: DDO | string,
     serviceType: string,
     consumerAddress: string,
-    serviceIndex: number = -1,
+    serviceIndex = -1,
     serviceEndpoint: string,
     userCustomParameters?: UserCustomParameters
   ): Promise<any> {
@@ -561,7 +561,7 @@ export class Assets extends Instantiable {
     asset: DDO | string,
     serviceType: string,
     payerAddress: string,
-    serviceIndex: number = -1,
+    serviceIndex = -1,
     mpAddress?: string,
     consumerAddress?: string,
     userCustomParameters?: UserCustomParameters,
@@ -659,75 +659,6 @@ export class Assets extends Instantiable {
     }
   }
 
-  // marketplace flow
-  public async download(
-    asset: DDO | string,
-    txId: string,
-    tokenAddress: string,
-    consumerAccount: Account,
-    destination: string,
-    index = -1,
-    userCustomParameters?: UserCustomParameters
-  ): Promise<string | true> {
-    const { did, ddo } = await assetResolve(asset, this.ocean)
-    const { attributes } = ddo.findServiceByType('metadata')
-    const service = ddo.findServiceByType('access')
-    const { files } = attributes.main
-    const { serviceEndpoint } = service
-
-    if (!serviceEndpoint) {
-      throw new Error(
-        'Consume asset failed, service definition is missing the `serviceEndpoint`.'
-      )
-    }
-
-    this.logger.log('Consuming files')
-
-    destination = destination
-      ? `${destination}/datafile.${ddo.shortId()}.${service.index}/`
-      : undefined
-    const provider = await Provider.getInstance(this.instanceConfig)
-    await provider.setBaseUrl(serviceEndpoint)
-    await provider.download(
-      did,
-      txId,
-      tokenAddress,
-      service.type,
-      service.index.toString(),
-      destination,
-      consumerAccount,
-      files,
-      index,
-      userCustomParameters
-    )
-    return true
-  }
-
-  // simple flow
-  public async simpleDownload(
-    dtAddress: string,
-    serviceEndpoint: string,
-    txId: string,
-    account: string
-  ): Promise<string> {
-    let consumeUrl = serviceEndpoint
-    consumeUrl += `?consumerAddress=${account}`
-    consumeUrl += `&tokenAddress=${dtAddress}`
-    consumeUrl += `&transferTxId=${txId}`
-    const serviceConnector = new WebServiceConnector(
-      this.logger,
-      this.instanceConfig?.config?.requestTimeout
-    )
-    try {
-      await serviceConnector.downloadFile(consumeUrl)
-    } catch (e) {
-      this.logger.error('Error consuming assets')
-      this.logger.error(e)
-      throw e
-    }
-    return serviceEndpoint
-  }
-
   /**
    * get Order History
    * @param {Account} account
@@ -775,7 +706,9 @@ export class Assets extends Instantiable {
         order.serviceType = service.type
         if (!serviceType || (serviceType && serviceType === service.type))
           results.push(order)
-      } catch (e) {}
+      } catch (e) {
+        console.error(e)
+      }
     }
     return results
   }

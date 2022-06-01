@@ -180,23 +180,35 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.OceanAuth = void 0
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
 var defaultAuthMessage = 'Ocean Protocol Authentication'
-var defaultExpirationTime = 30 * 24 * 60 * 60 * 1000
+var defaultExpirationTime = 30 * 24 * 60 * 60 * 1000 // 30 days
 var localStorageKey = 'SquidTokens'
-var OceanAuth = (function (_super) {
+/**
+ * Tokens submodule of Ocean Protocol.
+ */
+var OceanAuth = /** @class */ (function (_super) {
   __extends(OceanAuth, _super)
   function OceanAuth() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of OceanAuth.
+   * @return {Promise<OceanAuth>}
+   */
   OceanAuth.getInstance = function (config) {
     return __awaiter(this, void 0, void 0, function () {
       var instance
       return __generator(this, function (_a) {
         instance = new OceanAuth()
         instance.setInstanceConfig(config)
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }
+  /**
+   * Returns a token for a account.
+   * @param  {Account} account Signer account.
+   * @return {Promise<string>} Token
+   */
   OceanAuth.prototype.get = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var time, message, signature, _a
@@ -209,7 +221,7 @@ var OceanAuth = (function (_super) {
           case 1:
             _b.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.ocean.utils.signature.signText(
                 message,
                 account.getId(),
@@ -218,16 +230,21 @@ var OceanAuth = (function (_super) {
             ]
           case 2:
             signature = _b.sent()
-            return [2, ''.concat(signature, '-').concat(time)]
+            return [2 /*return*/, ''.concat(signature, '-').concat(time)]
           case 3:
             _a = _b.sent()
             throw new Error('User denied the signature.')
           case 4:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Returns the address of signed token.
+   * @param  {string}          token Token.
+   * @return {Promise<string>}       Signer address.
+   */
   OceanAuth.prototype.check = function (token) {
     return __awaiter(this, void 0, void 0, function () {
       var expiration, _a, signature, timestamp, message, _b, _c
@@ -238,34 +255,42 @@ var OceanAuth = (function (_super) {
             ;(_a = token.split('-')), (signature = _a[0]), (timestamp = _a[1])
             message = ''.concat(this.getMessage(), '\n').concat(timestamp)
             if (+timestamp * 1000 + expiration < Date.now()) {
-              return [2, '0x'.concat('0'.repeat(40))]
+              return [2 /*return*/, '0x'.concat('0'.repeat(40))]
             }
             _c = (_b = this.web3.utils).toChecksumAddress
             return [
-              4,
+              4 /*yield*/,
               this.ocean.utils.signature.verifyText(message, signature)
             ]
           case 1:
-            return [2, _c.apply(_b, [_d.sent()])]
+            return [2 /*return*/, _c.apply(_b, [_d.sent()])]
         }
       })
     })
   }
+  /**
+   * Generates and stores the token for a account.
+   * @param {Account} account Signer account.
+   */
   OceanAuth.prototype.store = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var token
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.get(account)]
+            return [4 /*yield*/, this.get(account)]
           case 1:
             token = _a.sent()
             this.writeToken(account.getId(), token)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Returns a stored token.
+   * @param {Account} account Signer account.
+   */
   OceanAuth.prototype.restore = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       var token, signer
@@ -275,30 +300,35 @@ var OceanAuth = (function (_super) {
             try {
               token = this.readToken(account.getId())
             } catch (_b) {
-              return [2]
+              return [2 /*return*/]
             }
             if (!token) {
-              return [2]
+              return [2 /*return*/]
             }
-            return [4, this.check(token)]
+            return [4 /*yield*/, this.check(token)]
           case 1:
             signer = _a.sent()
             if (signer.toLowerCase() !== account.getId().toLowerCase()) {
-              return [2]
+              return [2 /*return*/]
             }
-            return [2, token]
+            return [2 /*return*/, token]
         }
       })
     })
   }
+  /**
+   * Returns if the token is stored and is valid.
+   * @param  {Account}          account Signer account.
+   * @return {Promise<boolean>}         Is stored and valid.
+   */
   OceanAuth.prototype.isStored = function (account) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.restore(account)]
+            return [4 /*yield*/, this.restore(account)]
           case 1:
-            return [2, !!_a.sent()]
+            return [2 /*return*/, !!_a.sent()]
         }
       })
     })

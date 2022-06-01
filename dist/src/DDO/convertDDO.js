@@ -175,7 +175,9 @@ function convertDDO(v4Did, v3DDO, nftAddress, erc20Address, encryptedFiles) {
         links: v3DDO.service[0].attributes.additionalInformation.links.url,
         additionalInformation: {
           termsAndConditions:
-            v3DDO.service[0].attributes.additionalInformation.termsAndConditions
+            v3DDO.service[0].attributes.additionalInformation
+              .termsAndConditions,
+          source: 'ddmdev'
         }
       }
       newService = __assign(
@@ -200,7 +202,7 @@ function convertDDO(v4Did, v3DDO, nftAddress, erc20Address, encryptedFiles) {
         metadata: newMetadata,
         services: [newService]
       }
-      return [2, v4DDO]
+      return [2 /*return*/, v4DDO]
     })
   })
 }
@@ -218,16 +220,16 @@ function getAndConvertDDO(
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          return [4, (0, importDDO_1.getDDO)(v3Did, metadataCacheUri)]
+          return [4 /*yield*/, (0, importDDO_1.getDDO)(v3Did, metadataCacheUri)]
         case 1:
           v3DDO = _a.sent()
           return [
-            4,
+            4 /*yield*/,
             convertDDO(v4Did, v3DDO, nftAddress, erc20Address, encryptedFiles)
           ]
         case 2:
           v4DDO = _a.sent()
-          return [2, v4DDO]
+          return [2 /*return*/, v4DDO]
       }
     })
   })

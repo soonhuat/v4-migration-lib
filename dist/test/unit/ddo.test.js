@@ -149,13 +149,16 @@ describe('Imports V3 DDO', function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, (0, importDDO_1.getDDO)(did1, metadataCacheUri)]
+            return [
+              4 /*yield*/,
+              (0, importDDO_1.getDDO)(did1, metadataCacheUri)
+            ]
           case 1:
             ddo1 = _a.sent()
             ;(0,
             console_1.assert)(ddo1.service[0].attributes.main.name === '🖼  DataUnion.app - Image & Annotation Vault  📸')
             ;(0, console_1.assert)(ddo1.service[1].type === 'access')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -166,13 +169,16 @@ describe('Imports V3 DDO', function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, (0, importDDO_1.getDDO)(did2, metadataCacheUri)]
+            return [
+              4 /*yield*/,
+              (0, importDDO_1.getDDO)(did2, metadataCacheUri)
+            ]
           case 1:
             ddo2 = _a.sent()
             ;(0,
             console_1.assert)(ddo2.service[0].attributes.main.name === 'Product Pages of 1’044’709 Products on Amazon.com (processed data)')
             ;(0, console_1.assert)(ddo2.service[1].type === 'access')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -183,13 +189,16 @@ describe('Imports V3 DDO', function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, (0, importDDO_1.getDDO)(did3, metadataCacheUri)]
+            return [
+              4 /*yield*/,
+              (0, importDDO_1.getDDO)(did3, metadataCacheUri)
+            ]
           case 1:
             ddo3 = _a.sent()
             ;(0,
             console_1.assert)(ddo3.service[0].attributes.main.name === 'Posthuman: DistilBERT QA inference Algo v2')
             ;(0, console_1.assert)(ddo3.service[1].type === 'access')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -203,7 +212,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did1,
                 '1234567890',
@@ -218,7 +227,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
             ;(0,
             console_1.assert)(ddo1.metadata.name === '🖼  DataUnion.app - Image & Annotation Vault  📸')
             ;(0, console_1.assert)(ddo1.metadata.type === 'dataset')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -230,7 +239,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did2,
                 '1234567890',
@@ -245,7 +254,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
             ;(0,
             console_1.assert)(ddo2.metadata.name === 'Product Pages of 1’044’709 Products on Amazon.com (processed data)')
             ;(0, console_1.assert)(ddo2.metadata.type === 'dataset')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -257,7 +266,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did3,
                 '1234567890',
@@ -272,7 +281,7 @@ describe('Converts V3 DDO to V4 DDO', function () {
             ;(0,
             console_1.assert)(ddo3.metadata.name === 'Posthuman: DistilBERT QA inference Algo v2')
             ;(0, console_1.assert)(ddo3.metadata.type === 'algorithm')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

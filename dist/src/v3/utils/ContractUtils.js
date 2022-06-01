@@ -147,19 +147,19 @@ function getFairGasPrice(web3, config) {
       switch (_b.label) {
         case 0:
           _a = bignumber_js_1.default.bind
-          return [4, web3.eth.getGasPrice()]
+          return [4 /*yield*/, web3.eth.getGasPrice()]
         case 1:
           x = new (_a.apply(bignumber_js_1.default, [void 0, _b.sent()]))()
           if (config && config.gasFeeMultiplier)
             return [
-              2,
+              2 /*return*/,
               x
                 .multipliedBy(config.gasFeeMultiplier)
                 .integerValue(bignumber_js_1.default.ROUND_DOWN)
                 .toString(10)
             ]
-          else return [2, x.toString(10)]
-          return [2]
+          else return [2 /*return*/, x.toString(10)]
+          return [2 /*return*/]
       }
     })
   })

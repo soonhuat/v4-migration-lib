@@ -165,19 +165,27 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.Network = void 0
 var navigator_1 = require('@ethereum-navigator/navigator')
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var Network = (function (_super) {
+var Network = /** @class */ (function (_super) {
   __extends(Network, _super)
   function Network() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns network id.
+   * @return {Promise<number>} Network ID.
+   */
   Network.prototype.getNetworkId = function () {
     return this.web3.eth.net.getId()
   }
+  /**
+   * Returns the network by name.
+   * @return {Promise<string>} Network name.
+   */
   Network.prototype.getNetworkName = function () {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         return [
-          2,
+          2 /*return*/,
           this.web3.eth.net.getId().then(function (networkId) {
             var network = (0, navigator_1.lookup)(networkId)
             return network && network.name ? network.name : 'Development'

@@ -145,7 +145,16 @@ var utils_1 = require('../utils')
 var WebServiceConnector_1 = require('../ocean/utils/WebServiceConnector')
 var cross_fetch_1 = require('cross-fetch')
 var apiPath = '/api/v1/aquarius/assets/ddo'
-var MetadataCache = (function () {
+/**
+ * Provides an interface with Metadata Cache.
+ * Metadata Cache provides an off-chain database cache for on-chain metadata about data assets.
+ */
+var MetadataCache = /** @class */ (function () {
+  /**
+   * Instantiate Metadata Cache (independently of Ocean) for off-chain interaction.
+   * @param {String} metadataCacheUri
+   * @param {Logger} logger
+   */
   function MetadataCache(metadataCacheUri, logger, requestTimeout) {
     this.fetch = new WebServiceConnector_1.WebServiceConnector(
       logger,
@@ -166,9 +175,9 @@ var MetadataCache = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.fetch.get(this.url)]
+            return [4 /*yield*/, this.fetch.get(this.url)]
           case 1:
-            return [2, _a.sent().json()]
+            return [2 /*return*/, _a.sent().json()]
         }
       })
     })
@@ -181,7 +190,7 @@ var MetadataCache = (function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.fetch
                 .post(
                   ''
@@ -217,11 +226,16 @@ var MetadataCache = (function () {
             ]
           case 1:
             accessUrl = _a.sent()
-            return [2, accessUrl]
+            return [2 /*return*/, accessUrl]
         }
       })
     })
   }
+  /**
+   * Search over the DDOs using a query.
+   * @param  {SearchQuery} query Query to filter the DDOs.
+   * @return {Promise<QueryResult>}
+   */
   MetadataCache.prototype.queryMetadata = function (query) {
     return __awaiter(this, void 0, void 0, function () {
       var result
@@ -230,7 +244,7 @@ var MetadataCache = (function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               this.fetch
                 .post(
                   ''.concat(this.url, '/api/v1/aquarius/assets/query'),
@@ -260,11 +274,16 @@ var MetadataCache = (function () {
             ]
           case 1:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Encrypts a DDO
+   * @param  {any} ddo bytes to be encrypted.
+   * @return {Promise<String>} Hex encoded encrypted DDO.
+   */
   MetadataCache.prototype.encryptDDO = function (ddo) {
     return __awaiter(this, void 0, void 0, function () {
       var fullUrl, result
@@ -277,7 +296,7 @@ var MetadataCache = (function () {
               '/api/v1/aquarius/assets/ddo/encryptashex '
             )
             return [
-              4,
+              4 /*yield*/,
               this.fetch
                 .postWithOctet(fullUrl, ddo)
                 .then(function (response) {
@@ -299,11 +318,16 @@ var MetadataCache = (function () {
             ]
           case 1:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
   }
+  /**
+   * Validate Metadata
+   * @param  {Metadata} metadata  metadata to be validated. If it's a Metadata, it will be validated agains the local schema. Else, it's validated agains the remote schema
+   * @return {Promise<Boolean|Object>}  Result.
+   */
   MetadataCache.prototype.validateMetadata = function (metadata) {
     return __awaiter(this, void 0, void 0, function () {
       var status, path, response, errors, error_1
@@ -320,7 +344,7 @@ var MetadataCache = (function () {
           case 1:
             _a.trys.push([1, 6, , 7])
             return [
-              4,
+              4 /*yield*/,
               this.fetch.post(
                 ''.concat(this.url).concat(apiPath).concat(path),
                 JSON.stringify(metadata)
@@ -328,13 +352,13 @@ var MetadataCache = (function () {
             ]
           case 2:
             response = _a.sent()
-            if (!response.ok) return [3, 4]
-            return [4, response.json()]
+            if (!response.ok) return [3 /*break*/, 4]
+            return [4 /*yield*/, response.json()]
           case 3:
             errors = _a.sent()
             if (errors === true) status.valid = true
             else status.errors = errors
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             this.logger.error(
               'validate Metadata failed:',
@@ -343,17 +367,22 @@ var MetadataCache = (function () {
             )
             _a.label = 5
           case 5:
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 6:
             error_1 = _a.sent()
             this.logger.error('Error validating metadata: ', error_1)
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 7:
-            return [2, status]
+            return [2 /*return*/, status]
         }
       })
     })
   }
+  /**
+   * Retrieves a DDO by DID.
+   * @param  {DID | string} did DID of the asset.
+   * @return {Promise<DDO>} DDO of the asset.
+   */
   MetadataCache.prototype.retrieveDDO = function (
     did,
     metadataServiceEndpoint
@@ -369,7 +398,7 @@ var MetadataCache = (function () {
               metadataServiceEndpoint ||
               ''.concat(this.url).concat(apiPath, '/').concat(did.getDid())
             return [
-              4,
+              4 /*yield*/,
               this.fetch
                 .get(fullUrl)
                 .then(function (response) {
@@ -397,7 +426,7 @@ var MetadataCache = (function () {
             ]
           case 1:
             result = _a.sent()
-            return [2, result]
+            return [2 /*return*/, result]
         }
       })
     })
@@ -407,7 +436,10 @@ var MetadataCache = (function () {
   ) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
-        return [2, this.retrieveDDO(undefined, metadataServiceEndpoint)]
+        return [
+          2 /*return*/,
+          this.retrieveDDO(undefined, metadataServiceEndpoint)
+        ]
       })
     })
   }
@@ -419,11 +451,20 @@ var MetadataCache = (function () {
   MetadataCache.prototype.getURI = function () {
     return ''.concat(this.url)
   }
+  /**
+   * Simple blocking sleep function
+   */
   MetadataCache.prototype.sleep = function (ms) {
     return new Promise(function (resolve) {
       setTimeout(resolve, ms)
     })
   }
+  /**
+   * Blocks until Aqua will cache the did (or the update for that did) or timeouts
+   * @param  {string} did DID of the asset.
+   * @param  {string} txid used when the did exists and we expect an update with that txid.
+   * @return {Promise<DDO>} DDO of the asset.
+   */
   MetadataCache.prototype.waitForAqua = function (did, txid) {
     return __awaiter(this, void 0, void 0, function () {
       var apiPath, tries, result, ddo, e_1
@@ -436,36 +477,36 @@ var MetadataCache = (function () {
           case 1:
             _a.trys.push([1, 6, , 7])
             return [
-              4,
+              4 /*yield*/,
               (0, cross_fetch_1.fetch)(this.getURI() + apiPath + '/' + did)
             ]
           case 2:
             result = _a.sent()
-            if (!result.ok) return [3, 5]
-            if (!txid) return [3, 4]
-            return [4, result.json()]
+            if (!result.ok) return [3 /*break*/, 5]
+            if (!txid) return [3 /*break*/, 4]
+            return [4 /*yield*/, result.json()]
           case 3:
             ddo = _a.sent()
-            if (ddo.event && ddo.event.txid === txid) return [3, 10]
-            return [3, 5]
+            if (ddo.event && ddo.event.txid === txid) return [3 /*break*/, 10]
+            return [3 /*break*/, 5]
           case 4:
-            return [3, 10]
+            return [3 /*break*/, 10]
           case 5:
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 6:
             e_1 = _a.sent()
-            return [3, 7]
+            return [3 /*break*/, 7]
           case 7:
-            return [4, this.sleep(1500)]
+            return [4 /*yield*/, this.sleep(1500)]
           case 8:
             _a.sent()
             tries++
             _a.label = 9
           case 9:
-            if (tries < 100) return [3, 1]
+            if (tries < 100) return [3 /*break*/, 1]
             _a.label = 10
           case 10:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

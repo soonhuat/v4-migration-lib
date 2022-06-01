@@ -154,7 +154,7 @@ var crypto_js_1 = require('crypto-js')
 var Ocean_1 = require('../v3/ocean/Ocean')
 var ConfigHelper_1 = require('../v3/utils/ConfigHelper')
 var axios_1 = __importDefault(require('axios'))
-var Migration = (function () {
+var Migration = /** @class */ (function () {
   function Migration(web3, startBlock) {
     this.GASLIMIT_DEFAULT = 1000000
     this.web3 = web3
@@ -164,9 +164,9 @@ var Migration = (function () {
     return __awaiter(this, void 0, void 0, function () {
       var chainId, checksum
       return __generator(this, function (_a) {
-        chainId = 1
+        chainId = 1 // await this.web3.eth.getChainId()
         checksum = (0, crypto_js_1.SHA256)(erc721Address + chainId.toString(10))
-        return [2, 'did:op:'.concat(checksum.toString())]
+        return [2 /*return*/, 'did:op:'.concat(checksum.toString())]
       })
     })
   }
@@ -179,7 +179,7 @@ var Migration = (function () {
           hex += '' + message.charCodeAt(i).toString(16)
         }
         hexMessage = '0x' + hex
-        return [2, hexMessage]
+        return [2 /*return*/, hexMessage]
       })
     })
   }
@@ -196,7 +196,7 @@ var Migration = (function () {
               v4MetadataCacheUri || 'https://v4.aquarius.oceanprotocol.com'
             data = JSON.stringify(asset)
             return [
-              4,
+              4 /*yield*/,
               axios_1.default.post(
                 ''.concat(
                   metadataCacheUri,
@@ -209,14 +209,14 @@ var Migration = (function () {
           case 1:
             response = _b.sent()
             if (!response || response.status !== 200 || !response.data)
-              return [2, { response: null, validation: {} }]
+              return [2 /*return*/, { response: null, validation: {} }]
             ;(_a = response.data),
               (validatorAddress = _a.publicKey),
               (r = _a.r),
               (s = _a.s),
               (v = _a.v)
             return [
-              2,
+              2 /*return*/,
               {
                 response: response.data,
                 validation: {
@@ -242,8 +242,9 @@ var Migration = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
+            // Workaround for testing
             if (network === 'v4-testing')
-              return [2, 'http://oceanprotocol.com/test']
+              return [2 /*return*/, 'http://oceanprotocol.com/test']
             _a.label = 1
           case 1:
             _a.trys.push([1, 4, , 5])
@@ -252,19 +253,19 @@ var Migration = (function () {
               infuraProjectId
             )
             config.web3Provider = this.web3
-            return [4, Ocean_1.Ocean.getInstance(config)]
+            return [4 /*yield*/, Ocean_1.Ocean.getInstance(config)]
           case 2:
             ocean = _a.sent()
-            return [4, ocean.provider.getAssetURL(account, did, 1)]
+            return [4 /*yield*/, ocean.provider.getAssetURL(account, did, 1)]
           case 3:
             urlResponse = _a.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             error_1 = _a.sent()
             console.log('error', error_1)
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2, urlResponse]
+            return [2 /*return*/, urlResponse]
         }
       })
     })
@@ -280,7 +281,7 @@ var Migration = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.getAssetURL(account, did, network)]
+            return [4 /*yield*/, this.getAssetURL(account, did, network)]
           case 1:
             assetURL = _a.sent()
             file = [
@@ -293,16 +294,19 @@ var Migration = (function () {
             _a.label = 2
           case 2:
             _a.trys.push([2, 4, , 5])
-            return [4, Provider_1.default.encrypt(file, v4ProviderUrl)]
+            return [
+              4 /*yield*/,
+              Provider_1.default.encrypt(file, v4ProviderUrl)
+            ]
           case 3:
             response = _a.sent()
-            return [2, response]
+            return [2 /*return*/, response]
           case 4:
             error_2 = _a.sent()
             console.error('Error parsing json: ' + error_2.message)
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -350,7 +354,7 @@ var Migration = (function () {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               ERC721FactoryContract.methods
                 .createNftWithErc20WithFixedRate(
                   {
@@ -390,13 +394,13 @@ var Migration = (function () {
             ]
           case 2:
             estGas = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             error_3 = _a.sent()
             console.log('error', error_3)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, estGas]
+            return [2 /*return*/, estGas]
         }
       })
     })
@@ -430,7 +434,7 @@ var Migration = (function () {
               ERC721FactoryAddress
             )
             return [
-              4,
+              4 /*yield*/,
               this.estGasPublishFixedRateAsset(
                 did,
                 description,
@@ -499,18 +503,21 @@ var Migration = (function () {
               from: ownerAddress,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3)]
+            return [4 /*yield*/, (0, utils_1.getFairGasPrice)(this.web3)]
           case 3:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 4:
             tx = _d.sent()
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 5:
             error_4 = _d.sent()
             console.log('error', error_4)
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 6:
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
@@ -554,7 +561,7 @@ var Migration = (function () {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               ERC721FactoryContract.methods
                 .createNftWithErc20WithDispenser(
                   {
@@ -585,13 +592,13 @@ var Migration = (function () {
             ]
           case 2:
             estGas = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             error_5 = _a.sent()
             console.log('error', error_5)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, estGas]
+            return [2 /*return*/, estGas]
         }
       })
     })
@@ -621,7 +628,7 @@ var Migration = (function () {
               ERC721FactoryAddress
             )
             return [
-              4,
+              4 /*yield*/,
               this.estGaspublishFreeAsset(
                 description,
                 ERC721FactoryAddress,
@@ -677,18 +684,21 @@ var Migration = (function () {
               from: ownerAddress,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3)]
+            return [4 /*yield*/, (0, utils_1.getFairGasPrice)(this.web3)]
           case 3:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 4:
             tx = _d.sent()
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 5:
             error_6 = _d.sent()
             console.log('error', error_6)
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 6:
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
@@ -721,7 +731,7 @@ var Migration = (function () {
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               tokenERC721.methods
                 .setMetaData(
                   metaDataState,
@@ -738,13 +748,13 @@ var Migration = (function () {
             ]
           case 2:
             estGas = _a.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             error_7 = _a.sent()
             console.log('error', error_7)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
-            return [2, estGas]
+            return [2 /*return*/, estGas]
         }
       })
     })
@@ -774,7 +784,7 @@ var Migration = (function () {
               tokenAddress
             )
             return [
-              4,
+              4 /*yield*/,
               this.estGasUpdateMetadata(
                 ownerAddress,
                 txReceipt,
@@ -805,18 +815,21 @@ var Migration = (function () {
               from: ownerAddress,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3)]
+            return [4 /*yield*/, (0, utils_1.getFairGasPrice)(this.web3)]
           case 3:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 4:
             tx = _d.sent()
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 5:
             error_8 = _d.sent()
             console.log('setMetaDataAndTokenURI ERROR', error_8)
-            return [3, 6]
+            return [3 /*break*/, 6]
           case 6:
-            return [2, tx]
+            return [2 /*return*/, tx]
         }
       })
     })
@@ -869,7 +882,10 @@ var Migration = (function () {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, (0, importDDO_1.getDDO)(v3Did, v3MetadataCacheUri)]
+            return [
+              4 /*yield*/,
+              (0, importDDO_1.getDDO)(v3Did, v3MetadataCacheUri)
+            ]
           case 1:
             v3DDO = _b.sent()
             description =
@@ -878,7 +894,7 @@ var Migration = (function () {
           case 2:
             _b.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               this.publishFixedRateAsset(
                 v3Did,
                 description,
@@ -900,18 +916,18 @@ var Migration = (function () {
             ]
           case 3:
             txReceipt = _b.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_1 = _b.sent()
             console.log('publishFixedRateAsset Error', e_1)
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             nftAddress =
               txReceipt.events.NFTCreated.returnValues.newTokenAddress
             erc20Address =
               txReceipt.events.TokenCreated.returnValues.newTokenAddress
             return [
-              4,
+              4 /*yield*/,
               this.getEncryptedFiles(
                 v4ProviderUrl,
                 ownerAccount,
@@ -921,11 +937,11 @@ var Migration = (function () {
             ]
           case 6:
             encryptedFiles = _b.sent()
-            return [4, this.generateDidv4(nftAddress)]
+            return [4 /*yield*/, this.generateDidv4(nftAddress)]
           case 7:
             v4Did = _b.sent()
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 v3Did,
                 v4Did,
@@ -937,32 +953,35 @@ var Migration = (function () {
             ]
           case 8:
             ddo = _b.sent()
-            return [4, Provider_1.default]
+            return [4 /*yield*/, Provider_1.default]
           case 9:
             v4Provider = _b.sent()
             return [
-              4,
+              4 /*yield*/,
               v4Provider.encrypt(ddo, v4EncryptProviderUri || v4ProviderUrl)
             ]
           case 10:
             encryptedDdo = _b.sent()
             dataHash =
               '0x' + (0, sha256_1.default)(JSON.stringify(ddo)).toString()
-            return [4, this.validateAssetAquariusV4(ddo, v4MetadataCacheUri)]
+            return [
+              4 /*yield*/,
+              this.validateAssetAquariusV4(ddo, v4MetadataCacheUri)
+            ]
           case 11:
             ;(_a = _b.sent()),
               (validation = _a.validation),
               (response = _a.response)
-            isValid = response.hash === dataHash
+            isValid = response.hash === dataHash // Should be true
             if (isValid === false) {
               console.log('Asset is not valid')
-              return [2, new Error('Invalid DDO hash')]
+              return [2 /*return*/, new Error('Invalid DDO hash')]
             }
             _b.label = 12
           case 12:
             _b.trys.push([12, 14, , 15])
             return [
-              4,
+              4 /*yield*/,
               this.updateMetadata(
                 ownerAddress,
                 txReceipt,
@@ -977,13 +996,16 @@ var Migration = (function () {
             ]
           case 13:
             txReceipt2 = _b.sent()
-            return [3, 15]
+            return [3 /*break*/, 15]
           case 14:
             e_2 = _b.sent()
             console.log('Error', e_2)
-            return [3, 15]
+            return [3 /*break*/, 15]
           case 15:
-            return [2, { txReceipt: txReceipt, txReceipt2: txReceipt2 }]
+            return [
+              2 /*return*/,
+              { txReceipt: txReceipt, txReceipt2: txReceipt2 }
+            ]
         }
       })
     })
@@ -1032,7 +1054,10 @@ var Migration = (function () {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, (0, importDDO_1.getDDO)(v3Did, v3MetadataCacheUri)]
+            return [
+              4 /*yield*/,
+              (0, importDDO_1.getDDO)(v3Did, v3MetadataCacheUri)
+            ]
           case 1:
             v3DDO = _b.sent()
             description =
@@ -1041,7 +1066,7 @@ var Migration = (function () {
           case 2:
             _b.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               this.publishFreeAsset(
                 description,
                 ERC721FactoryAddress,
@@ -1059,18 +1084,18 @@ var Migration = (function () {
             ]
           case 3:
             txReceipt = _b.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_3 = _b.sent()
             console.log('publishFixedRateAsset Error', e_3)
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             nftAddress =
               txReceipt.events.NFTCreated.returnValues.newTokenAddress
             erc20Address =
               txReceipt.events.TokenCreated.returnValues.newTokenAddress
             return [
-              4,
+              4 /*yield*/,
               this.getEncryptedFiles(
                 v4ProviderUrl,
                 ownerAccount,
@@ -1080,11 +1105,11 @@ var Migration = (function () {
             ]
           case 6:
             encryptedFiles = _b.sent()
-            return [4, this.generateDidv4(nftAddress)]
+            return [4 /*yield*/, this.generateDidv4(nftAddress)]
           case 7:
             v4Did = _b.sent()
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 v3Did,
                 v4Did,
@@ -1096,29 +1121,32 @@ var Migration = (function () {
             ]
           case 8:
             ddo = _b.sent()
-            return [4, Provider_1.default]
+            return [4 /*yield*/, Provider_1.default]
           case 9:
             v4Provider = _b.sent()
-            return [4, v4Provider.encrypt(ddo, v4ProviderUrl)]
+            return [4 /*yield*/, v4Provider.encrypt(ddo, v4ProviderUrl)]
           case 10:
             encryptedDdo = _b.sent()
             dataHash =
               '0x' + (0, sha256_1.default)(JSON.stringify(ddo)).toString()
-            return [4, this.validateAssetAquariusV4(ddo, v4MetadataCacheUri)]
+            return [
+              4 /*yield*/,
+              this.validateAssetAquariusV4(ddo, v4MetadataCacheUri)
+            ]
           case 11:
             ;(_a = _b.sent()),
               (validation = _a.validation),
               (response = _a.response)
-            isValid = response.hash === dataHash
+            isValid = response.hash === dataHash // Should be true
             if (isValid === false) {
               console.log('Asset is not valid')
-              return [2, new Error('Invalid DDO hash')]
+              return [2 /*return*/, new Error('Invalid DDO hash')]
             }
             _b.label = 12
           case 12:
             _b.trys.push([12, 14, , 15])
             return [
-              4,
+              4 /*yield*/,
               this.updateMetadata(
                 ownerAddress,
                 txReceipt,
@@ -1133,13 +1161,16 @@ var Migration = (function () {
             ]
           case 13:
             txReceipt2 = _b.sent()
-            return [3, 15]
+            return [3 /*break*/, 15]
           case 14:
             e_4 = _b.sent()
             console.log('Error', e_4)
-            return [3, 15]
+            return [3 /*break*/, 15]
           case 15:
-            return [2, { txReceipt: txReceipt, txReceipt2: txReceipt2 }]
+            return [
+              2 /*return*/,
+              { txReceipt: txReceipt, txReceipt2: txReceipt2 }
+            ]
         }
       })
     })

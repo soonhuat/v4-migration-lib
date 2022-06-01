@@ -34,7 +34,8 @@ export async function convertDDO(
     links: v3DDO.service[0].attributes.additionalInformation.links.url,
     additionalInformation: {
       termsAndConditions:
-        v3DDO.service[0].attributes.additionalInformation.termsAndConditions
+        v3DDO.service[0].attributes.additionalInformation.termsAndConditions,
+      source: 'ddmdev'
     }
   }
 

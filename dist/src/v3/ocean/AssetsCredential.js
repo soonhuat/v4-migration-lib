@@ -5,6 +5,13 @@ exports.addCredentialDetail =
   exports.removeCredentialDetail =
   exports.checkCredentialExist =
     void 0
+/**
+ * checks if a credential list exists for a specific action
+ * @param  {credentials} Credentials list of crentials from ddo
+ * @param {credentialType} string e.g. address / credential3Box
+ * @param {credentialAction} CredentialAction allow or deny
+ * @return {boolean}
+ */
 function checkCredentialExist(credentials, credentialType, credentialAction) {
   var isExist = false
   if (credentialAction === 'allow') {
@@ -26,6 +33,13 @@ function checkCredentialExist(credentials, credentialType, credentialAction) {
   }
 }
 exports.checkCredentialExist = checkCredentialExist
+/**
+ * Removes all credentials of a certain type for a specific action
+ * @param  {ddo} DDO
+ * @param {credentialType} string e.g. address / credential3Box
+ * @param {credentialAction} CredentialAction allow or deny
+ * @return {DDO}
+ */
 function removeCredentialDetail(ddo, credentialType, credentialAction) {
   var exists = checkCredentialExist(
     ddo.credentials,
@@ -60,6 +74,14 @@ function removeCredentialDetail(ddo, credentialType, credentialAction) {
   return ddo
 }
 exports.removeCredentialDetail = removeCredentialDetail
+/**
+ * Updates credentials of a certain type for a specific action
+ * @param  {ddo} DDO
+ * @param {credentialType} string e.g. address / credential3Box
+ * @param {list} string[] list of values
+ * @param {credentialAction} CredentialAction allow or deny
+ * @return {DDO}
+ */
 function updateCredentialDetail(ddo, credentialType, list, credentialAction) {
   var exists = checkCredentialExist(
     ddo.credentials,
@@ -90,6 +112,14 @@ function updateCredentialDetail(ddo, credentialType, list, credentialAction) {
   return ddo
 }
 exports.updateCredentialDetail = updateCredentialDetail
+/**
+ * Adds values to credentials of a certain type for a specific action
+ * @param  {ddo} DDO
+ * @param {credentialType} string e.g. address / credential3Box
+ * @param {list} string[] list of values
+ * @param {credentialAction} CredentialAction allow or deny
+ * @return {DDO}
+ */
 function addCredentialDetail(ddo, credentialType, list, credentialAction) {
   var newCredentialDetail = {
     type: credentialType,

@@ -146,9 +146,12 @@ function signText(web3, text, publicKey, password) {
           _a.label = 1
         case 1:
           _a.trys.push([1, 3, , 8])
-          return [4, web3.eth.personal.sign(text, publicKey, password)]
+          return [
+            4 /*yield*/,
+            web3.eth.personal.sign(text, publicKey, password)
+          ]
         case 2:
-          return [2, _a.sent()]
+          return [2 /*return*/, _a.sent()]
         case 3:
           e_1 = _a.sent()
           if (isMetaMask) {
@@ -159,18 +162,18 @@ function signText(web3, text, publicKey, password) {
           _a.label = 4
         case 4:
           _a.trys.push([4, 6, , 7])
-          return [4, web3.eth.sign(text, publicKey)]
+          return [4 /*yield*/, web3.eth.sign(text, publicKey)]
         case 5:
-          return [2, _a.sent()]
+          return [2 /*return*/, _a.sent()]
         case 6:
           e2_1 = _a.sent()
           Logger_1.LoggerInstance.error('Error on sign.')
           Logger_1.LoggerInstance.error(e2_1)
           throw new Error('Error executing personal sign')
         case 7:
-          return [3, 8]
+          return [3 /*break*/, 8]
         case 8:
-          return [2]
+          return [2 /*return*/]
       }
     })
   })
@@ -182,16 +185,17 @@ function signHash(web3, message, address) {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          return [4, web3.eth.sign(message, address)]
+          return [4 /*yield*/, web3.eth.sign(message, address)]
         case 1:
           signedMessage = _a.sent()
-          signedMessage = signedMessage.substr(2)
+          signedMessage = signedMessage.substr(2) // remove 0x
           r = '0x' + signedMessage.slice(0, 64)
           s = '0x' + signedMessage.slice(64, 128)
           v = '0x' + signedMessage.slice(128, 130)
+          // make sure we obey 27 and 28 standards
           if (v === '0x00') v = '0x1b'
           if (v === '0x01') v = '0x1c'
-          return [2, { v: v, r: r, s: s }]
+          return [2 /*return*/, { v: v, r: r, s: s }]
       }
     })
   })
@@ -209,9 +213,12 @@ function signWithHash(web3, text, publicKey, password) {
           _a.label = 1
         case 1:
           _a.trys.push([1, 3, , 8])
-          return [4, web3.eth.personal.sign(hash, publicKey, password)]
+          return [
+            4 /*yield*/,
+            web3.eth.personal.sign(hash, publicKey, password)
+          ]
         case 2:
-          return [2, _a.sent()]
+          return [2 /*return*/, _a.sent()]
         case 3:
           e_2 = _a.sent()
           if (isMetaMask) {
@@ -222,18 +229,18 @@ function signWithHash(web3, text, publicKey, password) {
           _a.label = 4
         case 4:
           _a.trys.push([4, 6, , 7])
-          return [4, web3.eth.sign(hash, publicKey)]
+          return [4 /*yield*/, web3.eth.sign(hash, publicKey)]
         case 5:
-          return [2, _a.sent()]
+          return [2 /*return*/, _a.sent()]
         case 6:
           e2_2 = _a.sent()
           Logger_1.LoggerInstance.error('Error on sign.')
           Logger_1.LoggerInstance.error(e2_2)
           throw new Error('Error executing personal sign')
         case 7:
-          return [3, 8]
+          return [3 /*break*/, 8]
         case 8:
-          return [2]
+          return [2 /*return*/]
       }
     })
   })

@@ -141,7 +141,6 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.postData =
   exports.getData =
   exports.downloadFile =
-  exports.downloadFileBrowser =
   exports.fetchData =
     void 0
 var cross_fetch_1 = __importDefault(require('cross-fetch'))
@@ -152,39 +151,26 @@ function fetchData(url, opts) {
     return __generator(this, function (_d) {
       switch (_d.label) {
         case 0:
-          return [4, (0, cross_fetch_1.default)(url, opts)]
+          return [4 /*yield*/, (0, cross_fetch_1.default)(url, opts)]
         case 1:
           result = _d.sent()
-          if (!!result.ok) return [3, 3]
+          if (!!result.ok) return [3 /*break*/, 3]
           Logger_1.default.error(
             'Error requesting ['.concat(opts.method, '] ').concat(url)
           )
           _b = (_a = Logger_1.default).error
           _c = 'Response message: \n'.concat
-          return [4, result.text()]
+          return [4 /*yield*/, result.text()]
         case 2:
           _b.apply(_a, [_c.apply('Response message: \n', [_d.sent()])])
           throw result
         case 3:
-          return [2, result]
+          return [2 /*return*/, result]
       }
     })
   })
 }
 exports.fetchData = fetchData
-function downloadFileBrowser(url) {
-  return __awaiter(this, void 0, void 0, function () {
-    var anchor
-    return __generator(this, function (_a) {
-      anchor = document.createElement('a')
-      anchor.download = ''
-      anchor.href = url
-      anchor.click()
-      return [2]
-    })
-  })
-}
-exports.downloadFileBrowser = downloadFileBrowser
 function downloadFile(url, index) {
   return __awaiter(this, void 0, void 0, function () {
     var response, filename
@@ -192,7 +178,7 @@ function downloadFile(url, index) {
     return __generator(this, function (_b) {
       switch (_b.label) {
         case 0:
-          return [4, (0, cross_fetch_1.default)(url)]
+          return [4 /*yield*/, (0, cross_fetch_1.default)(url)]
         case 1:
           response = _b.sent()
           if (!response.ok) {
@@ -210,9 +196,12 @@ function downloadFile(url, index) {
             }
           }
           _a = {}
-          return [4, response.arrayBuffer()]
+          return [4 /*yield*/, response.arrayBuffer()]
         case 2:
-          return [2, ((_a.data = _b.sent()), (_a.filename = filename), _a)]
+          return [
+            2 /*return*/,
+            ((_a.data = _b.sent()), (_a.filename = filename), _a)
+          ]
       }
     })
   })
@@ -222,7 +211,7 @@ function getData(url) {
   return __awaiter(this, void 0, void 0, function () {
     return __generator(this, function (_a) {
       return [
-        2,
+        2 /*return*/,
         (0, cross_fetch_1.default)(url, {
           method: 'GET',
           headers: {
@@ -239,7 +228,7 @@ function postWithHeaders(url, payload, headers) {
     return __generator(this, function (_a) {
       if (payload != null) {
         return [
-          2,
+          2 /*return*/,
           (0, cross_fetch_1.default)(url, {
             method: 'POST',
             body: payload,
@@ -248,13 +237,13 @@ function postWithHeaders(url, payload, headers) {
         ]
       } else {
         return [
-          2,
+          2 /*return*/,
           (0, cross_fetch_1.default)(url, {
             method: 'POST'
           })
         ]
       }
-      return [2]
+      return [2 /*return*/]
     })
   })
 }
@@ -265,7 +254,7 @@ function postData(url, payload) {
       headers = {
         'Content-type': 'application/json'
       }
-      return [2, postWithHeaders(url, payload, headers)]
+      return [2 /*return*/, postWithHeaders(url, payload, headers)]
     })
   })
 }

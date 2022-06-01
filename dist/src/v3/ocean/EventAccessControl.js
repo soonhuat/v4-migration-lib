@@ -164,11 +164,18 @@ var __generator =
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.EventAccessControl = void 0
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var EventAccessControl = (function (_super) {
+/**
+ * Provides an interface for Event access control service.
+ */
+var EventAccessControl = /** @class */ (function (_super) {
   __extends(EventAccessControl, _super)
   function EventAccessControl() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of Event access Control.
+   * @return {Promise<EventAccessControl>}
+   */
   EventAccessControl.getInstance = function (config) {
     var _a
     return __awaiter(this, void 0, void 0, function () {
@@ -179,7 +186,7 @@ var EventAccessControl = (function (_super) {
             instance = new EventAccessControl()
             instance.setInstanceConfig(config)
             return [
-              4,
+              4 /*yield*/,
               instance.setBaseUrl(
                 (_a = config.config) === null || _a === void 0
                   ? void 0
@@ -188,7 +195,7 @@ var EventAccessControl = (function (_super) {
             ]
           case 1:
             _b.sent()
-            return [2, instance]
+            return [2 /*return*/, instance]
         }
       })
     })
@@ -197,7 +204,7 @@ var EventAccessControl = (function (_super) {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         this.baseUrl = url
-        return [2]
+        return [2 /*return*/]
       })
     })
   }
@@ -251,7 +258,7 @@ var EventAccessControl = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!this.url) return [2, true]
+            if (!this.url) return [2 /*return*/, true]
             args = this.getIsPermitArgs(
               component,
               eventType,
@@ -264,22 +271,22 @@ var EventAccessControl = (function (_super) {
           case 1:
             _a.trys.push([1, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               this.ocean.utils.fetch.post(this.url, JSON.stringify(args))
             ]
           case 2:
             response = _a.sent()
-            return [4, response.json()]
+            return [4 /*yield*/, response.json()]
           case 3:
             results = _a.sent()
             results = JSON.stringify(results)
-            return [2, results === 'true']
+            return [2 /*return*/, results === 'true']
           case 4:
             e_1 = _a.sent()
             this.logger.error(e_1)
             throw new Error('ERROR: Asset URL not found or not available.')
           case 5:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

@@ -1,14 +1,3 @@
-import Web3 from 'web3'
-import {
-  FileMetadata,
-  ComputeJob,
-  ComputeOutput,
-  ComputeAlgorithm,
-  ComputeAsset,
-  ComputeEnvironment,
-  ProviderInitialize
-} from '../@types'
-import { DownloadResponse } from '../@types/DownloadResponse'
 export interface HttpCallback {
   (httpMethod: string, url: string, body: string, header: any): Promise<any>
 }
@@ -21,15 +10,32 @@ export interface UserCustomParameters {
   [key: string]: any
 }
 export declare class Provider {
+  /**
+   * Returns the provider endpoints
+   * @return {Promise<ServiceEndpoint[]>}
+   */
   getEndpoints(providerUri: string): Promise<any>
   getEndpointURL(
     servicesEndpoints: ServiceEndpoint[],
     serviceName: string
   ): ServiceEndpoint
+  /**
+   * Returns the service endpoints that exist in provider.
+   * @param {any} endpoints
+   * @return {Promise<ServiceEndpoint[]>}
+   */
   getServiceEndpoints(
     providerEndpoint: string,
     endpoints: any
   ): Promise<ServiceEndpoint[]>
+  /** Encrypt DDO using the Provider's own symmetric key
+   * @param {string} providerUri provider uri address
+   * @param {string} consumerAddress Publisher address
+   * @param {AbortSignal} signal abort signal
+   * @param {string} providerEndpoints Identifier of the asset to be registered in ocean
+   * @param {string} serviceEndpoints document description object (DDO)=
+   * @return {Promise<string>} urlDetails
+   */
   getNonce(
     providerUri: string,
     consumerAddress: string,
@@ -37,96 +43,13 @@ export declare class Provider {
     providerEndpoints?: any,
     serviceEndpoints?: ServiceEndpoint[]
   ): Promise<string>
-  createSignature(
-    web3: Web3,
-    accountId: string,
-    agreementId: string
-  ): Promise<string>
-  createHashSignature(
-    web3: Web3,
-    accountId: string,
-    message: string
-  ): Promise<string>
+  /** Encrypt data using the Provider's own symmetric key
+   * @param {string} data data in json format that needs to be sent , it can either be a DDO or a File array
+   * @param {string} providerUri provider uri address
+   * @param {AbortSignal} signal abort signal
+   * @return {Promise<string>} urlDetails
+   */
   encrypt(data: any, providerUri: string, signal?: AbortSignal): Promise<string>
-  checkDidFiles(
-    did: string,
-    serviceId: number,
-    providerUri: string,
-    signal?: AbortSignal
-  ): Promise<FileMetadata[]>
-  checkFileUrl(
-    url: string,
-    providerUri: string,
-    signal?: AbortSignal
-  ): Promise<FileMetadata[]>
-  getComputeEnvironments(
-    providerUri: string,
-    signal?: AbortSignal
-  ): Promise<ComputeEnvironment[]>
-  initialize(
-    did: string,
-    serviceId: string,
-    fileIndex: number,
-    consumerAddress: string,
-    providerUri: string,
-    signal?: AbortSignal,
-    userCustomParameters?: UserCustomParameters,
-    computeEnv?: string,
-    validUntil?: number
-  ): Promise<ProviderInitialize>
-  getDownloadUrl(
-    did: string,
-    accountId: string,
-    serviceId: string,
-    fileIndex: number,
-    transferTxId: string,
-    providerUri: string,
-    web3: Web3,
-    userCustomParameters?: UserCustomParameters
-  ): Promise<any>
-  computeStart(
-    providerUri: string,
-    web3: Web3,
-    consumerAddress: string,
-    computeEnv: string,
-    dataset: ComputeAsset,
-    algorithm: ComputeAlgorithm,
-    signal?: AbortSignal,
-    additionalDatasets?: ComputeAsset[],
-    output?: ComputeOutput
-  ): Promise<ComputeJob | ComputeJob[]>
-  computeStop(
-    did: string,
-    consumerAddress: string,
-    jobId: string,
-    providerUri: string,
-    web3: Web3,
-    signal?: AbortSignal
-  ): Promise<ComputeJob | ComputeJob[]>
-  computeStatus(
-    providerUri: string,
-    signal?: AbortSignal,
-    jobId?: string,
-    did?: string,
-    consumerAddress?: string
-  ): Promise<ComputeJob | ComputeJob[]>
-  computeResult(
-    jobId: string,
-    index: number,
-    accountId: string,
-    providerUri: string,
-    web3: Web3,
-    signal?: AbortSignal
-  ): Promise<DownloadResponse | void>
-  computeDelete(
-    did: string,
-    consumerAddress: string,
-    jobId: string,
-    providerUri: string,
-    web3: Web3,
-    signal?: AbortSignal
-  ): Promise<ComputeJob | ComputeJob[]>
-  isValidProvider(url: string, signal?: AbortSignal): Promise<boolean>
 }
 export declare const V4ProviderInstance: Provider
 export default V4ProviderInstance

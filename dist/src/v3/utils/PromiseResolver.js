@@ -171,10 +171,10 @@ var objectPromiseAll = function (obj) {
       switch (_a.label) {
         case 0:
           keys = Object.keys(obj)
-          return [4, Promise.all(Object.values(obj))]
+          return [4 /*yield*/, Promise.all(Object.values(obj))]
         case 1:
           result = _a.sent()
-          return [2, zipObject(keys, result)]
+          return [2 /*return*/, zipObject(keys, result)]
       }
     })
   })

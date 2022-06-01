@@ -6,8 +6,12 @@ var __importDefault =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 var web3_1 = __importDefault(require('web3'))
-var Web3Provider = (function () {
+var Web3Provider = /** @class */ (function () {
   function Web3Provider() {}
+  /**
+   * Returns Web3 instance.
+   * @return {Web3}
+   */
   Web3Provider.getWeb3 = function (config) {
     if (config === void 0) {
       config = {}

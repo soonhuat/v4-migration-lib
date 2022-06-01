@@ -144,8 +144,17 @@ var Metadata_json_1 = __importDefault(
   require('@oceanprotocol/contracts/artifacts/Metadata.json')
 )
 var utils_1 = require('../utils')
+// Using limited, compress-only version
+// See https://github.com/LZMA-JS/LZMA-JS#but-i-dont-want-to-use-web-workers
 var lzma_c_1 = require('lzma/src/lzma-c')
-var OnChainMetadata = (function () {
+/**
+ * Provides an interface with Metadata Cache.
+ * Metadata Cache provides an off-chain database store for metadata about data assets.
+ */
+var OnChainMetadata = /** @class */ (function () {
+  /**
+   * Instantiate OnChainMetadata Store for on-chain interaction.
+   */
   function OnChainMetadata(
     web3,
     logger,
@@ -177,16 +186,30 @@ var OnChainMetadata = (function () {
     this.logger = logger
     this.metadataCache = metadataCache
   }
+  /**
+   * Compress DDO using xz/lzma2
+   */
   OnChainMetadata.prototype.compressDDO = function (data) {
     return __awaiter(this, void 0, void 0, function () {
       var compressed
       return __generator(this, function (_a) {
+        // see https://github.com/LZMA-JS/LZMA-JS/issues/44
         lzma_c_1.LZMA.disableEndMark = true
         compressed = lzma_c_1.LZMA.compress(data, 9)
-        return [2, compressed]
+        // return this.getHex(compressed)
+        return [2 /*return*/, compressed]
       })
     })
   }
+  /**
+   * Publish a new DDO
+   * @param {String} did
+   * @param {DDO} ddo
+   * @param {String} consumerAccount
+   * @param {Boolean} encrypt If the DDO should be encrypted
+   * @param {Boolean} validate If the DDO should be validated against Aqua prior to publish
+   * @return {Promise<TransactionReceipt>} exchangeId
+   */
   OnChainMetadata.prototype.publish = function (
     did,
     ddo,
@@ -205,8 +228,8 @@ var OnChainMetadata = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!validate) return [3, 2]
-            return [4, this.metadataCache.validateMetadata(ddo)]
+            if (!validate) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.metadataCache.validateMetadata(ddo)]
           case 1:
             valid = _a.sent()
             if (!valid.valid) {
@@ -214,17 +237,26 @@ var OnChainMetadata = (function () {
             }
             _a.label = 2
           case 2:
-            return [4, this.prepareRawData(ddo, encrypt)]
+            return [4 /*yield*/, this.prepareRawData(ddo, encrypt)]
           case 3:
             rawData = _a.sent()
             if (!rawData) {
               throw new Error('Could not prepare raw data for publish')
-            } else return [2, this.publishRaw((0, utils_1.didZeroX)(did), rawData.flags, rawData.data, consumerAccount)]
-            return [2]
+            } else return [2 /*return*/, this.publishRaw((0, utils_1.didZeroX)(did), rawData.flags, rawData.data, consumerAccount)]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Update DDO
+   * @param {String} did
+   * @param {DDO} ddo
+   * @param {String} consumerAccount
+   * @param {Boolean} encrypt If the DDO should be encrypted
+   * @param {Boolean} validate If the DDO should be validated against Aqua prior to publish
+   * @return {Promise<TransactionReceipt>} exchangeId
+   */
   OnChainMetadata.prototype.update = function (
     did,
     ddo,
@@ -243,8 +275,8 @@ var OnChainMetadata = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!validate) return [3, 2]
-            return [4, this.metadataCache.validateMetadata(ddo)]
+            if (!validate) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.metadataCache.validateMetadata(ddo)]
           case 1:
             valid = _a.sent()
             if (!valid.valid) {
@@ -252,17 +284,23 @@ var OnChainMetadata = (function () {
             }
             _a.label = 2
           case 2:
-            return [4, this.prepareRawData(ddo, encrypt)]
+            return [4 /*yield*/, this.prepareRawData(ddo, encrypt)]
           case 3:
             rawData = _a.sent()
             if (!rawData) {
               throw new Error('Could not prepare raw data for udate')
-            } else return [2, this.updateRaw((0, utils_1.didZeroX)(did), rawData.flags, rawData.data, consumerAccount)]
-            return [2]
+            } else return [2 /*return*/, this.updateRaw((0, utils_1.didZeroX)(did), rawData.flags, rawData.data, consumerAccount)]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Prepare onchain data
+   * @param {Any} ddo
+   * @param {Boolean} encrypt Should encrypt the ddo
+   * @return {Promise<rawMetadata>} Raw metadata bytes
+   */
   OnChainMetadata.prototype.prepareRawData = function (ddo, encrypt) {
     if (encrypt === void 0) {
       encrypt = false
@@ -274,26 +312,34 @@ var OnChainMetadata = (function () {
           case 0:
             flags = 0
             data = DDO_1.DDO.serialize(ddo)
-            if (!(encrypt === false)) return [3, 2]
-            return [4, this.compressDDO(data)]
+            if (!(encrypt === false)) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.compressDDO(data)]
           case 1:
             data = _a.sent()
             flags = flags | 1
             data = this.getHex(data)
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 2:
-            return [4, this.metadataCache.encryptDDO(data)]
+            return [4 /*yield*/, this.metadataCache.encryptDDO(data)]
           case 3:
             data = _a.sent()
-            if (!data) return [2, null]
+            if (!data) return [2 /*return*/, null]
             flags = flags | 2
             _a.label = 4
           case 4:
-            return [2, { flags: flags, data: data }]
+            return [2 /*return*/, { flags: flags, data: data }]
         }
       })
     })
   }
+  /**
+   * Raw publish ddo
+   * @param {String} did
+   * @param {Any} flags
+   * @param {Any} ddo
+   * @param {String} consumerAccount
+   * @return {Promise<TransactionReceipt>} exchangeId
+   */
   OnChainMetadata.prototype.publishRaw = function (
     did,
     flags,
@@ -308,14 +354,14 @@ var OnChainMetadata = (function () {
           case 0:
             if (!this.DDOContract) {
               this.logger.error('ERROR: Missing DDOContract')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             gasLimitDefault = this.GASLIMIT_DEFAULT
             _d.label = 1
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.DDOContract.methods
                 .create((0, utils_1.didZeroX)(did), flags, data)
                 .estimateGas({ from: consumerAccount }, function (err, estGas) {
@@ -324,11 +370,11 @@ var OnChainMetadata = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_1 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = this.DDOContract.methods.create(
@@ -340,24 +386,38 @@ var OnChainMetadata = (function () {
               from: consumerAccount,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 7:
             e_2 = _d.sent()
             this.logger.error(
               'ERROR: Failed to publish raw DDO : '.concat(e_2.message)
             )
-            return [2, null]
+            return [2 /*return*/, null]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Raw update of a ddo
+   * @param {String} did
+   * @param {Any} flags
+   * @param {Any} ddo
+   * @param {String} consumerAccount
+   * @return {Promise<TransactionReceipt>} exchangeId
+   */
   OnChainMetadata.prototype.updateRaw = function (
     did,
     flags,
@@ -372,14 +432,14 @@ var OnChainMetadata = (function () {
           case 0:
             if (!this.DDOContract) {
               this.logger.error('ERROR: Missing DDOContract')
-              return [2, null]
+              return [2 /*return*/, null]
             }
             gasLimitDefault = this.GASLIMIT_DEFAULT
             _d.label = 1
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.DDOContract.methods
                 .update((0, utils_1.didZeroX)(did), flags, data)
                 .estimateGas({ from: consumerAccount }, function (err, estGas) {
@@ -388,11 +448,11 @@ var OnChainMetadata = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_3 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = this.DDOContract.methods.update(
@@ -404,24 +464,37 @@ var OnChainMetadata = (function () {
               from: consumerAccount,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 7:
             e_4 = _d.sent()
             this.logger.error(
               'ERROR: Failed to update raw DDO : '.concat(e_4.message)
             )
-            return [2, null]
+            return [2 /*return*/, null]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Transfer Ownership of a DDO
+   * @param {String} did
+   * @param {String} newOwner
+   * @param {String} consumerAccount
+   * @return {Promise<TransactionReceipt>} exchangeId
+   */
   OnChainMetadata.prototype.transferOwnership = function (
     did,
     newOwner,
@@ -432,12 +505,12 @@ var OnChainMetadata = (function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            if (!this.DDOContract) return [2, null]
+            if (!this.DDOContract) return [2 /*return*/, null]
             _a.label = 1
           case 1:
             _a.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.DDOContract.methods
                 .transferOwnership((0, utils_1.didZeroX)(did), newOwner)
                 .send({
@@ -446,15 +519,15 @@ var OnChainMetadata = (function () {
             ]
           case 2:
             trxReceipt = _a.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 3:
             e_5 = _a.sent()
             this.logger.error(
               'ERROR: Failed to transfer DDO ownership : '.concat(e_5.message)
             )
-            return [2, null]
+            return [2 /*return*/, null]
           case 4:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

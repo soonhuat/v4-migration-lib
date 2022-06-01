@@ -195,22 +195,22 @@ describe('V3 flow', function () {
             )
             config = new ConfigHelper_1.ConfigHelper().getConfig('development')
             config.web3Provider = web3
-            return [4, Ocean_1.Ocean.getInstance(config)]
+            return [4 /*yield*/, Ocean_1.Ocean.getInstance(config)]
           case 1:
             ocean = _a.sent()
-            return [4, ocean.accounts.list()]
+            return [4 /*yield*/, ocean.accounts.list()]
           case 2:
             owner = _a.sent()[0]
-            return [4, ocean.accounts.list()]
+            return [4 /*yield*/, ocean.accounts.list()]
           case 3:
             alice = _a.sent()[1]
             data = { t: 1, url: config.metadataCacheUri }
             blob = JSON.stringify(data)
-            return [4, contracts.deployContracts(owner.getId())]
+            return [4 /*yield*/, contracts.deployContracts(owner.getId())]
           case 4:
             _a.sent()
             migration = new Migration_1.Migration(web3)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -228,7 +228,7 @@ describe('V3 flow', function () {
               utils_1.LoggerInstance
             )
             return [
-              4,
+              4 /*yield*/,
               datatoken.create(
                 blob,
                 alice.getId(),
@@ -240,7 +240,7 @@ describe('V3 flow', function () {
           case 1:
             tokenAddress = _a.sent()
             ;(0, chai_1.assert)(tokenAddress != null)
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -252,7 +252,7 @@ describe('V3 flow', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did1,
                 '1234567890',
@@ -267,7 +267,7 @@ describe('V3 flow', function () {
             ;(0,
             chai_1.assert)(ddo1.metadata.name === '🖼  DataUnion.app - Image & Annotation Vault  📸')
             ;(0, chai_1.assert)(ddo1.metadata.type === 'dataset')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -279,7 +279,7 @@ describe('V3 flow', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did2,
                 '1234567890',
@@ -294,7 +294,7 @@ describe('V3 flow', function () {
             ;(0,
             chai_1.assert)(ddo2.metadata.name === 'Product Pages of 1’044’709 Products on Amazon.com (processed data)')
             ;(0, chai_1.assert)(ddo2.metadata.type === 'dataset')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -306,7 +306,7 @@ describe('V3 flow', function () {
         switch (_a.label) {
           case 0:
             return [
-              4,
+              4 /*yield*/,
               (0, convertDDO_1.getAndConvertDDO)(
                 did3,
                 '1234567890',
@@ -321,7 +321,7 @@ describe('V3 flow', function () {
             ;(0,
             chai_1.assert)(ddo3.metadata.name === "UK Traffic 2'177'207 Accidents and Vehicles from 2005 to 2017")
             ;(0, chai_1.assert)(ddo3.metadata.type === 'dataset')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -349,7 +349,7 @@ describe('V3 flow', function () {
             ]
           }
         }
-        return [2]
+        return [2 /*return*/]
       })
     })
   })
@@ -359,11 +359,11 @@ describe('V3 flow', function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, ocean.metadataCache.validateMetadata(asset)]
+            return [4 /*yield*/, ocean.metadataCache.validateMetadata(asset)]
           case 1:
             valid = _a.sent()
             ;(0, chai_1.assert)(valid.valid, 'This metadata should be valid')
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -374,12 +374,12 @@ describe('V3 flow', function () {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            price = '10'
+            price = '10' // in datatoken
             publishedDate =
               new Date(Date.now()).toISOString().split('.')[0] + 'Z'
             timeout = 0
             return [
-              4,
+              4 /*yield*/,
               ocean.assets.createAccessServiceAttributes(
                 alice,
                 price,
@@ -394,16 +394,16 @@ describe('V3 flow', function () {
           case 2:
             _a.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               ocean.assets.create(asset, alice, [service1], tokenAddress)
             ]
           case 3:
             ddo = _a.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             error_1 = _a.sent()
             console.log('error', error_1)
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             ;(0, chai_1.assert)(ddo.dataToken === tokenAddress)
             did = ddo.id
@@ -411,22 +411,24 @@ describe('V3 flow', function () {
           case 6:
             _a.trys.push([6, 8, , 9])
             return [
-              4,
+              4 /*yield*/,
               ocean.onChainMetadata.publish(ddo.id, ddo, alice.getId())
             ]
           case 7:
             storeTx = _a.sent()
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 8:
             error_2 = _a.sent()
             console.log('error', error_2)
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 9:
             ;(0, chai_1.assert)(storeTx)
-            return [4, ocean.metadataCache.waitForAqua(ddo.id)]
+            // wait for all this assets to be published
+            return [4 /*yield*/, ocean.metadataCache.waitForAqua(ddo.id)]
           case 10:
+            // wait for all this assets to be published
             _a.sent()
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -438,21 +440,21 @@ describe('V3 flow', function () {
         switch (_a.label) {
           case 0:
             _a.trys.push([0, 2, , 3])
-            return [4, ocean.provider.getAssetURL(alice, did, 1)]
+            return [4 /*yield*/, ocean.provider.getAssetURL(alice, did, 1)]
           case 1:
             urlResponse = _a.sent()
             ;(0,
             chai_1.assert)(urlResponse !== undefined, 'Failed to get asset url')
             ;(0,
             chai_1.assert)(urlResponse === url, 'Wrong or invalid url returned')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             error_3 = _a.sent()
             ;(0,
             chai_1.assert)(error_3 === null, 'Order should not throw error')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -464,21 +466,21 @@ describe('V3 flow', function () {
         switch (_a.label) {
           case 0:
             _a.trys.push([0, 2, , 3])
-            return [4, migration.getAssetURL(alice, did, network)]
+            return [4 /*yield*/, migration.getAssetURL(alice, did, network)]
           case 1:
             urlResponse = _a.sent()
             ;(0,
             chai_1.assert)(urlResponse !== undefined, 'Failed to get asset url')
             ;(0,
             chai_1.assert)(urlResponse === url, 'Wrong or invalid url returned')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             error_4 = _a.sent()
             ;(0,
             chai_1.assert)(error_4 === null, 'Order should not throw error')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
@@ -491,21 +493,21 @@ describe('V3 flow', function () {
           case 0:
             _a.trys.push([0, 2, , 3])
             return [
-              4,
+              4 /*yield*/,
               migration.getEncryptedFiles(v4ProviderUrl, alice, did, network)
             ]
           case 1:
             encryptedFiles_1 = _a.sent()
             ;(0,
             chai_1.assert)(encryptedFiles_1 !== undefined, 'Failed to get asset url')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             error_5 = _a.sent()
             ;(0,
             chai_1.assert)(error_5 === null, 'Order should not throw error')
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })

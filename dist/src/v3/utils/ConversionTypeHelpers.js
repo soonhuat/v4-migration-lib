@@ -10,6 +10,7 @@ exports.didNoZeroX =
   exports.zeroX =
     void 0
 var Logger_1 = require('./Logger')
+// Ox transformer
 var zeroX = function (input) {
   return zeroXTransformer(input, true)
 }
@@ -28,6 +29,7 @@ function zeroXTransformer(input, zeroOutput) {
   return (zeroOutput && valid ? '0x' : '') + output
 }
 exports.zeroXTransformer = zeroXTransformer
+// did:op: transformer
 var didPrefixed = function (input) {
   return didTransformer(input, true)
 }
@@ -50,6 +52,7 @@ function didTransformer(input, prefixOutput) {
   return (prefixOutput && valid ? 'did:op:' : '') + output
 }
 exports.didTransformer = didTransformer
+// 0x + did:op: transformer
 var didZeroX = function (input) {
   return (0, exports.zeroX)(didTransformer(input, false))
 }
@@ -58,6 +61,7 @@ var didNoZeroX = function (input) {
   return (0, exports.noZeroX)(didTransformer(input, false))
 }
 exports.didNoZeroX = didNoZeroX
+// Shared functions
 function inputMatch(input, regexp, conversorName) {
   if (typeof input !== 'string') {
     Logger_1.LoggerInstance.debug('Not input string:')

@@ -164,7 +164,7 @@ function getDDO(did, metadataCacheUri) {
         case 0:
           _a.trys.push([0, 2, , 3])
           return [
-            4,
+            4 /*yield*/,
             axios_1.default.get(
               ''
                 .concat(metadataCacheUri, '/api/v1/aquarius/assets/ddo/')
@@ -173,9 +173,10 @@ function getDDO(did, metadataCacheUri) {
           ]
         case 1:
           response = _a.sent()
-          if (!response || response.status !== 200 || !response.data) return [2]
+          if (!response || response.status !== 200 || !response.data)
+            return [2 /*return*/]
           data = __assign({}, response.data)
-          return [2, new v3_1.DDO(data)]
+          return [2 /*return*/, new v3_1.DDO(data)]
         case 2:
           error_1 = _a.sent()
           if (axios_1.default.isCancel(error_1)) {
@@ -183,9 +184,9 @@ function getDDO(did, metadataCacheUri) {
           } else {
             v3_1.Logger.error(error_1.message)
           }
-          return [3, 3]
+          return [3 /*break*/, 3]
         case 3:
-          return [2]
+          return [2 /*return*/]
       }
     })
   })

@@ -170,21 +170,32 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.Accounts = void 0
 var Account_1 = __importDefault(require('./Account'))
 var Instantiable_abstract_1 = require('../Instantiable.abstract')
-var Accounts = (function (_super) {
+/**
+ * Account submodule of Ocean Protocol.
+ */
+var Accounts = /** @class */ (function (_super) {
   __extends(Accounts, _super)
   function Accounts() {
     return (_super !== null && _super.apply(this, arguments)) || this
   }
+  /**
+   * Returns the instance of OceanAccounts.
+   * @return {Promise<OceanAccounts>}
+   */
   Accounts.getInstance = function (config) {
     return __awaiter(this, void 0, void 0, function () {
       var instance
       return __generator(this, function (_a) {
         instance = new Accounts()
         instance.setInstanceConfig(config)
-        return [2, instance]
+        return [2 /*return*/, instance]
       })
     })
   }
+  /**
+   * Returns the list of accounts.
+   * @return {Promise<Account[]>}
+   */
   Accounts.prototype.list = function () {
     return __awaiter(this, void 0, void 0, function () {
       var ethAccounts, accountPromises
@@ -192,23 +203,39 @@ var Accounts = (function (_super) {
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            return [4, this.web3.eth.getAccounts()]
+            return [4 /*yield*/, this.web3.eth.getAccounts()]
           case 1:
             ethAccounts = _a.sent()
             accountPromises = ethAccounts.map(function (address) {
               return new Account_1.default(address, _this.instanceConfig)
             })
-            return [2, Promise.all(accountPromises)]
+            return [2 /*return*/, Promise.all(accountPromises)]
         }
       })
     })
   }
+  /**
+   * Return account balance for a given ERC20 token
+   * @param  {String}          TokenAddress .
+   * @param  {Account}          account Account instance.
+   * @return {Promise<String>}         Token balance.
+   */
   Accounts.prototype.getTokenBalance = function (TokenAddress, account) {
     return account.getTokenBalance(TokenAddress)
   }
+  /**
+   * Return account balance for a Ocean Tokens
+   * @param  {Account}          account Account instance.
+   * @return {Promise<String>}         Ocean Token balance.
+   */
   Accounts.prototype.getOceanBalance = function (account) {
     return account.getOceanBalance()
   }
+  /**
+   * Return account balance in ETH
+   * @param  {Account}          account Account instance.
+   * @return {Promise<String>}         Ether  balance.
+   */
   Accounts.prototype.getEtherBalance = function (account) {
     return account.getEtherBalance()
   }

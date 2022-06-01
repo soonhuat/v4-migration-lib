@@ -149,9 +149,11 @@ var utils_1 = require('../utils')
 var decimal_js_1 = __importDefault(require('decimal.js'))
 var DispenserMakeMinterProgressStep
 ;(function (DispenserMakeMinterProgressStep) {
+  // eslint-disable-next-line no-unused-vars
   DispenserMakeMinterProgressStep[
     (DispenserMakeMinterProgressStep['MakeDispenserMinter'] = 0)
   ] = 'MakeDispenserMinter'
+  // eslint-disable-next-line no-unused-vars
   DispenserMakeMinterProgressStep[
     (DispenserMakeMinterProgressStep['AcceptingNewMinter'] = 1)
   ] = 'AcceptingNewMinter'
@@ -162,9 +164,11 @@ var DispenserMakeMinterProgressStep
 )
 var DispenserCancelMinterProgressStep
 ;(function (DispenserCancelMinterProgressStep) {
+  // eslint-disable-next-line no-unused-vars
   DispenserCancelMinterProgressStep[
     (DispenserCancelMinterProgressStep['MakeOwnerMinter'] = 0)
   ] = 'MakeOwnerMinter'
+  // eslint-disable-next-line no-unused-vars
   DispenserCancelMinterProgressStep[
     (DispenserCancelMinterProgressStep['AcceptingNewMinter'] = 1)
   ] = 'AcceptingNewMinter'
@@ -173,7 +177,13 @@ var DispenserCancelMinterProgressStep
     exports.DispenserCancelMinterProgressStep ||
     (exports.DispenserCancelMinterProgressStep = {}))
 )
-var OceanDispenser = (function () {
+var OceanDispenser = /** @class */ (function () {
+  /**
+   * Instantiate Dispenser
+   * @param {any} web3
+   * @param {String} dispenserAddress
+   * @param {any} dispenserABI
+   */
   function OceanDispenser(
     web3,
     logger,
@@ -203,6 +213,11 @@ var OceanDispenser = (function () {
       )
     this.logger = logger
   }
+  /**
+   * Get dispenser status for a datatoken
+   * @param {String} dataTokenAddress
+   * @return {Promise<FixedPricedExchange>} Exchange details
+   */
   OceanDispenser.prototype.status = function (dataTokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var result, e_1
@@ -210,25 +225,36 @@ var OceanDispenser = (function () {
         switch (_a.label) {
           case 0:
             _a.trys.push([0, 2, , 3])
-            return [4, this.contract.methods.status(dataTokenAddress).call()]
+            return [
+              4 /*yield*/,
+              this.contract.methods.status(dataTokenAddress).call()
+            ]
           case 1:
             result = _a.sent()
             result.maxTokens = this.web3.utils.fromWei(result.maxTokens)
             result.maxBalance = this.web3.utils.fromWei(result.maxBalance)
             result.balance = this.web3.utils.fromWei(result.balance)
-            return [2, result]
+            return [2 /*return*/, result]
           case 2:
             e_1 = _a.sent()
             this.logger.warn(
               'No dispenser available for data token: '.concat(dataTokenAddress)
             )
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 3:
-            return [2, null]
+            return [2 /*return*/, null]
         }
       })
     })
   }
+  /**
+   * Activates a new dispener.
+   * @param {String} dataToken
+   * @param {Number} maxTokens max amount of tokens to dispense
+   * @param {Number} maxBalance max balance of user. If user balance is >, then dispense will be rejected
+   * @param {String} address User address (must be owner of the dataToken)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.activate = function (
     dataToken,
     maxTokens,
@@ -246,7 +272,7 @@ var OceanDispenser = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .activate(
                   dataToken,
@@ -259,11 +285,11 @@ var OceanDispenser = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_2 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             trxReceipt = null
             _d.label = 5
@@ -278,24 +304,36 @@ var OceanDispenser = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 8:
             e_3 = _d.sent()
             this.logger.error(
               'ERROR: Failed to activate dispenser: '.concat(e_3.message)
             )
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 9:
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Deactivates a dispener.
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.deactivate = function (dataToken, address) {
     return __awaiter(this, void 0, void 0, function () {
       var estGas, gasLimitDefault, e_4, trxReceipt, _a, _b, e_5
@@ -308,7 +346,7 @@ var OceanDispenser = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .deactivate(dataToken)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -317,11 +355,11 @@ var OceanDispenser = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_4 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             trxReceipt = null
             _d.label = 5
@@ -332,24 +370,36 @@ var OceanDispenser = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 8:
             e_5 = _d.sent()
             this.logger.error(
               'ERROR: Failed to deactivate dispenser: '.concat(e_5.message)
             )
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 9:
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Make the dispenser minter of the datatoken
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the datatoken)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.makeMinter = function (dataToken, address) {
     var _this = this
     return new utils_1.SubscribablePromise(function (observer) {
@@ -362,7 +412,7 @@ var OceanDispenser = (function () {
               observer.next(DispenserMakeMinterProgressStep.MakeDispenserMinter)
               gasLimitDefault = this.GASLIMIT_DEFAULT
               return [
-                4,
+                4 /*yield*/,
                 this.datatokens.proposeMinter(
                   dataToken,
                   this.dispenserAddress,
@@ -372,14 +422,14 @@ var OceanDispenser = (function () {
             case 1:
               minterTx = _d.sent()
               if (!minterTx) {
-                return [2, null]
+                return [2 /*return*/, null]
               }
               observer.next(DispenserMakeMinterProgressStep.AcceptingNewMinter)
               _d.label = 2
             case 2:
               _d.trys.push([2, 4, , 5])
               return [
-                4,
+                4 /*yield*/,
                 this.contract.methods
                   .acceptMinter(dataToken)
                   .estimateGas({ from: address }, function (err, estGas) {
@@ -388,11 +438,11 @@ var OceanDispenser = (function () {
               ]
             case 3:
               estGas = _d.sent()
-              return [3, 5]
+              return [3 /*break*/, 5]
             case 4:
               e_6 = _d.sent()
               estGas = gasLimitDefault
-              return [3, 5]
+              return [3 /*break*/, 5]
             case 5:
               trxReceipt = null
               _d.label = 6
@@ -403,25 +453,37 @@ var OceanDispenser = (function () {
                 from: address,
                 gas: estGas + 1
               }
-              return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+              return [
+                4 /*yield*/,
+                (0, utils_1.getFairGasPrice)(this.web3, this.config)
+              ]
             case 7:
-              return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+              return [
+                4 /*yield*/,
+                _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+              ]
             case 8:
               trxReceipt = _d.sent()
-              return [3, 10]
+              return [3 /*break*/, 10]
             case 9:
               e_7 = _d.sent()
               this.logger.error(
                 'ERROR: Failed to accept minter role: '.concat(e_7.message)
               )
-              return [3, 10]
+              return [3 /*break*/, 10]
             case 10:
-              return [2, trxReceipt]
+              return [2 /*return*/, trxReceipt]
           }
         })
       })
     })
   }
+  /**
+   * Cancel minter role of dispenser and make the owner minter of the datatoken
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.cancelMinter = function (dataToken, address) {
     var _this = this
     return new utils_1.SubscribablePromise(function (observer) {
@@ -437,7 +499,7 @@ var OceanDispenser = (function () {
             case 1:
               _d.trys.push([1, 3, , 4])
               return [
-                4,
+                4 /*yield*/,
                 this.contract.methods
                   .removeMinter(dataToken)
                   .estimateGas({ from: address }, function (err, estGas) {
@@ -446,11 +508,11 @@ var OceanDispenser = (function () {
               ]
             case 2:
               estGas = _d.sent()
-              return [3, 4]
+              return [3 /*break*/, 4]
             case 3:
               e_8 = _d.sent()
               estGas = gasLimitDefault
-              return [3, 4]
+              return [3 /*break*/, 4]
             case 4:
               trxReceipt = null
               _d.label = 5
@@ -461,34 +523,50 @@ var OceanDispenser = (function () {
                 from: address,
                 gas: estGas + 1
               }
-              return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+              return [
+                4 /*yield*/,
+                (0, utils_1.getFairGasPrice)(this.web3, this.config)
+              ]
             case 6:
-              return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+              return [
+                4 /*yield*/,
+                _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+              ]
             case 7:
               trxReceipt = _d.sent()
-              return [3, 9]
+              return [3 /*break*/, 9]
             case 8:
               e_9 = _d.sent()
               this.logger.error(
                 'ERROR: Failed to remove minter role: '.concat(e_9.message)
               )
-              return [3, 9]
+              return [3 /*break*/, 9]
             case 9:
               if (!trxReceipt) {
-                return [2, null]
+                return [2 /*return*/, null]
               }
               observer.next(
                 DispenserCancelMinterProgressStep.AcceptingNewMinter
               )
-              return [4, this.datatokens.approveMinter(dataToken, address)]
+              return [
+                4 /*yield*/,
+                this.datatokens.approveMinter(dataToken, address)
+              ]
             case 10:
               minterTx = _d.sent()
-              return [2, minterTx]
+              return [2 /*return*/, minterTx]
           }
         })
       })
     })
   }
+  /**
+   * Request tokens from dispenser
+   * @param {String} dataToken
+   * @param {String} amount
+   * @param {String} address User address
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.dispense = function (dataToken, address, amount) {
     if (amount === void 0) {
       amount = '1'
@@ -504,7 +582,7 @@ var OceanDispenser = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .dispense(dataToken, this.web3.utils.toWei(amount))
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -513,11 +591,11 @@ var OceanDispenser = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_10 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             trxReceipt = null
             _d.label = 5
@@ -531,24 +609,36 @@ var OceanDispenser = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 8:
             e_11 = _d.sent()
             this.logger.error(
               'ERROR: Failed to dispense tokens: '.concat(e_11.message)
             )
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 9:
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Withdraw all tokens from the dispenser (if any)
+   * @param {String} dataToken
+   * @param {String} address User address (must be owner of the dispenser)
+   * @return {Promise<TransactionReceipt>} TransactionReceipt
+   */
   OceanDispenser.prototype.ownerWithdraw = function (dataToken, address) {
     return __awaiter(this, void 0, void 0, function () {
       var estGas, gasLimitDefault, e_12, trxReceipt, _a, _b, e_13
@@ -561,7 +651,7 @@ var OceanDispenser = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               this.contract.methods
                 .ownerWithdraw(dataToken)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -570,11 +660,11 @@ var OceanDispenser = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_12 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             trxReceipt = null
             _d.label = 5
@@ -585,24 +675,36 @@ var OceanDispenser = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 8:
             e_13 = _d.sent()
             this.logger.error(
               'ERROR: Failed to withdraw tokens: '.concat(e_13.message)
             )
-            return [3, 9]
+            return [3 /*break*/, 9]
           case 9:
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Check if tokens can be dispensed
+   * @param {String} dataToken
+   * @param {String} address User address that will receive datatokens
+   * @return {Promise<Boolean>}
+   */
   OceanDispenser.prototype.isDispensable = function (
     dataToken,
     address,
@@ -616,33 +718,53 @@ var OceanDispenser = (function () {
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            return [4, this.status(dataToken)]
+            return [4 /*yield*/, this.status(dataToken)]
           case 1:
             status = _b.sent()
-            if (!status) return [2, false]
-            if (status.active === false) return [2, false]
+            if (!status)
+              return [
+                2 /*return*/,
+                false
+                // check active
+              ]
+            // check active
+            if (status.active === false)
+              return [
+                2 /*return*/,
+                false
+                // check maxBalance
+              ]
             _a = decimal_js_1.default.bind
-            return [4, this.datatokens.balance(dataToken, address)]
+            return [4 /*yield*/, this.datatokens.balance(dataToken, address)]
           case 2:
             userBalance = new (_a.apply(decimal_js_1.default, [
               void 0,
               _b.sent()
             ]))()
             if (userBalance.greaterThanOrEqualTo(status.maxBalance))
-              return [2, false]
+              return [
+                2 /*return*/,
+                false
+                // check maxAmount
+              ]
+            // check maxAmount
             if (
               new decimal_js_1.default(String(amount)).greaterThan(
                 status.maxTokens
               )
             )
-              return [2, false]
+              return [
+                2 /*return*/,
+                false
+                // check dispenser balance
+              ]
             contractBalance = new decimal_js_1.default(status.balance)
             if (
               contractBalance.greaterThanOrEqualTo(amount) ||
               status.isTrueMinter === true
             )
-              return [2, true]
-            return [2, false]
+              return [2 /*return*/, true]
+            return [2 /*return*/, false]
         }
       })
     })

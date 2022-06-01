@@ -19,7 +19,14 @@ export interface OceanPlatformVersions {
     ok: boolean
   }
 }
+/**
+ * Versions submodule of Ocean Protocol.
+ */
 export declare class Versions extends Instantiable {
+  /**
+   * Returns the instance of Ocean Stack Versions.
+   * @return {Promise<Versions>}
+   */
   static getInstance(config: InstantiableConfig): Promise<Versions>
   get(): Promise<OceanPlatformVersions>
 }

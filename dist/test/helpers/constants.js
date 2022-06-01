@@ -1,4 +1,7 @@
 var constants = {
+  // network: {
+  //     nodeUrl: `http://localhost:${process.env.NETWORK_RPC_PORT || '8545'}`
+  // },
   did: [
     '0x0000000000000000000000000000000000000000000000000000000001111111',
     '0x319d158c3a5d81d15b0160cf8929916089218bdb4aa78c3ecd16633afd44b8ae'

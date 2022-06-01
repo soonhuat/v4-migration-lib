@@ -134,7 +134,8 @@ var __generator =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.ContractEvent = void 0
-var ContractEvent = (function () {
+var ContractEvent = /** @class */ (function () {
+  // eslint-disable-next-line no-useless-constructor
   function ContractEvent(eventEmitter, contract, eventName, filter) {
     this.eventEmitter = eventEmitter
     this.contract = contract
@@ -150,7 +151,7 @@ var ContractEvent = (function () {
           switch (_a.label) {
             case 0:
               return [
-                4,
+                4 /*yield*/,
                 this.contract.getEventData(this.eventName, {
                   filter: this.filter,
                   fromBlock: blockNumber,
@@ -162,7 +163,7 @@ var ContractEvent = (function () {
               if (events.length) {
                 callback(events)
               }
-              return [2]
+              return [2 /*return*/]
           }
         })
       })

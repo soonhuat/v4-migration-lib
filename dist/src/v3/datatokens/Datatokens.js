@@ -149,7 +149,17 @@ var utils_1 = require('../utils')
 var bignumber_js_1 = __importDefault(require('bignumber.js'))
 var decimal_js_1 = __importDefault(require('decimal.js'))
 var Datatokens_1 = require('../utils/Datatokens')
-var DataTokens = (function () {
+/**
+ * Provides an interface to DataTokens
+ */
+var DataTokens = /** @class */ (function () {
+  /**
+   * Instantiate DataTokens (independently of Ocean).
+   * @param {String} factoryAddress
+   * @param {AbiItem | AbiItem[]} factoryABI
+   * @param {AbiItem | AbiItem[]} datatokensABI
+   * @param {Web3} web3
+   */
   function DataTokens(
     factoryAddress,
     factoryABI,
@@ -167,12 +177,25 @@ var DataTokens = (function () {
     this.config = config
     this.startBlock = (config && config.startBlock) || 0
   }
+  /**
+   * Generate new datatoken name & symbol from a word list
+   * @return {<{ name: String; symbol: String }>} datatoken name & symbol. Produces e.g. "Endemic Jellyfish Token" & "ENDJEL-45"
+   */
   DataTokens.prototype.generateDtName = function (wordList) {
     var _a = (0, Datatokens_1.generateDatatokenName)(wordList),
       name = _a.name,
       symbol = _a.symbol
     return { name: name, symbol: symbol }
   }
+  /**
+   * Create new datatoken
+   * @param {String} metadataCacheUri
+   * @param {String} address
+   * @param {String} cap Maximum cap (Number) - will be converted to wei
+   * @param {String} name Token name
+   * @param {String} symbol Token symbol
+   * @return {Promise<string>} datatoken address
+   */
   DataTokens.prototype.create = function (
     metadataCacheUri,
     address,
@@ -194,6 +217,7 @@ var DataTokens = (function () {
         switch (_e.label) {
           case 0:
             if (!cap) cap = '1000'
+            // Generate name & symbol if not present
             if (!name || !symbol) {
               ;(_c = this.generateDtName()),
                 (name = _c.name),
@@ -210,7 +234,7 @@ var DataTokens = (function () {
           case 1:
             _e.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               factory.methods
                 .createToken(
                   metadataCacheUri,
@@ -224,11 +248,11 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _e.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_1 = _e.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _b = (_a = factory.methods.createToken(
               metadataCacheUri,
@@ -240,9 +264,15 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_d.gasPrice = _e.sent()), _d)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_d.gasPrice = _e.sent()), _d)])
+            ]
           case 6:
             trxReceipt = _e.sent()
             tokenAddress = null
@@ -253,11 +283,19 @@ var DataTokens = (function () {
                 'ERROR: Failed to create datatoken : '.concat(e.message)
               )
             }
-            return [2, tokenAddress]
+            return [2 /*return*/, tokenAddress]
         }
       })
     })
   }
+  /**
+   * Approve
+   * @param {String} dataTokenAddress
+   * @param {String} toAddress
+   * @param {string} amount Number of datatokens, as number. Will be converted to wei
+   * @param {String} address
+   * @return {Promise<TransactionReceipt>} transactionId
+   */
   DataTokens.prototype.approve = function (
     dataTokenAddress,
     spender,
@@ -281,7 +319,7 @@ var DataTokens = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .approve(spender, this.web3.utils.toWei(amount))
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -290,11 +328,11 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_2 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _b = (_a = datatoken.methods.approve(
               spender,
@@ -304,16 +342,30 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Mint
+   * @param {String} dataTokenAddress
+   * @param {String} address
+   * @param {String} amount Number of datatokens, as number. Will be converted to wei
+   * @param {String} toAddress   - only if toAddress is different from the minter
+   * @return {Promise<TransactionReceipt>} transactionId
+   */
   DataTokens.prototype.mint = function (
     dataTokenAddress,
     address,
@@ -339,18 +391,18 @@ var DataTokens = (function () {
               }),
               this.config
             )
-            return [4, this.getCap(dataTokenAddress)]
+            return [4 /*yield*/, this.getCap(dataTokenAddress)]
           case 1:
             capAvailble = _d.sent()
             if (!new decimal_js_1.default(capAvailble).gte(amount))
-              return [3, 8]
+              return [3 /*break*/, 8]
             gasLimitDefault_1 = this.GASLIMIT_DEFAULT
             estGas = void 0
             _d.label = 2
           case 2:
             _d.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .mint(toAddress || address, this.web3.utils.toWei(amount))
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -359,11 +411,11 @@ var DataTokens = (function () {
             ]
           case 3:
             estGas = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_3 = _d.sent()
             estGas = gasLimitDefault_1
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             _b = (_a = datatoken.methods.mint(
               toAddress || address,
@@ -373,18 +425,32 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 8:
             throw new Error('Mint amount exceeds cap available')
         }
       })
     })
   }
+  /**
+   * Transfer as number from address to toAddress
+   * @param {String} dataTokenAddress
+   * @param {String} toAddress
+   * @param {String} amount Number of datatokens, as number. Will be converted to wei
+   * @param {String} address
+   * @return {Promise<TransactionReceipt>} transactionId
+   */
   DataTokens.prototype.transfer = function (
     dataTokenAddress,
     toAddress,
@@ -394,12 +460,20 @@ var DataTokens = (function () {
     return __awaiter(this, void 0, void 0, function () {
       return __generator(this, function (_a) {
         return [
-          2,
+          2 /*return*/,
           this.transferToken(dataTokenAddress, toAddress, amount, address)
         ]
       })
     })
   }
+  /**
+   * Transfer as number from address to toAddress
+   * @param {String} dataTokenAddress
+   * @param {String} toAddress
+   * @param {String} amount Number of datatokens, as number. Will be converted to wei
+   * @param {String} address
+   * @return {Promise<TransactionReceipt>} transactionId
+   */
   DataTokens.prototype.transferToken = function (
     dataTokenAddress,
     toAddress,
@@ -411,12 +485,20 @@ var DataTokens = (function () {
       return __generator(this, function (_a) {
         weiAmount = this.web3.utils.toWei(amount)
         return [
-          2,
+          2 /*return*/,
           this.transferWei(dataTokenAddress, toAddress, weiAmount, address)
         ]
       })
     })
   }
+  /**
+   * Transfer in wei from address to toAddress
+   * @param {String} dataTokenAddress
+   * @param {String} toAddress
+   * @param {String} amount Number of datatokens, as number. Expressed as wei
+   * @param {String} address
+   * @return {Promise<TransactionReceipt>} transactionId
+   */
   DataTokens.prototype.transferWei = function (
     dataTokenAddress,
     toAddress,
@@ -440,7 +522,7 @@ var DataTokens = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .transfer(toAddress, amount)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -449,27 +531,41 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_4 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _b = (_a = datatoken.methods.transfer(toAddress, amount)).send
             _c = {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Transfer from fromAddress to address  (needs an Approve operation before)
+   * @param {String} dataTokenAddress
+   * @param {String} fromAddress
+   * @param {String} amount Number of datatokens, as number. Will be converted to wei
+   * @param {String} address
+   * @return {Promise<string>} transactionId
+   */
   DataTokens.prototype.transferFrom = function (
     dataTokenAddress,
     fromAddress,
@@ -493,7 +589,7 @@ var DataTokens = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .transferFrom(
                   fromAddress,
@@ -506,11 +602,11 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_5 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _b = (_a = datatoken.methods.transferFrom(
               fromAddress,
@@ -521,16 +617,28 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /**
+   * Get Address Balance for datatoken
+   * @param {String} dataTokenAddress
+   * @param {String} address
+   * @return {Promise<String>} balance  Number of datatokens. Will be converted from wei
+   */
   DataTokens.prototype.balance = function (dataTokenAddress, address) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, balance
@@ -543,14 +651,20 @@ var DataTokens = (function () {
               }),
               this.config
             )
-            return [4, datatoken.methods.balanceOf(address).call()]
+            return [4 /*yield*/, datatoken.methods.balanceOf(address).call()]
           case 1:
             balance = _a.sent()
-            return [2, this.web3.utils.fromWei(balance)]
+            return [2 /*return*/, this.web3.utils.fromWei(balance)]
         }
       })
     })
   }
+  /**
+   * Get Alloance
+   * @param {String } dataTokenAddress
+   * @param {String} owner
+   * @param {String} spender
+   */
   DataTokens.prototype.allowance = function (dataTokenAddress, owner, spender) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -563,14 +677,21 @@ var DataTokens = (function () {
               }),
               this.config
             )
-            return [4, datatoken.methods.allowance(owner, spender).call()]
+            return [
+              4 /*yield*/,
+              datatoken.methods.allowance(owner, spender).call()
+            ]
           case 1:
             trxReceipt = _a.sent()
-            return [2, this.web3.utils.fromWei(trxReceipt)]
+            return [2 /*return*/, this.web3.utils.fromWei(trxReceipt)]
         }
       })
     })
   }
+  /** Get Blob
+   * @param {String} dataTokenAddress
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.getBlob = function (dataTokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -581,14 +702,18 @@ var DataTokens = (function () {
               new this.web3.eth.Contract(this.datatokensABI, dataTokenAddress),
               this.config
             )
-            return [4, datatoken.methods.blob().call()]
+            return [4 /*yield*/, datatoken.methods.blob().call()]
           case 1:
             trxReceipt = _a.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /** Get Name
+   * @param {String} dataTokenAddress
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.getName = function (dataTokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -599,14 +724,18 @@ var DataTokens = (function () {
               new this.web3.eth.Contract(this.datatokensABI, dataTokenAddress),
               this.config
             )
-            return [4, datatoken.methods.name().call()]
+            return [4 /*yield*/, datatoken.methods.name().call()]
           case 1:
             trxReceipt = _a.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /** Get Symbol
+   * @param {String} dataTokenAddress
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.getSymbol = function (dataTokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -617,14 +746,18 @@ var DataTokens = (function () {
               new this.web3.eth.Contract(this.datatokensABI, dataTokenAddress),
               this.config
             )
-            return [4, datatoken.methods.symbol().call()]
+            return [4 /*yield*/, datatoken.methods.symbol().call()]
           case 1:
             trxReceipt = _a.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })
   }
+  /** Get Cap
+   * @param {String} dataTokenAddress
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.getCap = function (dataTokenAddress) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -635,20 +768,37 @@ var DataTokens = (function () {
               new this.web3.eth.Contract(this.datatokensABI, dataTokenAddress),
               this.config
             )
-            return [4, datatoken.methods.cap().call()]
+            return [4 /*yield*/, datatoken.methods.cap().call()]
           case 1:
             trxReceipt = _a.sent()
-            return [2, this.web3.utils.fromWei(trxReceipt)]
+            return [2 /*return*/, this.web3.utils.fromWei(trxReceipt)]
         }
       })
     })
   }
+  /** Convert to wei
+   * @param {String} amount
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.toWei = function (amount) {
     return this.web3.utils.toWei(amount)
   }
+  /** Convert from wei
+   * @param {String} amount
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.fromWei = function (amount) {
     return this.web3.utils.fromWei(amount)
   }
+  /** Start Order
+   * @param {String} dataTokenAddress
+   * @param {String} consumer consumer Address
+   * @param {String} amount
+   * @param {Number} serviceId
+   * @param {String} mpFeeAddress
+   * @param {String} address consumer Address
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.startOrder = function (
     dataTokenAddress,
     consumer,
@@ -680,7 +830,7 @@ var DataTokens = (function () {
           case 2:
             _d.trys.push([2, 4, , 5])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .startOrder(
                   consumer,
@@ -694,11 +844,11 @@ var DataTokens = (function () {
             ]
           case 3:
             estGas = _d.sent()
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 4:
             e_6 = _d.sent()
             estGas = gasLimitDefault_2
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 5:
             _b = (_a = datatoken.methods.startOrder(
               consumer,
@@ -710,12 +860,18 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 6:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 7:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 8:
             e_7 = _d.sent()
             this.logger.error(
@@ -723,11 +879,21 @@ var DataTokens = (function () {
             )
             throw new Error('Failed to start order: '.concat(e_7.message))
           case 9:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /** Search and return txid for a previous valid order with the same params
+   * @param {String} dataTokenAddress
+   * @param {String} amount
+   * @param {String} did
+   * @param {Number} serviceId
+   * @param {Number} timeout service timeout
+   * @param {String} address consumer Address
+   * @return {Promise<string>} string
+   */
+  // Note that getPreviousValidOrders() only works on Eth (see: https://github.com/oceanprotocol/ocean.js/issues/741)
   DataTokens.prototype.getPreviousValidOrders = function (
     dataTokenAddress,
     amount,
@@ -753,19 +919,19 @@ var DataTokens = (function () {
               }),
               this.config
             )
-            if (!(timeout > 0)) return [3, 2]
-            return [4, this.web3.eth.getBlockNumber()]
+            if (!(timeout > 0)) return [3 /*break*/, 2]
+            return [4 /*yield*/, this.web3.eth.getBlockNumber()]
           case 1:
             lastBlock = _a.sent()
             fromBlock = lastBlock - timeout
             if (fromBlock < this.startBlock) fromBlock = this.startBlock
-            return [3, 3]
+            return [3 /*break*/, 3]
           case 2:
             fromBlock = this.startBlock
             _a.label = 3
           case 3:
             return [
-              4,
+              4 /*yield*/,
               datatoken.getPastEvents('OrderStarted', {
                 filter: { consumer: address },
                 fromBlock: fromBlock,
@@ -777,7 +943,7 @@ var DataTokens = (function () {
             i = 0
             _a.label = 5
           case 5:
-            if (!(i < events.length)) return [3, 8]
+            if (!(i < events.length)) return [3 /*break*/, 8]
             if (
               !(
                 String(events[i].returnValues.amount) ===
@@ -788,9 +954,9 @@ var DataTokens = (function () {
                   address.toLowerCase()
               )
             )
-              return [3, 7]
-            if (timeout === 0) return [2, events[i].transactionHash]
-            return [4, this.web3.eth.getBlock(events[i].blockHash)]
+              return [3 /*break*/, 7]
+            if (timeout === 0) return [2 /*return*/, events[i].transactionHash]
+            return [4 /*yield*/, this.web3.eth.getBlock(events[i].blockHash)]
           case 6:
             blockDetails = _a.sent()
             expiry = new bignumber_js_1.default(blockDetails.timestamp).plus(
@@ -798,13 +964,13 @@ var DataTokens = (function () {
             )
             unixTime = new bignumber_js_1.default(Math.floor(Date.now() / 1000))
             if (unixTime.isLessThan(expiry))
-              return [2, events[i].transactionHash]
+              return [2 /*return*/, events[i].transactionHash]
             _a.label = 7
           case 7:
             i++
-            return [3, 5]
+            return [3 /*break*/, 5]
           case 8:
-            return [2, null]
+            return [2 /*return*/, null]
         }
       })
     })
@@ -817,6 +983,13 @@ var DataTokens = (function () {
     var topic = this.web3.eth.abi.encodeEventSignature(eventdata)
     return topic
   }
+  /**
+   * Purpose a new minter
+   * @param {String} dataTokenAddress
+   * @param {String} newMinter
+   * @param {String} address - only current minter can call this
+   * @return {Promise<string>} transactionId
+   */
   DataTokens.prototype.proposeMinter = function (
     dataTokenAddress,
     newMinterAddress,
@@ -839,7 +1012,7 @@ var DataTokens = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .proposeMinter(newMinterAddress)
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -848,11 +1021,11 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_8 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = datatoken.methods.proposeMinter(newMinterAddress)).send
@@ -860,22 +1033,34 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 7:
             e_9 = _d.sent()
             this.logger.error('ERROR: Propose minter failed')
-            return [2, null]
+            return [2 /*return*/, null]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /**
+   * Approve minter role
+   * @param {String} dataTokenAddress
+   * @param {String} address - only proposad minter can call this
+   * @return {Promise<string>} transactionId
+   */
   DataTokens.prototype.approveMinter = function (dataTokenAddress, address) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, gasLimitDefault, estGas, e_10, trxReceipt, _a, _b, e_11
@@ -894,7 +1079,7 @@ var DataTokens = (function () {
           case 1:
             _d.trys.push([1, 3, , 4])
             return [
-              4,
+              4 /*yield*/,
               datatoken.methods
                 .approveMinter()
                 .estimateGas({ from: address }, function (err, estGas) {
@@ -903,11 +1088,11 @@ var DataTokens = (function () {
             ]
           case 2:
             estGas = _d.sent()
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 3:
             e_10 = _d.sent()
             estGas = gasLimitDefault
-            return [3, 4]
+            return [3 /*break*/, 4]
           case 4:
             _d.trys.push([4, 7, , 8])
             _b = (_a = datatoken.methods.approveMinter()).send
@@ -915,21 +1100,32 @@ var DataTokens = (function () {
               from: address,
               gas: estGas + 1
             }
-            return [4, (0, utils_1.getFairGasPrice)(this.web3, this.config)]
+            return [
+              4 /*yield*/,
+              (0, utils_1.getFairGasPrice)(this.web3, this.config)
+            ]
           case 5:
-            return [4, _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])]
+            return [
+              4 /*yield*/,
+              _b.apply(_a, [((_c.gasPrice = _d.sent()), _c)])
+            ]
           case 6:
             trxReceipt = _d.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
           case 7:
             e_11 = _d.sent()
-            return [2, null]
+            return [2 /*return*/, null]
           case 8:
-            return [2]
+            return [2 /*return*/]
         }
       })
     })
   }
+  /** Check if an address has the minter role
+   * @param {String} dataTokenAddress
+   * * @param {String} address
+   * @return {Promise<string>} string
+   */
   DataTokens.prototype.isMinter = function (dataTokenAddress, address) {
     return __awaiter(this, void 0, void 0, function () {
       var datatoken, trxReceipt
@@ -940,10 +1136,10 @@ var DataTokens = (function () {
               new this.web3.eth.Contract(this.datatokensABI, dataTokenAddress),
               this.config
             )
-            return [4, datatoken.methods.isMinter(address).call()]
+            return [4 /*yield*/, datatoken.methods.isMinter(address).call()]
           case 1:
             trxReceipt = _a.sent()
-            return [2, trxReceipt]
+            return [2 /*return*/, trxReceipt]
         }
       })
     })

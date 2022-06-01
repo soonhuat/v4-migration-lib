@@ -16,6 +16,7 @@ function timeoutSignal(timeout) {
     controller.abort()
   }, timeout)
   signalMap.set(controller.signal, timeoutId)
+  // any is needed due to some type incompatibility
   return controller.signal
 }
 exports.default = timeoutSignal
